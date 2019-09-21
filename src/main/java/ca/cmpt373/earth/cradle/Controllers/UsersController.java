@@ -51,7 +51,7 @@ public class UsersController {
     @PostMapping("/login")
     @CrossOrigin(origins = "http://localhost:3000")
     @ResponseStatus(code = HttpStatus.OK)
-    public ResponseEntity<Users> validateLogin(@RequestBody Users candidate) throws Exception {
+    public ResponseEntity<Users> validateLogin(@RequestBody Users candidate) {
         String candidateUsername = candidate.getUsername();
         String candidatePassword = candidate.getPassword();
 
