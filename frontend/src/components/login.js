@@ -16,9 +16,32 @@ class Login extends Component {
     this.state={
       username:'',
       password:'',
+      id: '',
+      redirect: false,
     }
   }
 
+  redirect() {
+    if (this.state.redirect) {
+      return <Redirect to={{
+        pathname: '/',
+        props: { id: this.state.id }
+        }}
+      />
+    }
+  }
+
+  setTheState(response) {
+    this.setState({
+      redirect: true,
+      id: response.data.name,
+    })
+  }
+
+  testConsoleLog(response) {
+    console.log("response from server: ", response, this.state)
+    console.log("decomposing response: ", response.data.id, " ", response.data.name, response.status)
+  }
 
   loginHandler = e => {
     e.preventDefault()
@@ -26,9 +49,8 @@ class Login extends Component {
     console.log(this.state)
     axios.post('http://localhost:8080/users/login', this.state)
         .then(response => {
-            window.location.href = '/'
-            console.log("response from server: ", response, this.state)
-            console.log("decomposing response: ", response.data.id, " ", response.data.name, response.status)
+            this.setTheState(response)
+            this.testConsoleLog(response)
         })
         .catch(error => {
             console.log('error block')
@@ -37,6 +59,8 @@ class Login extends Component {
   }
 
   render() {
+
+    { if (this.state.redirect) { return this.redirect()} }
       return (
         <div>
           <MuiThemeProvider>

@@ -18,6 +18,7 @@ class LandingPage extends Component {
             password: '',
         }
     }
+
     changeHandler = (e) => {
         this.setState({ [e.target.name] : e.target.value })
     }
