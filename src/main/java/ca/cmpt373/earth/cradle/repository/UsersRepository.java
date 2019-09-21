@@ -1,6 +1,6 @@
 package ca.cmpt373.earth.cradle.repository;
 
-import ca.cmpt373.earth.cradle.document.Users;
+import ca.cmpt373.earth.cradle.Models.Users;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

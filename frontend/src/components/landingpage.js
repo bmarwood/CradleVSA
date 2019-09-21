@@ -13,7 +13,9 @@ class LandingPage extends Component {
         this.state = {
             id : '',
             name : '',
-            salary : ''
+            salary : '',
+            username: '',
+            password: '',
         }
     }
     changeHandler = (e) => {
