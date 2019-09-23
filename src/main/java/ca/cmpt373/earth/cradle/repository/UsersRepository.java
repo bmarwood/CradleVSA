@@ -12,6 +12,8 @@ public interface UsersRepository extends MongoRepository<Users,String > {
 
     Users findFirstByName(String name);
 
+    Users findByUsername(String username);
+
     @Query("{address: '?0'}")
     List<Users> findCustomByAddress(String address);
 

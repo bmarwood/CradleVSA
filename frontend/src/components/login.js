@@ -17,17 +17,6 @@ class Login extends Component {
       username:'',
       password:'',
       id: '',
-      redirect: false,
-    }
-  }
-
-  redirect() {
-    if (this.state.redirect) {
-      return <Redirect to={{
-        pathname: '/',
-        props: { id: this.state.id }
-        }}
-      />
     }
   }
 
@@ -51,6 +40,10 @@ class Login extends Component {
         .then(response => {
             this.setTheState(response)
             this.testConsoleLog(response)
+            this.props.history.push(
+              '/',
+              { detail: response.data }
+            )
         })
         .catch(error => {
             console.log('error block')
@@ -60,7 +53,6 @@ class Login extends Component {
 
   render() {
 
-    { if (this.state.redirect) { return this.redirect()} }
       return (
         <div>
           <MuiThemeProvider>

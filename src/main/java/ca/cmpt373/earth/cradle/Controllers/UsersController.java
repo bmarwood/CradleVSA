@@ -6,6 +6,7 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -18,6 +19,8 @@ public class UsersController {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
     public UsersController(UsersRepository usersRepository){
         this.usersRepository = usersRepository;
@@ -47,21 +50,21 @@ public class UsersController {
         return usersRepository.save(candidate);
     }
 
-
     @PostMapping("/login")
-    @CrossOrigin(origins = "http://localhost:3000")
     @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Users> validateLogin(@RequestBody Users candidate) {
         String candidateUsername = candidate.getUsername();
         String candidatePassword = candidate.getPassword();
 
-        List<Users> users = this.usersRepository.findAll();
-        for (Users user : users ) {
-            String usern = user.getUsername();
-            String pass = user.getPassword();
-            if (usern.equals(candidateUsername) && pass.equals(candidatePassword) ) {
-                return ResponseEntity.status(200).body(user);
-            }
+        Users user = this.usersRepository.findByUsername(candidateUsername);
+
+        if (user == null) { return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); }
+
+        String hashedPassword = user.getPassword();
+
+        if (bCrypt.matches(candidatePassword, hashedPassword)) {
+            return ResponseEntity.status(200).body(user);
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
