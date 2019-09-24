@@ -38,10 +38,11 @@ class Login extends Component {
     console.log(this.state)
     axios.post('http://localhost:8080/users/login', this.state)
         .then(response => {
+            localStorage.setItem("isLoggedIn", "true")
             this.setTheState(response)
             this.testConsoleLog(response)
             this.props.history.push(
-              '/',
+              '/users/hello',
               { detail: response.data }
             )
         })
