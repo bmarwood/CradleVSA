@@ -1,7 +1,7 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 
-export default function MaterialTableDemo() {
+export default function PatientList() {
   const [state, setState] = React.useState({
     columns: [
       { title: 'Name', field: 'name' },
@@ -11,14 +11,14 @@ export default function MaterialTableDemo() {
       { title: 'ID Number', field: 'id', type: 'numberic'},
     ],
     data: [
-      { name: 'Mehmet',
-        surname: 'Baran',
-        sex: 'M', 
+      { name: 'Ann',
+        surname: 'Howard',
+        sex: 'F', 
         birthYear: 1987, 
         id: 849567 },
       {
-        name: 'Zerya Betül',
-        surname: 'Baran',
+        name: 'Kenneth',
+        surname: 'Washington',
         sex: 'M',
         birthYear: 2017,
         id: 374856,
@@ -46,15 +46,6 @@ export default function MaterialTableDemo() {
       columns={state.columns}
       data={state.data}
       editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              const data = [...state.data];
-              data.push(newData);
-              setState({ ...state, data });
-            }, 600);
-          }),
         onRowUpdate: (newData, oldData) =>
           new Promise(resolve => {
             setTimeout(() => {
@@ -78,12 +69,12 @@ export default function MaterialTableDemo() {
   //Other Actions
   actions={[
     {
-      //Graph button
+      //Graph button for patient chart
       icon: 'assessment',
       tooltip: 'Graph',
-      onClick: (event, rowData) => {
-        //Replace videos.js with graph page
-        window.open("videos.js",'popUpWindow',
+      onClick: () => {
+        //Popup for Patient chart
+        window.open("PatientChart",'popUpWindow',
         'height=500,width=500,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
       }
     }
