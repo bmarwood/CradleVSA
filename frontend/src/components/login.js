@@ -24,7 +24,6 @@ class Login extends Component {
 
   setTheState(response) {
     this.setState({
-      redirect: true,
       id: response.data.name,
     })
   }
@@ -36,8 +35,7 @@ class Login extends Component {
 
   loginHandler = e => {
     e.preventDefault()
-    console.log(e)
-    console.log(this.state)
+
     axios.post('http://localhost:8080/users/login', this.state)
         .then(response => {
             localStorage.setItem("isLoggedIn", "true")
@@ -71,7 +69,9 @@ class Login extends Component {
 
             <TextField
               hintText="Enter your Username"
+              inputStyle={styles.white}
               floatingLabelText="Username"
+              hintStyle={styles.grey}
               floatingLabelStyle={styles.input}
               onChange = {(event,newValue) => this.setState({username:newValue})}
               />
@@ -79,6 +79,8 @@ class Login extends Component {
               <TextField
                 type="password"
                 hintText="Enter your Password"
+                inputStyle={styles.white}
+                hintStyle={styles.grey}
                 floatingLabelText="Password"
                 floatingLabelStyle={styles.input}
                 onChange = {(event,newValue) => this.setState({password:newValue})}
@@ -107,6 +109,12 @@ const styles = {
     width: '100%',
     color: 'white'
   },
+  'white': {
+    color: 'white'
+  },
+  'grey': {
+    color: 'grey'
+  }
 };
 
 export default Login;

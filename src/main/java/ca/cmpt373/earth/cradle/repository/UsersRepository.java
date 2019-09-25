@@ -8,7 +8,7 @@ import java.util.List;
 
 
 //Define user repository
-public interface UsersRepository extends MongoRepository<Users,String > {
+public interface UsersRepository extends MongoRepository<Users,String> {
 
     Users findFirstByName(String name);
 
