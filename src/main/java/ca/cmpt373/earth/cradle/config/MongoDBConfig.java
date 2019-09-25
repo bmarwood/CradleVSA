@@ -1,6 +1,7 @@
 package ca.cmpt373.earth.cradle.config;
 
 import ca.cmpt373.earth.cradle.Models.Users;
+import ca.cmpt373.earth.cradle.repository.AssessmentsRepository;
 import ca.cmpt373.earth.cradle.repository.UsersRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
