@@ -1,7 +1,9 @@
 import React from 'react';
 import MaterialTable from 'material-table';
+import './PatientList.css';
 
 export default function PatientList() {
+  
   const [state, setState] = React.useState({
     columns: [
       { title: 'Name', field: 'name' },
@@ -41,6 +43,9 @@ export default function PatientList() {
   });
 
   return (
+
+
+    <div className = "table-position" >
     <MaterialTable
       title="Patients"
       columns={state.columns}
@@ -65,7 +70,7 @@ export default function PatientList() {
             }, 600);
           }),
       }}
-
+  
   //Other Actions
   actions={[
     {
@@ -75,10 +80,12 @@ export default function PatientList() {
       onClick: () => {
         //Popup for Patient chart
         window.open("PatientChart",'popUpWindow',
-        'height=500,width=500,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
+        'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
       }
     }
   ]}
     />
+  </div>
+
   );
 }
