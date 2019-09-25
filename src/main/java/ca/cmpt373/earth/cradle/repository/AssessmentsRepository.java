@@ -10,15 +10,13 @@ import java.util.List;
 //Define Assessments repository
 public interface AssessmentsRepository extends MongoRepository<Assessments,String > {
 
-    Assessments findFirstById(String _id);
-
-    Assessments findByPatientID(String patient_id);
+    Assessments findFirstById(String id);
 
     @Query("{address: '?0'}")
     List<Assessments> findCustomByAddress(String address);
 
     @Query("{address: {$regex: ?0 } }")
-    List<Assessments> findCustomByRegExAdress(String domain);
+    List<Assessments> findCustomByRegExAddress(String domain);
 
 }
 

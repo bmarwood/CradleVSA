@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Assessments {
 
     @Id
-    private String _id;
+    private String id;
     private String patient_id;
     private String patient_age;
     private String vht_id;
@@ -22,9 +22,9 @@ public class Assessments {
     private String follow_up_date;
     private boolean recheck;
 
-    public Assessments(String _id, String patient_id, String patient_age, String vht_id, String date, String gestational_age, int heart_rate,
+    public Assessments(String id, String patient_id, String patient_age, String vht_id, String date, String gestational_age, int heart_rate,
                        int systolic, int diastolic, String ews_color, String symptoms, boolean referred, boolean follow_up, String follow_up_date, boolean recheck) {
-        this._id = _id;
+        this.id = id;
         this.patient_id = patient_id;
         this.patient_age = patient_age;
         this.vht_id = vht_id;
@@ -42,11 +42,11 @@ public class Assessments {
     }
 
     public String get_id() {
-        return _id;
+        return id;
     }
 
     public void set_id(String _id) {
-        this._id = _id;
+        this.id = id;
     }
 
     public String getPatient_id() {

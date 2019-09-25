@@ -1,4 +1,5 @@
 package ca.cmpt373.earth.cradle;
+import ca.cmpt373.earth.cradle.repository.AssessmentsRepository;
 import ca.cmpt373.earth.cradle.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +10,8 @@ public class CradleApplication {
 
 	@Autowired
 	UsersRepository repository;
+	@Autowired
+	AssessmentsRepository assessmentsRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CradleApplication.class, args);

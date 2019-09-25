@@ -23,12 +23,10 @@ public class AssessmentsController {
     public AssessmentsController(AssessmentsRepository assessmentsRepository){
         this.assessmentsRepository = assessmentsRepository;
     }
-
-    @GetMapping("/assessall")
+    @GetMapping("/all")
     public List<Assessments> getAll(){
         List<Assessments> assessments = this.assessmentsRepository.findAll();
         return assessments;
-        //return "Hello all";
     }
 
     @PutMapping
@@ -36,12 +34,10 @@ public class AssessmentsController {
         this.assessmentsRepository.insert(assessment);
     }
 
-    @PostMapping("/assessadd")
+    @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     @CrossOrigin(origins = "http://localhost:3000")
     public Assessments add(@RequestBody Assessments candidate) {
         return assessmentsRepository.save(candidate);
     }
-
-
 }
