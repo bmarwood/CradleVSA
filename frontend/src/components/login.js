@@ -17,6 +17,8 @@ class Login extends Component {
       username:'',
       password:'',
       id: '',
+      error: false,
+      errorMsg: '',
     }
   }
 
@@ -49,7 +51,15 @@ class Login extends Component {
         .catch(error => {
             console.log('error block')
             console.log(error)
+            this.setState({
+              error: true, 
+              errorMsg: 'Invalid Login'
+            })
         })
+  }
+
+  showErrorMsg() {
+    return <p>{this.state.errorMsg}</p>
   }
 
   render() {
@@ -74,6 +84,9 @@ class Login extends Component {
                 onChange = {(event,newValue) => this.setState({password:newValue})}
                 />
               <br/>
+              <div className='errorMsg'>
+                {(this.state.error ? this.showErrorMsg() : '' )}
+              </div>
               <RaisedButton label="Submit" primary={true} style={styles.button} onClick={(event) => this.loginHandler(event)}/>
           </div>
           </MuiThemeProvider>

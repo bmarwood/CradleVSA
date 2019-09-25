@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.errorMsg {
+  font-size: 18px;
+  color: red;
+  font-weight: bold;
+}
 .header-color {
   background: #141E30;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */

@@ -20,6 +20,7 @@ public class MongoDBConfig {
 
             usersRepository.save(new Users("4", "Peter", 4500.00, "username", hashedPassword));
             usersRepository.save(new Users("5", "Sam", 7500.00, "usernameB", hashedPassword));
+
         };
     }
 
