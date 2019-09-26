@@ -13,9 +13,12 @@ class LandingPage extends Component {
         this.state = {
             id : '',
             name : '',
-            salary : ''
+            salary : '',
+            username: '',
+            password: '',
         }
     }
+
     changeHandler = (e) => {
         this.setState({ [e.target.name] : e.target.value })
     }

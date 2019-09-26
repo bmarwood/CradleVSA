@@ -1,4 +1,4 @@
-package ca.cmpt373.earth.cradle.document;
+package ca.cmpt373.earth.cradle.Models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,12 +10,24 @@ public class Users {
     private String name;
     private String teamName;
     private Double salary;
+    private String username;
+    private String password;
 
-    public Users(String id, String name, Double salary) {
+    public Users (String id, String name, Double salary, String username, String password) {
         this.id = id;
         this.name = name;
         this.salary = salary;
+        this.username = username;
+        this.password = password;
     }
+
+//    public Users (String id, String name, Double salary) {
+//        this.id = id;
+//        this.name = name;
+//        this.salary = salary;
+//        this.username = "username";
+//        this.password = "password";
+//    }
 
     public String getId() {
         return id;
@@ -24,6 +36,14 @@ public class Users {
     public String getName() {
         return name;
     }
+
+    public void setUsername(String username) { this.username = username; }
+
+    public void setPassword(String password) { this.password = password; }
+
+    public String getUsername() { return username; }
+
+    public String getPassword() { return password; }
 
     public String getTeamName() {
         return teamName;

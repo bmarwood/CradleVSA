@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+.errorMsg {
+  font-size: 18px;
+  color: red;
+  font-weight: bold;
+}
+
+.input-txt {
+  color: white;
+}
 .header-color {
   background: #141E30;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
@@ -22,7 +31,15 @@
   width : 100%;
   min-height: 100%;
   margin: auto;
+}
 
+.login-form {
+  width: 100%;
+  height: 100%;
+  padding-top: 150px;
+  text-align: center;
+  align-items: center;
+  margin: auto;
 }
 
 .App-logo {

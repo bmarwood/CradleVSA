@@ -1,5 +1,4 @@
 package ca.cmpt373.earth.cradle;
-import ca.cmpt373.earth.cradle.document.Users;
 import ca.cmpt373.earth.cradle.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
