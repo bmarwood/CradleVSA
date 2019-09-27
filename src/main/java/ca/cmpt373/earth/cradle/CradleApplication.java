@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CradleApplication {
 
 	@Autowired
-	UsersRepository repository;
+	UsersRepository usersRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CradleApplication.class, args);

@@ -42,7 +42,7 @@ class Login extends Component {
             this.setTheState(response)
             this.testConsoleLog(response)
             this.props.history.push(
-              '/users/hello',
+              '/dashboard',
               { detail: response.data }
             )
         })

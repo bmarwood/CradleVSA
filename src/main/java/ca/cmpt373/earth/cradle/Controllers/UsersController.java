@@ -27,6 +27,7 @@ public class UsersController {
     }
 
     @GetMapping("/all")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Users> getAll(){
         List<Users> users = this.usersRepository.findAll();
         return users;
@@ -34,6 +35,7 @@ public class UsersController {
     }
 
     @GetMapping("/hello")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public String hello() {
         return "Hi, the time at the server is now " + new Date() + "\n";
     }

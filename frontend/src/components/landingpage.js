@@ -7,7 +7,7 @@ import axios from 'axios';
 import '../App.css';
 
 class LandingPage extends Component {
-    constructor(props) {
+    /*constructor(props) {
         super(props)
 
         this.state = {
@@ -33,7 +33,7 @@ class LandingPage extends Component {
             .catch(error => {
                 console.log(error)
             })
-    }
+    }*/
 
 /*   componentDidMount() {
     setInterval(this.hello, 250);
@@ -48,11 +48,11 @@ hello = () => {
 }; */
 
   render() {
-      const {id,name,salary} = this.state
+       {/* const {id,name,salary} = this.state */}
       return (
           <div className="landing-form">
                 {/* <h1 className="App-title">{this.state.message}</h1> */}
-                <form onSubmit = {this.submitHandler}>
+                {/*<form onSubmit = {this.submitHandler}>
                     <div>
                         <p style = {{color: 'white'}}>Input ID</p>
                         <input type = "text" name = "id" title = "ID" value = {id} onChange = {this.changeHandler}/>
@@ -66,7 +66,8 @@ hello = () => {
                         <input type = "text" name = "salary" title = "Salary" value = {salary} onChange = {this.changeHandler}/>
                     </div>
                     <button type = "submit"> Submit </button>
-                </form>
+                </form>*/}
+                <h1 style = {{color : 'white' }}> Welcome to Cradle</h1>
           </div>
       );
   }

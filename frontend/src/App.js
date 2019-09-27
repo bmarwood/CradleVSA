@@ -15,12 +15,14 @@ class App extends Component {
                   <Navigation>
                       <Link to ="/">Home</Link>
                       <Link to ="/users/hello">Hello</Link>
+                      <Link to ="/login">Login</Link>
                   </Navigation>
               </Header>
               <Drawer title="CRADLE">
                   <Navigation>
                       <Link to ="/">Home</Link>
                       <Link to ="/users/hello">Hello</Link>
+                      <Link to ="/login">Login</Link>
                   </Navigation>
               </Drawer>
               <Content>
