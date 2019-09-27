@@ -1,15 +1,32 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 import LandingPage from './landingpage';
 import Hello from './hello';
-import PatientList from './PatientList';
+import Assessments from './assessments';
+import Login  from './login';
 
 const Navigation = () => (
   <Switch>
     <Route exact path = "/" component = {LandingPage} />
-    <Route path = "/users/hello" component = {Hello} />
-    <Route path = "/users/PatientList" component = {PatientList} />
+    <PrivateRoute path = "/users/hello" component = {Hello} />
+    <Route exact path = "/assessments/all" component = {Assessments} />
+    <Route path = "/login" component = {Login} />
   </Switch>
 )
+
+
+function PrivateRoute ({component: Component, authed, ...rest}) {
+  return (
+    <Route {...rest} render={(props) => (
+      localStorage.getItem('isLoggedIn') === 'true'
+        ? <Component {...props} />
+        : <Redirect to={{
+            pathname: '/login',
+            state: { from: props.location }
+          }} />
+    )} />
+  )
+}
+
 
 export default Navigation;
