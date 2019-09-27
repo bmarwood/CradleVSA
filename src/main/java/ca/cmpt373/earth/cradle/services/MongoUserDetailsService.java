@@ -19,8 +19,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-@Component
-//This class creates a service to find and authenticate users
+//Authentication Services for the Web
+//This class tells Springs where our user data is stored
+//and where to find information for authentication
+
+@Component //an annotation indicates this class can be injected into another file (for ex: WebSecurityConfig)
 public class MongoUserDetailsService implements UserDetailsService {
 
     //Injection
@@ -29,6 +32,10 @@ public class MongoUserDetailsService implements UserDetailsService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    private UserDetails buildUserForAuthentication(Users user, List<GrantedAuthority> authorities) {
+        return new User(user.getUsername(), user.getPassword(), authorities);
+    }
 
     public Users findUserByUsername(String username) {
         return usersRepository.findByUsername(username);
@@ -43,9 +50,14 @@ public class MongoUserDetailsService implements UserDetailsService {
         usersRepository.save(user);
     }
 
+    //Override default methods from UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
+        //1. Retrieves Users object from MongoDB by findByUsername
+        //2. Check if the user was found or not
+        //3. Give an authority/role
+        //4. Returns a User objects with username, password and role
         Users user = usersRepository.findByUsername(username);
         if(user != null) {
             List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
@@ -65,8 +77,12 @@ public class MongoUserDetailsService implements UserDetailsService {
         return grantedAuthorities;
     }
 
-    private UserDetails buildUserForAuthentication(Users user, List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
-    }
+
+
+
+
+
+
+
 
 }

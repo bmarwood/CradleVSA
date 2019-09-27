@@ -19,34 +19,51 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-@Configuration //Indicates that the class will contain java beans
+
+//The class override methods from WebSecurityConfigurerAdapter to
+//enforce security rules.
+@Configuration          //indicates the class will contains java "beans"
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+@EnableConfigurationProperties
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     MongoUserDetailsService userDetailsService;
 
     @Autowired
     AuthenticationHandler authenticationHandler;
 
-    //@Autowired
-    //private BCryptPasswordEncoder bCryptPasswordEncoder;
+    //Tell Spring to use our own PasswordEncoder for
+    //encoding and decoding password
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    };
 
     @Bean
     public UserDetailsService mongoUserDetails() {
         return new MongoUserDetailsService();
     }
 
+    //This method tells SpringBoot to use MongoUserDetailsServices for authentication
+    //It overrides the default AuthenticationManagerBuilder config
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(mongoUserDetails()).passwordEncoder(passwordEncoder());
+    }
+
+    //This method tells SpringBoot to use our own config instead of Springs default config
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http
+        /*http
             .csrf().disable() //disable CSRF protection (not important for API)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll();
-                /*.antMatchers("/").permitAll()
+                *//*.antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/signup").permitAll();*/
-                /*.antMatchers("/dashboard/**").hasAuthority("ADMIN").anyRequest()
+                .antMatchers("/signup").permitAll();*//*
+                *//*.antMatchers("/dashboard/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin().successHandler(authenticationHandler)
                 .loginPage("/login").failureUrl("/login?error=true")
                 .usernameParameter("username")
@@ -54,11 +71,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").and().exceptionHandling();*/
-    }
 
-    @Override
-    public void configure(AuthenticationManagerBuilder builder) throws Exception {
-        builder.userDetailsService(userDetailsService);
+        //http.authorizeRequests().anyRequest().hasAnyRole("ADMIN", "USER")
+
+        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                .and()
+                .httpBasic()
+                /*.and()
+                .logout().permitAll().logoutSuccessUrl("/login")*/
+                .and()
+                .sessionManagement().disable() //Tells Spring not hold session information for users
+                .csrf().disable();
     }
 }
 
