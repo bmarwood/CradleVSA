@@ -43,8 +43,7 @@ export default function PatientList() {
   });
 
   return (
-
-
+    
     <div className = "table-position" >
     <MaterialTable
       title="Patients"
@@ -78,7 +77,7 @@ export default function PatientList() {
       icon: 'assessment',
       tooltip: 'Graph',
       onClick: () => {
-        //Popup for Patient chart
+        //Popup for Patient chart, opens PatientChart.js
         window.open("PatientChart",'popUpWindow',
         'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
       }
@@ -86,6 +85,6 @@ export default function PatientList() {
   ]}
     />
   </div>
-
+  
   );
 }
