@@ -11,19 +11,22 @@ class App extends Component {
     return (
       <div className="demo-big-content">
           <Layout fixedHeader>
-              <Header className = "header-color" title="CRADLE" scroll waterfall seamed>
+              <Header className = "header-color" title="CRADLE" transparent scroll waterfall seamed>
                   <Navigation>
                       <Link to ="/">Home</Link>
                       <Link to ="/users/hello">Hello</Link>
                       <Link to ="/users/admin/landing">Admin</Link>
                       <Link to ="/users/test">Test</Link>
 
+                      <Link to ="/login">Login</Link>
+                      <Link to ="/assessments/all">Assessments</Link>
                   </Navigation>
               </Header>
               <Drawer title="CRADLE">
                   <Navigation>
                       <Link to ="/">Home</Link>
                       <Link to ="/users/hello">Hello</Link>
+                      <Link to ="/login">Login</Link>
                   </Navigation>
               </Drawer>
               <Content>
