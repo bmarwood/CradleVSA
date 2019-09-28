@@ -40,4 +40,11 @@ public class AssessmentsController {
     public Assessments add(@RequestBody Assessments candidate) {
         return assessmentsRepository.save(candidate);
     }
+
+    @GetMapping("/get{assessment_id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Assessments get(@PathVariable String assessment_id) {
+        return assessmentsRepository.findCustomById(assessment_id);
+    }
 }

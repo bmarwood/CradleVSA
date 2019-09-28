@@ -41,5 +41,10 @@ public class CHOsController {
         return chosRepository.save(candidate);
     }
 
-
+    @GetMapping("/get{cho_id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:3000")
+    public CHOs get(@PathVariable String cho_id) {
+        return chosRepository.findCustomById(cho_id);
+    }
 }

@@ -12,9 +12,6 @@ public class CradleApplication {
 
 	@Autowired
 	UsersRepository usersRepository;
-	UsersRepository repository;
-	@Autowired
-	AssessmentsRepository assessmentsRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CradleApplication.class, args);

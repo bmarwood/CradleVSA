@@ -41,5 +41,10 @@ public class PatientsController {
         return patientsRepository.save(candidate);
     }
 
-
+    @GetMapping("/get{patient_id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Patients get(@PathVariable String patient_id) {
+        return patientsRepository.findCustomById(patient_id);
+    }
 }

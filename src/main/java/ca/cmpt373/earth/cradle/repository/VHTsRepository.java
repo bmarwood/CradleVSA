@@ -18,5 +18,8 @@ public interface VHTsRepository extends MongoRepository<VHTs,String> {
     @Query("{address: {$regex: ?0 } }")
     List<VHTs> findCustomByRegExAddress(String domain);
 
+    @Query("{id: '?0'}")
+    VHTs findCustomById(String id);
+
 }
 

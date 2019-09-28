@@ -18,5 +18,8 @@ public interface CHOsRepository extends MongoRepository<CHOs,String> {
     @Query("{address: {$regex: ?0 } }")
     List<CHOs> findCustomByRegExAddress(String domain);
 
+    @Query("{id: '?0'}")
+    CHOs findCustomById(String id);
+
 }
 
