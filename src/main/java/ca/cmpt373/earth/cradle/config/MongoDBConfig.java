@@ -1,17 +1,14 @@
 package ca.cmpt373.earth.cradle.config;
 
-<<<<<<< HEAD
 import ca.cmpt373.earth.cradle.Models.CHOs;
 import ca.cmpt373.earth.cradle.Models.Patients;
 import ca.cmpt373.earth.cradle.Models.Users;
 import ca.cmpt373.earth.cradle.Models.VHTs;
 import ca.cmpt373.earth.cradle.repository.CHOsRepository;
 import ca.cmpt373.earth.cradle.repository.PatientsRepository;
-=======
 import ca.cmpt373.earth.cradle.Models.Assessments;
 import ca.cmpt373.earth.cradle.Models.Users;
 import ca.cmpt373.earth.cradle.repository.AssessmentsRepository;
->>>>>>> fb7e8c9f651d9b029c5d2a344200ae82eded69a9
 import ca.cmpt373.earth.cradle.repository.UsersRepository;
 import ca.cmpt373.earth.cradle.repository.VHTsRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -43,6 +40,12 @@ public class MongoDBConfig {
                     "cough", true, true, "next week monday", true ));
             assessmentsRepository.save(new Assessments("2", "44", "10yrs" , "ab11", "sept 25", "0 weeks", 44,90,10,"Red" ,
                     "sweating", true, true, "next week tuesday", true ));
+            assessmentsRepository.save(new Assessments("4", "1", "44yrs" , "777", "sept 24, 2019", "0 weeks", 80,105,70,"Red" ,
+                    "sings not well, and keeps singing christmas songs", true, true, "next week tuesday", true ));
+            assessmentsRepository.save(new Assessments("5", "1", "44yrs" , "777", "sept 24, 2019", "0 weeks", 82,110,80,"Yellow" ,
+                    "keeps singing christmas songs", true, true, "next week tuesday", false ));
+            assessmentsRepository.save(new Assessments("6", "1", "44yrs" , "777", "sept 26, 2019", "0 weeks", 74,127,84,"Green" ,
+                    "sings well", true, false, null, false ));
         };
     }
 
@@ -51,8 +54,9 @@ public class MongoDBConfig {
         return strings -> {
             String hashedPassword = passwordEncoder.encode("password");
 
-            patientsRepository.save(new Patients("36", "Peter", "feb4 1996", "id of assessment 1, id of assessment2", "female"));
-            patientsRepository.save(new Patients("5", "Sam", "dec1 1960", "null", "male"));
+            patientsRepository.save(new Patients("36", "Peter", "feb4 1996", new String[]{"id of assessment 1", "id of assessment2"}, "female"));
+            patientsRepository.save(new Patients("5", "Sam", "dec1 1960", new String[]{"id of assessment 1", "id of assessment2"}, "male"));
+            patientsRepository.save(new Patients("1", "Michael Bublé", "September 9, 1975", new String[]{"4", "5", "6"}, "male"));
 
         };
     }
@@ -61,8 +65,9 @@ public class MongoDBConfig {
         return strings -> {
             String hashedPassword = passwordEncoder.encode("password");
 
-            vhtsRepository.save(new VHTs("115", "Bilbo Baggins", "id of patient 1", "id of assessment 1, id of assessment2"));
-            vhtsRepository.save(new VHTs("54", "Gregor the Overlander", "id of patient 1, id of patient 2", "id of assessment 1, id of assessment2"));
+            vhtsRepository.save(new VHTs("115", "Bilbo Baggins", new String[]{"id of patient 1", "id of patient 2"}, new String[]{"id of assessment 1", "id of assessment2"}));
+            vhtsRepository.save(new VHTs("54", "Gregor the Overlander", new String[]{"id of patient 1"}, new String[]{"id of assessment 1", "id of assessment 2", "id of assessment 3"}));
+            vhtsRepository.save(new VHTs("777", "Brian Marwood", new String[]{"1"}, new String[]{"4", "5", "6"}));
 
         };
     }
@@ -71,8 +76,9 @@ public class MongoDBConfig {
         return strings -> {
             String hashedPassword = passwordEncoder.encode("password");
 
-            chosRepository.save(new CHOs("1105", "Bilbo Baggins", "id of vht 1,id of vht 2","id of patient 1", "id of assessment 1, id of assessment2"));
-            chosRepository.save(new CHOs("540", "Gregor the Overlander", "","id of patient 1, id of patient 2", "id of assessment 1, id of assessment2"));
+            chosRepository.save(new CHOs("1105", "Bilbo Baggins", new String[]{"id of vht 1"},new String[]{"id of patient 1"}, new String[]{"id of assessment 1"}));
+            chosRepository.save(new CHOs("540", "Gregor the Overlander", new String[]{"id of vht 1", "id of vht 2"},new String[]{"id of patient 1"}, new String[]{"id of assessment 1", "id of assessment 2", "id of assessment 3"}));
+            chosRepository.save(new CHOs("1234", "Bill Gates", new String[]{"777"},null, null));
 
         };
     }
