@@ -55,25 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //This method tells SpringBoot to use our own config instead of Springs default config
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        /*http
-            .csrf().disable() //disable CSRF protection (not important for API)
-                .authorizeRequests() //defines all requests should be authenticated
-                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll();
-                *//*.antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/signup").permitAll();*//*
-                *//*.antMatchers("/dashboard/**").hasAuthority("ADMIN").anyRequest()
-                .authenticated().and().csrf().disable().formLogin().successHandler(authenticationHandler)
-                .loginPage("/login").failureUrl("/login?error=true")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").and().exceptionHandling();*/
-
-        //http.authorizeRequests().anyRequest().hasAnyRole("ADMIN", "USER")
-
         http.authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers( "/admin-dashboard").hasAnyAuthority("ADMIN")

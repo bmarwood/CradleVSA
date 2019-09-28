@@ -48,30 +48,4 @@ public class LoginController  {
         }
         return modelAndView;
     }
-
-    @GetMapping("/admin-dashboard")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ModelAndView adminDashboard() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Users user = userService.findUserByUsername(auth.getName());
-        modelAndView.addObject("currentUser", user);
-        modelAndView.addObject("fullName", "Welcome " + user.getName());
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("dashboard");
-        return modelAndView;
-    }
-
-    @GetMapping("/user-dashboard")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ModelAndView userDashboard() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Users user = userService.findUserByUsername(auth.getName());
-        modelAndView.addObject("currentUser", user);
-        modelAndView.addObject("fullName", "Welcome " + user.getName());
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("dashboard");
-        return modelAndView;
-    }
 }

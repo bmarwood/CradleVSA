@@ -32,9 +32,12 @@ public class MongoDBConfig {
             Role newUserRole = new Role("382828", "USER");
             roles2.add(newUserRole);
 
+            Role newHealthWorkerRole = new Role("3920101", "HEALTHWORKER");
+            roles.add(newHealthWorkerRole);
+
             usersRepository.save(new Users("3920101", "admin", hashedPassword, "Admin", "02/02/2002",
                     "8888 University Drive, Burnaby V3J 7H5", "MALE", roles));
-            usersRepository.save(new Users("382828", "username", hashedPassword, "User", "12/02/1992",
+            usersRepository.save(new Users("382828", "user", hashedPassword, "User", "12/02/1992",
                     "8888 University Drive, Burnaby V3J 7H5", "FEMALE", roles2));
 
         };
@@ -45,9 +48,10 @@ public class MongoDBConfig {
         return strings -> {
             Role newAdminRole = new Role("3920101","ADMIN");
             roleRepository.save(newAdminRole);
-
             Role newUserRole = new Role("382828", "USER");
             roleRepository.save(newUserRole);
+            Role newHealthWorkerRole = new Role("3920101", "HEALTHWORKER");
+            roleRepository.save(newHealthWorkerRole);
         };
     }
 
