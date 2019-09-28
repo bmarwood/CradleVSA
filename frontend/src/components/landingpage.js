@@ -1,13 +1,14 @@
 // All the rest of the content of the landing page is coming from 
 import React, {Component} from 'react';
 import {List, ListItem} from 'react-mdl';
-import logo from '../logo.svg';
+import heart from '../heart1.svg';
+import report from '../report.svg';
 import axios from 'axios';
 
 import '../App.css';
 
 class LandingPage extends Component {
-    constructor(props) {
+    /*constructor(props) {
         super(props)
 
         this.state = {
@@ -33,7 +34,7 @@ class LandingPage extends Component {
             .catch(error => {
                 console.log(error)
             })
-    }
+    }*/
 
 /*   componentDidMount() {
     setInterval(this.hello, 250);
@@ -48,25 +49,12 @@ hello = () => {
 }; */
 
   render() {
-      const {id,name,salary} = this.state
+       {/* const {id,name,salary} = this.state */}
       return (
           <div className="landing-form">
-                {/* <h1 className="App-title">{this.state.message}</h1> */}
-                <form onSubmit = {this.submitHandler}>
-                    <div>
-                        <p style = {{color: 'white'}}>Input ID</p>
-                        <input type = "text" name = "id" title = "ID" value = {id} onChange = {this.changeHandler}/>
-                    </div>
-                    <div>
-                        <p style = {{color: 'white'}}>Input Name</p>
-                        <input type = "text" name = "name" title = "Name" value = {name} onChange = {this.changeHandler}/>
-                    </div>
-                    <div>
-                        <p style = {{color: 'white'}}>Input Salary</p>
-                        <input type = "text" name = "salary" title = "Salary" value = {salary} onChange = {this.changeHandler}/>
-                    </div>
-                    <button type = "submit"> Submit </button>
-                </form>
+                <h1 style = {{color : "white"}}> Welcome to CRADLE</h1>
+                <p style = {{ color : "white"}}>Our platform provides gestational monitoring for pregnant woman</p>
+                <img src={heart} alt="logo"/>
           </div>
       );
   }
