@@ -1,6 +1,7 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 import './PatientList.css';
+import PatientChart from './PatientChart';
 
 export default function PatientList() {
   
@@ -78,8 +79,10 @@ export default function PatientList() {
       tooltip: 'Graph',
       onClick: () => {
         //Popup for Patient chart, opens PatientChart.js
-        window.open("PatientChart",'popUpWindow',
-        'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
+        window.open("/users/PatientChart")
+          //'popUpWindow',
+        //'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
+        //window.location.pathname = "/users/PatientList";
       }
     }
   ]}

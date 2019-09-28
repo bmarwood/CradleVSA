@@ -4,6 +4,9 @@ import LandingPage from './landingpage';
 import Hello from './hello';
 import Assessments from './assessments';
 import Login  from './login';
+import PatientList from './PatientList';
+import PatientChart from './PatientChart';
+
 
 const Navigation = () => (
   <Switch>
@@ -11,6 +14,9 @@ const Navigation = () => (
     <PrivateRoute path = "/users/hello" component = {Hello} />
     <Route exact path = "/assessments/all" component = {Assessments} />
     <Route path = "/login" component = {Login} />
+    <Route path = "/users/PatientList" component = {PatientList} />
+    <Route path = "/users/PatientChart" component = {PatientChart} />
+
   </Switch>
 )
 
