@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 // import TextField from 'material-ui/TextField';
 import axios from 'axios';
-//import ShowSymp from "./Symptoms";
+import ShowSymp from "./SymptomsForm";
 
 
 class newPatient extends React.Component {
@@ -30,10 +30,21 @@ class newPatient extends React.Component {
                 referred: false,
                 follow_up: false,
                 follow_up_date: null,
-                recheck: false
+                recheck: false,
+                //Symptoms
+                symptoms_arr: [
+                    {id: 1, name: 'No Symptoms (patient healthy)', checked: false},
+                    {id: 2, name: 'Headache', checked: false},
+                    {id: 3, name: 'Blurred vision', checked: false},
+                    {id: 4, name: 'Abdominal pain', checked: false},
+                    {id: 5, name: 'Bleeding', checked: false},
+                    {id: 6, name: 'Feverish', checked: false},
+                    {id: 7, name: 'Unwell', checked: false},
+                ]
             }
         }
         this.handleChange = this.handleChange.bind(this)
+        this.handleCheckbox = this.handleCheckbox.bind(this)
     }
 
     // private String patient_id;
@@ -69,18 +80,42 @@ class newPatient extends React.Component {
     //     ValidatorForm.removeValidationRule('isValidEWS');
     // }
 
+    handleCheckbox(id){
+        this.setState(prevState => {
+            const updatedSymp = prevState.patient.symptoms_arr.map(each => {
+                if(each.id === id){
+                    each.checked = !each.checked
+                }
+                return each
+            });
+            prevState.patient.symptoms_arr = updatedSymp;
+            return prevState;
+        })
+        console.log(this.state.patient.symptoms_arr)
+    }
+
+    addSymptoms(){
+        const symp = this.state.patient.symptoms_arr;
+        for(var index in symp){
+            if (symp[index].checked){
+                this.state.patient.symptoms.push(symp[index].name)
+            }
+        }
+    }
+
     changeType(){
         this.state.patient.heart_rate = parseInt(this.state.patient.heart_rate)
         this.state.patient.systolic = parseInt(this.state.patient.systolic)
         this.state.patient.diastolic = parseInt(this.state.patient.diastolic)
-        this.state.patient.symptoms = this.state.patient.symptoms.push(this.state.patient.temp_symptoms)
+        this.state.patient.symptoms.push(this.state.patient.temp_symptoms)
+        this.addSymptoms()
         delete this.state.patient.temp_symptoms;
+        delete this.state.patient.symptoms_arr;
 
     }
 
 
     handleSubmit = () => {
-        alert(this.state.patient);
         this.changeType();
         console.log(this.state)
         axios.post('http://localhost:8080/user/form', this.state.patient)
@@ -109,6 +144,9 @@ class newPatient extends React.Component {
 
 
     render() {
+        const symptom = this.state.patient.symptoms_arr.map(item => <ShowSymp key = {item.id} item = {item}
+                                                              handleChange = { this.handleCheckbox}/>)
+
         return (
             <ValidatorForm
                 style={{
@@ -179,6 +217,9 @@ class newPatient extends React.Component {
 
                 <br/>
                 <h4> Symptoms </h4>
+
+                {symptom}
+
 
                 <TextValidator
                     label="Other Symptoms"
