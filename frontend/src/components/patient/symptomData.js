@@ -6,7 +6,6 @@ const symptomData =[
     {id: 5, name: 'Bleeding', checked: false},
     {id: 6, name: 'Feverish', checked: false},
     {id: 7, name: 'Unwell', checked: false},
-    {id: 8, name: 'Others', checked: false},
 ]
 
 export default symptomData

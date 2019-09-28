@@ -14,15 +14,15 @@ class App extends Component {
               <Header className = "header-color" title="CRADLE" scroll waterfall seamed>
                   <Navigation>
                       <Link to ="/">Home</Link>
-                      <Link to ="/form">Main</Link>
+                      <Link to ="/users/form">New Patient</Link>
                       <Link to ="/users/hello">Hello</Link>
                   </Navigation>
               </Header>
               <Drawer title="CRADLE">
                   <Navigation>
                       <Link to ="/">Home</Link>
+                      <Link to ="/users/form">New Patient</Link>
                       <Link to ="/users/hello">Hello</Link>
-                      <Link to ="/form">Main</Link>
                   </Navigation>
               </Drawer>
               <Content>

@@ -3,7 +3,7 @@ import React from "react"
 function SymptomsForm(props) {
     return(
         <div className = "sypmtoms">
-            <p>
+            <p style={{ color: 'grey' }}>
             <input
                 type = "checkbox"
                 checked = {props.item.checked}
