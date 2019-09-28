@@ -27,20 +27,20 @@ public class UsersController {
         this.usersRepository = usersRepository;
     }
 
-    /*//@Role(access="users")
+    //@Role(access="users")
     @GetMapping("/all")
     //@CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Users> getAll(){
         List<Users> users = this.usersRepository.findAll();
         return users;
         //return "Hello all";
-    }*/
+    }
 
     /*@GetMapping("/{user_id}")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public Users getUsers(@PathVariable String id) {
-        User user = this.usersRepository.findById(id);
-
+        Users user = this.usersRepository.findById(id);
+        return user;
     }*/
 
     @GetMapping("/hello")

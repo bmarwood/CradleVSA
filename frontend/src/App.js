@@ -15,11 +15,8 @@ class App extends Component {
                   <Navigation>
                       <Link to ="/">Home</Link>
                       <Link to ="/users/hello">Hello</Link>
-<<<<<<< HEAD
                       <Link to ="/login">Login</Link>
-=======
                       <Link to ="/assessments/all">Assessments</Link>
->>>>>>> f05d6ff493528e26c04b660bf9a5085d9bb5cd16
                   </Navigation>
               </Header>
               <Drawer title="CRADLE">

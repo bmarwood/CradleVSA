@@ -10,8 +10,8 @@ public interface UsersRepository extends MongoRepository<Users,String> {
 
     Users findByUsername(String username);
 
-
-    //Users findById(String id);
+    @Query("{id: '?0'}")
+    Users findUserById(String id);
 
     @Query("{address: '?0'}")
     List<Users> findCustomByAddress(String address);
