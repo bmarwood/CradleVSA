@@ -11,6 +11,23 @@ html, body {
 
 }
 
+.AssessList {
+  border: thin solid blue;
+  padding: 2rem;
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+ 
+.AssessList {
+  position: relative;
+  top: -47px;
+  background: white;
+  padding: 7px;
+  width: 106px;
+  color: blue;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
