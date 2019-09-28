@@ -8,7 +8,7 @@ const Navigation = () => (
   <Switch>
     <Route exact path = "/" component = {LandingPage} />
     <PrivateRoute path = "/users/hello" component = {Hello} />
-    <Route path = "/login" component = {Login} />
+    <Route exact path = "/login" component = {Login} />
   </Switch>
 )
 

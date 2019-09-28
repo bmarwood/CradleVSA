@@ -22,7 +22,11 @@ public class AuthenticationHandler implements AuthenticationSuccessHandler {
 
         for (GrantedAuthority auth : authentication.getAuthorities()) {
             if ("ADMIN".equals(auth.getAuthority())) {
-                response.sendRedirect("/dashboard");
+                System.out.println("I'm Admin");
+                response.sendRedirect("/admin-dashboard");
+            }
+            else {
+                response.sendRedirect("/user-dashboard");
             }
         }
     }

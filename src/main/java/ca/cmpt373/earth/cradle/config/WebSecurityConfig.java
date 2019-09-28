@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         /*http
             .csrf().disable() //disable CSRF protection (not important for API)
-                .authorizeRequests()
+                .authorizeRequests() //defines all requests should be authenticated
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll();
                 *//*.antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
@@ -74,7 +74,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //http.authorizeRequests().anyRequest().hasAnyRole("ADMIN", "USER")
 
-        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .antMatchers( "/admin-dashboard").hasAnyAuthority("ADMIN")
+                .antMatchers( "/user-dashboard").hasAnyAuthority("USER")
+                .and()
+                .formLogin()
+                .loginProcessingUrl("/login")
+                .successHandler(authenticationHandler)
                 .and()
                 .httpBasic()
                 /*.and()

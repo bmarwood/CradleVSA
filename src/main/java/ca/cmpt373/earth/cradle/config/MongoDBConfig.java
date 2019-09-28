@@ -14,25 +14,43 @@ import java.util.HashSet;
 import java.util.Set;
 
 @EnableMongoRepositories(basePackageClasses = UsersRepository.class)
+
 @Configuration
 public class MongoDBConfig {
+
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Bean
-    CommandLineRunner commandLineRunner(UsersRepository usersRepository, RoleRepository roleRepository) {
-        return args -> {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    CommandLineRunner commandLineRunner(UsersRepository usersRepository) {
+        return strings -> {
             String hashedPassword = passwordEncoder.encode("password");
+
             Set<Role> roles = new HashSet<>();
             Role newAdminRole = new Role("3920101","ADMIN");
             roles.add(newAdminRole);
-            Users newUser = new Users("3920101", "admin", hashedPassword, "Admin", "02/02/2002",
-                    "8888 University Drive, Burnaby V3J 7H5", "MALE", roles);
+            Set<Role> roles2 = new HashSet<>();
+            Role newUserRole = new Role("382828", "USER");
+            roles2.add(newUserRole);
 
-            //newAdminRole.setRole("ADMIN");
-            roleRepository.save(newAdminRole);
-            //newUser.addRoles(new Role("3920101", "ADMIN"));
-            usersRepository.save(newUser);
+            usersRepository.save(new Users("3920101", "admin", hashedPassword, "Admin", "02/02/2002",
+                    "8888 University Drive, Burnaby V3J 7H5", "MALE", roles));
+            usersRepository.save(new Users("382828", "username", hashedPassword, "User", "12/02/1992",
+                    "8888 University Drive, Burnaby V3J 7H5", "FEMALE", roles2));
+
         };
     }
+
+    @Bean
+    CommandLineRunner commandLineRunnerRole(RoleRepository roleRepository) {
+        return strings -> {
+            Role newAdminRole = new Role("3920101","ADMIN");
+            roleRepository.save(newAdminRole);
+
+            Role newUserRole = new Role("382828", "USER");
+            roleRepository.save(newUserRole);
+        };
+    }
+
 
 
 }

@@ -12,7 +12,7 @@ public class Users {
     private String id;              //primary key
     private String username;
     private String password;
-    private String fullName;
+    private String name;
     private String dob;
     private String address;
     private String gender;
@@ -23,7 +23,7 @@ public class Users {
         this.id = "n/a";
         this.username = "n/a";
         this.password = "n/a";
-        this.fullName = "n/a";
+        this.name = "n/a";
         this.dob = "n/a";
         this.address = "n/a";
         this.gender = "n/a";
@@ -32,12 +32,12 @@ public class Users {
 
 
     public Users(String id, String username, String password,
-                 String fullName, String dob, String address,
+                 String name, String dob, String address,
                  String gender) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.fullName = fullName;
+        this.name = name;
         this.dob = dob;
         this.address = address;
         this.gender = gender;
@@ -45,12 +45,12 @@ public class Users {
     }
 
     public Users(String id, String username, String password,
-                 String fullName, String dob, String address,
+                 String name, String dob, String address,
                  String gender, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.fullName = fullName;
+        this.name = name;
         this.dob = dob;
         this.address = address;
         this.gender = gender;
@@ -98,12 +98,12 @@ public class Users {
         this.enabled = enabled;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
     public void setUsername(String username) { this.username = username; }
