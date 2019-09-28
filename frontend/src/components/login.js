@@ -19,6 +19,8 @@ class Login extends Component {
       id: '',
       error: false,
       errorMsg: '',
+      isAdmin: false,
+      isUser: false,
     }
   }
 
@@ -26,6 +28,43 @@ class Login extends Component {
     this.setState({
       id: response.data.name,
     })
+  }
+
+  setRole(response) {
+    response.data.roles.forEach( role => {
+
+      console.log("role given to user: ", role)
+      console.log("role given to user: ", role.role)
+
+      if (role.role == 'ADMIN') {
+        console.log('is admin')
+        this.setState({
+          isAdmin: true
+        })
+      }
+
+      if (role.role == 'USER') {
+        console.log('is user')
+        this.setState({
+          isUser: true
+        })
+      }
+      
+    });
+  }
+
+  navigate(response) {
+    if (this.state.isAdmin) {
+      this.props.history.push(
+        '/admin-dashboard',
+        { detail: response.data }
+      )
+    } else {
+      this.props.history.push(
+        '/user-dashboard',
+        { detail: response.data }
+      )
+    }
   }
 
   testConsoleLog(response) {
@@ -41,10 +80,8 @@ class Login extends Component {
             localStorage.setItem("isLoggedIn", "true")
             this.setTheState(response)
             this.testConsoleLog(response)
-            this.props.history.push(
-              '/user-dashboard',
-              { detail: response.data }
-            )
+            this.setRole(response)
+            this.navigate(response)
         })
         .catch(error => {
             console.log('error block')
