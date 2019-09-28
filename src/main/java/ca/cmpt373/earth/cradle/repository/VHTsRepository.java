@@ -10,7 +10,7 @@ import java.util.List;
 //Define VHT repository
 public interface VHTsRepository extends MongoRepository<VHTs,String> {
 
-    VHTs findFirstByName(String name);
+    VHTs findFirstByName(String username);
 
     @Query("{address: '?0'}")
     List<VHTs> findCustomByAddress(String address);

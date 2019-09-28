@@ -9,6 +9,9 @@ const Navigation = () => (
   <Switch>
     <Route exact path = "/" component = {LandingPage} />
     <PrivateRoute path = "/users/hello" component = {Hello} />
+    <Route exact path = "/user-dashboard" component = {LandingPage} />
+    <Route exact path = "/admin-dashboard" component = {LandingPage} />
+    <Route exact path = "/login" component = {Login} />
     <Route exact path = "/assessments/all" component = {Assessments} />
     <Route path = "/login" component = {Login} />
   </Switch>

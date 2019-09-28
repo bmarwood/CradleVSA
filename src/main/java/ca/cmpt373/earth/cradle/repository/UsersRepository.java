@@ -6,13 +6,12 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-
-//Define user repository
 public interface UsersRepository extends MongoRepository<Users,String> {
 
-    Users findFirstByName(String name);
-
     Users findByUsername(String username);
+
+    @Query("{id: '?0'}")
+    Users findUserById(String id);
 
     @Query("{address: '?0'}")
     List<Users> findCustomByAddress(String address);

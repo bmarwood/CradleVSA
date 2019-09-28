@@ -4,6 +4,7 @@ import ca.cmpt373.earth.cradle.Models.Users;
 import ca.cmpt373.earth.cradle.repository.UsersRepository;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,14 +27,24 @@ public class UsersController {
         this.usersRepository = usersRepository;
     }
 
+    //@Role(access="users")
     @GetMapping("/all")
+    //@CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Users> getAll(){
         List<Users> users = this.usersRepository.findAll();
         return users;
         //return "Hello all";
     }
 
+    /*@GetMapping("/{user_id}")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public Users getUsers(@PathVariable String id) {
+        Users user = this.usersRepository.findById(id);
+        return user;
+    }*/
+
     @GetMapping("/hello")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public String hello() {
         return "Hi, the time at the server is now " + new Date() + "\n";
     }
@@ -43,12 +54,12 @@ public class UsersController {
         this.usersRepository.insert(user);
     }
 
-    @PostMapping("/add")
+    /*@PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     @CrossOrigin(origins = "http://localhost:3000")
     public Users add(@RequestBody Users candidate) {
         return usersRepository.save(candidate);
-    }
+    }*/
 
     @PostMapping("/login")
     @ResponseStatus(code = HttpStatus.OK)
