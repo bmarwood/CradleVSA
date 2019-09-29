@@ -15,6 +15,7 @@ class App extends Component {
               <Header className = "header-color" title="CRADLE" transparent scroll waterfall seamed>
                   <Navigation>
                       <Link to ="/">Home</Link>
+                      <Link to ="/users/form">New Patient</Link>
                       <Link to ="/users/hello">Hello</Link>
                       <Link to ="/login">Login</Link>
                       <Link to ="/assessments/all">Assessments</Link>
@@ -26,6 +27,7 @@ class App extends Component {
               <Drawer title="CRADLE">
                   <Navigation>
                       <Link to ="/">Home</Link>
+                      <Link to ="/users/form">New Patient</Link>
                       <Link to ="/users/hello">Hello</Link>
                       <Link to ="/login">Login</Link>
                   </Navigation>
