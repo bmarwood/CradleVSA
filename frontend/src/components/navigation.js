@@ -4,15 +4,17 @@ import LandingPage from './landingpage';
 import Hello from './hello';
 import Assessments from './assessments';
 import Login  from './login';
+import Register  from './register';
 
 const Navigation = () => (
   <Switch>
     <Route exact path = "/" component = {LandingPage} />
     <PrivateRoute path = "/users/hello" component = {Hello} />
-    <Route exact path = "/user-dashboard" component = {LandingPage} />
-    <Route exact path = "/admin-dashboard" component = {LandingPage} />
+    <PrivateRoute exact path = "/user-dashboard" component = {LandingPage} />
+    <PrivateRoute exact path = "/admin-dashboard" component = {LandingPage} />
     <Route exact path = "/login" component = {Login} />
-    <Route exact path = "/assessments/all" component = {Assessments} />
+    <PrivateRoute exact path = "/register" component = {Register} />
+    <PrivateRoute exact path = "/assessments/all" component = {Assessments} />
     <Route path = "/login" component = {Login} />
   </Switch>
 )

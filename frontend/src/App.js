@@ -6,9 +6,14 @@ import {Link} from 'react-router-dom';
 import Nav from './components/navigation';
 import './App.css';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 class App extends Component {
+
   render() {
     return (
+        
       <div className="demo-big-content">
           <Layout fixedHeader>
               <Header className = "header-color" title="CRADLE" transparent scroll waterfall seamed>
