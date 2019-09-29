@@ -69,6 +69,22 @@ export default function PatientList() {
               setState({ ...state, data });
             }, 600);
           }),
+        onRowAdd: newData =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                {
+                  const data = [...state.data];
+                  data.push(newData);
+                  setState({ ...state, data });
+                }
+                resolve();
+              }, 1000);
+            }),
+        // onRowAdd: newData =>
+        //     new Promise((resolve) => {
+        //       console.log("onrowadd", newData)
+        //     }),
+
       }}
   
   //Other Actions

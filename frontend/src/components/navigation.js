@@ -2,9 +2,7 @@ import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import LandingPage from './landingpage';
 import Hello from './hello';
-
-import Form from './patient/NewPatient';
-
+import Form from './Assessment/NewAssessment';
 import Assessments from './assessments';
 import Login  from './login';
 import PatientList from './PatientList';
