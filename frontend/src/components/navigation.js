@@ -1,10 +1,6 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import LandingPage from './landingpage';
-import Hello from './hello';
-
-import Form from './patient/NewPatient';
-
 import Assessments from './assessments';
 import Login  from './login';
 import PatientList from './PatientList';
@@ -15,10 +11,6 @@ import PatientChart from './PatientChart';
 const Navigation = () => (
   <Switch>
     <Route exact path = "/" component = {LandingPage} />
-
-    <Route path = "/users/form" component = {Form} />
-
-    <PrivateRoute path = "/users/hello" component = {Hello} />
     <Route exact path = "/user-dashboard" component = {LandingPage} />
     <Route exact path = "/admin-dashboard" component = {LandingPage} />
     <Route exact path = "/login" component = {Login} />
