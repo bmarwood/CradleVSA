@@ -73,8 +73,8 @@ public class MongoDBConfig {
         return strings -> {
             String hashedPassword = passwordEncoder.encode("password");
 
-            patientsRepository.save(new Patients("36", "Peter", "feb4 1996", new String[]{"id of assessment 1", "id of assessment2"}, "female"));
-            patientsRepository.save(new Patients("5", "Sam", "dec1 1960", new String[]{"id of assessment 1", "id of assessment2"}, "male"));
+            patientsRepository.save(new Patients("36", "Peter Parker", "April 31, 1996", new String[]{"id of assessment 1", "id of assessment2"}, "female"));
+            patientsRepository.save(new Patients("5", "Sam Smith", "December 16, 1960", new String[]{"id of assessment 1", "id of assessment2"}, "male"));
             patientsRepository.save(new Patients("1", "Michael Bublé", "September 9, 1975", new String[]{"4", "5", "6"}, "male"));
 
         };

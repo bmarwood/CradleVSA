@@ -23,7 +23,9 @@ public class PatientsController {
     }
 
     @GetMapping("/all")
-    public List<Patients> getAll(){
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public List<Patients> getAll() {
         List<Patients> patients = this.patientsRepository.findAll();
         return patients;
     }
