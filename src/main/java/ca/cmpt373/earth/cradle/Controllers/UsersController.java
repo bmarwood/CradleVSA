@@ -33,13 +33,11 @@ public class UsersController {
         this.usersRepository = usersRepository;
     }
 
-    //@Role(access="users")
     @GetMapping("/all")
     //@CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Users> getAll(){
         List<Users> users = this.usersRepository.findAll();
         return users;
-        //return "Hello all";
     }
 
     /*@GetMapping("/{user_id}")
@@ -49,23 +47,18 @@ public class UsersController {
         return user;
     }*/
 
-    @GetMapping("/hello")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public String hello() {
-        return "Hi, the time at the server is now " + new Date() + "\n";
-    }
 
     @PutMapping
     public void insert(@RequestBody Users user){
         this.usersRepository.insert(user);
     }
 
-    /*@PostMapping("/add")
+    @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     @CrossOrigin(origins = "http://localhost:3000")
     public Users add(@RequestBody Users candidate) {
         return usersRepository.save(candidate);
-    }*/
+    }
 
     @PostMapping("/login")
     @ResponseStatus(code = HttpStatus.OK)

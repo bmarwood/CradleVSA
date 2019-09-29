@@ -20,7 +20,7 @@ public class RoleController {
     }
 
     //Update
-    @PutMapping("/{roleId}")
+    @PutMapping("/put{roleId}")
     public Role updateRole(@RequestBody Role role, @PathVariable String roleId) {
         role.setId(roleId);
         roleRepository.save(role);
@@ -33,13 +33,13 @@ public class RoleController {
         return role;
     }
 
-    @DeleteMapping("/{roleId}")
+    @DeleteMapping("/del{roleId}")
     public String deleteById(@PathVariable String id) {
         roleRepository.deleteById(id);
         return id;
     }
 
-    @GetMapping("/{roleId}")
+    @GetMapping("/get{roleId}")
     public List findRoleById(@PathVariable String id) {
         return roleRepository.findRoleByUserID(id);
     }
