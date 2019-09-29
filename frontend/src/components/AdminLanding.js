@@ -162,7 +162,7 @@ function Patient_list() {
           tooltip: 'Graph',
           onClick: () => {
             //Popup for Patient chart
-            window.open("PatientChart",'popUpWindow',
+            window.open("/users/PatientChart",'popUpWindow',
             'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
           }
         }
@@ -262,7 +262,7 @@ function User_list() {
                 tooltip: 'Graph',
                 onClick: () => {
                   //Popup for Patient chart
-                  window.open("PatientChart",'popUpWindow',
+                  window.open("/users/PatientChart",'popUpWindow',
                       'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
                 }
               }
