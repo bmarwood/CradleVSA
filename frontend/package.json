@@ -13,24 +13,17 @@
     "mdbreact": "^4.20.0",
     "polaris-react": "^1.0.0",
     "react": "^16.9.0",
-<<<<<<< HEAD
     "react-day-picker": "^7.3.2",
-=======
     "react-charts": "^2.0.0-beta.4",
->>>>>>> 4a9e45f39268d37b51f347bcad99d6cd1765b6f3
     "react-dom": "^16.9.0",
     "react-material-ui-form-validator": "^2.0.9",
     "react-mdl": "^1.11.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
-<<<<<<< HEAD
-    "react-tap-event-plugin": "^3.0.3",
-    "react-toastify": "^5.4.0"
-=======
+    "react-toastify": "^5.4.0",
     "react-tabs": "^3.0.0",
     "react-tap-event-plugin": "^3.0.3",
     "write-json-file": "^4.2.0"
->>>>>>> 4a9e45f39268d37b51f347bcad99d6cd1765b6f3
   },
   "scripts": {
     "start": "react-scripts start",
