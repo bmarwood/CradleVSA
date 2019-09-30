@@ -152,6 +152,18 @@ function Patient_list() {
                 setState({ ...state, data });
               }, 600);
             }),
+
+          onRowAdd: newData =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  {
+                    const data = [...state.data];
+                    data.push(newData);
+                    setState({ ...state, data });
+                  }
+                  resolve();
+                }, 600);
+              }),
         }}
 
       //Other Actions
@@ -250,6 +262,17 @@ function User_list() {
                       const data = [...state.data];
                       data.splice(data.indexOf(oldData), 1);
                       setState({ ...state, data });
+                    }, 600);
+                  }),
+              onRowAdd: newData =>
+                  new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                      {
+                        const data = [...state.data];
+                        data.push(newData);
+                        setState({ ...state, data });
+                      }
+                      resolve();
                     }, 600);
                   }),
             }}

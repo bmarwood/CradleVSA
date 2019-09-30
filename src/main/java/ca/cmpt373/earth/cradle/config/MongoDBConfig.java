@@ -55,16 +55,17 @@ public class MongoDBConfig {
     @Bean
     CommandLineRunner commandLineRunnerAssess(AssessmentsRepository assessmentsRepository) {
         return strings -> {
+            String[] symptoms = {"cough","sings well"};
             assessmentsRepository.save(new Assessments("1", "22", "34yrs" , "ab11", "sept 24", "2 weeks", 72,68,44,"Green" ,
-                    "cough", true, true, "next week monday", true ));
+                    symptoms, true, true, "next week monday", true ));
             assessmentsRepository.save(new Assessments("2", "44", "10yrs" , "ab11", "sept 25", "0 weeks", 44,90,10,"Red" ,
-                    "sweating", true, true, "next week tuesday", true ));
+                    symptoms, true, true, "next week tuesday", true ));
             assessmentsRepository.save(new Assessments("4", "1", "44yrs" , "777", "sept 24, 2019", "0 weeks", 80,105,70,"Red" ,
-                    "sings not well, and keeps singing christmas songs", true, true, "next week tuesday", true ));
+                    symptoms, true, true, "next week tuesday", true ));
             assessmentsRepository.save(new Assessments("5", "1", "44yrs" , "777", "sept 24, 2019", "0 weeks", 82,110,80,"Yellow" ,
-                    "keeps singing christmas songs", true, true, "next week tuesday", false ));
+                    symptoms, true, true, "next week tuesday", false ));
             assessmentsRepository.save(new Assessments("6", "1", "44yrs" , "777", "sept 26, 2019", "0 weeks", 74,127,84,"Green" ,
-                    "sings well", true, false, null, false ));
+                    symptoms, true, false, null, false ));
         };
     }
 
