@@ -6,7 +6,6 @@ import {Link} from 'react-router-dom';
 import Nav from './components/navigation';
 import './App.css';
 
-
 class App extends Component {
   render() {
     return (
@@ -16,19 +15,16 @@ class App extends Component {
                   <Navigation>
                       <Link to ="/">Home</Link>
                       <Link to ="/users/form">New Assessment</Link>
-                      <Link to ="/users/hello">Hello</Link>
                       <Link to ="/login">Login</Link>
                       <Link to ="/assessments/all">Assessments</Link>
                       <Link to ="/users/PatientList">PatientList</Link>
                       <Link to ="/users/PatientChart">PatientChart</Link>
-                      
                   </Navigation>
               </Header>
               <Drawer title="CRADLE">
                   <Navigation>
                       <Link to ="/">Home</Link>
                       <Link to ="/users/form">New Assessment</Link>
-                      <Link to ="/users/hello">Hello</Link>
                       <Link to ="/login">Login</Link>
                       <Link to ="/assessments/all">Assessments</Link>
                       <Link to ="/users/PatientList">PatientList</Link>
