@@ -28,6 +28,21 @@ class PatientChart extends React.Component {
           data: [80, 89, 98, 150, 86, 81, 90, 82, 91, 95, 120, 200]
       }
       ]
+    },
+    options: {
+      legend:{
+        labels:{
+          fontColor: "white"
+        }
+      },
+      scales:{
+        yAxes:[{
+          ticks:{
+            fontColor: "white",
+            fontSize: 15
+          }
+        }]
+      }
     }
   };
 
