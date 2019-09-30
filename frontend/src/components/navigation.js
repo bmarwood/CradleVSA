@@ -13,6 +13,10 @@ import AssessmentList from './AssessmentList';
 const Navigation = () => (
   <Switch>
     <Route exact path = "/" component = {LandingPage} />
+
+    {/* <Route path = "/users/form" component = {Form} /> */}
+
+    {/* <PrivateRoute path = "/users/hello" component = {Hello} /> */}
     <Route exact path = "/user-dashboard" component = {PatientList} />
     <Route exact path = "/admin-dashboard" component = {Landing_List} />
     <Route exact path = "/login" component = {Login} />
