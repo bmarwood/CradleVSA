@@ -3,11 +3,11 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import LandingPage from './landingpage';
 import Form from './Assessment/NewAssessment';
 import Landing_List from './AdminLanding';
-import Assessments from './assessments';
 import Login  from './login';
 import Register  from './register';
 import PatientList from './PatientList';
 import PatientChart from './PatientChart';
+import AssessmentList from './AssessmentList';
 
 
 const Navigation = () => (
@@ -17,7 +17,7 @@ const Navigation = () => (
     <Route exact path = "/admin-dashboard" component = {Landing_List} />
     <Route exact path = "/login" component = {Login} />
     <PrivateRoute exact path = "/register" component = {Register} />
-    <PrivateRoute exact path = "/assessments/all" component = {Assessments} />
+    <Route exact path = "/users/AssessmentList" component = {AssessmentList} />
     <Route path = "/login" component = {Login} />
     <Route path = "/users/admin/landing" component = {Landing_List} />
     <Route path = "/users/PatientList" component = {PatientList} />

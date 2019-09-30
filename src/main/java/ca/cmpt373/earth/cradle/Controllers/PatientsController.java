@@ -23,7 +23,9 @@ public class PatientsController {
     }
 
     @GetMapping("/all")
-    public List<Patients> getAll(){
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public List<Patients> getAll() {
         List<Patients> patients = this.patientsRepository.findAll();
         return patients;
     }
@@ -41,5 +43,10 @@ public class PatientsController {
         return patientsRepository.save(candidate);
     }
 
-
+    @GetMapping("/get{patient_id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Patients get(@PathVariable String patient_id) {
+        return patientsRepository.findCustomById(patient_id);
+    }
 }
