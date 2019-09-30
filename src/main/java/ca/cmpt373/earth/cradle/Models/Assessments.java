@@ -26,7 +26,7 @@ public class Assessments {
 
     public Assessments(String id, String patient_id, String patient_age, String vht_id, String date, String gestational_age, int heart_rate,
                        int systolic, int diastolic, String ews_color, String[] symptoms, boolean referred, boolean follow_up, String follow_up_date, boolean recheck) {
-        this.id = id; //assestment ID //get method length...
+        this.id = id; //assestment ID
         this.patient_id = patient_id;
         this.patient_age = patient_age;
         //this.time_scale = time_scale;

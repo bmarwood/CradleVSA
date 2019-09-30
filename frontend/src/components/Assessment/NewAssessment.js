@@ -16,9 +16,7 @@ class NewAssessment extends React.Component {
                 //use get method to get the assessment id <- should be equal to # of assessments + 1
                 id: '',
                 patient_id: "0110",
-                initial: "AJ",
                 patient_age: "20",
-                time_scale: "w",
                 vht_id : null,
                 date: "",
                 gestational_age: "20",
@@ -31,7 +29,10 @@ class NewAssessment extends React.Component {
                 follow_up: false,
                 follow_up_date: null,
                 recheck: false,
+
                 //Temp
+                time_scale: "w",
+                initial: "AJ",
                 temp_symptoms: "",
                 //Symptoms
                 symptoms_arr: [
@@ -126,7 +127,7 @@ class NewAssessment extends React.Component {
     handleSubmit = () => {
         this.changeType();
         console.log(this.state)
-        axios.post('http://localhost:8080/assessments/add', this.state.assessments)
+            axios.post('http://localhost:8080/assessments/add', this.state.assessments)
             .then(response => {
                 console.log(this.state)
                 this.props.history.push(
@@ -172,7 +173,16 @@ class NewAssessment extends React.Component {
                     <Cell col={4}>
                         <h4> Patient Form </h4>
                         <TextValidator
-                            label="ID"
+                            label="Assigned Worker Id"
+                            onChange={this.handleChange}
+                            name="id"
+                            value={this.state.assessments.id}
+                            validators={['required']}
+                            errorMessages={['this field is required']}
+                        />
+                        <br/>
+                        <TextValidator
+                            label="Patient ID"
                             onChange={this.handleChange}
                             name="patient_id"
                             value={this.state.assessments.patient_id}
@@ -182,7 +192,7 @@ class NewAssessment extends React.Component {
                         <br/>
 
                         <TextValidator
-                            label="Initial"
+                            label="Initials"
                             onChange={this.handleChange}
                             name="initial"
                             value={this.state.assessments.initial}
@@ -209,8 +219,8 @@ class NewAssessment extends React.Component {
                             name="time_scale"
                         >
                             <option value=""> --SELECT ONE---</option>
-                            <option value="w"> Week</option>
-                            <option value="m"> Month</option>
+                            <option value="w"> Weeks</option>
+                            <option value="m"> Months</option>
                             <option value="n/a"> Not Pregnant</option>
                         </select>
                         <br/>
