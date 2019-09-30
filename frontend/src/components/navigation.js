@@ -1,6 +1,7 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import LandingPage from './landingpage';
+import Form from './Assessment/NewAssessment';
 import Landing_List from './AdminLanding';
 import Login  from './login';
 import PatientList from './PatientList';
@@ -19,6 +20,7 @@ const Navigation = () => (
     <Route path = "/users/admin/landing" component = {Landing_List} />
     <Route path = "/users/PatientList" component = {PatientList} />
     <Route path = "/users/PatientChart" component = {PatientChart} />
+    <Route path = "/users/form" component = {Form} />
 
   </Switch>
 )

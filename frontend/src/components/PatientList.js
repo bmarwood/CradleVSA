@@ -103,47 +103,63 @@ render() {
   return (
     
     <div className = "table-position" >
-    
-      <MaterialTable
-        title="Patients"
-        columns={this.state.columns}
-        data={this.state.data}
-        editable={{
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
+    <MaterialTable
+      title="Patients"
+      columns={this.state.columns}
+      data={this.state.data}
+      editable={{
+        onRowUpdate: (newData, oldData) =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve();
+              const data = [...this.state.data];
+              data[data.indexOf(oldData)] = newData;
+              this.setState({ ...this.state, data });
+            }, 600);
+          }),
+        onRowDelete: oldData =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve();
+              const data = [...this.state.data];
+              data.splice(data.indexOf(oldData), 1);
+              this.setState({ ...this.state, data });
+            }, 600);
+          }),
+        onRowAdd: newData =>
+            new Promise((resolve, reject) => {
               setTimeout(() => {
+                {
+                  const data = [...this.state.data];
+                  data.push(newData);
+                  this.setState({ ...this.state, data });
+                }
                 resolve();
-                const data = [...this.state.data];
-                data[data.indexOf(oldData)] = newData;
-                this.setState({ ...this.state, data });
-              }, 600);
+              }, 1000);
             }),
-          onRowDelete: oldData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                const data = [...this.state.data];
-                data.splice(data.indexOf(oldData), 1);
-                this.setState({ ...this.state, data });
-              }, 600);
-            }),
-        }}
-        //Other Actions
-        actions={[
-          {
-            //Graph button for patient chart
-            icon: 'assessment',
-            tooltip: 'Graph',
-            onClick: () => {
-              //Popup for Patient chart, opens PatientChart.js
-              window.open("/users/PatientChart")
-                //'popUpWindow',
-              //'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-              //window.location.pathname = "/users/PatientList";
-            }
-          }
-        ]}
-      />
+        // onRowAdd: newData =>
+        //     new Promise((resolve) => {
+        //       console.log("onrowadd", newData)
+        //     }),
+
+      }}
+  
+  //Other Actions
+  actions={[
+    {
+      //Graph button for patient chart
+      icon: 'assessment',
+      tooltip: 'Graph',
+      onClick: () => {
+        //Popup for Patient chart, opens PatientChart.js
+        window.open("/users/PatientChart")
+          //'popUpWindow',
+        //'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
+        //window.location.pathname = "/users/PatientList";
+      }
+    }
+  ]}
+    />
   </div>
 
   );

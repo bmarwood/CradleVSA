@@ -9,6 +9,7 @@ public class Assessments {
     private String id;
     private String patient_id;
     private String patient_age;
+    //private String time_scale;
     private String vht_id;
     private String date;
     private String gestational_age;
@@ -16,17 +17,19 @@ public class Assessments {
     private int systolic;
     private int diastolic;
     private String ews_color;
-    private String symptoms;
+    private String[] symptoms;
     private boolean referred;
     private boolean follow_up;
     private String follow_up_date;
     private boolean recheck;
 
+
     public Assessments(String id, String patient_id, String patient_age, String vht_id, String date, String gestational_age, int heart_rate,
-                       int systolic, int diastolic, String ews_color, String symptoms, boolean referred, boolean follow_up, String follow_up_date, boolean recheck) {
-        this.id = id;
+                       int systolic, int diastolic, String ews_color, String[] symptoms, boolean referred, boolean follow_up, String follow_up_date, boolean recheck) {
+        this.id = id; //assestment ID
         this.patient_id = patient_id;
         this.patient_age = patient_age;
+        //this.time_scale = time_scale;
         this.vht_id = vht_id;
         this.date = date;
         this.gestational_age = gestational_age;
@@ -64,6 +67,14 @@ public class Assessments {
     public void setPatient_age(String patient_age) {
         this.patient_age = patient_age;
     }
+
+//    public String getTime_scale() {
+//        return time_scale;
+//    }
+//
+//    public void setTime_scale(String time_scale) {
+//        this.time_scale = time_scale;
+//    }
 
     public String getVht_id() {
         return vht_id;
@@ -121,11 +132,11 @@ public class Assessments {
         this.ews_color = ews_color;
     }
 
-    public String getSymptoms() {
+    public String[] getSymptoms() {
         return symptoms;
     }
 
-    public void setSymptoms(String symptoms) {
+    public void setSymptoms(String[] symptoms) {
         this.symptoms = symptoms;
     }
 
