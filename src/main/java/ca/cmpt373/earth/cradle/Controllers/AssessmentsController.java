@@ -24,6 +24,8 @@ public class AssessmentsController {
         this.assessmentsRepository = assessmentsRepository;
     }
     @GetMapping("/all")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Assessments> getAll(){
         List<Assessments> assessments = this.assessmentsRepository.findAll();
         return assessments;

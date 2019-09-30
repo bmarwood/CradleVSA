@@ -17,7 +17,7 @@ class App extends Component {
                       <Link to ="/">Home</Link>
                       <Link to ="/users/hello">Hello</Link>
                       <Link to ="/login">Login</Link>
-                      <Link to ="/assessments/all">Assessments</Link>
+                      <Link to ="/users/AssessmentList">AssessmentsList</Link>
                       <Link to ="/users/PatientList">PatientList</Link>
                       <Link to ="/users/PatientChart">PatientChart</Link>
                       

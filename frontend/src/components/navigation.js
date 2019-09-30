@@ -2,10 +2,10 @@ import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import LandingPage from './landingpage';
 import Hello from './hello';
-import Assessments from './assessments';
 import Login  from './login';
 import PatientList from './PatientList';
 import PatientChart from './PatientChart';
+import AssessmentList from './AssessmentList';
 
 
 const Navigation = () => (
@@ -15,7 +15,7 @@ const Navigation = () => (
     <Route exact path = "/user-dashboard" component = {LandingPage} />
     <Route exact path = "/admin-dashboard" component = {LandingPage} />
     <Route exact path = "/login" component = {Login} />
-    <Route exact path = "/assessments/all" component = {Assessments} />
+    <Route exact path = "/users/AssessmentList" component = {AssessmentList} />
     <Route path = "/login" component = {Login} />
     <Route path = "/users/PatientList" component = {PatientList} />
     <Route path = "/users/PatientChart" component = {PatientChart} />

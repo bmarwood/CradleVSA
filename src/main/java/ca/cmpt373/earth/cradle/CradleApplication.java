@@ -24,7 +24,6 @@ public class CradleApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/users/login").allowedOrigins("http://localhost:8080/users/login");
-//				registry.addMapping("/patients/all").allowedOrigins("http://localhost:3000/users/PatientList");
 				registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("*")
 						.allowedHeaders("*");
 			}
