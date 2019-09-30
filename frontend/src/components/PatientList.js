@@ -1,81 +1,138 @@
-import React from 'react';
+import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import './PatientList.css';
 import PatientChart from './PatientChart';
 
-export default function PatientList() {
-  
-  const [state, setState] = React.useState({
-    columns: [
-      { title: 'Name', field: 'name' },
-      { title: 'Surname', field: 'surname' },
-      { title: 'Sex', field: 'sex'},
-      { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-      { title: 'ID Number', field: 'id', type: 'numberic'},
-    ],
-    data: [
-      { name: 'Ann',
-        surname: 'Howard',
-        sex: 'F', 
-        birthYear: 1987, 
-        id: 849567 },
-      {
-        name: 'Kenneth',
-        surname: 'Washington',
-        sex: 'M',
-        birthYear: 2017,
-        id: 374856,
-      },
-      {
-        name: 'Shayla',
-        surname: 'Owens',
-        sex: 'F',
-        birthYear: 1991,
-        id: 384957,
-      },
-      {
-        name: 'Kirsten',
-        surname: 'Turner',
-        sex: 'F',
-        birthYear: 1972,
-        id: 794057,
-      },
-    ],
-  });
+import axios from 'axios';
 
+class PatientList extends Component {
+
+  constructor(props){
+    super(props);
+    this.state={
+      columns: [],
+      data: []
+    }
+  }
+  
+  componentDidMount() {
+    this.getPatientList()
+    this.setState({
+      columns: [
+        { title: 'Name', field: 'name' },
+        { title: 'Surname', field: 'surname' },
+        { title: 'Sex', field: 'sex'},
+        { title: 'Birth Date', field: 'birthDate'},
+        { title: 'ID Number', field: 'id'},
+      ], 
+      data: [
+        { 
+          name: 'Ann',
+          surname: 'Howard',
+          sex: 'F', 
+          birthYear: 1987, 
+          id: 849567 },
+        {
+          name: 'Kenneth',
+          surname: 'Washington',
+          sex: 'M',
+          birthYear: 2017,
+          id: 374856,
+        },
+        {
+          name: 'Shayla',
+          surname: 'Owens',
+          sex: 'F',
+          birthYear: 1991,
+          id: 384957,
+        },
+        {
+          name: 'Kirsten',
+          surname: 'Turner',
+          sex: 'F',
+          birthYear: 1972,
+          id: 794057,
+        },
+      ],
+    })
+  }
+  
+
+  populateData(response) {
+    console.log(response)
+    var patientList = []
+    response.forEach(patient => {
+      var name = (patient.name.split(" "))[0]
+      var surname = (patient.name.split(" "))[1]
+      var birthDate = patient.birth_date
+      var sex = patient.gender[0]
+      var id = patient.id
+      
+      var patient = {
+        name: name,
+        surname: surname,
+        birthDate: birthDate,
+        sex: sex,
+        id : id
+      }
+
+      patientList.push(patient)
+    });
+
+    this.setState({data: patientList})
+
+  }
+
+  getPatientList() {
+    axios.get('http://localhost:8080/patients/all', this.state)
+      .then(response => {
+        // console.log("response from server: ", response)
+        this.populateData(response.data)
+      })
+      .catch(error => {
+          console.log('error block')
+          console.log(error)
+          this.setState({
+            error: true, 
+            errorMsg: 'Invalid Login'
+          })
+      })
+}
+
+render() {
   return (
     
     <div className = "table-position" >
     <MaterialTable
       title="Patients"
-      columns={state.columns}
-      data={state.data}
+      columns={this.state.columns}
+      data={this.state.data}
       editable={{
         onRowUpdate: (newData, oldData) =>
           new Promise(resolve => {
             setTimeout(() => {
               resolve();
-              const data = [...state.data];
+              const data = [...this.state.data];
               data[data.indexOf(oldData)] = newData;
-              setState({ ...state, data });
+              this.setState({ ...this.state, data });
             }, 600);
           }),
         onRowDelete: oldData =>
           new Promise(resolve => {
             setTimeout(() => {
               resolve();
-              const data = [...state.data];
+              const data = [...this.state.data];
               data.splice(data.indexOf(oldData), 1);
-              setState({ ...state, data });
+              this.setState({ ...this.state, data });
             }, 600);
           }),
         onRowAdd: newData =>
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 {
-                  const data = [...state.data];
+                  const data = [...this.state.data];
                   data.push(newData);
-                  setState({ ...state, data });
+                  this.setState({ ...this.state, data });
                 }
                 resolve();
               }, 1000);
@@ -104,6 +161,11 @@ export default function PatientList() {
   ]}
     />
   </div>
-  
+
   );
 }
+
+
+
+}
+export default PatientList;

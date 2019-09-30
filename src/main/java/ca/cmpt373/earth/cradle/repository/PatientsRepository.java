@@ -18,5 +18,7 @@ public interface PatientsRepository extends MongoRepository<Patients,String> {
     @Query("{address: {$regex: ?0 } }")
     List<Patients> findCustomByRegExAddress(String domain);
 
+    @Query("{id: '?0'}")
+    Patients findCustomById(String id);
 }
 

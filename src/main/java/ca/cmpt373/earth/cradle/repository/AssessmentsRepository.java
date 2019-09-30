@@ -18,5 +18,7 @@ public interface AssessmentsRepository extends MongoRepository<Assessments,Strin
     @Query("{address: {$regex: ?0 } }")
     List<Assessments> findCustomByRegExAddress(String domain);
 
+    @Query("{id: '?0'}")
+    Assessments findCustomById(String id);
 }
 

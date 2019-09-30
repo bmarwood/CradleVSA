@@ -41,5 +41,12 @@ public class VHTsController {
         return vhtsRepository.save(candidate);
     }
 
+    @GetMapping("/get{vht_id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:3000")
+    public VHTs get(@PathVariable String vht_id) {
+        return vhtsRepository.findCustomById(vht_id);
+    }
+
 
 }
