@@ -19,6 +19,7 @@ class App extends Component {
                       <Link to ="/assessments/all">Assessments</Link>
                       <Link to ="/users/PatientList">PatientList</Link>
                       <Link to ="/users/PatientChart">PatientChart</Link>
+                      <Link to ="/users/admin/landing">Admin Landing page</Link>
                   </Navigation>
               </Header>
               <Drawer title="CRADLE">

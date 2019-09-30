@@ -15,15 +15,15 @@ class NewAssessment extends React.Component {
             assessments : {
                 //use get method to get the assessment id <- should be equal to # of assessments + 1
                 id: '',
-                patient_id: "0110",
-                patient_age: "20",
+                patient_id: "",
+                patient_age: "",
                 vht_id : null,
                 date: "",
-                gestational_age: "20",
-                heart_rate: "100",
-                systolic: "100",
-                diastolic: "100",
-                ews_color: "red",
+                gestational_age: "",
+                heart_rate: "",
+                systolic: "",
+                diastolic: "",
+                ews_color: "",
                 symptoms: [],
                 referred: false,
                 follow_up: false,
@@ -31,8 +31,8 @@ class NewAssessment extends React.Component {
                 recheck: false,
 
                 //Temp
-                time_scale: "w",
-                initial: "AJ",
+                time_scale: "",
+                initial: "",
                 temp_symptoms: "",
                 //Symptoms
                 symptoms_arr: [
