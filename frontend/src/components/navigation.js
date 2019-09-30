@@ -5,6 +5,7 @@ import Form from './Assessment/NewAssessment';
 import Landing_List from './AdminLanding';
 import Assessments from './assessments';
 import Login  from './login';
+import Register  from './register';
 import PatientList from './PatientList';
 import PatientChart from './PatientChart';
 
@@ -15,7 +16,8 @@ const Navigation = () => (
     <Route exact path = "/user-dashboard" component = {PatientList} />
     <Route exact path = "/admin-dashboard" component = {Landing_List} />
     <Route exact path = "/login" component = {Login} />
-    <Route exact path = "/assessments/all" component = {Assessments} />
+    <PrivateRoute exact path = "/register" component = {Register} />
+    <PrivateRoute exact path = "/assessments/all" component = {Assessments} />
     <Route path = "/login" component = {Login} />
     <Route path = "/users/admin/landing" component = {Landing_List} />
     <Route path = "/users/PatientList" component = {PatientList} />
