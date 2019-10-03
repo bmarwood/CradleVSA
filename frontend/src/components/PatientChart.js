@@ -48,7 +48,7 @@ class PatientChart extends React.Component {
 
   render() {
     return (
-      <MDBContainer>
+      <MDBContainer style = {{backgroundColor:'white'}}>
         <h3 className="mt-5">Blood Pressure</h3>
         <Line data={this.state.dataLine} options={{ responsive: true }} />
       </MDBContainer>
