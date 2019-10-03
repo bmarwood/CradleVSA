@@ -24,11 +24,12 @@ const Navigation = () => (
     <Route exact path = "/users/AssessmentList" component = {AssessmentList} />
     <Route path = "/login" component = {Login} />
     <Route path = "/users/admin/landing" component = {Landing_List} />
-    <Route path = "/users/PatientList" component = {PatientList} />
-    <Route path = "/users/PatientChart" component = {PatientChart} />
+    <Route exact path = "/users/PatientList" component = {PatientList} />
+    <Route exact path = "/PatientChart" component = {PatientChart} />
     <Route path = "/users/form" component = {Form} />
 
-  </Switch>
+    </Switch>
+
 )
 
 
@@ -42,6 +43,7 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
             state: { from: props.location }
           }} />
     )} />
+    
   )
 }
 

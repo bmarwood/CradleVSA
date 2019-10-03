@@ -151,11 +151,11 @@ render() {
       icon: 'assessment',
       tooltip: 'Graph',
       onClick: () => {
+     
         //Popup for Patient chart, opens PatientChart.js
-        window.open("/users/PatientChart")
-          //'popUpWindow',
-        //'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-        //window.location.pathname = "/users/PatientList";
+        window.open("/PatientChart",'popUpWindow',
+        'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
+    
       }
     }
   ]}
