@@ -99,7 +99,7 @@ class NewAssessment extends React.Component {
 
     addSymptoms(){
         const symp = this.state.assessments.symptoms_arr;
-        for(var index in symp){
+        for(let index in symp){
             if (symp[index].checked){
                 this.state.assessments.symptoms.push(symp[index].name)
             }
@@ -150,11 +150,10 @@ class NewAssessment extends React.Component {
     }
 
 
-
+    // use variant="outlined" to wrap up the box
     render() {
         const symptom = this.state.assessments.symptoms_arr.map(item => <ShowSymp key = {item.id} item = {item}
                                                               handleChange = { this.handleCheckbox}/>)
-
         return (
             <ValidatorForm
                 style={{
@@ -198,7 +197,6 @@ class NewAssessment extends React.Component {
                             value={this.state.assessments.initial}
                             validators={['required']}
                             errorMessages={['this field is required']}
-
                         />
                         <br/>
 

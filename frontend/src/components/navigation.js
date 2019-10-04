@@ -1,7 +1,9 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import LandingPage from './landingpage';
-import Form from './Assessment/NewAssessment';
+import NewAssessment from './NewForm/NewAssessment';
+import NewPatient from './NewForm/NewPatient';
+import NewUser from './NewForm/NewUser';
 import Landing_List from './AdminLanding';
 import Login  from './login';
 import Register  from './register';
@@ -14,9 +16,6 @@ const Navigation = () => (
   <Switch>
     <Route exact path = "/" component = {LandingPage} />
 
-    {/* <Route path = "/users/form" component = {Form} /> */}
-
-    {/* <PrivateRoute path = "/users/hello" component = {Hello} /> */}
     <Route exact path = "/user-dashboard" component = {PatientList} />
     <Route exact path = "/admin-dashboard" component = {Landing_List} />
     <Route exact path = "/login" component = {Login} />
@@ -26,7 +25,9 @@ const Navigation = () => (
     <Route path = "/users/admin/landing" component = {Landing_List} />
     <Route path = "/users/PatientList" component = {PatientList} />
     <Route path = "/users/PatientChart" component = {PatientChart} />
-    <Route path = "/users/form" component = {Form} />
+    <Route path = "/users/newAssessment" component = {NewAssessment} />
+    <Route path = "/users/newPatient" component = {NewPatient} />
+    <Route path = "/users/newUser" component = {NewUser} />
 
   </Switch>
 )
