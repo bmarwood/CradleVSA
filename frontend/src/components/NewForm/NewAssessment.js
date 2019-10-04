@@ -34,6 +34,8 @@ class NewAssessment extends React.Component {
                 time_scale: "",
                 initial: "",
                 temp_symptoms: "",
+                error: false,
+                errorMsg: '',
                 //Symptoms
                 symptoms_arr: [
                     {id: 1, name: 'No Symptoms (patient healthy)', checked: true},
@@ -71,7 +73,14 @@ class NewAssessment extends React.Component {
     componentDidMount() {
         // custom rule will have name 'isValidEWS'
         ValidatorForm.addValidationRule('isValidEWS', (value) => {
+            value = value.toLowerCase();
             if (value === 'green' || value === 'yellow' || value ==='red') {
+                return true;
+            }
+            return false;
+        });
+        ValidatorForm.addValidationRule('isGreater', (value) => {
+            if (parseInt(value) <= parseInt(this.state.assessments.systolic)) {
                 return true;
             }
             return false;
@@ -94,7 +103,6 @@ class NewAssessment extends React.Component {
             prevState.assessments.symptoms_arr = updatedSymp;
             return prevState;
         })
-        console.log(this.state.assessments.symptoms_arr)
     }
 
     addSymptoms(){
@@ -105,8 +113,28 @@ class NewAssessment extends React.Component {
             }
         }
     }
+    checkSymptoms(){
+        const symp = this.state.assessments.symptoms_arr;
+        let checked = false;
+        for(let index in symp){
+            if (index > 0 && symp[0].checked && symp[index].checked){
+                this.state.assessments.error = true;
+                this.state.assessments.errorMsg = "Please double check the Symptoms"
+            }
+            if(!checked){
+                checked = symp[index].checked
+            }
+        }
+        if(!this.state.assessments.error && !checked && this.state.assessments.temp_symptoms === ""){
+            symp[0].checked = true;
+        }
+        if(symp[0].checked && this.state.assessments.temp_symptoms !== ""){
+            symp[0].checked = false;
+        }
+    }
 
     changeType(){
+        this.state.assessments.ews_color = this.state.assessments.ews_color.toLowerCase();
         this.state.assessments.heart_rate = parseInt(this.state.assessments.heart_rate)
         this.state.assessments.systolic = parseInt(this.state.assessments.systolic)
         this.state.assessments.diastolic = parseInt(this.state.assessments.diastolic)
@@ -119,26 +147,38 @@ class NewAssessment extends React.Component {
         delete this.state.assessments.symptoms_arr;
         delete this.state.assessments.initial;
         delete this.state.assessments.time_scale;
+        delete this.state.assessments.errorMsg;
+        delete this.state.assessments.error;
+    }
 
-
+    showErrorMsg() {
+        return <p>{this.state.assessments.errorMsg}</p>
     }
 
 
-    handleSubmit = () => {
+    //USING ALERT RIGHT NOW, SHOULD DISPLAY INSTEAD
+    handleSubmit = (e) => {
+        this.state.assessments.error = false;
+        this.checkSymptoms()
+        console.log(this.state.assessments.error, this.state.assessments.errorMsg)
+        if(this.state.assessments.error){
+            alert(this.state.assessments.errorMsg)
+            return;
+        }
         this.changeType();
         console.log(this.state)
-            axios.post('http://localhost:8080/assessments/add', this.state.assessments)
-            .then(response => {
-                console.log(this.state)
-                this.props.history.push(
-                    '/',
-                    { detail: response.data }
-                )
-            })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-            })
+        axios.post('http://localhost:8080/assessments/add', this.state.assessments)
+        .then(response => {
+            console.log(this.state)
+            this.props.history.push(
+                '/',
+                { detail: response.data }
+            )
+        })
+        .catch(error => {
+            console.log('error block')
+            console.log(error)
+        })
 
     }
 
@@ -195,8 +235,8 @@ class NewAssessment extends React.Component {
                             onChange={this.handleChange}
                             name="initial"
                             value={this.state.assessments.initial}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
+                            validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                            errorMessages={['this field is required', 'Invalid input (only letters)']}
                         />
                         <br/>
 
@@ -230,7 +270,7 @@ class NewAssessment extends React.Component {
                             name="gestational_age"
                             value={this.state.assessments.gestational_age}
                             validators={['required', 'minNumber:0', 'maxNumber:60', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required','MUST BE BETWEEN 0-60','MUST BE BETWEEN 0-60','MUST BE BETWEEN 0-60']}
+                            errorMessages={['this field is required','MUST BE BETWEEN 0-60']}
                         />
                     </Cell>
                     <Cell col={4}>
@@ -257,7 +297,7 @@ class NewAssessment extends React.Component {
                             name="systolic"
                             value={this.state.assessments.systolic}
                             validators={['required', 'minNumber:0', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required','MUST BE BETWEEN 0-300']}
+                            errorMessages={['this field is required','MUST BE BETWEEN 0-300','MUST BE BETWEEN 0-300','MUST BE BETWEEN 0-300']}
                         />
                         <br/>
                         <TextValidator
@@ -266,7 +306,7 @@ class NewAssessment extends React.Component {
                             name="diastolic"
                             value={this.state.assessments.diastolic}
                             validators={['required', 'minNumber:0', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required','MUST BE BETWEEN 0-300']}
+                            errorMessages={['this field is required','MUST BE BETWEEN 0-300','MUST BE BETWEEN 0-300','MUST BE BETWEEN 0-300']}
                         />
                         <br/>
                         <TextValidator
@@ -274,8 +314,8 @@ class NewAssessment extends React.Component {
                             onChange = {this.handleChange}
                             name="heart_rate"
                             value={this.state.assessments.heart_rate}
-                            validators={['required', 'minNumber:0', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required','MUST BE BETWEEN 0-300']}
+                            validators={['required', 'isGreater','minNumber:0', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
+                            errorMessages={['this field is required','Heart rate should be <= to Systolic','MUST BE BETWEEN 0-300','MUST BE BETWEEN 0-300','MUST BE BETWEEN 0-300']}
                         />
                         <br/>
                         <TextValidator
@@ -289,7 +329,9 @@ class NewAssessment extends React.Component {
                     </Cell>
                 </Grid>
                 <br/>
-
+                <div className='errorMsg'>
+                    {(this.state.assessments.error ? this.showErrorMsg() : '' )}
+                </div>
                 <br/>
                 <Button type="submit" style={{
                     backgroundColor: 'blue',

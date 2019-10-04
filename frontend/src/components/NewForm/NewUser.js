@@ -10,18 +10,18 @@ class NewUser extends React.Component {
     constructor(){
         super()
         this.state = {
-            id: '10',
-            username:'gaeunl',
-            password: '1234',
+            id: '',
+            username:'',
+            password: '',
             name: '',
-            dob: '02/02/02',
-            address: '8888 University Drive, Burnaby V3J 7H5',
-            gender: '',
+            dob: '',
+            address: '',
+            gender: 'male',
             roles: [],
             enabled: false,
             //TEMP VARIABLES
-            fname: 'Gaeun',
-            lname: 'Lee',
+            fname: '',
+            lname: '',
             roles_array: [
                 {id: 1, name: 'USER',checked: true},
                 {id: 2, name: 'ADMIN', checked: false},
@@ -74,6 +74,13 @@ class NewUser extends React.Component {
     }
     checkTheInput(){
         //remove the empty space
+        if(this.state.fname.containts(" ")){
+            this.fname = ""
+
+        }
+        if(this.state.lname.contains(" ")){
+            this.lname = ""
+        }
     }
 
 
@@ -136,8 +143,8 @@ class NewUser extends React.Component {
                             onChange={this.handleChange}
                             name="fname"
                             value={this.state.fname}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
+                            validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                            errorMessages={['this field is required', 'Invalid input (only letters)']}
                             variant="outlined"
                         />
                         <br/>
@@ -147,8 +154,8 @@ class NewUser extends React.Component {
                             onChange={this.handleChange}
                             name="lname"
                             value={this.state.lname}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
+                            validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                            errorMessages={['this field is required', 'Invalid input (only letters)']}
                             variant="outlined"
                         />
                         <br/>

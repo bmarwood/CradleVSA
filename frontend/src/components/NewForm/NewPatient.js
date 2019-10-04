@@ -15,7 +15,7 @@ class NewPatient extends React.Component {
             name:'',
             birth_date: '',
             list_of_assessments: [], // NOT SURE IF WE NEED IT HERE //LEAVE FOR LATER
-            gender: '',
+            gender: 'male',
             //TEMP VARIABLES
             fname: '',
             lname: ''
@@ -36,7 +36,11 @@ class NewPatient extends React.Component {
     //     ValidatorForm.removeValidationRule('isValidEWS');
     // }
 
-
+    // componentDidMount() {
+    //     ValidatorForm.addValidationRule('anySpace', (value) => {
+    //
+    //     });
+    // }
 
     changeState(){
         this.state.name = this.state.fname + ' ' + this.state.lname;
@@ -96,8 +100,8 @@ class NewPatient extends React.Component {
                     onChange={this.handleChange}
                     name="fname"
                     value={this.state.fname}
-                    validators={['required']}
-                    errorMessages={['this field is required']}
+                    validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                    errorMessages={['this field is required', 'Invalid input (only letters)']}
                     variant="outlined"
                 />
                 <br/>
@@ -107,8 +111,8 @@ class NewPatient extends React.Component {
                     onChange={this.handleChange}
                     name="lname"
                     value={this.state.lname}
-                    validators={['required']}
-                    errorMessages={['this field is required']}
+                    validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                    errorMessages={['this field is required', 'Invalid input (only letters)']}
                     variant="outlined"
                 />
                 <br/>
