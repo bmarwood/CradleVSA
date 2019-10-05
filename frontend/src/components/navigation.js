@@ -8,7 +8,8 @@ import Register  from './register';
 import PatientList from './PatientList';
 import PatientChart from './PatientChart';
 import AssessmentList from './AssessmentList';
-
+import PatientNotes from './PatientNotes';
+import PatientAddMedication from './PatientAddMedication';
 
 const Navigation = () => (
   <Switch>
@@ -26,6 +27,8 @@ const Navigation = () => (
     <Route path = "/users/admin/landing" component = {Landing_List} />
     <Route exact path = "/users/PatientList" component = {PatientList} />
     <Route exact path = "/PatientChart" component = {PatientChart} />
+    <Route exact path = "/PatientNotes" component = {PatientNotes} />
+    <Route exact path = "/PatientAddMedication" component = {PatientAddMedication} />
     <Route path = "/users/form" component = {Form} />
 
     </Switch>

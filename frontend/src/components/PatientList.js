@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import './PatientList.css';
-import PatientChart from './PatientChart';
-
 import axios from 'axios';
 
 class PatientList extends Component {
@@ -101,7 +99,6 @@ class PatientList extends Component {
 
 render() {
   return (
-    
     <div className = "table-position" >
     <MaterialTable
       title="Patients"
@@ -151,17 +148,23 @@ render() {
       icon: 'assessment',
       tooltip: 'Graph',
       onClick: () => {
-     
         //Popup for Patient chart, opens PatientChart.js
         window.open("/PatientChart",'popUpWindow',
         'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-    
       }
+    },
+    {
+        icon: 'assignment',
+        tooltip: 'Notes',
+        onClick: () => {
+          //Popup for Patient chart, opens PatientChart.js
+          window.open("/PatientNotes",'popUpWindow',
+          'height=800,width=500,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
+        }
     }
   ]}
     />
   </div>
-
   );
 }
 

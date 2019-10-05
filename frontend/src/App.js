@@ -20,7 +20,7 @@ class App extends Component {
                       <Link to ="/users/admin/landing">Admin Landing page</Link>
                       <Link to ="/users/PatientList">Patient List</Link>
                       <Link to ="/users/AssessmentList">Assessments List</Link>
-                      <Link to ="/users/PatientChart">Patient Chart</Link>
+                      <Link to ="/users/PatientNotes">Note</Link>
                   </Navigation>
               </Header>
               <Drawer title="CRADLE">
