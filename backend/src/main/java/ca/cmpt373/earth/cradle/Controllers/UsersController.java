@@ -55,7 +55,7 @@ public class UsersController {
 
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8043")
     public Users add(@RequestBody Users candidate) {
         return usersRepository.save(candidate);
     }

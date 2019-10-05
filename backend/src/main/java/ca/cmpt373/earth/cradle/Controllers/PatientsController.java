@@ -38,14 +38,14 @@ public class PatientsController {
 
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8043")
     public Patients add(@RequestBody Patients candidate) {
         return patientsRepository.save(candidate);
     }
 
     @GetMapping("/get{patient_id}")
     @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8043")
     public Patients get(@PathVariable String patient_id) {
         return patientsRepository.findCustomById(patient_id);
     }
