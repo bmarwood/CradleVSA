@@ -88,7 +88,7 @@ class NewUser extends React.Component {
         this.changeState();
         this.checkTheInput();
         console.log(this.state);
-        axios.post('http://localhost:8080/users/add', this.state)
+        axios.post('http://localhost:8083/users/add', this.state)
             .then(response => {
                 console.log(this.state);
                 this.props.history.push(
