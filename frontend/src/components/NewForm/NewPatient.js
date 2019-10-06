@@ -9,7 +9,7 @@ import {Grid, Cell} from 'react-mdl';
 class NewPatient extends React.Component {
 
     constructor() {
-        super()
+        super();
         this.state = {
             id: '',
             name: '',
@@ -19,8 +19,8 @@ class NewPatient extends React.Component {
             //TEMP VARIABLES
             fname: '',
             lname: ''
-        }
-        this.handleChange = this.handleChange.bind(this)
+        };
+        this.handleChange = this.handleChange.bind(this);
     }
 
 
@@ -28,7 +28,6 @@ class NewPatient extends React.Component {
         this.state.name = this.state.fname + ' ' + this.state.lname;
         delete this.state.fname;
         delete this.state.lname;
-
     }
 
     checkTheInput() {
@@ -39,20 +38,19 @@ class NewPatient extends React.Component {
     handleSubmit = () => {
         this.changeState();
         this.checkTheInput();
-        console.log(this.state)
-        axios.post('http://localhost:8083/patients/add', this.state)
+        console.log(this.state);
+        axios.post('http://localhost:8080/patients/add', this.state)
             .then(response => {
-                console.log(this.state)
+                console.log(this.state);
                 this.props.history.push(
                     '/',
                     {detail: response.data}
                 )
             })
             .catch(error => {
-                console.log('error block')
+                console.log('error block');
                 console.log(error)
             })
-
     }
 
     handleChange(event) {
@@ -100,7 +98,6 @@ class NewPatient extends React.Component {
                 />
                 <br/>
                 <br/>
-
                 <TextValidator
                     label="ID"
                     onChange={this.handleChange}
@@ -112,7 +109,6 @@ class NewPatient extends React.Component {
                 />
                 <br/>
                 <br/>
-
                 <TextValidator
                     label="Date of Birth"
                     onChange={this.handleChange}
@@ -134,9 +130,7 @@ class NewPatient extends React.Component {
                     <option value="female"> Female</option>
                 </select>
                 <br/>
-
                 <br/>
-
                 <br/>
                 <Button type="submit" style={{
                     backgroundColor: 'blue',

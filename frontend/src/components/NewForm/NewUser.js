@@ -29,8 +29,8 @@ class NewUser extends React.Component {
                 {id: 2, name: 'ADMIN', checked: false},
                 {id: 3, name: 'HEALTH WORKER', checked: false}
             ]
-        }
-        this.handleChange = this.handleChange.bind(this)
+        };
+        this.handleChange = this.handleChange.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this)
     }
 
@@ -99,7 +99,7 @@ class NewUser extends React.Component {
         console.log(this.state);
 
         //connect to the database
-        axios.post('http://localhost:8083/users/add', this.state)
+        axios.post('http://localhost:8080/users/add', this.state)
             .then(response => {
                 console.log(this.state);
                 this.props.history.push(

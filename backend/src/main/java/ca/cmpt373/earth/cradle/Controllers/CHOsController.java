@@ -18,32 +18,32 @@ public class CHOsController {
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
-    public CHOsController(CHOsRepository vhtsRepository){
+    public CHOsController(CHOsRepository vhtsRepository) {
         this.chosRepository = vhtsRepository;
     }
 
     @GetMapping("/all")
-    public List<CHOs> getAll(){
+    public List<CHOs> getAll() {
         List<CHOs> chos = this.chosRepository.findAll();
         return chos;
     }
 
 
     @PutMapping
-    public void insert(@RequestBody CHOs chos){
+    public void insert(@RequestBody CHOs chos) {
         this.chosRepository.insert(chos);
     }
 
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:8043")
+    @CrossOrigin(origins = "http://localhost:8040")
     public CHOs add(@RequestBody CHOs candidate) {
         return chosRepository.save(candidate);
     }
 
     @GetMapping("/get{cho_id}")
     @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "http://localhost:8043")
+    @CrossOrigin(origins = "http://localhost:8040")
     public CHOs get(@PathVariable String cho_id) {
         return chosRepository.findCustomById(cho_id);
     }
