@@ -27,7 +27,7 @@ class LandingPage extends Component {
     submitHandler = e => {
         e.preventDefault()
         console.log(this.state)
-        axios.post('http://localhost:8080/users/add', this.state)
+        axios.post('http://localhost:s8083/users/add', this.state)
             .then(response => {
                 console.log(response)
             })

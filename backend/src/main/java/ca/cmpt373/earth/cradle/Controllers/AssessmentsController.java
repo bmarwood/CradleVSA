@@ -38,14 +38,14 @@ public class AssessmentsController {
 
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8043")
     public Assessments add(@RequestBody Assessments candidate) {
         return assessmentsRepository.save(candidate);
     }
 
     @GetMapping("/get{assessment_id}")
     @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8043")
     public Assessments get(@PathVariable String assessment_id) {
         return assessmentsRepository.findCustomById(assessment_id);
     }

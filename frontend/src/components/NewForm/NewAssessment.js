@@ -1,23 +1,21 @@
-
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import axios from 'axios';
 import ShowSymp from "./SymptomsForm";
-import { Grid, Cell } from 'react-mdl';
+import {Grid, Cell} from 'react-mdl';
 
-
+//Form for a new assessment
 class NewAssessment extends React.Component {
-
-    constructor(){
+    constructor() {
         super()
         this.state = {
-            assessments : {
+            assessments: {
                 //use get method to get the assessment id <- should be equal to # of assessments + 1
                 id: '',
                 patient_id: "",
                 patient_age: "",
-                vht_id : null,
+                vht_id: null,
                 date: "",
                 gestational_age: "",
                 heart_rate: "",
@@ -30,10 +28,13 @@ class NewAssessment extends React.Component {
                 follow_up_date: null,
                 recheck: false,
 
-                //Temp
+                //Temporary variables
                 time_scale: "",
                 initial: "",
                 temp_symptoms: "",
+                error: false,
+                errorMsg: '',
+
                 //Symptoms
                 symptoms_arr: [
                     {id: 1, name: 'No Symptoms (patient healthy)', checked: true},
@@ -50,43 +51,29 @@ class NewAssessment extends React.Component {
         this.handleCheckbox = this.handleCheckbox.bind(this)
     }
 
-    // private String patient_id;
-    // private String patient_age;
-    // private String vht_id;
-    // private String date;
-    // private String gestational_age;
-    // private int heart_rate;
-    // private int systolic;
-    // private int diastolic;
-    // private String ews_color;
-    // private String symptoms;
-    // private boolean referred;
-    // private boolean follow_up;
-    // private String follow_up_date;
-    // private boolean recheck;
-    //
-
-
 
     componentDidMount() {
         // custom rule will have name 'isValidEWS'
         ValidatorForm.addValidationRule('isValidEWS', (value) => {
-            if (value === 'green' || value === 'yellow' || value ==='red') {
+            value = value.toLowerCase();
+            if (value === 'green' || value === 'yellow' || value === 'red') {
+                return true;
+            }
+            return false;
+        });
+        ValidatorForm.addValidationRule('isGreater', (value) => {
+            if (parseInt(value) <= parseInt(this.state.assessments.systolic)) {
                 return true;
             }
             return false;
         });
     }
 
-    // componentWillUnmount() {
-    //     // remove rule when it is not needed
-    //     ValidatorForm.removeValidationRule('isValidEWS');
-    // }
 
-    handleCheckbox(id){
+    handleCheckbox(id) {
         this.setState(prevState => {
             const updatedSymp = prevState.assessments.symptoms_arr.map(each => {
-                if(each.id === id){
+                if (each.id === id) {
                     each.checked = !each.checked
                 }
                 return each
@@ -94,45 +81,93 @@ class NewAssessment extends React.Component {
             prevState.assessments.symptoms_arr = updatedSymp;
             return prevState;
         })
-        console.log(this.state.assessments.symptoms_arr)
     }
 
-    addSymptoms(){
+
+    //add checked symptoms in the array
+    addSymptoms() {
         const symp = this.state.assessments.symptoms_arr;
-        for(var index in symp){
-            if (symp[index].checked){
+        for (let index in symp) {
+            if (symp[index].checked) {
                 this.state.assessments.symptoms.push(symp[index].name)
             }
         }
     }
 
-    changeType(){
-        this.state.assessments.heart_rate = parseInt(this.state.assessments.heart_rate)
-        this.state.assessments.systolic = parseInt(this.state.assessments.systolic)
-        this.state.assessments.diastolic = parseInt(this.state.assessments.diastolic)
-        if(this.state.assessments.temp_symptoms !== ""){
-            this.state.assessments.symptoms.push(this.state.assessments.temp_symptoms)
+
+    // Check if one of the checkbox is selected or the selected checkboxes are valid
+    checkSymptoms() {
+        const symp = this.state.assessments.symptoms_arr;
+        let checked = false;
+        for (let index in symp) {
+            if (index > 0 && symp[0].checked && symp[index].checked) {
+                this.state.assessments.error = true;
+                this.state.assessments.errorMsg = "Please double check the Symptoms"
+            }
+            if (!checked) {
+                checked = symp[index].checked
+            }
         }
-        this.addSymptoms()
+        if (!this.state.assessments.error && !checked && this.state.assessments.temp_symptoms === "") {
+            symp[0].checked = true;
+        }
+        if (symp[0].checked && this.state.assessments.temp_symptoms !== "") {
+            symp[0].checked = false;
+        }
+    }
+
+
+    changeType() {
+        //change the input type, change all the ews color to lowercase
+        this.state.assessments.ews_color = this.state.assessments.ews_color.toLowerCase();
+        this.state.assessments.heart_rate = parseInt(this.state.assessments.heart_rate);
+        this.state.assessments.systolic = parseInt(this.state.assessments.systolic);
+        this.state.assessments.diastolic = parseInt(this.state.assessments.diastolic);
+
+        //add the symptoms in the text field
+        if (this.state.assessments.temp_symptoms !== "") {
+            this.state.assessments.symptoms.push(this.state.assessments.temp_symptoms);
+        }
+
+        //add the checked symptoms
+        this.addSymptoms();
+
+        //combine the number and time scale
         this.state.assessments.gestational_age += this.state.assessments.time_scale
+
+        //delete unnecessary elements
         delete this.state.assessments.temp_symptoms;
         delete this.state.assessments.symptoms_arr;
         delete this.state.assessments.initial;
         delete this.state.assessments.time_scale;
+        delete this.state.assessments.errorMsg;
+        delete this.state.assessments.error;
+    }
 
-
+    showErrorMsg() {
+        return <p>{this.state.assessments.errorMsg}</p>
     }
 
 
-    handleSubmit = () => {
+    //USING ALERT RIGHT NOW, SHOULD DISPLAY INSTEAD
+    handleSubmit = (e) => {
+        this.state.assessments.error = false;
+        this.checkSymptoms()
+        console.log(this.state.assessments.error, this.state.assessments.errorMsg)
+        //the error controller
+        if (this.state.assessments.error) {
+            alert(this.state.assessments.errorMsg)
+            return;
+        }
+
         this.changeType();
         console.log(this.state)
-            axios.post('http://localhost:8080/assessments/add', this.state.assessments)
+        axios.post('http://localhost:8083/assessments/add', this.state.assessments)
             .then(response => {
                 console.log(this.state)
                 this.props.history.push(
                     '/',
-                    { detail: response.data }
+                    {detail: response.data}
                 )
             })
             .catch(error => {
@@ -143,24 +178,23 @@ class NewAssessment extends React.Component {
     }
 
 
-    handleChange(event){
-        const { assessments } = this.state;
+    handleChange(event) {
+        const {assessments} = this.state;
         assessments[event.target.name] = event.target.value;
-        this.setState({ assessments });
+        this.setState({assessments});
     }
 
 
-
+    // use variant="outlined" to wrap up the box
     render() {
-        const symptom = this.state.assessments.symptoms_arr.map(item => <ShowSymp key = {item.id} item = {item}
-                                                              handleChange = { this.handleCheckbox}/>)
-
+        const symptom = this.state.assessments.symptoms_arr.map(item => <ShowSymp key={item.id} item={item}
+                                                                                  handleChange={this.handleCheckbox}/>)
         return (
             <ValidatorForm
                 style={{
                     backgroundColor: 'white',
-                    margin : 'auto',
-                    padding : '50px',
+                    margin: 'auto',
+                    padding: '50px',
                     textAlign: 'center'
                     // width: '400px',
                     // height: '400px'
@@ -196,9 +230,8 @@ class NewAssessment extends React.Component {
                             onChange={this.handleChange}
                             name="initial"
                             value={this.state.assessments.initial}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
-
+                            validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                            errorMessages={['this field is required', 'Invalid input (only letters)']}
                         />
                         <br/>
 
@@ -207,7 +240,7 @@ class NewAssessment extends React.Component {
                             onChange={this.handleChange}
                             name="patient_age"
                             value={this.state.assessments.patient_age}
-                            validators={['required','minNumber:0', 'maxNumber:200', 'matchRegexp:^[0-9]*$']}
+                            validators={['required', 'minNumber:0', 'maxNumber:200', 'matchRegexp:^[0-9]*$']}
                             errorMessages={['this field is required', 'MUST BE BETWEEN 0-200']}
                         />
                         <br/>
@@ -232,7 +265,7 @@ class NewAssessment extends React.Component {
                             name="gestational_age"
                             value={this.state.assessments.gestational_age}
                             validators={['required', 'minNumber:0', 'maxNumber:60', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required','MUST BE BETWEEN 0-60','MUST BE BETWEEN 0-60','MUST BE BETWEEN 0-60']}
+                            errorMessages={['this field is required', 'MUST BE BETWEEN 0-60']}
                         />
                     </Cell>
                     <Cell col={4}>
@@ -250,7 +283,7 @@ class NewAssessment extends React.Component {
 
                         <br/>
                     </Cell>
-                    <Cell col = {4}>
+                    <Cell col={4}>
 
                         <h4>Vitals</h4>
                         <TextValidator
@@ -259,7 +292,7 @@ class NewAssessment extends React.Component {
                             name="systolic"
                             value={this.state.assessments.systolic}
                             validators={['required', 'minNumber:0', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required','MUST BE BETWEEN 0-300']}
+                            errorMessages={['this field is required', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300']}
                         />
                         <br/>
                         <TextValidator
@@ -268,16 +301,16 @@ class NewAssessment extends React.Component {
                             name="diastolic"
                             value={this.state.assessments.diastolic}
                             validators={['required', 'minNumber:0', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required','MUST BE BETWEEN 0-300']}
+                            errorMessages={['this field is required', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300']}
                         />
                         <br/>
                         <TextValidator
                             label="Heart Rate"
-                            onChange = {this.handleChange}
+                            onChange={this.handleChange}
                             name="heart_rate"
                             value={this.state.assessments.heart_rate}
-                            validators={['required', 'minNumber:0', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required','MUST BE BETWEEN 0-300']}
+                            validators={['required', 'isGreater', 'minNumber:0', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
+                            errorMessages={['this field is required', 'Heart rate should be <= to Systolic', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300']}
                         />
                         <br/>
                         <TextValidator
@@ -291,11 +324,13 @@ class NewAssessment extends React.Component {
                     </Cell>
                 </Grid>
                 <br/>
-
+                <div className='errorMsg'>
+                    {(this.state.assessments.error ? this.showErrorMsg() : '')}
+                </div>
                 <br/>
                 <Button type="submit" style={{
                     backgroundColor: 'blue',
-                    color:'white'
+                    color: 'white'
                 }}>Submit</Button>
                 <br/>
                 <br/>
@@ -304,8 +339,5 @@ class NewAssessment extends React.Component {
         );
     }
 }
-
-
-
 
 export default NewAssessment
