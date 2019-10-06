@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e43636d1-f531-462e-8058-c454d19d5c26" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/saveactions_settings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/SymptomsForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/SymptomsForm.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,15 +26,14 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="150" />
-    <option name="y" value="119" />
-    <option name="width" value="1760" />
-    <option name="height" value="1012" />
-  </component>
+  <component name="ProjectId" id="1RqNVEVk5Zpo0xb9wJrwUl4DIcF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570348118439" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.JavaScript" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -117,20 +119,26 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="77db3dba-89b4-4ed6-a6d3-dc949798a016" name="Default Changelist" comment="" />
+      <changelist id="e43636d1-f531-462e-8058-c454d19d5c26" name="Default Changelist" comment="" />
       <created>1570347832870</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1570347832870</updated>
+      <workItem from="1570390690418" duration="835000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

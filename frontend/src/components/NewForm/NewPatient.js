@@ -1,18 +1,18 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import axios from 'axios';
 import ShowSymp from "./SymptomsForm";
-import { Grid, Cell } from 'react-mdl';
+import {Grid, Cell} from 'react-mdl';
 
-
+//form for a new patient
 class NewPatient extends React.Component {
 
-    constructor(){
+    constructor() {
         super()
         this.state = {
             id: '',
-            name:'',
+            name: '',
             birth_date: '',
             list_of_assessments: [], // NOT SURE IF WE NEED IT HERE //LEAVE FOR LATER
             gender: 'male',
@@ -42,13 +42,14 @@ class NewPatient extends React.Component {
     //     });
     // }
 
-    changeState(){
+    changeState() {
         this.state.name = this.state.fname + ' ' + this.state.lname;
         delete this.state.fname;
         delete this.state.lname;
 
     }
-    checkTheInput(){
+
+    checkTheInput() {
         //remove the empty space
     }
 
@@ -62,7 +63,7 @@ class NewPatient extends React.Component {
                 console.log(this.state)
                 this.props.history.push(
                     '/',
-                    { detail: response.data }
+                    {detail: response.data}
                 )
             })
             .catch(error => {
@@ -72,7 +73,7 @@ class NewPatient extends React.Component {
 
     }
 
-    handleChange(event){
+    handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -84,8 +85,8 @@ class NewPatient extends React.Component {
             <ValidatorForm
                 style={{
                     backgroundColor: 'white',
-                    margin : 'auto',
-                    padding : '50px',
+                    margin: 'auto',
+                    padding: '50px',
                     textAlign: 'center'
                     // width: '400px',
                     // height: '400px'
@@ -157,7 +158,7 @@ class NewPatient extends React.Component {
                 <br/>
                 <Button type="submit" style={{
                     backgroundColor: 'blue',
-                    color:'white'
+                    color: 'white'
                 }}>Submit</Button>
                 <br/>
                 <br/>
@@ -165,8 +166,5 @@ class NewPatient extends React.Component {
         );
     }
 }
-
-
-
 
 export default NewPatient
