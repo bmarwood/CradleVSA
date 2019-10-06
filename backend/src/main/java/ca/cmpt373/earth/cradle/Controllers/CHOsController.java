@@ -36,14 +36,14 @@ public class CHOsController {
 
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8043")
     public CHOs add(@RequestBody CHOs candidate) {
         return chosRepository.save(candidate);
     }
 
     @GetMapping("/get{cho_id}")
     @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8043")
     public CHOs get(@PathVariable String cho_id) {
         return chosRepository.findCustomById(cho_id);
     }

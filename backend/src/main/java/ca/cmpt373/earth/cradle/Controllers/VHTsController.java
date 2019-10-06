@@ -36,14 +36,14 @@ public class VHTsController {
 
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8043")
     public VHTs add(@RequestBody VHTs candidate) {
         return vhtsRepository.save(candidate);
     }
 
     @GetMapping("/get{vht_id}")
     @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8043")
     public VHTs get(@PathVariable String vht_id) {
         return vhtsRepository.findCustomById(vht_id);
     }

@@ -26,7 +26,9 @@ class App extends Component {
               <Drawer title="CRADLE">
                   <Navigation>
                       <Link to ="/login">Login</Link>
-                      <Link to ="/users/form">New Assessment</Link>
+                      <Link to ="/users/newAssessment">New Assessment</Link>
+                      <Link to ="/users/newPatient">New Patient</Link>
+                      <Link to ="/users/newUser">New User</Link>
                   </Navigation>
               </Drawer>
               <Content>
