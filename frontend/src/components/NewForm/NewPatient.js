@@ -23,24 +23,6 @@ class NewPatient extends React.Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
-    //
-    // private String id; //primary key
-    // private String name;
-    // private String birth_date;
-    // private String[] list_of_assessments;
-    // private String gender;
-
-
-    // componentWillUnmount() {
-    //     // remove rule when it is not needed
-    //     ValidatorForm.removeValidationRule('isValidEWS');
-    // }
-
-    // componentDidMount() {
-    //     ValidatorForm.addValidationRule('anySpace', (value) => {
-    //
-    //     });
-    // }
 
     changeState() {
         this.state.name = this.state.fname + ' ' + this.state.lname;
