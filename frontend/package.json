@@ -28,10 +28,7 @@
     "write-json-file": "^4.2.0"
   },
   "scripts": {
-    "start": "PORT=8043 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "cross-env PORT=8043 react-scripts start"
   },
   "eslintConfig": {
     "extends": "react-app"
