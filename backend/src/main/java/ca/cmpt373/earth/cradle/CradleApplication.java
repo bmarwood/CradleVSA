@@ -23,7 +23,7 @@ public class CradleApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/users/login").allowedOrigins("http://localhost:8083/users/login");
+				registry.addMapping("/users/login").allowedOrigins("http://localhost:8080/users/login");
 				registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("*")
 						.allowedHeaders("*");
 			}
