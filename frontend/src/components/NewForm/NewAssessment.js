@@ -113,6 +113,7 @@ class NewAssessment extends React.Component {
             }
         }
     }
+    
     checkSymptoms(){
         const symp = this.state.assessments.symptoms_arr;
         let checked = false;

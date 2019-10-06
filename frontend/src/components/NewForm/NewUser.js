@@ -20,6 +20,7 @@ class NewUser extends React.Component {
             roles: [],
             enabled: false,
             //TEMP VARIABLES
+            error: false,
             fname: '',
             lname: '',
             roles_array: [
@@ -72,21 +73,25 @@ class NewUser extends React.Component {
         delete this.state.lname;
         delete this.state.roles_array;
     }
-    checkTheInput(){
-        //remove the empty space
-        if(this.state.fname.containts(" ")){
-            this.fname = ""
 
-        }
-        if(this.state.lname.contains(" ")){
-            this.lname = ""
+    checkRole(){
+        const role = this.state.roles_array;
+        this.state.error = false;
+        for(let index in role){
+            if (role[index].checked && !this.state.error){
+                this.state.error = true;
+            }
         }
     }
 
 
     handleSubmit = () => {
+        this.checkRole();
+        if(!this.state.error){
+            alert("Must select one role")
+            return
+        }
         this.changeState();
-        this.checkTheInput();
         console.log(this.state);
         axios.post('http://localhost:8083/users/add', this.state)
             .then(response => {
