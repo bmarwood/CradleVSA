@@ -3,27 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e43636d1-f531-462e-8058-c454d19d5c26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/CHOsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/CHOsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/VHTsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/VHTsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/CradleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/CradleApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/curl_cmd/curl_cmd.txt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/curl_cmd/curl_cmd.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AssessmentList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AssessmentList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatientList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatientList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/landingpage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/landingpage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/setupProxy.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/setupProxy.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +47,7 @@
       <workItem from="1570045281630" duration="174000" />
       <workItem from="1570045466643" duration="512000" />
       <workItem from="1570048997053" duration="10963000" />
-      <workItem from="1570210337229" duration="9445000" />
+      <workItem from="1570210337229" duration="9810000" />
     </task>
     <servers />
   </component>
