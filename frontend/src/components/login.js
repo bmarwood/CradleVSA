@@ -75,7 +75,7 @@ class Login extends Component {
     loginHandler = e => {
         e.preventDefault()
 
-        axios.post('http://localhost:8080/users/login', this.state)
+        axios.post('http://cmpt373.csil.sfu.ca:8083/users/login', this.state)
             .then(response => {
                 localStorage.setItem("isLoggedIn", "true")
                 this.setTheState(response)

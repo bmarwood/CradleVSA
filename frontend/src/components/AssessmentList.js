@@ -91,7 +91,7 @@ class AssessmentList extends Component {
     }
 
     getAssessmentList() {
-        axios.get('http://localhost:8080/assessments/all', this.state)
+        axios.get('http://cmpt373.csil.sfu.ca:8083/assessments/all', this.state)
             .then(response => {
                 // console.log("response from server: ", response)
                 this.populateData(response.data)
