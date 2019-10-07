@@ -18,7 +18,7 @@ public class PatientsController {
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
-    public PatientsController(PatientsRepository patientsRepository){
+    public PatientsController(PatientsRepository patientsRepository) {
         this.patientsRepository = patientsRepository;
     }
 
@@ -32,20 +32,20 @@ public class PatientsController {
 
 
     @PutMapping
-    public void insert(@RequestBody Patients patient){
+    public void insert(@RequestBody Patients patient) {
         this.patientsRepository.insert(patient);
     }
 
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:8043")
+    @CrossOrigin(origins = "http://localhost:8040")
     public Patients add(@RequestBody Patients candidate) {
         return patientsRepository.save(candidate);
     }
 
     @GetMapping("/get{patient_id}")
     @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "http://localhost:8043")
+    @CrossOrigin(origins = "http://localhost:8040")
     public Patients get(@PathVariable String patient_id) {
         return patientsRepository.findCustomById(patient_id);
     }

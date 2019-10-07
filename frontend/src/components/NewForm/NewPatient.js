@@ -1,54 +1,36 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import axios from 'axios';
 import ShowSymp from "./SymptomsForm";
-import { Grid, Cell } from 'react-mdl';
+import {Grid, Cell} from 'react-mdl';
 
-
+//form for a new patient
 class NewPatient extends React.Component {
 
-    constructor(){
-        super()
+    constructor() {
+        super();
         this.state = {
             id: '',
-            name:'',
+            name: '',
             birth_date: '',
             list_of_assessments: [], // NOT SURE IF WE NEED IT HERE //LEAVE FOR LATER
             gender: 'male',
             //TEMP VARIABLES
             fname: '',
             lname: ''
-        }
-        this.handleChange = this.handleChange.bind(this)
+        };
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    //
-    // private String id; //primary key
-    // private String name;
-    // private String birth_date;
-    // private String[] list_of_assessments;
-    // private String gender;
 
-
-    // componentWillUnmount() {
-    //     // remove rule when it is not needed
-    //     ValidatorForm.removeValidationRule('isValidEWS');
-    // }
-
-    // componentDidMount() {
-    //     ValidatorForm.addValidationRule('anySpace', (value) => {
-    //
-    //     });
-    // }
-
-    changeState(){
+    changeState() {
         this.state.name = this.state.fname + ' ' + this.state.lname;
         delete this.state.fname;
         delete this.state.lname;
-
     }
-    checkTheInput(){
+
+    checkTheInput() {
         //remove the empty space
     }
 
@@ -56,23 +38,22 @@ class NewPatient extends React.Component {
     handleSubmit = () => {
         this.changeState();
         this.checkTheInput();
-        console.log(this.state)
-        axios.post('http://localhost:8083/patients/add', this.state)
+        console.log(this.state);
+        axios.post('http://localhost:8080/patients/add', this.state)
             .then(response => {
-                console.log(this.state)
+                console.log(this.state);
                 this.props.history.push(
                     '/',
-                    { detail: response.data }
+                    {detail: response.data}
                 )
             })
             .catch(error => {
-                console.log('error block')
+                console.log('error block');
                 console.log(error)
             })
-
     }
 
-    handleChange(event){
+    handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -84,8 +65,8 @@ class NewPatient extends React.Component {
             <ValidatorForm
                 style={{
                     backgroundColor: 'white',
-                    margin : 'auto',
-                    padding : '50px',
+                    margin: 'auto',
+                    padding: '50px',
                     textAlign: 'center'
                     // width: '400px',
                     // height: '400px'
@@ -117,7 +98,6 @@ class NewPatient extends React.Component {
                 />
                 <br/>
                 <br/>
-
                 <TextValidator
                     label="ID"
                     onChange={this.handleChange}
@@ -129,7 +109,6 @@ class NewPatient extends React.Component {
                 />
                 <br/>
                 <br/>
-
                 <TextValidator
                     label="Date of Birth"
                     onChange={this.handleChange}
@@ -151,13 +130,11 @@ class NewPatient extends React.Component {
                     <option value="female"> Female</option>
                 </select>
                 <br/>
-
                 <br/>
-
                 <br/>
                 <Button type="submit" style={{
                     backgroundColor: 'blue',
-                    color:'white'
+                    color: 'white'
                 }}>Submit</Button>
                 <br/>
                 <br/>
@@ -165,8 +142,5 @@ class NewPatient extends React.Component {
         );
     }
 }
-
-
-
 
 export default NewPatient

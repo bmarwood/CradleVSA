@@ -1,17 +1,17 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import axios from 'axios';
 import ShowRoles from "./SymptomsForm";
-import { Grid, Cell } from 'react-mdl';
+import {Grid, Cell} from 'react-mdl';
 
-
+//form for a new user
 class NewUser extends React.Component {
-    constructor(){
+    constructor() {
         super()
         this.state = {
             id: '',
-            username:'',
+            username: '',
             password: '',
             name: '',
             dob: '',
@@ -19,32 +19,27 @@ class NewUser extends React.Component {
             gender: 'male',
             roles: [],
             enabled: false,
-            //TEMP VARIABLES
+
+            //TEMPORARY VARIABLES
+            error: false,
             fname: '',
             lname: '',
             roles_array: [
-                {id: 1, name: 'USER',checked: true},
+                {id: 1, name: 'USER', checked: true},
                 {id: 2, name: 'ADMIN', checked: false},
                 {id: 3, name: 'HEALTH WORKER', checked: false}
             ]
-        }
-        this.handleChange = this.handleChange.bind(this)
+        };
+        this.handleChange = this.handleChange.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this)
     }
 
-    // private String id;              //primary key
-    // private String username;
-    // private String password;
-    // private String name;
-    // private String dob;
-    // private String address;
-    // private String gender;
-    // private Set<Role> roles;
-    // private boolean enabled;
-    handleCheckbox(id){
+
+    //make the checkboxes are changeable
+    handleCheckbox(id) {
         this.setState(prevState => {
             const updatedSymp = prevState.roles_array.map(each => {
-                if(each.id === id){
+                if (each.id === id) {
                     each.checked = !each.checked
                 }
                 return each
@@ -55,62 +50,71 @@ class NewUser extends React.Component {
         console.log(this.state.roles_array)
     }
 
-    addRole(){
+
+    //add selected roles in the array
+    addRole() {
         const role_array = this.state.roles_array;
-        for(let index in role_array){
-            if (role_array[index].checked){
-                this.state.roles.push({id : role_array[index].id,role: role_array[index].name})
+        for (let index in role_array) {
+            if (role_array[index].checked) {
+                this.state.roles.push({id: role_array[index].id, role: role_array[index].name})
             }
         }
     }
 
 
-    changeState(){
+    changeState() {
         this.state.name = this.state.fname + ' ' + this.state.lname;
         this.addRole();
+
+        //delete
         delete this.state.fname;
         delete this.state.lname;
+        delete this.state.error;
         delete this.state.roles_array;
     }
-    checkTheInput(){
-        //remove the empty space
-        if(this.state.fname.containts(" ")){
-            this.fname = ""
 
-        }
-        if(this.state.lname.contains(" ")){
-            this.lname = ""
+
+    //check if at least one role has been selected
+    checkRole() {
+        const role = this.state.roles_array;
+        this.state.error = false;
+        for (let index in role) {
+            if (role[index].checked && !this.state.error) {
+                this.state.error = true;
+            }
         }
     }
 
 
     handleSubmit = () => {
+        //input validation
+        this.checkRole();
+        if (!this.state.error) {
+            alert("Must select one role")
+            return
+        }
+
+        //remove and change the inputs
         this.changeState();
-        this.checkTheInput();
         console.log(this.state);
-        axios.post('http://localhost:8083/users/add', this.state)
+
+        //connect to the database
+        axios.post('http://localhost:8080/users/add', this.state)
             .then(response => {
                 console.log(this.state);
                 this.props.history.push(
                     '/',
-                    { detail: response.data }
+                    {detail: response.data}
                 )
             })
             .catch(error => {
                 console.log('error block')
                 console.log(error)
             })
-
     }
 
 
-    // handleChange(event){
-    //     const { assessments } = this.state;
-    //     assessments[event.target.name] = event.target.value;
-    //     this.setState({ assessments });
-    // }
-
-    handleChange(event){
+    handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -118,14 +122,14 @@ class NewUser extends React.Component {
 
 
     render() {
-        const roles = this.state.roles_array.map(item => <ShowRoles key = {item.id} item = {item}
-                                                                                  handleChange = { this.handleCheckbox}/>)
+        const roles = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
+                                                                    handleChange={this.handleCheckbox}/>)
         return (
             <ValidatorForm
                 style={{
                     backgroundColor: 'white',
-                    margin : 'auto',
-                    padding : '50px',
+                    margin: 'auto',
+                    padding: '50px',
                     textAlign: 'center'
                     // width: '400px',
                     // height: '400px'
@@ -134,8 +138,8 @@ class NewUser extends React.Component {
                 onSubmit={this.handleSubmit}
                 onError={errors => console.log(errors)}
             >
-
                 <h4>New User </h4>
+
                 <Grid>
                     <Cell col={4}>
                         <TextValidator
@@ -171,8 +175,8 @@ class NewUser extends React.Component {
                         />
                         <br/>
                         <br/>
-
                     </Cell>
+
                     <Cell col={4}>
                         <TextValidator
                             label="ID"
@@ -185,7 +189,6 @@ class NewUser extends React.Component {
                         />
                         <br/>
                         <br/>
-
                         <TextValidator
                             label="Username"
                             onChange={this.handleChange}
@@ -241,7 +244,7 @@ class NewUser extends React.Component {
                 </Grid>
                 <Button type="submit" style={{
                     backgroundColor: 'blue',
-                    color:'white'
+                    color: 'white'
                 }}>Submit</Button>
                 <br/>
                 <br/>
@@ -249,7 +252,5 @@ class NewUser extends React.Component {
         );
     }
 }
-
-
 
 export default NewUser
