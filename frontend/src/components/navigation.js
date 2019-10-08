@@ -28,7 +28,6 @@ const Navigation = () => (
     <Route path = "/users/newAssessment" component = {NewAssessment} />
     <Route path = "/users/newPatient" component = {NewPatient} />
     <Route path = "/users/newUser" component = {NewUser} />
-
   </Switch>
 )
 

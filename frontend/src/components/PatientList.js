@@ -85,7 +85,7 @@ class PatientList extends Component {
     }
 
     getPatientList() {
-        axios.get('http://localhost:8080/patients/all', this.state)
+        axios.get('http://cmpt373.csil.sfu.ca:8083/patients/all', this.state)
             .then(response => {
                 // console.log("response from server: ", response)
                 this.populateData(response.data)
