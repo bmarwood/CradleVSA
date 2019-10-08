@@ -6,6 +6,7 @@ import NewPatient from './NewForm/NewPatient';
 import NewUser from './NewForm/NewUser';
 import Landing_List from './AdminLanding';
 import Login  from './login';
+import Logout  from './logout';
 import Register  from './register';
 import PatientList from './PatientList';
 import PatientChart from './PatientChart';
@@ -22,6 +23,7 @@ const Navigation = () => (
     <PrivateRoute exact path = "/register" component = {Register} />
     <Route exact path = "/users/AssessmentList" component = {AssessmentList} />
     <Route path = "/login" component = {Login} />
+    <Route path = "/logout" component = {Logout} />
     <Route path = "/users/admin/landing" component = {Landing_List} />
     <Route path = "/users/PatientList" component = {PatientList} />
     <Route path = "/users/PatientChart" component = {PatientChart} />
