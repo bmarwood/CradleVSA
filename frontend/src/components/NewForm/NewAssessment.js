@@ -186,7 +186,7 @@ class NewAssessment extends React.Component {
 
         this.changeType();
         console.log(this.state)
-        axios.post('http://cmpt373.csil.sfu.ca:8083/assessments/add', this.state.assessments)
+        axios.post('http://localhost:8080/assessments/add', this.state.assessments)
             .then(response => {
                 console.log(this.state)
                 this.props.history.push(

@@ -93,7 +93,7 @@ class Register extends Component {
 
         console.log("State before calling register function", this.state)
 
-        axios.post('http://cmpt373.csil.sfu.ca:8083/users/register', this.state)
+        axios.post('http://localhost:8080/users/register', this.state)
             .then(response => {
                 toast("User Added");
                 this.clearFields()

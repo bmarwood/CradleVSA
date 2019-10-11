@@ -39,7 +39,7 @@ class NewPatient extends React.Component {
         this.changeState();
         this.checkTheInput();
         console.log(this.state);
-        axios.post('http://cmpt373.csil.sfu.ca:8083/patients/add', this.state)
+        axios.post('http://localhost:8080/patients/add', this.state)
             .then(response => {
                 console.log(this.state);
                 this.props.history.push(

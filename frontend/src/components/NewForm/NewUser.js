@@ -99,7 +99,7 @@ class NewUser extends React.Component {
         console.log(this.state);
 
         //connect to the database
-        axios.post('http://cmpt373.csil.sfu.ca:8083/users/add', this.state)
+        axios.post('http://localhost:8080/users/add', this.state)
             .then(response => {
                 console.log(this.state);
                 this.props.history.push(

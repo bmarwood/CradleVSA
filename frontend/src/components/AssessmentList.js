@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './AssessmentList.css';
+import TrafficIcons from "./Visuals/TrafficIcons";
 
 import axios from 'axios';
 
@@ -10,28 +11,30 @@ class AssessmentList extends Component {
         super(props);
         this.state = {
             columns: [],
-            data: []
+            data: [],
         }
     }
+
 
     componentDidMount() {
         this.getAssessmentList()
         this.setState({
             columns: [
-                {title: 'patient Id', field: 'patient_id'},
-                {title: 'Patient Age', field: 'patient_age'},
-                {title: 'vht Id', field: 'vht_id'},
-                {title: 'Date', field: 'date'},
-                {title: 'Gestational Age', field: 'gestational_age'},
-                {title: 'Heart Rate', field: 'heart_rate'},
-                {title: 'Systolic', field: 'systolic'},
-                {title: 'Early Warning Color', field: 'ews_color'},
-                {title: 'Symptoms', field: 'symptoms'},
-                {title: 'Referred?', field: 'referred'},
-                {title: 'Follow Up?', field: 'follow_up'},
-                {title: 'Follow Up Date', field: 'follow_up_date'},
-                {title: 'Recheck?', field: 'recheck'},
-                {title: 'Id Number', field: 'id'},
+                { title: 'Assessment Number', field: 'id' },
+                { title: 'patient Id', field: 'patient_id' },
+                { title: 'Early Warning Color', field: 'ews_color' },
+                { title: 'vht Id', field: 'vht_id' },
+                { title: 'Date', field: 'date' },
+                { title: 'Patient Age', field: 'patient_age' },
+                { title: 'Gestational Age', field: 'gestational_age' },
+                { title: 'Heart Rate', field: 'heart_rate' },
+                { title: 'Systolic', field: 'systolic' },
+                { title: 'Diastolic', field: 'diastolic' },
+                { title: 'Symptoms', field: 'symptoms' },
+                { title: 'Referred?', field: 'referred' },
+                { title: 'Follow Up?', field: 'follow_up' },
+                { title: 'Follow Up Date', field: 'follow_up_date' },
+                { title: 'Recheck?', field: 'recheck' },
             ],
             data: [
                 {
@@ -57,7 +60,20 @@ class AssessmentList extends Component {
             var heart_rate = assessment.heart_rate
             var systolic = assessment.systolic
             var diastolic = assessment.diastolic
-            var ews_color = assessment.ews_color
+            var ews_color;
+            switch (String(assessment.ews_color)) {
+                case "Green":
+                    ews_color = <GreenLight />
+                    break;
+                case "Yellow":
+                    ews_color = <YellowLight />
+                    break;
+                case "Red":
+                    ews_color = <RedLight />
+                    break;
+                default:
+                    ews_color = assessment.ews_color
+            }
             var symptoms = assessment.symptoms
             var referred = assessment.referred
             var follow_up = assessment.follow_up
@@ -67,6 +83,7 @@ class AssessmentList extends Component {
 
             var assessment_obj = {
                 patient_id: patient_id,
+                ews_color: ews_color,
                 patient_age: patient_age,
                 vht_id: vht_id,
                 date: date,
@@ -74,7 +91,6 @@ class AssessmentList extends Component {
                 heart_rate: heart_rate,
                 systolic: systolic,
                 diastolic: diastolic,
-                ews_color: ews_color,
                 symptoms: symptoms,
                 referred: referred.toString(),
                 follow_up: follow_up.toString(),
@@ -86,12 +102,12 @@ class AssessmentList extends Component {
             assessmentList.push(assessment_obj)
         });
 
-        this.setState({data: assessmentList})
+        this.setState({ data: assessmentList })
 
     }
 
     getAssessmentList() {
-        axios.get('http://cmpt373.csil.sfu.ca:8083/assessments/all', this.state)
+        axios.get('http://localhost:8080/assessments/all', this.state)
             .then(response => {
                 // console.log("response from server: ", response)
                 this.populateData(response.data)
@@ -105,12 +121,13 @@ class AssessmentList extends Component {
                 })
             })
     }
+    
+
 
     render() {
         return (
 
             <div className="table-position">
-
                 <MaterialTable
                     title="Assessment List"
                     columns={this.state.columns}
@@ -122,7 +139,7 @@ class AssessmentList extends Component {
                                     resolve();
                                     const data = [...this.state.data];
                                     data[data.indexOf(oldData)] = newData;
-                                    this.setState({...this.state, data});
+                                    this.setState({ ...this.state, data });
                                 }, 600);
                             }),
                         onRowDelete: oldData =>
@@ -131,7 +148,7 @@ class AssessmentList extends Component {
                                     resolve();
                                     const data = [...this.state.data];
                                     data.splice(data.indexOf(oldData), 1);
-                                    this.setState({...this.state, data});
+                                    this.setState({ ...this.state, data });
                                 }, 600);
                             }),
                     }}
@@ -154,9 +171,33 @@ class AssessmentList extends Component {
             </div>
 
         );
+        
     }
+    
 
 
 }
+const styles = {
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    fontFamily: "sans-serif",
+    justifyContent: "center"
+};
+const GreenLight = () => (
+    <div style={styles}>
+        <TrafficIcons name="greencircle" width={100} fill={"#228B22"} />
+    </div>
+);
+const RedLight = () => (
+    <div style={styles}>
+        <TrafficIcons name="redcircle" width={100} fill={"#B22222"} />
+    </div>
+);
+const YellowLight = () => (
+    <div style={styles}>
+        <TrafficIcons name="yellowcircle" width={100} fill={"#CCCC00"} />
+    </div>
+);
 
 export default AssessmentList;
