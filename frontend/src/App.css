@@ -51,9 +51,16 @@
 }
 
 .block{
-  width: 560px;
-  height: 315px;
-  margin: 10px
+  width: 672px;
+  height: 378px;
+  padding-bottom: 50px;
+  margin: 10px;
+}
+
+.block-text{
+    width: 672px;
+    height: 200px;
+    margin: 10px;
 }
 
 
