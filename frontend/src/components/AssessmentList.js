@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './AssessmentList.css';
 import TrafficIcons from "./Visuals/TrafficIcons";
-
 import axios from 'axios';
+import AssessmentModal from '../Modals/AssessmentModal';
 
 class AssessmentList extends Component {
 
@@ -15,26 +15,18 @@ class AssessmentList extends Component {
         }
     }
 
-
     componentDidMount() {
         this.getAssessmentList()
         this.setState({
             columns: [
-                { title: 'Assessment Number', field: 'id' },
+                { title: 'Assessment Information', field: 'info' },
                 { title: 'patient Id', field: 'patient_id' },
-                { title: 'Early Warning Color', field: 'ews_color' },
                 { title: 'vht Id', field: 'vht_id' },
-                { title: 'Date', field: 'date' },
-                { title: 'Patient Age', field: 'patient_age' },
                 { title: 'Gestational Age', field: 'gestational_age' },
-                { title: 'Heart Rate', field: 'heart_rate' },
-                { title: 'Systolic', field: 'systolic' },
-                { title: 'Diastolic', field: 'diastolic' },
-                { title: 'Symptoms', field: 'symptoms' },
                 { title: 'Referred?', field: 'referred' },
                 { title: 'Follow Up?', field: 'follow_up' },
-                { title: 'Follow Up Date', field: 'follow_up_date' },
                 { title: 'Recheck?', field: 'recheck' },
+                { title: 'Early Warning Color', field: 'ews_color' },
             ],
             data: [
                 {
@@ -79,8 +71,15 @@ class AssessmentList extends Component {
             var follow_up = assessment.follow_up
             var follow_up_date = assessment.follow_up_date
             var recheck = assessment.recheck
-            var id = assessment._id
-
+            var info = <AssessmentModal 
+            id={assessment._id} 
+            symptoms={assessment.symptoms} 
+            systolic={assessment.systolic} 
+            date={assessment.date} 
+            diastolic={assessment.diastolic} 
+            gestational_age={assessment.gestational_age} 
+            referred={assessment.referred} 
+/>
             var assessment_obj = {
                 patient_id: patient_id,
                 ews_color: ews_color,
@@ -96,7 +95,7 @@ class AssessmentList extends Component {
                 follow_up: follow_up.toString(),
                 follow_up_date: follow_up_date,
                 recheck: recheck.toString(),
-                id: id
+                info: info
             }
 
             assessmentList.push(assessment_obj)
@@ -132,27 +131,27 @@ class AssessmentList extends Component {
                     title="Assessment List"
                     columns={this.state.columns}
                     data={this.state.data}
-                    editable={{
-                        onRowUpdate: (newData, oldData) =>
-                            new Promise(resolve => {
-                                setTimeout(() => {
-                                    resolve();
-                                    const data = [...this.state.data];
-                                    data[data.indexOf(oldData)] = newData;
-                                    this.setState({ ...this.state, data });
-                                }, 600);
-                            }),
-                        onRowDelete: oldData =>
-                            new Promise(resolve => {
-                                setTimeout(() => {
-                                    resolve();
-                                    const data = [...this.state.data];
-                                    data.splice(data.indexOf(oldData), 1);
-                                    this.setState({ ...this.state, data });
-                                }, 600);
-                            }),
-                    }}
-                    //Other Actions
+                    // editable={{
+                    //     onRowUpdate: (newData, oldData) =>
+                    //         new Promise(resolve => {
+                    //             setTimeout(() => {
+                    //                 resolve();
+                    //                 const data = [...this.state.data];
+                    //                 data[data.indexOf(oldData)] = newData;
+                    //                 this.setState({ ...this.state, data });
+                    //             }, 600);
+                    //         }),
+                    //     onRowDelete: oldData =>
+                    //         new Promise(resolve => {
+                    //             setTimeout(() => {
+                    //                 resolve();
+                    //                 const data = [...this.state.data];
+                    //                 data.splice(data.indexOf(oldData), 1);
+                    //                 this.setState({ ...this.state, data });
+                    //             }, 600);
+                    //         }),
+                    // }}
+                    Other Actions
                     actions={[
                         {
                             //Graph button for patient chart
@@ -171,32 +170,32 @@ class AssessmentList extends Component {
             </div>
 
         );
-        
+
     }
-    
+
 
 
 }
 const styles = {
     display: "flex",
     flexWrap: "wrap",
-    alignItems: "center",
+    alignItems: "left",
     fontFamily: "sans-serif",
-    justifyContent: "center"
+    justifyContent: "left"
 };
 const GreenLight = () => (
     <div style={styles}>
-        <TrafficIcons name="greencircle" width={100} fill={"#228B22"} />
+        <TrafficIcons name="greencircle" width={50} fill={"#228B22"} />
     </div>
 );
 const RedLight = () => (
     <div style={styles}>
-        <TrafficIcons name="redcircle" width={100} fill={"#B22222"} />
+        <TrafficIcons name="redcircle" width={50} fill={"#B22222"} />
     </div>
 );
 const YellowLight = () => (
     <div style={styles}>
-        <TrafficIcons name="yellowcircle" width={100} fill={"#CCCC00"} />
+        <TrafficIcons name="yellowcircle" width={50} fill={"#CCCC00"} />
     </div>
 );
 

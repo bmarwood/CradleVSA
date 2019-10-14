@@ -13,11 +13,11 @@
     "material-ui": "^0.20.2",
     "mdbreact": "^4.20.0",
     "polaris-react": "^1.0.0",
-    "react": "^16.9.0",
+    "react": "^16.10.2",
     "react-chartjs-2": "^2.8.0",
     "react-charts": "^2.0.0-beta.4",
     "react-day-picker": "^7.3.2",
-    "react-dom": "^16.9.0",
+    "react-dom": "^16.10.2",
     "react-material-ui-form-validator": "^2.0.9",
     "react-mdl": "^1.11.0",
     "react-router-dom": "^5.0.1",
@@ -25,6 +25,10 @@
     "react-tabs": "^3.0.0",
     "react-tap-event-plugin": "^3.0.3",
     "react-toastify": "^5.4.0",
+    "reactjs-popup": "^1.5.0",
+    "reactstrap": "^8.0.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.1",
     "write-json-file": "^4.2.0"
   },
   "scripts": {
@@ -47,6 +51,8 @@
   },
   "devDependencies": {
     "@material-ui/core": "^4.4.3",
-    "redux-form": "^8.2.6"
+    "css-loader": "^3.2.0",
+    "redux-form": "^8.2.6",
+    "style-loader": "^1.0.0"
   }
 }
