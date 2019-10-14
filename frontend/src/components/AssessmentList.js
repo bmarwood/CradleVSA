@@ -20,12 +20,26 @@ class AssessmentList extends Component {
         this.getAssessmentList()
         this.setState({
             columns: [
-                { title: 'Early Warning Color', field: 'ews_color' },
+                {
+                    title: 'Early Warning Color', field: 'ews_color', cellStyle: { padding: '5px' }
+                },
                 { title: 'Assessment Information', field: 'info' },
                 { title: 'patient Id', field: 'patient_id' },
-                { title: 'vht Id', field: 'vht_id' },
+                {
+                    title: 'vht Id', field: 'vht_id',
+                    cellStyle: {
+                        marginLeft: "auto",
+                        marginRight: "auto"
+                    },
+                },
                 { title: 'Gestational Age', field: 'gestational_age' },
-                { title: 'Referred?', field: 'referred' },
+                {
+                    title: 'Referred?', field: 'referred',
+                    cellStyle: {
+                        marginLeft: "auto",
+                        marginRight: "auto"
+                    },
+                },
                 { title: 'Follow Up?', field: 'follow_up' },
                 { title: 'Recheck?', field: 'recheck' },
             ],
@@ -53,7 +67,7 @@ class AssessmentList extends Component {
             var heart_rate = assessment.heart_rate
             var systolic = assessment.systolic
             var diastolic = assessment.diastolic
-            var ews_color;
+            var ews_color
             switch (String(assessment.ews_color).toUpperCase()) {
                 case "GREEN":
                     ews_color = <GreenLight />
@@ -67,8 +81,9 @@ class AssessmentList extends Component {
                 default:
                     ews_color = assessment.ews_color
             }
+
             var symptoms = assessment.symptoms
-            var referred;
+            var referred
             switch (String(assessment.referred)) {
                 case "true":
                     referred = <i aria-hidden="true" class="check icon"></i>
@@ -80,19 +95,30 @@ class AssessmentList extends Component {
                     referred = assessment.referred
             }
 
-            var follow_up;
+            var follow_up
             switch (String(assessment.follow_up)) {
                 case "true":
-                    follow_up = <IconCheckmark />
+                    follow_up = <i aria-hidden="true" class="check icon"></i>
                     break;
                 case "false":
-                    follow_up = <ClearIcon />
+                    follow_up = <i aria-hidden="true" class="x icon"></i>
                     break;
                 default:
                     follow_up = assessment.follow_up
             }
             var follow_up_date = assessment.follow_up_date
-            var recheck = assessment.recheck
+
+            var recheck
+            switch (String(assessment.recheck)) {
+                case "true":
+                    recheck = <i aria-hidden="true" class="check icon"></i>
+                    break;
+                case "false":
+                    recheck = <i aria-hidden="true" class="x icon"></i>
+                    break;
+                default:
+                    recheck = assessment.recheck
+            }
             var info = <AssessmentModal
                 id={assessment._id}
                 symptoms={assessment.symptoms}
@@ -113,10 +139,10 @@ class AssessmentList extends Component {
                 systolic: systolic,
                 diastolic: diastolic,
                 symptoms: symptoms,
-                referred: referred.toString(),
-                follow_up: follow_up.toString(),
+                referred: referred,
+                follow_up: follow_up,
                 follow_up_date: follow_up_date,
-                recheck: recheck.toString(),
+                recheck: recheck,
                 info: info
             }
 
@@ -150,6 +176,7 @@ class AssessmentList extends Component {
 
             <div className="table-position">
                 <MaterialTable
+
                     title="Assessment List"
                     columns={this.state.columns}
                     data={this.state.data}
