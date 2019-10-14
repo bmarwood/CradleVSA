@@ -4,6 +4,7 @@ import './AssessmentList.css';
 import TrafficIcons from "./Visuals/TrafficIcons";
 import axios from 'axios';
 import AssessmentModal from '../Modals/AssessmentModal';
+import ClearIcon from '@material-ui/icons/Clear';
 
 class AssessmentList extends Component {
 
@@ -19,6 +20,7 @@ class AssessmentList extends Component {
         this.getAssessmentList()
         this.setState({
             columns: [
+                { title: 'Early Warning Color', field: 'ews_color' },
                 { title: 'Assessment Information', field: 'info' },
                 { title: 'patient Id', field: 'patient_id' },
                 { title: 'vht Id', field: 'vht_id' },
@@ -26,7 +28,6 @@ class AssessmentList extends Component {
                 { title: 'Referred?', field: 'referred' },
                 { title: 'Follow Up?', field: 'follow_up' },
                 { title: 'Recheck?', field: 'recheck' },
-                { title: 'Early Warning Color', field: 'ews_color' },
             ],
             data: [
                 {
@@ -53,33 +54,54 @@ class AssessmentList extends Component {
             var systolic = assessment.systolic
             var diastolic = assessment.diastolic
             var ews_color;
-            switch (String(assessment.ews_color)) {
-                case "Green":
+            switch (String(assessment.ews_color).toUpperCase()) {
+                case "GREEN":
                     ews_color = <GreenLight />
                     break;
-                case "Yellow":
+                case "YELLOW":
                     ews_color = <YellowLight />
                     break;
-                case "Red":
+                case "RED":
                     ews_color = <RedLight />
                     break;
                 default:
                     ews_color = assessment.ews_color
             }
             var symptoms = assessment.symptoms
-            var referred = assessment.referred
-            var follow_up = assessment.follow_up
+            var referred;
+            switch (String(assessment.referred)) {
+                case "true":
+                    referred = <i aria-hidden="true" class="check icon"></i>
+                    break;
+                case "false":
+                    referred = <i aria-hidden="true" class="x icon"></i>
+                    break;
+                default:
+                    referred = assessment.referred
+            }
+
+            var follow_up;
+            switch (String(assessment.follow_up)) {
+                case "true":
+                    follow_up = <IconCheckmark />
+                    break;
+                case "false":
+                    follow_up = <ClearIcon />
+                    break;
+                default:
+                    follow_up = assessment.follow_up
+            }
             var follow_up_date = assessment.follow_up_date
             var recheck = assessment.recheck
-            var info = <AssessmentModal 
-            id={assessment._id} 
-            symptoms={assessment.symptoms} 
-            systolic={assessment.systolic} 
-            date={assessment.date} 
-            diastolic={assessment.diastolic} 
-            gestational_age={assessment.gestational_age} 
-            referred={assessment.referred} 
-/>
+            var info = <AssessmentModal
+                id={assessment._id}
+                symptoms={assessment.symptoms}
+                systolic={assessment.systolic}
+                date={assessment.date}
+                diastolic={assessment.diastolic}
+                gestational_age={assessment.gestational_age}
+                referred={assessment.referred}
+            />
             var assessment_obj = {
                 patient_id: patient_id,
                 ews_color: ews_color,
@@ -120,7 +142,7 @@ class AssessmentList extends Component {
                 })
             })
     }
-    
+
 
 
     render() {
@@ -177,9 +199,10 @@ class AssessmentList extends Component {
 
 }
 const styles = {
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "left",
+    overflow: "hidden",
+    display: "auto",
+    flexWrap: "flex",
+    alignItems: "center",
     fontFamily: "sans-serif",
     justifyContent: "left"
 };

@@ -9,7 +9,7 @@ const TrafficIcons =  (props, {
   viewBox = "",
   width = "10%",
   className = "",
-  height = "50%"
+  height = "75%"
 }) => (
     <svg
       width= "40"
@@ -19,8 +19,6 @@ const TrafficIcons =  (props, {
       className={className}
       viewBox="0 0 20 10"      
       xmlns="http://www.w3.org/2000/svg"
-
-      overflow="scroll"
       >
       <circle cx="5" cy="5" fill="none" r="2.5" stroke={props.fill} stroke-width="2">
         <animate attributeName="r" from="1" to="4" dur="3s" begin="0s" repeatCount="indefinite" />
