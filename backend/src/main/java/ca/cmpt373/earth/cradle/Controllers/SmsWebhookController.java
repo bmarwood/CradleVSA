@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class SmsWebhookController {
 
-    // Find your Account Sid and Auth Token at twilio.com/console
+    // Account Sid and Auth Token at twilio.com/console
     private static final String ACCOUNT_SID =
             "AC752b0767fe6060eff8325f8aaf4b533b";
     private static final String AUTH_TOKEN =
