@@ -4,7 +4,6 @@ import './AssessmentList.css';
 import TrafficIcons from "./Visuals/TrafficIcons";
 import axios from 'axios';
 import AssessmentModal from '../Modals/AssessmentModal';
-import ClearIcon from '@material-ui/icons/Clear';
 
 class AssessmentList extends Component {
 
@@ -20,28 +19,14 @@ class AssessmentList extends Component {
         this.getAssessmentList()
         this.setState({
             columns: [
-                {
-                    title: 'Early Warning Color', field: 'ews_color', cellStyle: { padding: '5px' }
-                },
-                { title: 'Assessment Information', field: 'info' },
-                { title: 'patient Id', field: 'patient_id' },
-                {
-                    title: 'vht Id', field: 'vht_id',
-                    cellStyle: {
-                        marginLeft: "auto",
-                        marginRight: "auto"
-                    },
-                },
-                { title: 'Gestational Age', field: 'gestational_age' },
-                {
-                    title: 'Referred?', field: 'referred',
-                    cellStyle: {
-                        marginLeft: "auto",
-                        marginRight: "auto"
-                    },
-                },
-                { title: 'Follow Up?', field: 'follow_up' },
-                { title: 'Recheck?', field: 'recheck' },
+                { title: 'Early Warning Color', field: 'ews_color' ,  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
+                { title: 'patient Id', field: 'patient_id' ,  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
+                { title: 'VHT Id', field: 'vht_id' ,  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
+                { title: 'Gestational Age', field: 'gestational_age',  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
+                { title: 'Referred?', field: 'referred',  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
+                { title: 'Follow Up?', field: 'follow_up',  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
+                { title: 'Recheck?', field: 'recheck',  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
+                { title: 'Assessment Information', field: 'info' ,  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
             ],
             data: [
                 {
@@ -51,6 +36,7 @@ class AssessmentList extends Component {
                     date: 'Sept 1, 2019'
                 },
             ],
+
         })
     }
 
