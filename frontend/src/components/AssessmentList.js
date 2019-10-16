@@ -3,7 +3,7 @@ import MaterialTable from 'material-table';
 import './AssessmentList.css';
 import TrafficIcons from "./Visuals/TrafficIcons";
 import axios from 'axios';
-import AssessmentModal from '../Modals/AssessmentModal';
+import ModalPopup from '../Modals/ModalPopup';
 
 class AssessmentList extends Component {
 
@@ -19,14 +19,14 @@ class AssessmentList extends Component {
         this.getAssessmentList()
         this.setState({
             columns: [
-                { title: 'Early Warning Color', field: 'ews_color' ,  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
-                { title: 'patient Id', field: 'patient_id' ,  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
-                { title: 'VHT Id', field: 'vht_id' ,  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
-                { title: 'Gestational Age', field: 'gestational_age',  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
-                { title: 'Referred?', field: 'referred',  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
-                { title: 'Follow Up?', field: 'follow_up',  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
-                { title: 'Recheck?', field: 'recheck',  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
-                { title: 'Assessment Information', field: 'info' ,  headerStyle:{textAlign:'center'}, cellStyle:{textAlign:'center'}},
+                { title: 'Early Warning Color', field: 'ews_color', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'patient Id', field: 'patient_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'VHT Id', field: 'vht_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Gestational Age', field: 'gestational_age', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Referred?', field: 'referred', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Follow Up?', field: 'follow_up', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Recheck?', field: 'recheck', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Assessment Information', field: 'info', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
             ],
             data: [
                 {
@@ -105,15 +105,7 @@ class AssessmentList extends Component {
                 default:
                     recheck = assessment.recheck
             }
-            var info = <AssessmentModal
-                id={assessment._id}
-                patient_id= {assessment.patient_id}
-                symptoms={assessment.symptoms}
-                systolic={assessment.systolic}
-                date={assessment.date}
-                diastolic={assessment.diastolic}
-                gestational_age={assessment.gestational_age}
-                referred={assessment.referred}
+            var info = <ModalPopup patient_id={assessment.patient_id}
             />
             var assessment_obj = {
                 patient_id: patient_id,

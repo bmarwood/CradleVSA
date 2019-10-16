@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Popup from "reactjs-popup";
-import './AssessmentModal.css';
+import './ModalPopup';
 
-class AssessmentModal extends Component {
+class ModalAssessment extends Component {
     constructor(props) {
         super(props)
 
@@ -32,6 +32,10 @@ class AssessmentModal extends Component {
 
     }
 
+    componentDidMount(){
+        this.getPatient();
+    }
+
     getPatient() {
         axios.get('http://localhost:8080/patients/get' + this.props.patient_id)
             .then(response => {
@@ -39,7 +43,7 @@ class AssessmentModal extends Component {
                 this.setState({ patient_name: response.data.name })
                 console.log(response)
                 console.log(response.data.name)
-                console.log(this.state)
+                // console.log(this.state)
             })
             .catch(error => {
                 console.log('error block')
@@ -50,15 +54,14 @@ class AssessmentModal extends Component {
             })
     }
 
+    handleClick() {
+        // e.preventDefault()
+        console.log("Hello")
+    }
+
     render() {
         return (
-            <Popup trigger={<button className="ui icon button"><i aria-hidden="true" className="info circle icon"></i></button>} modal>
-                { close => (
-                    this.getPatient(),
-                    < div className="modal">
-                        <a className="close" onClick={close}>
-                            &times;
-                </a>
+            < div className="modal">
                         <h1>Asssessment ID: {this.props.id}</h1>
                         <div className="content">
                             {" "}
@@ -97,9 +100,7 @@ class AssessmentModal extends Component {
                             </Popup>
                         </div>
                     </div>
-                )}
-            </Popup >
         );
     }
 }
-export default AssessmentModal;
+export default ModalAssessment;                    
