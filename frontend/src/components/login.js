@@ -1,14 +1,10 @@
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import React, {Component} from 'react';
 import axios from 'axios';
 
 import '../App.css';
-
-import {Redirect} from 'react-router-dom';
-
 
 class Login extends Component {
     constructor(props) {
@@ -59,11 +55,13 @@ class Login extends Component {
                 '/admin-dashboard',
                 {detail: response.data}
             )
+            window.location.reload()
         } else {
             this.props.history.push(
                 '/user-dashboard',
                 {detail: response.data}
             )
+            window.location.reload()
         }
     }
 
@@ -75,7 +73,7 @@ class Login extends Component {
     loginHandler = e => {
         e.preventDefault()
 
-        axios.post('http://localhost:8080/users/login', this.state)
+        axios.post('http://cmpt373.csil.sfu.ca:8083/users/login', this.state)
             .then(response => {
                 localStorage.setItem("isLoggedIn", "true")
                 this.setTheState(response)

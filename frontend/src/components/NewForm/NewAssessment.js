@@ -76,6 +76,12 @@ class NewAssessment extends React.Component {
             this.state.assessments.msg  = "Must select one of the Gestational age"
             return false;
         });
+        ValidatorForm.addValidationRule('isGreater', (value) => {
+            if (parseInt(value) <= parseInt(this.state.assessments.systolic)) {
+                return true;
+            }
+            return false;
+        });
     }
 
 
@@ -100,6 +106,25 @@ class NewAssessment extends React.Component {
             if (symp[index].checked) {
                 this.state.assessments.symptoms.push(symp[index].name)
             }
+        }
+    }
+    checkSymptoms(){
+        const symp = this.state.assessments.symptoms_arr;
+        let checked = false;
+        for(let index in symp){
+            if (index > 0 && symp[0].checked && symp[index].checked){
+                this.state.assessments.error = true;
+                this.state.assessments.errorMsg = "Please double check the Symptoms"
+            }
+            if(!checked){
+                checked = symp[index].checked
+            }
+        }
+        if(!this.state.assessments.error && !checked && this.state.assessments.temp_symptoms === ""){
+            symp[0].checked = true;
+        }
+        if(symp[0].checked && this.state.assessments.temp_symptoms !== ""){
+            symp[0].checked = false;
         }
     }
 
@@ -232,7 +257,7 @@ class NewAssessment extends React.Component {
         this.setDate();
         this.changeType();
         console.log(this.state)
-        axios.post('http://localhost:8080/assessments/add', this.state.assessments)
+        axios.post('http://cmpt373.csil.sfu.ca:8083/assessments/add', this.state.assessments)
             .then(response => {
                 console.log(this.state)
                 this.props.history.push(
