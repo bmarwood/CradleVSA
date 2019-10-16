@@ -17,13 +17,22 @@ class ModalAssessment extends Component {
             date: '',
             heart_rate: '',
             patient_name: 'Gertrude',
+            VHT_name: 'Bill',
 
         }
     }
 
-    populateData(response) {
-        // console.log(response)
-        console.log(response.name)
+    populatePatientData(response) {
+        // console.log(response.name)
+        var patientData = {
+            patient_name: response.name
+        }
+        this.setState({ data: patientData })
+        // this.setState(this.patient_name = response.name);
+
+    }
+    populateVHTData(response) {
+        // console.log(response.name)
         var patientData = {
             patient_name: response.name
         }
@@ -32,8 +41,9 @@ class ModalAssessment extends Component {
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getPatient();
+        this.getVHT();
     }
 
     getPatient() {
@@ -41,6 +51,24 @@ class ModalAssessment extends Component {
             .then(response => {
                 // console.log("response from server: ", response)
                 this.setState({ patient_name: response.data.name })
+                console.log(response)
+                console.log(response.data.name)
+                // console.log(this.state)
+            })
+            .catch(error => {
+                console.log('error block')
+                console.log(error)
+                this.setState({
+                    error: true,
+                })
+            })
+    }
+
+    getVHT() {
+        axios.get('http://localhost:8080/vhts/get' + this.props.vht_id)
+            .then(response => {
+                // console.log("response from server: ", response)
+                this.setState({ vht_name: response.data.name })
                 console.log(response)
                 console.log(response.data.name)
                 // console.log(this.state)
@@ -62,44 +90,46 @@ class ModalAssessment extends Component {
     render() {
         return (
             < div className="modal">
-                        <h1>Asssessment ID: {this.props.id}</h1>
-                        <div className="content">
-                            {" "}
-                            Patient Name: {this.state.patient_name}
-                            <br />
-                            Date of Birth: {this.props.date}
-                            <br />
-                            Current Symptoms: {this.props.symptoms}
-                            <br />
-                            VHT Name:
+                <h1>Asssessment ID: {this.props.id}</h1>
+                <div className="content">
+                    {" "}
+                    Patient Name: {this.state.patient_name}
                     <br />
-                            Heart Rate: {this.props.heart_rate}
-                            <br />
-                            Diastolic: {this.props.diastolic}
-                            <br />
-                            Systolic: {this.props.systolic}
-                        </div>
-                        <div className="actions">
-                            <Popup
-                                trigger={<button className="ui black basic button"> See Patient </button>}
-                                position="top center"
-                                closeOnDocumentClick
-                            >
-                                <span>
-                                    This will navigate to the individual Patient page
+                    VHT Name: {this.state.vht_name}
+                    <br />
+                    Date of Birth: {this.props.date}
+                    <br />
+                    Current Symptoms: {this.props.symptoms}
+                    <br />
+                    VHT Name:
+                    <br />
+                    Heart Rate: {this.props.heart_rate}
+                    <br />
+                    Diastolic: {this.props.diastolic}
+                    <br />
+                    Systolic: {this.props.systolic}
+                </div>
+                <div className="actions">
+                    <Popup
+                        trigger={<button className="ui black basic button"> See Patient </button>}
+                        position="top center"
+                        closeOnDocumentClick
+                    >
+                        <span>
+                            This will navigate to the individual Patient page
                         </span>
-                            </Popup>
-                            <Popup
-                                trigger={<button className="ui black basic button"> See VHT </button>}
-                                position="top center"
-                                closeOnDocumentClick
-                            >
-                                <span>
-                                    This will navigate to the individual VHT page
+                    </Popup>
+                    <Popup
+                        trigger={<button className="ui black basic button"> See VHT </button>}
+                        position="top center"
+                        closeOnDocumentClick
+                    >
+                        <span>
+                            This will navigate to the individual VHT page
                         </span>
-                            </Popup>
-                        </div>
-                    </div>
+                    </Popup>
+                </div>
+            </div>
         );
     }
 }

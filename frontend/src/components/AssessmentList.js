@@ -105,7 +105,7 @@ class AssessmentList extends Component {
                 default:
                     recheck = assessment.recheck
             }
-            var info = <ModalPopup patient_id={assessment.patient_id}
+            var info = <ModalPopup patient_id={assessment.patient_id} vht_id={assessment.vht_id}
             />
             var assessment_obj = {
                 patient_id: patient_id,
