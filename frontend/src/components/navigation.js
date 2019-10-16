@@ -11,6 +11,7 @@ import Register  from './register';
 import PatientList from './PatientList';
 import PatientChart from './PatientChart';
 import AssessmentList from './AssessmentList';
+import Resources from './Resources';
 
 
 const Navigation = () => (
@@ -30,6 +31,7 @@ const Navigation = () => (
     <Route path = "/users/newAssessment" component = {NewAssessment} />
     <Route path = "/users/newPatient" component = {NewPatient} />
     <Route path = "/users/newUser" component = {NewUser} />
+    <Route path = "/resources" component = {Resources} />
   </Switch>
 )
 
