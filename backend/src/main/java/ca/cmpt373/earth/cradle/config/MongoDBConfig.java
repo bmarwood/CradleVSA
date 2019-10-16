@@ -58,13 +58,13 @@ public class MongoDBConfig {
             String[] symptoms = {"cough","sings well"};
             assessmentsRepository.save(new Assessments("1", "22", "34yrs" , "ab11", "sept 24", "2 weeks", 72,68,44,"Green" ,
                     symptoms, true, true, "next week monday", true ));
-            assessmentsRepository.save(new Assessments("2", "44", "10yrs" , "ab11", "sept 25", "0 weeks", 44,90,10,"Red" ,
+            assessmentsRepository.save(new Assessments("2", "36", "10yrs" , "ab11", "sept 25", "0 weeks", 44,90,10,"Red" ,
                     symptoms, true, true, "next week tuesday", true ));
-            assessmentsRepository.save(new Assessments("4", "1", "44yrs" , "777", "sept 24, 2019", "0 weeks", 80,105,70,"Red" ,
+            assessmentsRepository.save(new Assessments("4", "2", "44yrs" , "777", "sept 24, 2019", "0 weeks", 80,105,70,"Red" ,
                     symptoms, true, true, "next week tuesday", true ));
-            assessmentsRepository.save(new Assessments("5", "1", "44yrs" , "777", "sept 24, 2019", "0 weeks", 82,110,80,"Yellow" ,
+            assessmentsRepository.save(new Assessments("5", "1060", "44yrs" , "777", "sept 24, 2019", "0 weeks", 82,110,80,"Yellow" ,
                     symptoms, true, true, "next week tuesday", false ));
-            assessmentsRepository.save(new Assessments("6", "1", "44yrs" , "777", "sept 26, 2019", "0 weeks", 74,127,84,"Green" ,
+            assessmentsRepository.save(new Assessments("6", "1010101", "44yrs" , "777", "sept 26, 2019", "0 weeks", 74,127,84,"Green" ,
                     symptoms, true, false, null, false ));
         };
     }

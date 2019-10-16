@@ -20,7 +20,7 @@ const TrafficIcons =  (props, {
       viewBox="0 0 20 10"      
       xmlns="http://www.w3.org/2000/svg"
       >
-      <circle cx="5" cy="5" fill="none" r="2.5" stroke={props.fill} stroke-width="2">
+      <circle cx="5" cy="5" fill="none" r="2.5" stroke={props.fill} strokeWidth="2">
         <animate attributeName="r" from="1" to="4" dur="3s" begin="0s" repeatCount="indefinite" />
         <animate attributeName="opacity" from="1" to="0" dur="3s" begin="0s" repeatCount="indefinite" />
       </circle>

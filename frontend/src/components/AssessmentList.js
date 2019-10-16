@@ -72,10 +72,10 @@ class AssessmentList extends Component {
             var referred
             switch (String(assessment.referred)) {
                 case "true":
-                    referred = <i aria-hidden="true" class="check icon"></i>
+                    referred = <i aria-hidden="true" className="check icon"></i>
                     break;
                 case "false":
-                    referred = <i aria-hidden="true" class="x icon"></i>
+                    referred = <i aria-hidden="true" className="x icon"></i>
                     break;
                 default:
                     referred = assessment.referred
@@ -84,10 +84,10 @@ class AssessmentList extends Component {
             var follow_up
             switch (String(assessment.follow_up)) {
                 case "true":
-                    follow_up = <i aria-hidden="true" class="check icon"></i>
+                    follow_up = <i aria-hidden="true" className="check icon"></i>
                     break;
                 case "false":
-                    follow_up = <i aria-hidden="true" class="x icon"></i>
+                    follow_up = <i aria-hidden="true" className="x icon"></i>
                     break;
                 default:
                     follow_up = assessment.follow_up
@@ -97,16 +97,17 @@ class AssessmentList extends Component {
             var recheck
             switch (String(assessment.recheck)) {
                 case "true":
-                    recheck = <i aria-hidden="true" class="check icon"></i>
+                    recheck = <i aria-hidden="true" className="check icon"></i>
                     break;
                 case "false":
-                    recheck = <i aria-hidden="true" class="x icon"></i>
+                    recheck = <i aria-hidden="true" className="x icon"></i>
                     break;
                 default:
                     recheck = assessment.recheck
             }
             var info = <AssessmentModal
                 id={assessment._id}
+                patient_id= {assessment.patient_id}
                 symptoms={assessment.symptoms}
                 systolic={assessment.systolic}
                 date={assessment.date}
@@ -142,7 +143,7 @@ class AssessmentList extends Component {
     getAssessmentList() {
         axios.get('http://localhost:8080/assessments/all', this.state)
             .then(response => {
-                // console.log("response from server: ", response)
+                console.log("response from server: ", response)
                 this.populateData(response.data)
             })
             .catch(error => {
