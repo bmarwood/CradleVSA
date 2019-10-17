@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import '../App.css';
 
@@ -7,9 +7,6 @@ var IsVM = false;
 
 
 class RequestServer extends Component {
-    constructor(props) {
-        super(props)
-    }
     
     getServerLocation() {
         if (IsVM) {

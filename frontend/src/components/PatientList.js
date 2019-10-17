@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './PatientList.css';
-import PatientChart from './PatientChart';
 import requestServer from './RequestServer';
 
 
@@ -69,7 +68,7 @@ class PatientList extends Component {
             var sex = patient.gender[0]
             var id = patient.id
 
-            var patient = {
+            var patient_obj = {
                 name: name,
                 surname: surname,
                 birthDate: birthDate,
@@ -77,7 +76,7 @@ class PatientList extends Component {
                 id: id
             }
 
-            patientList.push(patient)
+            patientList.push(patient_obj)
         });
 
         this.setState({ data: patientList })

@@ -1,18 +1,13 @@
 // All the rest of the content of the landing page is coming from 
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import {Layout, Header, Navigation, Drawer, Content} from 'react-mdl';
 import {Link} from 'react-router-dom';
 import Nav from './components/navigation';
 import './App.css';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     ifLoggedIn() {
         if(localStorage.getItem('isLoggedIn') === 'true') {

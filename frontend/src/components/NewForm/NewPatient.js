@@ -2,8 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import axios from 'axios';
-import ShowSymp from "./SymptomsForm";
-import {Grid, Cell} from 'react-mdl';
 
 //form for a new patient
 class NewPatient extends React.Component {
@@ -25,7 +23,9 @@ class NewPatient extends React.Component {
 
 
     changeState() {
-        this.state.name = this.state.fname + ' ' + this.state.lname;
+        this.setState({
+            name: this.state.fname + ' ' + this.state.lname
+        })
         delete this.state.fname;
         delete this.state.lname;
     }

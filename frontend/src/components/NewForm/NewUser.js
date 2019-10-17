@@ -63,7 +63,9 @@ class NewUser extends React.Component {
 
 
     changeState() {
-        this.state.name = this.state.fname + ' ' + this.state.lname;
+        this.setState({
+            name: this.state.fname + ' ' + this.state.lname
+        })
         this.addRole();
 
         //delete
@@ -77,10 +79,14 @@ class NewUser extends React.Component {
     //check if at least one role has been selected
     checkRole() {
         const role = this.state.roles_array;
-        this.state.error = false;
+        this.setState({
+            error: false
+        })
         for (let index in role) {
             if (role[index].checked && !this.state.error) {
-                this.state.error = true;
+                this.setState({
+                    error: true
+                })
             }
         }
     }

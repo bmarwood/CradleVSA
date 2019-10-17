@@ -26,7 +26,7 @@ class Register extends Component {
     }
 
     checkPasswordMatch() {
-        if (this.state.password.trim() === "" || this.state.password != this.state.passwordRetyped) {
+        if (this.state.password.trim() === "" || this.state.password !== this.state.passwordRetyped) {
             console.log('Passwords mismatched')
             this.setState({
                 error: true,

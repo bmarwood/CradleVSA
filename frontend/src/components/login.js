@@ -18,6 +18,8 @@ class Login extends Component {
             isAdmin: false,
             isUser: false,
         }
+        this.keyPressed = this.keyPressed.bind(this)
+
     }
 
     setTheState(response) {
@@ -32,14 +34,14 @@ class Login extends Component {
             console.log("role given to user: ", role)
             console.log("role given to user: ", role.role)
 
-            if (role.role == 'ADMIN') {
+            if (role.role === 'ADMIN') {
                 console.log('is admin')
                 this.setState({
                     isAdmin: true
                 })
             }
 
-            if (role.role == 'USER') {
+            if (role.role === 'USER') {
                 console.log('is user')
                 this.setState({
                     isUser: true
@@ -96,6 +98,14 @@ class Login extends Component {
         return <p>{this.state.errorMsg}</p>
     }
 
+    keyPressed(event) {
+        if (event.key === "Enter") {
+            console.log(event)
+            this.loginHandler(event)
+        }
+    }
+
+
     render() {
 
         return (
@@ -103,6 +113,7 @@ class Login extends Component {
                 <MuiThemeProvider>
                     <div className='login-form'>
                         <h2 style={{ color: "white" }}> Please Login </h2>
+
                         <TextField
                             hintText="Enter your Username"
                             inputStyle={styles.white}
@@ -110,6 +121,8 @@ class Login extends Component {
                             hintStyle={styles.grey}
                             floatingLabelStyle={styles.input}
                             onChange={(event, newValue) => this.setState({ username: newValue })}
+                            onKeyPress={this.keyPressed}
+
                         />
                         <br />
                         <TextField
@@ -120,6 +133,8 @@ class Login extends Component {
                             floatingLabelText="Password"
                             floatingLabelStyle={styles.input}
                             onChange={(event, newValue) => this.setState({ password: newValue })}
+                            onKeyPress={this.keyPressed}
+
                         />
                         <br />
                         <div className='errorMsg'>
