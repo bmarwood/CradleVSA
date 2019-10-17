@@ -5,8 +5,21 @@ import axios from 'axios';
 import ShowSymp from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
 
+const Color = {
+    GREEN: "GREEN",
+    YELLOW: "YELLOW",
+    RED: "RED"
+}
+
+const Arrow = {
+    UP: "UP",
+    DOWN: "DOWN",
+    EMPTY: "EMPTY"
+}
+
 //Form for a new assessment
 class NewAssessment extends React.Component {
+
     constructor() {
         super()
         this.state = {
@@ -21,12 +34,13 @@ class NewAssessment extends React.Component {
                 heart_rate: "",
                 systolic: "",
                 diastolic: "",
-                ews_color: "",
+                ews_color: null,
                 symptoms: [],
                 referred: false,
                 follow_up: false,
                 follow_up_date: null,
                 recheck: false,
+                arrow: null, // pass in as an arrow
 
                 //Temporary variables
                 time_scale: "",
@@ -140,28 +154,38 @@ class NewAssessment extends React.Component {
 
     //set ews_color with an arrow
     setColor(){
-        const RED_SYSTOLIC = 160;
-        const RED_DIASTOLIC = 110;
-        const YELLOW_SYSTOLIC = 140;
-        const YELLOW_DIASTOLIC = 90;
-        const SHOCK_HIGH = 1.7;
-        const SHOCK_MEDIUM = 0.9;
-        const shockIndex = this.state.assessments.heartRate / this.state.assessments.systolic;
+        this.state.assessments.heart_rate = parseInt(this.state.assessments.heart_rate);
+        this.state.assessments.systolic = parseInt(this.state.assessments.systolic);
+        this.state.assessments.diastolic = parseInt(this.state.assessments.diastolic);
+        const red_systolic = 160;
+        const red_diastolic = 110;
+        const yellow_systolic = 140;
+        const yellow_diastolic = 90;
+        const shock_high = 1.7; // heartRate > systolic
+        const shock_medium = 0.9; //heartRate < systolic
+        const shock_index = this.state.assessments.heart_rate/this.state.assessments.systolic;
 
-        let isBpVeryHigh = (this.state.assessments.systolic >= RED_SYSTOLIC) || (this.state.assessments.diastolic >= RED_DIASTOLIC);
-        let isBpHigh = (this.state.assessments.systolic >= YELLOW_SYSTOLIC) || (this.state.assessments.diastolic >= YELLOW_DIASTOLIC);
-        let isSevereShock = (shockIndex >= SHOCK_HIGH);
-        let isShock = (shockIndex >= SHOCK_MEDIUM);
+        let isBpVeryHigh = (this.state.assessments.systolic >= red_systolic) || (this.state.assessments.diastolic >= red_diastolic);
+        let isBpHigh = (this.state.assessments.systolic >= yellow_systolic) || (this.state.assessments.diastolic >= yellow_diastolic);
+        let isSevereShock = (shock_index >= shock_high);
+        let isShock = (shock_index >= shock_medium);
+
+        //down : shock index (the ratio)
         if (isSevereShock) {
-            this.state.assessments.ews_color = "Red, down";
+            this.state.assessments.ews_color = Color.RED ;
+            this.state.assessments.arrow = Arrow.DOWN;
         } else if (isBpVeryHigh) {
-            this.state.assessments.ews_color = "Red, up";
+            this.state.assessments.ews_color = Color.RED;
+            this.state.assessments.arrow = Arrow.UP;
         } else if (isShock) {
-            this.state.assessments.ews_color = "Yellow, down";
+            this.state.assessments.ews_color = Color.YELLOW;
+            this.state.assessments.arrow = Arrow.DOWN;
         } else if (isBpHigh) {
-            this.state.assessments.ews_color = "Yellow, up";
+            this.state.assessments.ews_color = Color.YELLOW;
+            this.state.assessments.arrow = Arrow.UP;
         } else {
-            this.state.assessments.ews_color = "Green, n/a";
+            this.state.assessments.ews_color = Color.GREEN;
+            this.state.assessments.arrow = Arrow.EMPTY;
         }
     }
 
@@ -192,6 +216,7 @@ class NewAssessment extends React.Component {
         }
     }
 
+
     checkGestAge(){
         if(this.state.assessments.gestational_age == ''){
             this.state.assessments.error = true;
@@ -211,10 +236,6 @@ class NewAssessment extends React.Component {
 
     changeType() {
         //change the input type, change all the ews color to lowercase
-        this.state.assessments.heart_rate = parseInt(this.state.assessments.heart_rate);
-        this.state.assessments.systolic = parseInt(this.state.assessments.systolic);
-        this.state.assessments.diastolic = parseInt(this.state.assessments.diastolic);
-
         //add the symptoms in the text field
         if (this.state.assessments.temp_symptoms !== "") {
             this.state.assessments.symptoms.push(this.state.assessments.temp_symptoms);
@@ -234,6 +255,7 @@ class NewAssessment extends React.Component {
         delete this.state.assessments.msg;
 
     }
+
 
     showErrorMsg() {
         return <p>{this.state.assessments.errorMsg}</p>
@@ -395,8 +417,8 @@ class NewAssessment extends React.Component {
                             onChange={this.handleChange}
                             name="diastolic"
                             value={this.state.assessments.diastolic}
-                            validators={['required', 'minNumber:10', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300']}
+                            validators={['required', 'isGreater', 'minNumber:10', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
+                            errorMessages={['this field is required', 'Diastolic should be <= to Systolic','MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300']}
                         />
                         <br/>
                         <TextValidator
@@ -404,8 +426,8 @@ class NewAssessment extends React.Component {
                             onChange={this.handleChange}
                             name="heart_rate"
                             value={this.state.assessments.heart_rate}
-                            validators={['required', 'isGreater', 'minNumber:40', 'maxNumber:200', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required', 'Heart rate should be <= to Systolic', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300']}
+                            validators={['required', 'minNumber:40', 'maxNumber:200', 'matchRegexp:^[0-9]*$']}
+                            errorMessages={['this field is required', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300']}
                         />
                     </Cell>
                 </Grid>
