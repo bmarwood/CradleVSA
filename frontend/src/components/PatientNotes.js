@@ -1,35 +1,64 @@
 import React, {Component} from 'react';
-import {Button, Textfield, Grid, Cell} from 'react-mdl';
+import {Textfield, Grid, Cell} from 'react-mdl';
 import MaterialTable from 'material-table';
-import Modal from 'react-modal';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
+import AddMedication from './PatientAddMedication'
+
+//Function for Modals (popups)
+function ModalPopup(props) {
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Add Medication
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>
+        <AddMedication/>
+        </p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
 
 export default function PatientNotes() {
+  const [modalShow, setModalShow] = React.useState(false);
 
-  const [state, setState] = React.useState({
-    columns: [
-        { title: 'Medication', field: 'medication' },
-        { title: 'Dose', field: 'dose' },
-        { title: 'Start Date', field: 'startDate'},
-        { title: 'End Date', field: 'endDate'},
-        { title: 'Side Effects', field: 'sideEffects'},
-      ], 
-      data: [
-        { 
-          medication: 'Medication Name',
-          dose: '5mg',
-          startDate: 'Start', 
-          endDate: 'End', 
-          sideEffects: 'dry mouth' },
-        {
-          medication: 'Medication Name 2',
-          dose: '2mg',
-          startDate: 'Start',
-          endDate: 'End',
-          sideEffects: 'itchy skin',
-        },
-      ],
-    });
-  
+    //Set columns and fake/demo data for table
+    const [state, setState] = React.useState({
+      columns: [
+          { title: 'Medication', field: 'medication' },
+          { title: 'Dose', field: 'dose' },
+          { title: 'Start Date', field: 'startDate'},
+          { title: 'End Date', field: 'endDate'},
+          { title: 'Side Effects', field: 'sideEffects'},
+        ], 
+        data: [
+          { 
+            medication: 'Medication Name',
+            dose: '5mg',
+            startDate: 'Start', 
+            endDate: 'End', 
+            sideEffects: 'dry mouth' },
+          {
+            medication: 'Medication Name 2',
+            dose: '2mg',
+            startDate: 'Start',
+            endDate: 'End',
+            sideEffects: 'itchy skin',
+          },
+        ],
+      });
 
     return (
       <div className = "table-position" >
@@ -74,20 +103,28 @@ export default function PatientNotes() {
         icon: 'assessment',
         tooltip: 'Graph',
         onClick: () => {
+          setModalShow(true)
+          
           //Popup for Patient chart, opens PatientChart.js
-          window.open("/PatientChart",'popUpWindow',
-          'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
+          
         }
       },
     ]}
       />
       <div>
-      <Button name="new" style={{
-                    backgroundColor: 'blue', 
-                    color: 'white'}}
-                >New Medication</Button>      
+      <ButtonToolbar>
+      <Button variant="primary" onClick={() => setModalShow(true)}>
+       New Medication
+      </Button>
+
+      <ModalPopup
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
+    </ButtonToolbar>
       </div>
     </div>
-    );
-  }
+     );
+   }
+
 
