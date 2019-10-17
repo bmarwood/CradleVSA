@@ -28,7 +28,7 @@
     "write-json-file": "^4.2.0"
   },
   "scripts": {
-    "start": "cross-env PORT=8040 react-scripts start"
+    "start": "cross-env PORT=3000 react-scripts start"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,4 +49,4 @@
     "@material-ui/core": "^4.4.3",
     "redux-form": "^8.2.6"
   }
-}
+ }

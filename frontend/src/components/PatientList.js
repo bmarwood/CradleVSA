@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './PatientList.css';
-import PatientChart from './PatientChart';
+import requestServer from './RequestServer';
 
-import axios from 'axios';
 
 class PatientList extends Component {
 
@@ -19,11 +18,11 @@ class PatientList extends Component {
         this.getPatientList()
         this.setState({
             columns: [
-                {title: 'Name', field: 'name'},
-                {title: 'Surname', field: 'surname'},
-                {title: 'Sex', field: 'sex'},
-                {title: 'Birth Date', field: 'birthDate'},
-                {title: 'ID Number', field: 'id'},
+                { title: 'Name', field: 'name' },
+                { title: 'Surname', field: 'surname' },
+                { title: 'Sex', field: 'sex' },
+                { title: 'Birth Date', field: 'birthDate' },
+                { title: 'ID Number', field: 'id' },
             ],
             data: [
                 {
@@ -69,7 +68,7 @@ class PatientList extends Component {
             var sex = patient.gender[0]
             var id = patient.id
 
-            var patient = {
+            var patient_obj = {
                 name: name,
                 surname: surname,
                 birthDate: birthDate,
@@ -77,32 +76,22 @@ class PatientList extends Component {
                 id: id
             }
 
-            patientList.push(patient)
+            patientList.push(patient_obj)
         });
 
-        this.setState({data: patientList})
+        this.setState({ data: patientList })
 
     }
 
-    getPatientList() {
-        axios.get('http://cmpt373.csil.sfu.ca:8083/patients/all', this.state)
-            .then(response => {
-                // console.log("response from server: ", response)
-                this.populateData(response.data)
-            })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-                this.setState({
-                    error: true,
-                    errorMsg: 'Invalid Login'
-                })
-            })
+    async getPatientList() {
+        var passback = await requestServer.getPatientList()
+        if (passback !== null) {
+            this.populateData(passback.data)
+        }
     }
 
     render() {
         return (
-
             <div className="table-position">
                 <MaterialTable
                     title="Patients"
@@ -115,7 +104,7 @@ class PatientList extends Component {
                                     resolve();
                                     const data = [...this.state.data];
                                     data[data.indexOf(oldData)] = newData;
-                                    this.setState({...this.state, data});
+                                    this.setState({ ...this.state, data });
                                 }, 600);
                             }),
                         onRowDelete: oldData =>
@@ -124,7 +113,7 @@ class PatientList extends Component {
                                     resolve();
                                     const data = [...this.state.data];
                                     data.splice(data.indexOf(oldData), 1);
-                                    this.setState({...this.state, data});
+                                    this.setState({ ...this.state, data });
                                 }, 600);
                             }),
                         onRowAdd: newData =>
@@ -133,7 +122,7 @@ class PatientList extends Component {
                                     {
                                         const data = [...this.state.data];
                                         data.push(newData);
-                                        this.setState({...this.state, data});
+                                        this.setState({ ...this.state, data });
                                     }
                                     resolve();
                                 }, 1000);

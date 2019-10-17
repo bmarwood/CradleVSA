@@ -1,14 +1,14 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import axios from 'axios';
 import ShowSymp from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
+import RequestServer from '../RequestServer';
 
 //Form for a new assessment
 class NewAssessment extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             assessments: {
                 //use get method to get the assessment id <- should be equal to # of assessments + 1
@@ -103,8 +103,10 @@ class NewAssessment extends React.Component {
         let checked = false;
         for(let index in symp){
             if (index > 0 && symp[0].checked && symp[index].checked){
-                this.state.assessments.error = true;
-                this.state.assessments.errorMsg = "Please double check the Symptoms"
+                this.setState({
+                    error: true,
+                    errorMsg: "Please double check the Symptoms"
+                })
             }
             if(!checked){
                 checked = symp[index].checked
@@ -119,34 +121,14 @@ class NewAssessment extends React.Component {
     }
 
 
-    // Check if one of the checkbox is selected or the selected checkboxes are valid
-    checkSymptoms() {
-        const symp = this.state.assessments.symptoms_arr;
-        let checked = false;
-        for (let index in symp) {
-            if (index > 0 && symp[0].checked && symp[index].checked) {
-                this.state.assessments.error = true;
-                this.state.assessments.errorMsg = "Please double check the Symptoms"
-            }
-            if (!checked) {
-                checked = symp[index].checked
-            }
-        }
-        if (!this.state.assessments.error && !checked && this.state.assessments.temp_symptoms === "") {
-            symp[0].checked = true;
-        }
-        if (symp[0].checked && this.state.assessments.temp_symptoms !== "") {
-            symp[0].checked = false;
-        }
-    }
-
-
     changeType() {
         //change the input type, change all the ews color to lowercase
-        this.state.assessments.ews_color = this.state.assessments.ews_color.toLowerCase();
-        this.state.assessments.heart_rate = parseInt(this.state.assessments.heart_rate);
-        this.state.assessments.systolic = parseInt(this.state.assessments.systolic);
-        this.state.assessments.diastolic = parseInt(this.state.assessments.diastolic);
+        this.setState({
+            ews_color: this.state.assessments.ews_color.toLowerCase(),
+            heart_rate: parseInt(this.state.assessments.heart_rate),
+            systolic: parseInt(this.state.assessments.systolic),            
+            diastolic: parseInt(this.state.assessments.diastolic),
+        })
 
         //add the symptoms in the text field
         if (this.state.assessments.temp_symptoms !== "") {
@@ -157,7 +139,9 @@ class NewAssessment extends React.Component {
         this.addSymptoms();
 
         //combine the number and time scale
-        this.state.assessments.gestational_age += this.state.assessments.time_scale
+        this.setState({
+            gestational_age: this.state.assessments.gestational_age + this.state.assessments.time_scale
+        })
 
         //delete unnecessary elements
         delete this.state.assessments.temp_symptoms;
@@ -175,7 +159,9 @@ class NewAssessment extends React.Component {
 
     //USING ALERT RIGHT NOW, SHOULD DISPLAY INSTEAD
     handleSubmit = (e) => {
-        this.state.assessments.error = false;
+        this.setState({
+            error: false
+        })
         this.checkSymptoms()
         console.log(this.state.assessments.error, this.state.assessments.errorMsg)
         //the error controller
@@ -186,20 +172,23 @@ class NewAssessment extends React.Component {
 
         this.changeType();
         console.log(this.state)
-        axios.post('http://cmpt373.csil.sfu.ca:8083/assessments/add', this.state.assessments)
-            .then(response => {
-                console.log(this.state)
-                this.props.history.push(
-                    '/',
-                    {detail: response.data}
-                )
-            })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-            })
-
+        
+        this.addAssessment();
     }
+
+    async addAssessment() {
+        console.log("this.state")
+        var passback = await RequestServer.addAssessment(this.state.assessments)
+
+        if (passback !== null) {
+
+            this.props.history.push(
+                '/',
+                {detail: passback.data}
+            )
+        }
+    }
+
 
 
     handleChange(event) {

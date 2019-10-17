@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './AssessmentList.css';
+import requestServer from './RequestServer';
 
-import axios from 'axios';
 
 class AssessmentList extends Component {
 
@@ -18,20 +18,20 @@ class AssessmentList extends Component {
         this.getAssessmentList()
         this.setState({
             columns: [
-                {title: 'patient Id', field: 'patient_id'},
-                {title: 'Patient Age', field: 'patient_age'},
-                {title: 'vht Id', field: 'vht_id'},
-                {title: 'Date', field: 'date'},
-                {title: 'Gestational Age', field: 'gestational_age'},
-                {title: 'Heart Rate', field: 'heart_rate'},
-                {title: 'Systolic', field: 'systolic'},
-                {title: 'Early Warning Color', field: 'ews_color'},
-                {title: 'Symptoms', field: 'symptoms'},
-                {title: 'Referred?', field: 'referred'},
-                {title: 'Follow Up?', field: 'follow_up'},
-                {title: 'Follow Up Date', field: 'follow_up_date'},
-                {title: 'Recheck?', field: 'recheck'},
-                {title: 'Id Number', field: 'id'},
+                { title: 'patient Id', field: 'patient_id' },
+                { title: 'Patient Age', field: 'patient_age' },
+                { title: 'vht Id', field: 'vht_id' },
+                { title: 'Date', field: 'date' },
+                { title: 'Gestational Age', field: 'gestational_age' },
+                { title: 'Heart Rate', field: 'heart_rate' },
+                { title: 'Systolic', field: 'systolic' },
+                { title: 'Early Warning Color', field: 'ews_color' },
+                { title: 'Symptoms', field: 'symptoms' },
+                { title: 'Referred?', field: 'referred' },
+                { title: 'Follow Up?', field: 'follow_up' },
+                { title: 'Follow Up Date', field: 'follow_up_date' },
+                { title: 'Recheck?', field: 'recheck' },
+                { title: 'Id Number', field: 'id' },
             ],
             data: [
                 {
@@ -86,24 +86,15 @@ class AssessmentList extends Component {
             assessmentList.push(assessment_obj)
         });
 
-        this.setState({data: assessmentList})
+        this.setState({ data: assessmentList })
 
     }
 
-    getAssessmentList() {
-        axios.get('http://cmpt373.csil.sfu.ca:8083/assessments/all', this.state)
-            .then(response => {
-                // console.log("response from server: ", response)
-                this.populateData(response.data)
-            })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-                this.setState({
-                    error: true,
-                    errorMsg: 'Invalid Login'
-                })
-            })
+    async getAssessmentList() {
+        var passback = await requestServer.getAssessmentsList()
+        if (passback !== null) {
+            this.populateData(passback.data)
+        }
     }
 
     render() {
@@ -122,7 +113,7 @@ class AssessmentList extends Component {
                                     resolve();
                                     const data = [...this.state.data];
                                     data[data.indexOf(oldData)] = newData;
-                                    this.setState({...this.state, data});
+                                    this.setState({ ...this.state, data });
                                 }, 600);
                             }),
                         onRowDelete: oldData =>
@@ -131,7 +122,7 @@ class AssessmentList extends Component {
                                     resolve();
                                     const data = [...this.state.data];
                                     data.splice(data.indexOf(oldData), 1);
-                                    this.setState({...this.state, data});
+                                    this.setState({ ...this.state, data });
                                 }, 600);
                             }),
                     }}
