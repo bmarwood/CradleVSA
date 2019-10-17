@@ -22,19 +22,36 @@ class App extends Component {
         }
     }
 
+    navBasedOnLogin() {
+        if(localStorage.getItem('isLoggedIn') === 'true') {
+            return (                        
+            <Navigation>
+                <Link to ="/">Home</Link>
+                <Link to ="/users/admin/landing">Admin Landing page</Link>
+                <Link to ="/users/PatientList">Patient List</Link>
+                <Link to ="/users/AssessmentList">Assessments List</Link>
+                <Link to ="/users/PatientChart">Patient Chart</Link>
+                <Link to ="/resources">Resources</Link>
+            </Navigation>
+            )
+        } else {
+            return (                        
+            <Navigation>
+                <Link to ="/">Home</Link>
+                <Link to ="/resources">Resources</Link>
+            </Navigation>
+            )
+        }
+    }
+
     render() {
         return (
             <div className="demo-big-content">
                 <Layout fixedHeader>
                     <Header className = "header-color" title="CRADLE" transparent scroll waterfall seamed>
-                        <Navigation>
-                            <Link to ="/">Home</Link>
-                            <Link to ="/users/admin/landing">Admin Landing page</Link>
-                            <Link to ="/users/PatientList">Patient List</Link>
-                            <Link to ="/users/AssessmentList">Assessments List</Link>
-                            <Link to ="/users/PatientChart">Patient Chart</Link>
-                            <Link to ="/resources">Resources</Link>
-                        </Navigation>
+                        {this.navBasedOnLogin()}
+
+
                     </Header>
                     <Drawer title="CRADLE">
                         <Navigation>
