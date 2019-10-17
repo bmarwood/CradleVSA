@@ -1,7 +1,13 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+import ShowSymp from "./SymptomsForm";
+import {Grid, Cell} from 'react-mdl';
+import RequestServer from '../RequestServer'
+>>>>>>> f20e2650bfab4836e7357168714cc08456bd5583
 
 //form for a new patient
 class NewPatient extends React.Component {
@@ -35,22 +41,28 @@ class NewPatient extends React.Component {
     }
 
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
         this.changeState();
         this.checkTheInput();
         console.log(this.state);
-        axios.post('http://cmpt373.csil.sfu.ca:8083/patients/add', this.state)
-            .then(response => {
-                console.log(this.state);
-                this.props.history.push(
-                    '/',
-                    {detail: response.data}
-                )
-            })
-            .catch(error => {
-                console.log('error block');
-                console.log(error)
-            })
+
+        var patient = {
+            id: this.state.id,
+            name: this.state.name,
+            birth_date: this.state.birth_date,
+            list_of_assessments: this.state.list_of_assessments,
+            gender: this.state.gender,
+        }
+
+        var response = await RequestServer.addPatient(patient)
+
+        if (response !== null) {
+            this.props.history.push(
+                '/',
+                {detail: response.data}
+            )
+        }
+
     }
 
     handleChange(event) {
