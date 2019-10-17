@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import {List, ListItem} from 'react-mdl';
 import heart from '../heart1.svg';
 import report from '../report.svg';
-import axios from 'axios';
 
 import '../App.css';
 

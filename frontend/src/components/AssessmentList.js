@@ -3,7 +3,6 @@ import MaterialTable from 'material-table';
 import './AssessmentList.css';
 import requestServer from './RequestServer';
 
-import axios from 'axios';
 
 class AssessmentList extends Component {
 
