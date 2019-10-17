@@ -32,6 +32,7 @@ class AssessmentList extends Component {
                 {title: 'Follow Up Date', field: 'follow_up_date'},
                 {title: 'Recheck?', field: 'recheck'},
                 {title: 'Id Number', field: 'id'},
+                {title: 'Arrow', field: 'arrow'},
             ],
             data: [
                 {
@@ -64,6 +65,8 @@ class AssessmentList extends Component {
             var follow_up_date = assessment.follow_up_date
             var recheck = assessment.recheck
             var id = assessment._id
+            var arrow = assessment.arrow
+
 
             var assessment_obj = {
                 patient_id: patient_id,
@@ -80,7 +83,8 @@ class AssessmentList extends Component {
                 follow_up: follow_up.toString(),
                 follow_up_date: follow_up_date,
                 recheck: recheck.toString(),
-                id: id
+                id: id,
+                arrow: arrow
             }
 
             assessmentList.push(assessment_obj)
@@ -89,7 +93,6 @@ class AssessmentList extends Component {
         this.setState({data: assessmentList})
 
     }
-
     getAssessmentList() {
         axios.get('http://cmpt373.csil.sfu.ca:8083/assessments/all', this.state)
             .then(response => {
