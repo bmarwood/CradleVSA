@@ -6,13 +6,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "assessments")
 public class Assessments {
 
-    enum Color {
+    public enum Color {
         RED,
         YELLOW,
         GREEN
     }
 
-    enum Arrow {
+    public enum Arrow {
         EMPTY,
         UP,
         DOWN
