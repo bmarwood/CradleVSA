@@ -59,6 +59,7 @@ public class Assessments {
         this.arrow = arrow;
     }
 
+
     public String get_id() {
         return id;
     }
@@ -82,14 +83,6 @@ public class Assessments {
     public void setPatient_age(String patient_age) {
         this.patient_age = patient_age;
     }
-
-//    public String getTime_scale() {
-//        return time_scale;
-//    }
-//
-//    public void setTime_scale(String time_scale) {
-//        this.time_scale = time_scale;
-//    }
 
     public String getVht_id() {
         return vht_id;
@@ -143,10 +136,16 @@ public class Assessments {
         return ews_color;
     }
 
-    //Arrow getter and setter
+    public Arrow getArrow() {
+        return arrow;
+    }
 
     public void setEws_color(Color ews_color) {
         this.ews_color = ews_color;
+    }
+
+    public void setarrow(Arrow arrow) {
+        this.arrow = arrow;
     }
 
     public String[] getSymptoms() {
