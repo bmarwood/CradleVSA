@@ -24,11 +24,13 @@ public class AssessmentsController {
         this.assessmentsRepository = assessmentsRepository;
     }
 
-    @GetMapping("/all")
-    @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Assessments> getAll() {
-        List<Assessments> assessments = this.assessmentsRepository.findAll();
+        List<Assessments> assessments = null;
+        try {
+            assessments = this.assessmentsRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace(); //for debugging
+        }
         return assessments;
     }
 
