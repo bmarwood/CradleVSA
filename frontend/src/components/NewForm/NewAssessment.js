@@ -4,6 +4,7 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import axios from 'axios';
 import ShowSymp from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
+import RequestServer from '../RequestServer';
 
 //Form for a new assessment
 class NewAssessment extends React.Component {
@@ -186,20 +187,23 @@ class NewAssessment extends React.Component {
 
         this.changeType();
         console.log(this.state)
-        axios.post('http://cmpt373.csil.sfu.ca:8083/assessments/add', this.state.assessments)
-            .then(response => {
-                console.log(this.state)
-                this.props.history.push(
-                    '/',
-                    {detail: response.data}
-                )
-            })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-            })
-
+        
+        this.addAssessment();
     }
+
+    async addAssessment() {
+        var passback = await RequestServer.addAssessment(this.state.assessments)
+        console.log("this.state")
+
+        if (passback !== null) {
+
+            this.props.history.push(
+                '/',
+                {detail: passback.data}
+            )
+        }
+    }
+
 
 
     handleChange(event) {
