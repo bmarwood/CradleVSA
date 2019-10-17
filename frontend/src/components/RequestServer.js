@@ -4,16 +4,18 @@ import '../App.css';
 
 var IsVM = false;
 
-function getServerLocation() {
-    if (IsVM) {
-        return 'http://cmpt373.csil.sfu.ca:8083'
-    }
-    return 'http://localhost:8080'
-}
+
 
 class RequestServer extends Component {
     constructor(props) {
         super(props)
+    }
+    
+    getServerLocation() {
+        if (IsVM) {
+            return 'http://cmpt373.csil.sfu.ca:8083'
+        }
+        return 'http://localhost:8080'
     }
 
     // getPatient(patient_ID) {
@@ -30,7 +32,7 @@ class RequestServer extends Component {
 
     async addAssessment(assessment) {
         try {
-            var response = await axios.post(getServerLocation() + '/assessments/add', assessment)
+            var response = await axios.post(this.getServerLocation() + '/assessments/add', assessment)
             return response
         }
         catch (error) {
@@ -43,7 +45,7 @@ class RequestServer extends Component {
 
     async getAssessmentsList() {
         try {
-            var response = await axios.get(getServerLocation() + '/assessments/all')
+            var response = await axios.get(this.getServerLocation() + '/assessments/all')
             return response
         }
         catch (error) {
@@ -55,7 +57,7 @@ class RequestServer extends Component {
 
      async getPatientList() {
         try {
-            var response = await axios.get(getServerLocation() + '/patients/all')
+            var response = await axios.get(this.getServerLocation() + '/patients/all')
             return response
         }
         catch (error) {
@@ -71,7 +73,7 @@ class RequestServer extends Component {
             password: password
         }
         try {
-            var response = await axios.post(getServerLocation() + '/users/login', userObj)
+            var response = await axios.post(this.getServerLocation() + '/users/login', userObj)
             return response
         }
         catch (error) {
