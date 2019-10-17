@@ -1,10 +1,6 @@
 // All the rest of the content of the landing page is coming from 
 import React, {Component} from 'react';
 import heart from '../heart1.svg';
-<<<<<<< HEAD
-=======
-import report from '../report.svg';
->>>>>>> f20e2650bfab4836e7357168714cc08456bd5583
 
 import '../App.css';
 
