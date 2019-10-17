@@ -8,8 +8,8 @@ import RequestServer from '../RequestServer';
 
 //Form for a new assessment
 class NewAssessment extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             assessments: {
                 //use get method to get the assessment id <- should be equal to # of assessments + 1
@@ -192,8 +192,8 @@ class NewAssessment extends React.Component {
     }
 
     async addAssessment() {
-        var passback = await RequestServer.addAssessment(this.state.assessments)
         console.log("this.state")
+        var passback = await RequestServer.addAssessment(this.state.assessments)
 
         if (passback !== null) {
 
