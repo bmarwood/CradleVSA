@@ -43,13 +43,13 @@ class PatientAddMedication extends React.Component {
         const { medication } = this.state;
         const { dose } = this.state;
         return (
-            //<div style={{width: '100%', margin: 'auto'}}>
-            <Grid>
+            <div style={{width: '100%', margin: 'auto'}}>
+        
             <ValidatorForm
             style={{
             backgroundColor: 'white',
             margin : 'auto',
-            padding : '50px',
+            padding : '10px',
             textAlign: 'center'
             }}
                 ref="form"
@@ -57,8 +57,16 @@ class PatientAddMedication extends React.Component {
                 onError={errors => console.log(errors)}
 
             >
-                <h3>Patient Name</h3>
-                <Cell col={6}>
+                <Grid>
+                    <Cell col={4}></Cell>
+                    <Cell col={4}>
+                    <h3>Patient Name</h3>
+                    </Cell>
+                    <Cell col={4}></Cell>
+                </Grid>
+                <Grid>
+                <Cell col={4}></Cell>
+                <Cell col={4}>
                 <TextValidator
                     label="Medication"
                     onChange={this.changeMedication}
@@ -68,7 +76,11 @@ class PatientAddMedication extends React.Component {
                     errorMessages={['this field is required']}
                 />
                 </Cell>
-                <Cell col={6}>
+                <Cell col={4}></Cell>
+                </Grid>
+                <Grid>
+                <Cell col={4}></Cell>
+                <Cell col={4}>
                  <TextValidator
                     label="Dose"
                     onChange={this.changeDose}
@@ -78,11 +90,13 @@ class PatientAddMedication extends React.Component {
                     errorMessages={['this field is required']}
                 />
                 </Cell>
+                <Cell col={4}></Cell>
+                </Grid>
+
                 <Grid>
-                <Cell col={3}>
-                <p>Start Date:</p>
-                </Cell>
+                <Cell col={4}></Cell>
                 <Cell col={4}>
+                <p>Start Date:</p>
                 <DatePicker
                 selected={this.state.startDate}
                 onChange={this.changeStartDate}
@@ -90,33 +104,40 @@ class PatientAddMedication extends React.Component {
                 </Cell>
                 </Grid>
                 <Grid>
-                <Cell col={3}>
-                <p>End Date:</p>
-                </Cell>
+                <Cell col={4}></Cell>
                 <Cell col={4}>
+                <p>End Date:</p>
                 <DatePicker
                 selected={this.state.endDate}
                 onChange={this.changeEndDate}
                 />
                 </Cell>
                 </Grid>
-                <Cell col={6}>
+
+                <Grid>
+                <Cell col={4}></Cell>
+                <Cell col={4}>
                 <Textfield
                 onChange={() => {}}
                 label="Side Effects"
                 rows={3}
-                style={{width: '200px'}}
+                style={{width: '400px'}}
                 />
                 </Cell>
+                <Cell col={4}></Cell>
+                </Grid>
+                <Grid>
+                <Cell col={4}></Cell>
                 <Cell col={4}>
                 <Button type="submit" style={{
                     backgroundColor: 'blue', 
                     color: 'white'}}
                 >Submit</Button>
                 </Cell>
+                <Cell col={4}></Cell>
+                </Grid>
             </ValidatorForm>
-            </Grid>
-            //</div>
+            </div>
         );
     }
 }
