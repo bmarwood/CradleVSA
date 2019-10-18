@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - CradleApplication",
+            "request": "launch",
+            "mainClass": "ca.cmpt373.earth.cradle.CradleApplication",
+            "projectName": "cradle"
+        }
+    ]
+}
