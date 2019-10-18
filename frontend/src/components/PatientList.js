@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './PatientList.css';
-import axios from 'axios';
-
 import requestServer from './RequestServer';
 
 
@@ -16,76 +14,6 @@ class PatientList extends Component {
         }
     }
 
-render() {
-  return (
-    <div className = "table-position" >
-    <MaterialTable
-      title="Patients"
-      columns={this.state.columns}
-      data={this.state.data}
-      editable={{
-        onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              const data = [...this.state.data];
-              data[data.indexOf(oldData)] = newData;
-              this.setState({ ...this.state, data });
-            }, 600);
-          }),
-        onRowDelete: oldData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              const data = [...this.state.data];
-              data.splice(data.indexOf(oldData), 1);
-              this.setState({ ...this.state, data });
-            }, 600);
-          }),
-        onRowAdd: newData =>
-            new Promise((resolve, reject) => {
-              setTimeout(() => {
-                {
-                  const data = [...this.state.data];
-                  data.push(newData);
-                  this.setState({ ...this.state, data });
-                }
-                resolve();
-              }, 1000);
-            }),
-        // onRowAdd: newData =>
-        //     new Promise((resolve) => {
-        //       console.log("onrowadd", newData)
-        //     }),
-
-      }}
-  
-  //Other Actions
-  actions={[
-    {
-      //Graph button for patient chart
-      icon: 'assessment',
-      tooltip: 'Graph',
-      onClick: () => {
-        //Popup for Patient chart, opens PatientChart.js
-        window.open("/PatientChart",'popUpWindow',
-        'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-      }
-    },
-    {
-        icon: 'assignment',
-        tooltip: 'Medications',
-        onClick: () => {
-          //Popup for Patient chart, opens PatientChart.js
-          window.open("/PatientNotes",'popUpWindow',
-          'height=1000,width=1200,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-        }
-    }
-  ]}
-    />
-  </div>
-  );
-}
     componentDidMount() {
         this.getPatientList()
         this.setState({
@@ -229,5 +157,5 @@ render() {
 
 
 }
-export default PatientList;
 
+export default PatientList;
