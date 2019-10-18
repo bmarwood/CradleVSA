@@ -115,17 +115,17 @@ class NewAssessment extends React.Component {
 
     //add checked symptoms in the array
     addSymptoms() {
-        const symp = this.state.assessments.symptoms_arr;
-        for (let index in symp) {
+        const SYMP = this.state.assessments.symptoms_arr;
+        for (let index in SYMP) {
             if (symp[index].checked) {
                 this.state.assessments.symptoms.push(symp[index].name)
             }
         }
     }
     checkSymptoms(){
-        const symp = this.state.assessments.symptoms_arr;
+        const SYMP = this.state.assessments.symptoms_arr;
         let checked = false;
-        for(let index in symp){
+        for(let index in SYMP){
             if (index > 0 && symp[0].checked && symp[index].checked){
                 this.state.assessments.error = true;
                 this.state.assessments.errorMsg = "Please double check the Symptoms"
@@ -144,11 +144,11 @@ class NewAssessment extends React.Component {
 
     //set date "Month Date, Year"
     setDate(){
-        var today = new Date();
-        var month_arr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        var month = month_arr[today.getMonth()];
-        var date = today.getDate();
-        var year = today.getFullYear();
+        let today = new Date();
+        const MONTH_ARR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let month = MONTH_ARR[today.getMonth()];
+        let date = today.getDate();
+        let year = today.getFullYear();
         this.state.assessments.date = month + " " + date + ", " + year
     }
 
@@ -157,18 +157,18 @@ class NewAssessment extends React.Component {
         this.state.assessments.heart_rate = parseInt(this.state.assessments.heart_rate);
         this.state.assessments.systolic = parseInt(this.state.assessments.systolic);
         this.state.assessments.diastolic = parseInt(this.state.assessments.diastolic);
-        const red_systolic = 160;
-        const red_diastolic = 110;
-        const yellow_systolic = 140;
-        const yellow_diastolic = 90;
-        const shock_high = 1.7; // heartRate > systolic
-        const shock_medium = 0.9; //heartRate < systolic
-        const shock_index = this.state.assessments.heart_rate/this.state.assessments.systolic;
+        const RED_SYSTOLIC = 160;
+        const RED_DIASTOLIC = 110;
+        const YELLOW_SYSTOLIC = 140;
+        const YELLOW_DIASTOLIC = 90;
+        const SHOCK_HIGH = 1.7; // heartRate > systolic
+        const SHOCK_MEDIUM = 0.9; //heartRate < systolic
 
-        let isBpVeryHigh = (this.state.assessments.systolic >= red_systolic) || (this.state.assessments.diastolic >= red_diastolic);
-        let isBpHigh = (this.state.assessments.systolic >= yellow_systolic) || (this.state.assessments.diastolic >= yellow_diastolic);
-        let isSevereShock = (shock_index >= shock_high);
-        let isShock = (shock_index >= shock_medium);
+        let shock = this.state.assessments.heart_rate/this.state.assessments.systolic;
+        let isBpVeryHigh = (this.state.assessments.systolic >= RED_SYSTOLIC) || (this.state.assessments.diastolic >= RED_DIASTOLIC);
+        let isBpHigh = (this.state.assessments.systolic >= YELLOW_SYSTOLIC) || (this.state.assessments.diastolic >= YELLOW_DIASTOLIC);
+        let isSevereShock = (shock >= SHOCK_HIGH);
+        let isShock = (shock >= SHOCK_MEDIUM);
 
         //down : shock index (the ratio)
         if (isSevereShock) {
@@ -191,7 +191,7 @@ class NewAssessment extends React.Component {
 
     // Check if one of the checkbox is selected or the selected checkboxes are valid
     checkSymptoms() {
-        const symp = this.state.assessments.symptoms_arr;
+        let symp = this.state.assessments.symptoms_arr;
         let checked = false; //check if at least one of the checkbox is selected
         for (let index in symp) {
             if (index > 0 && symp[0].checked && symp[index].checked) {
@@ -306,7 +306,7 @@ class NewAssessment extends React.Component {
 
     // use variant="outlined" to wrap up the box
     render() {
-        const symptom = this.state.assessments.symptoms_arr.map(item => <ShowSymp key={item.id} item={item}
+        let symptom = this.state.assessments.symptoms_arr.map(item => <ShowSymp key={item.id} item={item}
                                                                                   handleChange={this.handleCheckbox}/>)
         return (
             <ValidatorForm
