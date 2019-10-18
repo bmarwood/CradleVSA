@@ -1,9 +1,11 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import axios from 'axios';
 import ShowRoles from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
+import RequestServer from  '../RequestServer'
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //form for a new user
 class NewUser extends React.Component {
@@ -63,7 +65,9 @@ class NewUser extends React.Component {
 
 
     changeState() {
-        this.state.name = this.state.fname + ' ' + this.state.lname;
+        this.setState({
+            name: this.state.fname + ' ' + this.state.lname
+        })
         this.addRole();
 
         //delete
@@ -77,16 +81,20 @@ class NewUser extends React.Component {
     //check if at least one role has been selected
     checkRole() {
         const role = this.state.roles_array;
-        this.state.error = false;
+        this.setState({
+            error: false
+        })
         for (let index in role) {
             if (role[index].checked && !this.state.error) {
-                this.state.error = true;
+                this.setState({
+                    error: true
+                })
             }
         }
     }
 
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
         //input validation
         this.checkRole();
         if (!this.state.error) {
@@ -99,18 +107,33 @@ class NewUser extends React.Component {
         console.log(this.state);
 
         //connect to the database
-        axios.post('http://cmpt373.csil.sfu.ca:8083/users/add', this.state)
-            .then(response => {
-                console.log(this.state);
-                this.props.history.push(
-                    '/',
-                    {detail: response.data}
-                )
+
+        var user = {
+            id: this.state.id,
+            name: this.state.name,
+            address: this.state.address,
+            dob: this.state.dob,
+            gender: this.state.gender,
+            username: this.state.username,
+            password: this.state.password,
+            roles: this.state.roles,
+        }
+
+        var response = await RequestServer.addUser(user)
+
+        if (response !== null) {
+            toast("User Added");
+            this.props.history.push(
+                '/',
+                {detail: response.data}
+            )
+        } else {
+            this.setState({
+                error: true,
+                errorMsg: 'Unable to register'
             })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-            })
+        }
+
     }
 
 

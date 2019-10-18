@@ -1,9 +1,9 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import axios from 'axios';
 import ShowSymp from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
+import RequestServer from '../RequestServer';
 
 const Color = {
     GREEN: "GREEN",
@@ -19,9 +19,8 @@ const Arrow = {
 
 //Form for a new assessment
 class NewAssessment extends React.Component {
-
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             assessments: {
                 //use get method to get the assessment id <- should be equal to # of assessments + 1
@@ -75,6 +74,7 @@ class NewAssessment extends React.Component {
             }
             return false;
         });
+        
         //check the gestational age
         ValidatorForm.addValidationRule('checkPregnancy', (value) => {
             if (this.state.assessments.time_scale == 'w') {
@@ -199,7 +199,7 @@ class NewAssessment extends React.Component {
                 this.state.assessments.errorMsg = "Please double check the Symptoms";
                 return;
             }
-            if (!checked) {
+            if(!checked){
                 checked = symp[index].checked
             }
         }
@@ -253,7 +253,6 @@ class NewAssessment extends React.Component {
         delete this.state.assessments.errorMsg;
         delete this.state.assessments.error;
         delete this.state.assessments.msg;
-
     }
 
 
@@ -279,20 +278,23 @@ class NewAssessment extends React.Component {
         this.setDate();
         this.changeType();
         console.log(this.state)
-        axios.post('http://cmpt373.csil.sfu.ca:8083/assessments/add', this.state.assessments)
-            .then(response => {
-                console.log(this.state)
-                this.props.history.push(
-                    '/',
-                    {detail: response.data}
-                )
-            })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-            })
-
+        
+        this.addAssessment();
     }
+
+    async addAssessment() {
+        console.log("this.state")
+        var passback = await RequestServer.addAssessment(this.state.assessments)
+
+        if (passback !== null) {
+
+            this.props.history.push(
+                '/',
+                {detail: passback.data}
+            )
+        }
+    }
+
 
 
     handleChange(event) {
