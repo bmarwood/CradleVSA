@@ -115,30 +115,11 @@ class NewAssessment extends React.Component {
 
     //add checked symptoms in the array
     addSymptoms() {
-        const SYMP = this.state.assessments.symptoms_arr;
-        for (let index in SYMP) {
+        let symp = this.state.assessments.symptoms_arr;
+        for (let index in symp) {
             if (symp[index].checked) {
                 this.state.assessments.symptoms.push(symp[index].name)
             }
-        }
-    }
-    checkSymptoms(){
-        const SYMP = this.state.assessments.symptoms_arr;
-        let checked = false;
-        for(let index in SYMP){
-            if (index > 0 && symp[0].checked && symp[index].checked){
-                this.state.assessments.error = true;
-                this.state.assessments.errorMsg = "Please double check the Symptoms"
-            }
-            if(!checked){
-                checked = symp[index].checked
-            }
-        }
-        if(!this.state.assessments.error && !checked && this.state.assessments.temp_symptoms === ""){
-            symp[0].checked = true;
-        }
-        if(symp[0].checked && this.state.assessments.temp_symptoms !== ""){
-            symp[0].checked = false;
         }
     }
 
