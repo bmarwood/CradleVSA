@@ -18,20 +18,21 @@ class AssessmentList extends Component {
         this.getAssessmentList()
         this.setState({
             columns: [
-                { title: 'patient Id', field: 'patient_id' },
-                { title: 'Patient Age', field: 'patient_age' },
-                { title: 'vht Id', field: 'vht_id' },
-                { title: 'Date', field: 'date' },
-                { title: 'Gestational Age', field: 'gestational_age' },
-                { title: 'Heart Rate', field: 'heart_rate' },
-                { title: 'Systolic', field: 'systolic' },
-                { title: 'Early Warning Color', field: 'ews_color' },
-                { title: 'Symptoms', field: 'symptoms' },
-                { title: 'Referred?', field: 'referred' },
-                { title: 'Follow Up?', field: 'follow_up' },
-                { title: 'Follow Up Date', field: 'follow_up_date' },
-                { title: 'Recheck?', field: 'recheck' },
-                { title: 'Id Number', field: 'id' },
+                {title: 'patient Id', field: 'patient_id'},
+                {title: 'Patient Age', field: 'patient_age'},
+                {title: 'vht Id', field: 'vht_id'},
+                {title: 'Date', field: 'date'},
+                {title: 'Gestational Age', field: 'gestational_age'},
+                {title: 'Heart Rate', field: 'heart_rate'},
+                {title: 'Systolic', field: 'systolic'},
+                {title: 'Early Warning Color', field: 'ews_color'},
+                {title: 'Symptoms', field: 'symptoms'},
+                {title: 'Referred?', field: 'referred'},
+                {title: 'Follow Up?', field: 'follow_up'},
+                {title: 'Follow Up Date', field: 'follow_up_date'},
+                {title: 'Recheck?', field: 'recheck'},
+                {title: 'Id Number', field: 'id'},
+                {title: 'Arrow', field: 'arrow'},
             ],
             data: [
                 {
@@ -64,6 +65,8 @@ class AssessmentList extends Component {
             var follow_up_date = assessment.follow_up_date
             var recheck = assessment.recheck
             var id = assessment._id
+            var arrow = assessment.arrow
+
 
             var assessment_obj = {
                 patient_id: patient_id,
@@ -80,7 +83,8 @@ class AssessmentList extends Component {
                 follow_up: follow_up.toString(),
                 follow_up_date: follow_up_date,
                 recheck: recheck.toString(),
-                id: id
+                id: id,
+                arrow: arrow
             }
 
             assessmentList.push(assessment_obj)
