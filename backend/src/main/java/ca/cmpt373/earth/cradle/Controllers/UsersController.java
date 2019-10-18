@@ -29,13 +29,13 @@ public class UsersController {
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
-    public UsersController(UsersRepository usersRepository){
+    public UsersController(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 
     @GetMapping("/all")
     //@CrossOrigin(origins = "*", allowedHeaders = "*")
-    public List<Users> getAll(){
+    public List<Users> getAll() {
         List<Users> users = this.usersRepository.findAll();
         return users;
     }
@@ -49,13 +49,13 @@ public class UsersController {
 
 
     @PutMapping
-    public void insert(@RequestBody Users user){
+    public void insert(@RequestBody Users user) {
         this.usersRepository.insert(user);
     }
 
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8040")
     public Users add(@RequestBody Users candidate) {
         return usersRepository.save(candidate);
     }
@@ -69,7 +69,9 @@ public class UsersController {
 
         Users user = this.usersRepository.findByUsername(candidateUsername);
 
-        if (user == null) { return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); }
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
 
         String hashedPassword = user.getPassword();
 
@@ -93,7 +95,7 @@ public class UsersController {
         String gender = user.getGender();
 
         Set<Role> roles = new HashSet<>();
-        Role newUserRole = new Role(workerId,"USER");
+        Role newUserRole = new Role(workerId, "USER");
         roles.add(newUserRole);
 
         String hashedPassword = bCrypt.encode(password);
@@ -110,12 +112,7 @@ public class UsersController {
         return ResponseEntity.status(200).body(user);
 
 
-
-
-
-
     }
-
 
 
 }

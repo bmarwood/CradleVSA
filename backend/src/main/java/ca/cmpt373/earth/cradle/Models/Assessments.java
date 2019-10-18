@@ -1,31 +1,45 @@
 package ca.cmpt373.earth.cradle.Models;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "assessments")
 public class Assessments {
 
+    public enum Color {
+        RED,
+        YELLOW,
+        GREEN
+    }
+
+    public enum Arrow {
+        EMPTY,
+        UP,
+        DOWN
+    }
+
+
     @Id
     private String id;
     private String patient_id;
     private String patient_age;
-    //private String time_scale;
     private String vht_id;
     private String date;
     private String gestational_age;
     private int heart_rate;
     private int systolic;
     private int diastolic;
-    private String ews_color;
+    private Color ews_color;
     private String[] symptoms;
     private boolean referred;
     private boolean follow_up;
     private String follow_up_date;
     private boolean recheck;
+    private Arrow arrow;
 
 
     public Assessments(String id, String patient_id, String patient_age, String vht_id, String date, String gestational_age, int heart_rate,
-                       int systolic, int diastolic, String ews_color, String[] symptoms, boolean referred, boolean follow_up, String follow_up_date, boolean recheck) {
+                       int systolic, int diastolic, Color ews_color, String[] symptoms, boolean referred, boolean follow_up, String follow_up_date, boolean recheck, Arrow arrow) {
         this.id = id; //assestment ID
         this.patient_id = patient_id;
         this.patient_age = patient_age;
@@ -42,7 +56,9 @@ public class Assessments {
         this.follow_up = follow_up;
         this.follow_up_date = follow_up_date;
         this.recheck = recheck;
+        this.arrow = arrow;
     }
+
 
     public String get_id() {
         return id;
@@ -67,14 +83,6 @@ public class Assessments {
     public void setPatient_age(String patient_age) {
         this.patient_age = patient_age;
     }
-
-//    public String getTime_scale() {
-//        return time_scale;
-//    }
-//
-//    public void setTime_scale(String time_scale) {
-//        this.time_scale = time_scale;
-//    }
 
     public String getVht_id() {
         return vht_id;
@@ -124,12 +132,20 @@ public class Assessments {
         this.diastolic = diastolic;
     }
 
-    public String getEws_color() {
+    public Color getEws_color() {
         return ews_color;
     }
 
-    public void setEws_color(String ews_color) {
+    public Arrow getArrow() {
+        return arrow;
+    }
+
+    public void setEws_color(Color ews_color) {
         this.ews_color = ews_color;
+    }
+
+    public void setarrow(Arrow arrow) {
+        this.arrow = arrow;
     }
 
     public String[] getSymptoms() {

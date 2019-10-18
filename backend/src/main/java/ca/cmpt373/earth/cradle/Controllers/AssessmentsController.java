@@ -20,32 +20,39 @@ public class AssessmentsController {
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
-    public AssessmentsController(AssessmentsRepository assessmentsRepository){
+    public AssessmentsController(AssessmentsRepository assessmentsRepository) {
         this.assessmentsRepository = assessmentsRepository;
     }
+
+
     @GetMapping("/all")
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public List<Assessments> getAll(){
-        List<Assessments> assessments = this.assessmentsRepository.findAll();
+    public List<Assessments> getAll() {
+        List<Assessments> assessments = null;
+        try {
+            assessments = this.assessmentsRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace(); //for debugging
+        }
         return assessments;
     }
 
     @PutMapping
-    public void insert(@RequestBody Assessments assessment){
+    public void insert(@RequestBody Assessments assessment) {
         this.assessmentsRepository.insert(assessment);
     }
 
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8040")
     public Assessments add(@RequestBody Assessments candidate) {
         return assessmentsRepository.save(candidate);
     }
 
     @GetMapping("/get{assessment_id}")
     @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8040")
     public Assessments get(@PathVariable String assessment_id) {
         return assessmentsRepository.findCustomById(assessment_id);
     }

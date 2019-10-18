@@ -1,9 +1,12 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import LandingPage from './landingpage';
-import Form from './Assessment/NewAssessment';
+import NewAssessment from './NewForm/NewAssessment';
+import NewPatient from './NewForm/NewPatient';
+import NewUser from './NewForm/NewUser';
 import Landing_List from './AdminLanding';
 import Login  from './login';
+import Logout  from './logout';
 import Register  from './register';
 import PatientList from './PatientList';
 import PatientChart from './PatientChart';
@@ -11,19 +14,20 @@ import AssessmentList from './AssessmentList';
 import PatientNotes from './PatientNotes';
 import PatientAddMedication from './PatientAddMedication';
 
+import Resources from './Resources';
+
+
 const Navigation = () => (
   <Switch>
     <Route exact path = "/" component = {LandingPage} />
 
-    {/* <Route path = "/users/form" component = {Form} /> */}
-
-    {/* <PrivateRoute path = "/users/hello" component = {Hello} /> */}
     <Route exact path = "/user-dashboard" component = {PatientList} />
     <Route exact path = "/admin-dashboard" component = {Landing_List} />
     <Route exact path = "/login" component = {Login} />
     <PrivateRoute exact path = "/register" component = {Register} />
     <Route exact path = "/users/AssessmentList" component = {AssessmentList} />
     <Route path = "/login" component = {Login} />
+    <Route path = "/logout" component = {Logout} />
     <Route path = "/users/admin/landing" component = {Landing_List} />
     <Route exact path = "/users/PatientList" component = {PatientList} />
     <Route exact path = "/PatientChart" component = {PatientChart} />
@@ -33,6 +37,13 @@ const Navigation = () => (
 
     </Switch>
 
+    <Route path = "/users/PatientList" component = {PatientList} />
+    <Route path = "/users/PatientChart" component = {PatientChart} />
+    <Route path = "/users/newAssessment" component = {NewAssessment} />
+    <Route path = "/users/newPatient" component = {NewPatient} />
+    <Route path = "/users/newUser" component = {NewUser} />
+    <Route path = "/resources" component = {Resources} />
+  </Switch>
 )
 
 

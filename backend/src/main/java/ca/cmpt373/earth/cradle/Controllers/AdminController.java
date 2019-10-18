@@ -27,7 +27,7 @@ public class AdminController {
 
     @PostMapping("/add-admin")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8040")
     public Users addAdmin(@RequestBody Users candidate) {
         Role role = new Role(candidate.getId(), "ADMIN");
         roleRepository.save(role);
@@ -36,8 +36,8 @@ public class AdminController {
 
     @GetMapping("/all")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:3000")
-    public List<Admin> getAll(){
+    @CrossOrigin(origins = "http://localhost:8040")
+    public List<Admin> getAll() {
         List<Admin> admins = this.adminRepository.findAll();
         return admins;
     }

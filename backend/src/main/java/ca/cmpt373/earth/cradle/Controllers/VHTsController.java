@@ -18,32 +18,32 @@ public class VHTsController {
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
-    public VHTsController(VHTsRepository vhtsRepository){
+    public VHTsController(VHTsRepository vhtsRepository) {
         this.vhtsRepository = vhtsRepository;
     }
 
     @GetMapping("/all")
-    public List<VHTs> getAll(){
+    public List<VHTs> getAll() {
         List<VHTs> vhts = this.vhtsRepository.findAll();
         return vhts;
     }
 
 
     @PutMapping
-    public void insert(@RequestBody VHTs vht){
+    public void insert(@RequestBody VHTs vht) {
         this.vhtsRepository.insert(vht);
     }
 
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8040")
     public VHTs add(@RequestBody VHTs candidate) {
         return vhtsRepository.save(candidate);
     }
 
     @GetMapping("/get{vht_id}")
     @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:8040")
     public VHTs get(@PathVariable String vht_id) {
         return vhtsRepository.findCustomById(vht_id);
     }
