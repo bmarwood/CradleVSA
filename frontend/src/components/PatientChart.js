@@ -1,8 +1,10 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";
+import './PatientChart.css';
 
-class PatientChart extends React.Component {
+class PatientChart extends React.Component { 
+  
   state = {
     dataLine: {
       labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -48,11 +50,11 @@ class PatientChart extends React.Component {
 
   render() {
     return (
-      <MDBContainer>
+      <MDBContainer style = {{backgroundColor:'white'}}>
         <h3 className="mt-5">Blood Pressure</h3>
         <Line data={this.state.dataLine} options={{ responsive: true }} />
       </MDBContainer>
-    );
+      );
   }
 }
 

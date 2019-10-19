@@ -137,18 +137,25 @@ class PatientList extends Component {
                     //Other Actions
                     actions={[
                         {
-                            //Graph button for patient chart
-                            icon: 'assessment',
-                            tooltip: 'Graph',
+                          //Graph button for patient chart
+                          icon: 'assessment',
+                          tooltip: 'Graph',
+                          onClick: () => {
+                            //Popup for Patient chart, opens PatientChart.js
+                            window.open("/PatientChart",'popUpWindow',
+                            'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
+                          }
+                        },
+                        {
+                            icon: 'assignment',
+                            tooltip: 'Medications',
                             onClick: () => {
-                                //Popup for Patient chart, opens PatientChart.js
-                                window.open("/users/PatientChart")
-                                //'popUpWindow',
-                                //'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-                                //window.location.pathname = "/users/PatientList";
+                              //Popup for Patient chart, opens PatientChart.js
+                              window.open("/PatientNotes",'popUpWindow',
+                              'height=1000,width=1200,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
                             }
                         }
-                    ]}
+                      ]}
                 />
             </div>
 
