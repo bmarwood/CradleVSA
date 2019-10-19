@@ -8,6 +8,8 @@ import {ToastContainer, toast} from 'react-toastify';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-toastify/dist/ReactToastify.css';
+import Utility from "./Utility";
+
 
 //form for a new user
 class NewUser extends React.Component {
@@ -18,7 +20,7 @@ class NewUser extends React.Component {
             username: '',
             password: '',
             name: '',
-            dob: new Date(),
+            dob: '',
             address: '',
             gender: 'male',
             roles: [],
@@ -28,6 +30,7 @@ class NewUser extends React.Component {
             error: false,
             fname: '',
             lname: '',
+            temp_dob: new Date(),
             roles_array: [
                 {id: 1, name: 'USER', checked: true},
                 {id: 2, name: 'ADMIN', checked: false},
@@ -40,7 +43,7 @@ class NewUser extends React.Component {
 
     changeDOB = date => {
         this.setState({
-            dob: date
+            temp_dob: date
         });
     };
 
@@ -76,15 +79,15 @@ class NewUser extends React.Component {
 
     changeState() {
         this.setState({
-            name: this.state.fname + ' ' + this.state.lname
+            name: this.state.fname + ' ' + this.state.lname,
+            dob: Utility.convertDate(this.state.temp_dob)
         })
         this.addRole();
-        this.setDate();
 
         //delete
-        delete this.state.fname;
-        delete this.state.lname;
-        delete this.state.error;
+        // delete this.state.fname;
+        // delete this.state.lname;
+        // delete this.state.error;
     }
 
 
@@ -104,14 +107,7 @@ class NewUser extends React.Component {
         }
     }
 
-    //set date "Month Date, Year"
-    setDate(){
-        const MONTH_ARR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let month = MONTH_ARR[this.state.dob.getMonth()];
-        let date = this.state.dob.getDate();
-        let year = this.state.dob.getFullYear();
-        this.state.dob = month + " " + date + ", " + year
-    }
+
 
     handleSubmit = async () => {
         //input validation
@@ -263,11 +259,10 @@ class NewUser extends React.Component {
                     <Cell col={4}>
                         <p>Date of Birth:</p>
                         <DatePicker
-                            selected={this.state.dob}
+                            selected={this.state.temp_dob}
                             onChange={this.changeDOB}
                         />
                         <br/>
-
                         <br/>
 
                         <label>Gender: </label>
