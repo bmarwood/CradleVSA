@@ -5,6 +5,8 @@ import ShowRoles from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
 import RequestServer from  '../RequestServer'
 import {ToastContainer, toast} from 'react-toastify';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import 'react-toastify/dist/ReactToastify.css';
 
 //form for a new user
@@ -16,7 +18,7 @@ class NewUser extends React.Component {
             username: '',
             password: '',
             name: '',
-            dob: '',
+            dob: new Date(),
             address: '',
             gender: 'male',
             roles: [],
@@ -33,20 +35,28 @@ class NewUser extends React.Component {
             ]
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleCheckbox = this.handleCheckbox.bind(this)
+        this.handleCheckbox = this.handleCheckbox.bind(this);
     }
+
+    changeDOB = date => {
+        this.setState({
+            dob: date
+        });
+    };
+
+
 
 
     //make the checkboxes are changeable
     handleCheckbox(id) {
         this.setState(prevState => {
-            const updatedSymp = prevState.roles_array.map(each => {
+            const updatedRole = prevState.roles_array.map(each => {
                 if (each.id === id) {
                     each.checked = !each.checked
                 }
                 return each
             });
-            prevState.roles_array = updatedSymp;
+            prevState.roles_array = updatedRole;
             return prevState;
         })
         console.log(this.state.roles_array)
@@ -69,12 +79,12 @@ class NewUser extends React.Component {
             name: this.state.fname + ' ' + this.state.lname
         })
         this.addRole();
+        this.setDate();
 
         //delete
         delete this.state.fname;
         delete this.state.lname;
         delete this.state.error;
-        delete this.state.roles_array;
     }
 
 
@@ -92,6 +102,15 @@ class NewUser extends React.Component {
                 })
             }
         }
+    }
+
+    //set date "Month Date, Year"
+    setDate(){
+        const MONTH_ARR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let month = MONTH_ARR[this.state.dob.getMonth()];
+        let date = this.state.dob.getDate();
+        let year = this.state.dob.getFullYear();
+        this.state.dob = month + " " + date + ", " + year
     }
 
     handleSubmit = async () => {
@@ -151,7 +170,7 @@ class NewUser extends React.Component {
 
 
     render() {
-        const roles = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
+        let roles_map = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
                                                                     handleChange={this.handleCheckbox}/>)
         return (
             <ValidatorForm
@@ -242,16 +261,13 @@ class NewUser extends React.Component {
                         <br/>
                     </Cell>
                     <Cell col={4}>
-                        <TextValidator
-                            label="Date of Birth"
-                            onChange={this.handleChange}
-                            name="dob"
-                            value={this.state.dob}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
-                            variant="outlined"
+                        <p>Date of Birth:</p>
+                        <DatePicker
+                            selected={this.state.dob}
+                            onChange={this.changeDOB}
                         />
                         <br/>
+
                         <br/>
 
                         <label>Gender: </label>
@@ -266,7 +282,7 @@ class NewUser extends React.Component {
                         <br/>
                         <br/>
                         <p>Select role</p>
-                        {roles}
+                        {roles_map}
                         <br/>
                         <br/>
                     </Cell>
