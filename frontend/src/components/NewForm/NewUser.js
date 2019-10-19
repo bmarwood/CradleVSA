@@ -62,7 +62,6 @@ class NewUser extends React.Component {
             prevState.roles_array = updatedRole;
             return prevState;
         })
-        console.log(this.state.roles_array)
     }
 
 
