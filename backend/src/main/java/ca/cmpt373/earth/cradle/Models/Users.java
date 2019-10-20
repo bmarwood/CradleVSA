@@ -30,20 +30,6 @@ public class Users {
         this.enabled = false;
     }
 
-//DO WE NEED THIS????
-//    public Users(String id, String username, String password,
-//                 String name, String dob, String address,
-//                 String gender) {
-//        this.id = id;
-//        this.username = username;
-//        this.password = password;
-//        this.name = name;
-//        this.dob = dob;
-//        this.address = address;
-//        this.gender = gender;
-//        this.enabled = false;
-//    }
-
     public Users(String id, String username, String password,
                  String name, String dob, String address,
                  String gender, Set<Role> roles) {
