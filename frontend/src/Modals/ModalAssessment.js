@@ -66,7 +66,7 @@ class ModalAssessment extends Component {
 
     render() {
         return (
-            < div className="modal">
+            <div className="modal">
                 <h1>Asssessment ID: {this.props.id}</h1>
                 <div className="temp">
                     {" "}

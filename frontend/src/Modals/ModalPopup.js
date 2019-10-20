@@ -12,7 +12,9 @@ class ModalPopup extends Component {
                     // <a className="close" onClick={close}>
                     //     &times;
                     // </a>
-                    <ModalAssessment{...this.props} />
+                    // console.log("before calling table", this.props)
+
+                    <ModalAssessment {...this.props} />
 
 
                 )}
