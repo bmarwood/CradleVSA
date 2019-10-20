@@ -11,6 +11,9 @@ import Register  from './register';
 import PatientList from './PatientList';
 import PatientChart from './PatientChart';
 import AssessmentList from './AssessmentList';
+import PatientNotes from './PatientNotes';
+import PatientAddMedication from './PatientAddMedication';
+import Resources from './Resources';
 
 
 const Navigation = () => (
@@ -26,10 +29,13 @@ const Navigation = () => (
     <Route path = "/logout" component = {Logout} />
     <Route path = "/users/admin/landing" component = {Landing_List} />
     <Route path = "/users/PatientList" component = {PatientList} />
-    <Route path = "/users/PatientChart" component = {PatientChart} />
+    <Route path = "/PatientChart" component = {PatientChart} />
+    <Route path = "/PatientNotes" component = {PatientNotes} />
+    <Route path = "/PatientAddMedication" component = {PatientAddMedication} />
     <Route path = "/users/newAssessment" component = {NewAssessment} />
     <Route path = "/users/newPatient" component = {NewPatient} />
     <Route path = "/users/newUser" component = {NewUser} />
+    <Route path = "/resources" component = {Resources} />
   </Switch>
 )
 
@@ -44,6 +50,7 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
             state: { from: props.location }
           }} />
     )} />
+    
   )
 }
 

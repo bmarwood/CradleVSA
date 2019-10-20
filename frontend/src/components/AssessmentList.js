@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './AssessmentList.css';
+import requestServer from './RequestServer';
 
-import axios from 'axios';
 
 class AssessmentList extends Component {
 
@@ -32,6 +32,7 @@ class AssessmentList extends Component {
                 {title: 'Follow Up Date', field: 'follow_up_date'},
                 {title: 'Recheck?', field: 'recheck'},
                 {title: 'Id Number', field: 'id'},
+                {title: 'Arrow', field: 'arrow'},
             ],
             data: [
                 {
@@ -64,6 +65,8 @@ class AssessmentList extends Component {
             var follow_up_date = assessment.follow_up_date
             var recheck = assessment.recheck
             var id = assessment._id
+            var arrow = assessment.arrow
+
 
             var assessment_obj = {
                 patient_id: patient_id,
@@ -80,30 +83,22 @@ class AssessmentList extends Component {
                 follow_up: follow_up.toString(),
                 follow_up_date: follow_up_date,
                 recheck: recheck.toString(),
-                id: id
+                id: id,
+                arrow: arrow
             }
 
             assessmentList.push(assessment_obj)
         });
 
-        this.setState({data: assessmentList})
+        this.setState({ data: assessmentList })
 
     }
 
-    getAssessmentList() {
-        axios.get('http://cmpt373.csil.sfu.ca:8083/assessments/all', this.state)
-            .then(response => {
-                // console.log("response from server: ", response)
-                this.populateData(response.data)
-            })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-                this.setState({
-                    error: true,
-                    errorMsg: 'Invalid Login'
-                })
-            })
+    async getAssessmentList() {
+        var passback = await requestServer.getAssessmentsList()
+        if (passback !== null) {
+            this.populateData(passback.data)
+        }
     }
 
     render() {
@@ -122,7 +117,7 @@ class AssessmentList extends Component {
                                     resolve();
                                     const data = [...this.state.data];
                                     data[data.indexOf(oldData)] = newData;
-                                    this.setState({...this.state, data});
+                                    this.setState({ ...this.state, data });
                                 }, 600);
                             }),
                         onRowDelete: oldData =>
@@ -131,7 +126,7 @@ class AssessmentList extends Component {
                                     resolve();
                                     const data = [...this.state.data];
                                     data.splice(data.indexOf(oldData), 1);
-                                    this.setState({...this.state, data});
+                                    this.setState({ ...this.state, data });
                                 }, 600);
                             }),
                     }}
