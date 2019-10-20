@@ -44,7 +44,8 @@ class NewUser extends React.Component {
                 {id: 1, name: Role.USER, checked: true},
                 {id: 2, name: Role.ADMIN, checked: false},
                 {id: 3, name: Role.HEALTH_WORKER, checked: false}
-            ]
+            ],
+            user_array: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
@@ -56,8 +57,7 @@ class NewUser extends React.Component {
         });
     };
 
-
-
+    
 
     //make the checkboxes are changeable
     handleCheckbox(id) {
@@ -79,11 +79,9 @@ class NewUser extends React.Component {
         //We need to re-initialize - if error cause
         this.state.roles = [];
         const role_array = this.state.roles_array;
-        console.log("For loop for the roles_array")
         for (let index in role_array) {
             if (role_array[index].checked) {
                 this.state.roles.push({id: this.state.id, role: role_array[index].name})
-                console.log(role_array[index].id, role_array[index].name)
             }
         }
     }
@@ -106,9 +104,6 @@ class NewUser extends React.Component {
     //check if at least one role has been selected
     checkRole() {
         const role = this.state.roles_array;
-        this.setState({
-            error: false
-        })
         for (let index in role) {
             //check if the checkbox is selected and if so change the error to true
             if (role[index].checked && !this.state.error) {
@@ -118,14 +113,74 @@ class NewUser extends React.Component {
             }
         }
     }
+    
+    
+    checkID() {
+        for (let user of this.state.user_array){
+            if(user.id === this.state.id){
+                this.setState({
+                    error: true
+                })
+                return;
+            }
+        }
+    }
 
+    checkUsername() {
+        let temp_name = this.state.fname + ' ' + this.state.lname
+        for (let user of this.state.user_array){
+            if(user.name === temp_name){
+                this.setState({
+                    error: true
+                })
+                return;
+            }
+        }
+    }
+
+    async getUserList() {
+        var passback = await RequestServer.getUserList()
+        if (passback !== null) {
+            this.setState({
+                user_array: Utility.populateData(passback.data)
+            })
+            //this.state.user_array = Utility.populateData(passback.data)
+        }
+    }
 
 
     handleSubmit = async () => {
         //input validation
+        this.setState({
+            error: false
+        })
         this.checkRole();
         if (!this.state.error) {
             alert("Must select one role")
+            return
+        }
+
+        this.getUserList()
+
+        console.log(this.state.user_arrays)
+        //check for user id - no duplicate value
+        this.checkID();
+        if (!this.state.error) {
+            alert("Existing ID: Re-enter the ID")
+            this.setState({
+                id: ''
+            })
+            return
+        }
+
+        //check for user name - no duplicate value
+        this.checkUsername();
+        if (!this.state.error) {
+            alert("Existing user: Re-enter first name and last name")
+            this.setState({
+                fname: '',
+                lname: '',
+            })
             return
         }
 

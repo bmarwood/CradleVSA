@@ -36,8 +36,13 @@ public class UsersController {
     @GetMapping("/all")
     //@CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Users> getAll() {
-        List<Users> users = this.usersRepository.findAll();
-        return users;
+        try {
+            List<Users> users = this.usersRepository.findAll();
+            return users;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /*@GetMapping("/{user_id}")

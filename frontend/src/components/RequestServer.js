@@ -106,5 +106,18 @@ class RequestServer extends Component {
         }
     }
 
+
+    async getUserList() {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/users/all')
+            return response
+        }
+        catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
 }
 export default new RequestServer();
