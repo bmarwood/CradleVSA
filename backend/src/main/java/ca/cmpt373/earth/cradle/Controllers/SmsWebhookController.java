@@ -12,6 +12,7 @@ import com.twilio.twiml.MessagingResponse;
 import com.twilio.twiml.TwiMLException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 //Controller for  Twilio Webhook when Sms comes in
@@ -24,10 +25,21 @@ public class SmsWebhookController {
     private static final String AUTH_TOKEN =
             "e84609dc660df4ac695d3f4727c5f853";
 
-    @GetMapping("/sms")
+    @GetMapping(path="/sms", produces="application/xml")
     @ResponseBody
-    public String respondToSms(){
+    public String respondToSms(@RequestParam(value = "Body") String smsBody){
 
-        return "Your Message has been received.";
+        Body body = new Body
+                .Builder("Thank you for messaging us. Your message has been received.")
+                .build();
+        Message sms = new Message
+                .Builder()
+                .body(body)
+                .build();
+        MessagingResponse twiml = new MessagingResponse
+                .Builder()
+                .message(sms)
+                .build();
+        return twiml.toXml();
     }
 }
