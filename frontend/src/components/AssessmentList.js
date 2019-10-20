@@ -60,6 +60,7 @@ class AssessmentList extends Component {
             var heart_rate = assessment.heart_rate
             var systolic = assessment.systolic
             var diastolic = assessment.diastolic
+            var id = assessment._id
             var ews_color
             switch (String(assessment.ews_color).toUpperCase()) {
                 case "GREEN":
@@ -115,7 +116,7 @@ class AssessmentList extends Component {
             var info = <ModalPopup patient_id={assessment.patient_id} vht_id={assessment.vht_id}
             />
             var assessment_obj = {
-                assessment_id: assessment._id,
+                id: id,
                 patient_id: patient_id,
                 ews_color: ews_color,
                 patient_age: patient_age,
