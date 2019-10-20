@@ -1,8 +1,8 @@
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import React, {Component} from 'react';
-import axios from 'axios';
+import React, { Component } from 'react';
+import requestServer from './RequestServer';
 
 import '../App.css';
 
@@ -18,6 +18,8 @@ class Login extends Component {
             isAdmin: false,
             isUser: false,
         }
+        this.keyPressed = this.keyPressed.bind(this)
+
     }
 
     setTheState(response) {
@@ -32,14 +34,14 @@ class Login extends Component {
             console.log("role given to user: ", role)
             console.log("role given to user: ", role.role)
 
-            if (role.role == 'ADMIN') {
+            if (role.role === 'ADMIN') {
                 console.log('is admin')
                 this.setState({
                     isAdmin: true
                 })
             }
 
-            if (role.role == 'USER') {
+            if (role.role === 'USER') {
                 console.log('is user')
                 this.setState({
                     isUser: true
@@ -53,13 +55,13 @@ class Login extends Component {
         if (this.state.isAdmin) {
             this.props.history.push(
                 '/admin-dashboard',
-                {detail: response.data}
+                { detail: response.data }
             )
             window.location.reload()
         } else {
             this.props.history.push(
                 '/user-dashboard',
-                {detail: response.data}
+                { detail: response.data }
             )
             window.location.reload()
         }
@@ -70,30 +72,39 @@ class Login extends Component {
         console.log("decomposing response: ", response.data.id, " ", response.data.name, response.status)
     }
 
-    loginHandler = e => {
+    loginHandler = async (e) => {
         e.preventDefault()
+        var passback = await requestServer.login(this.state.username, this.state.password)
+        console.log(passback)
+        if (passback === null) {
+            this.setState({
+                error: true,
+                errorMsg: 'Invalid Login'
+            })
 
-        axios.post('http://localhost:8080/users/login', this.state)
-            .then(response => {
-                localStorage.setItem("isLoggedIn", "true")
-                this.setTheState(response)
-                this.testConsoleLog(response)
-                this.setRole(response)
-                this.navigate(response)
-            })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-                this.setState({
-                    error: true,
-                    errorMsg: 'Invalid Login'
-                })
-            })
+        } else {
+            localStorage.setItem("isLoggedIn", "true")
+            this.setTheState(passback)
+            this.testConsoleLog(passback)
+            this.setRole(passback)
+            this.navigate(passback)
+        }
+
     }
+
+
 
     showErrorMsg() {
         return <p>{this.state.errorMsg}</p>
     }
+
+    keyPressed(event) {
+        if (event.key === "Enter") {
+            console.log(event)
+            this.loginHandler(event)
+        }
+    }
+
 
     render() {
 
@@ -101,16 +112,19 @@ class Login extends Component {
             <div>
                 <MuiThemeProvider>
                     <div className='login-form'>
-                        <h2 style={{color: "white"}}> Please Login </h2>
+                        <h2 style={{ color: "white" }}> Please Login </h2>
+
                         <TextField
                             hintText="Enter your Username"
                             inputStyle={styles.white}
                             floatingLabelText="Username"
                             hintStyle={styles.grey}
                             floatingLabelStyle={styles.input}
-                            onChange={(event, newValue) => this.setState({username: newValue})}
+                            onChange={(event, newValue) => this.setState({ username: newValue })}
+                            onKeyPress={this.keyPressed}
+
                         />
-                        <br/>
+                        <br />
                         <TextField
                             type="password"
                             hintText="Enter your Password"
@@ -118,14 +132,16 @@ class Login extends Component {
                             hintStyle={styles.grey}
                             floatingLabelText="Password"
                             floatingLabelStyle={styles.input}
-                            onChange={(event, newValue) => this.setState({password: newValue})}
+                            onChange={(event, newValue) => this.setState({ password: newValue })}
+                            onKeyPress={this.keyPressed}
+
                         />
-                        <br/>
+                        <br />
                         <div className='errorMsg'>
                             {(this.state.error ? this.showErrorMsg() : '')}
                         </div>
                         <RaisedButton label="Submit" primary={true} style={styles.button}
-                                      onClick={(event) => this.loginHandler(event)}/>
+                            onClick={(event) => this.loginHandler(event)} />
                     </div>
                 </MuiThemeProvider>
             </div>

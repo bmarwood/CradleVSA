@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import './AdminLanding.css';
-import logo from "../logo.svg";
-import {useState} from "react";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -79,16 +77,16 @@ function SimpleTabs() {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <Patient_list/>
+          <PatientList/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <User_list/>
+          <UserList/>
         </TabPanel>
       </div>
   );
 }
 
-function Patient_list() {
+function PatientList() {
     const [state, setState] = React.useState({
       columns: [
         { title: 'Name', field: 'name' },
@@ -184,7 +182,7 @@ function Patient_list() {
     );
 }
 
-function User_list() {
+function UserList() {
   const [state, setState] = React.useState({
     columns: [
       { title: 'Username', field: 'username' },

@@ -2,10 +2,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import React, {Component} from 'react';
-import axios from 'axios';
 import '../App.css';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import RequestServer from './RequestServer'
 
 class Register extends Component {
     constructor(props) {
@@ -26,7 +26,7 @@ class Register extends Component {
     }
 
     checkPasswordMatch() {
-        if (this.state.password.trim() === "" || this.state.password != this.state.passwordRetyped) {
+        if (this.state.password.trim() === "" || this.state.password !== this.state.passwordRetyped) {
             console.log('Passwords mismatched')
             this.setState({
                 error: true,
@@ -77,7 +77,7 @@ class Register extends Component {
         return false;
     }
 
-    registerHandler = e => {
+    registerHandler = async e => {
         e.preventDefault()
 
         var passwordMatch = this.checkPasswordMatch()
@@ -93,19 +93,28 @@ class Register extends Component {
 
         console.log("State before calling register function", this.state)
 
-        axios.post('http://localhost:8080/users/register', this.state)
-            .then(response => {
-                toast("User Added");
-                this.clearFields()
+        var user = {
+            id: this.state.id,
+            name: this.state.name,
+            address: this.state.address,
+            dob: this.state.dob,
+            gender: this.state.gender,
+            username: this.state.username,
+            password: this.state.password,
+        }
+
+        var response = await RequestServer.addUser(user)
+
+        if (response !== null) {
+            toast("User Added");
+            this.clearFields()
+        } else {
+            this.setState({
+                error: true,
+                errorMsg: 'Unable to register'
             })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-                this.setState({
-                    error: true,
-                    errorMsg: 'Unable to register'
-                })
-            })
+        }
+
     }
 
     showErrorMsg() {

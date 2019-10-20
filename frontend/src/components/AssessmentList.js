@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './AssessmentList.css';
 import TrafficIcons from "./Visuals/TrafficIcons";
-import axios from 'axios';
 import ModalPopup from '../Modals/ModalPopup';
+import requestServer from './RequestServer';
+
 
 class AssessmentList extends Component {
 
@@ -28,6 +29,7 @@ class AssessmentList extends Component {
                 { title: 'Follow Up?', field: 'follow_up', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Recheck?', field: 'recheck', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Assessment Information', field: 'info', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                //{title: 'Arrow', field: 'arrow'}
             ],
             data: [
                 {
@@ -39,7 +41,8 @@ class AssessmentList extends Component {
                     referred: 'LOADING...',
                     follow_up: 'LOADING...',
                     recheck: 'LOADING...',
-                    info: <ModalPopup />
+                    arrow: 'LOADING...',
+                    //info: <ModalPopup />
                 },
             ],
 
@@ -101,6 +104,9 @@ class AssessmentList extends Component {
                     follow_up = assessment.follow_up
             }
             var follow_up_date = assessment.follow_up_date
+            
+            var arrow = assessment.arrow
+
 
             var recheck
             switch (String(assessment.recheck)) {
@@ -116,7 +122,7 @@ class AssessmentList extends Component {
             var info = <ModalPopup patient_id={assessment.patient_id} vht_id={assessment.vht_id}
             />
             var assessment_obj = {
-                id: id,
+                id: assessment_id,
                 patient_id: patient_id,
                 ews_color: ews_color,
                 patient_age: patient_age,
@@ -131,7 +137,8 @@ class AssessmentList extends Component {
                 follow_up: follow_up,
                 follow_up_date: follow_up_date,
                 recheck: recheck,
-                info: info
+                info: info,
+                arrow: arrow
             }
 
             assessmentList.push(assessment_obj)
@@ -141,20 +148,11 @@ class AssessmentList extends Component {
 
     }
 
-    getAssessmentList() {
-        axios.get('http://localhost:8080/assessments/all', this.state)
-            .then(response => {
-                console.log("response from server: ", response)
-                this.populateData(response.data)
-            })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-                this.setState({
-                    error: true,
-                    errorMsg: 'Invalid Login'
-                })
-            })
+    async getAssessmentList() {
+        var passback = await requestServer.getAssessmentsList()
+        if (passback !== null) {
+            this.populateData(passback.data)
+        }
     }
 
 
@@ -163,6 +161,7 @@ class AssessmentList extends Component {
         return (
 
             <div className="table-position">
+                <GreenLight/>
                 <MaterialTable
                     title="Assessment List"
                     columns={this.state.columns}

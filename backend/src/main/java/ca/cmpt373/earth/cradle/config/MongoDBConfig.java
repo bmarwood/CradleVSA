@@ -36,7 +36,7 @@ public class MongoDBConfig {
             String hashedPassword = passwordEncoder.encode("password");
 
             Set<Role> roles = new HashSet<>();
-            Role newAdminRole = new Role("3920101","ADMIN");
+            Role newAdminRole = new Role("3920101", "ADMIN");
             roles.add(newAdminRole);
             Set<Role> roles2 = new HashSet<>();
             Role newUserRole = new Role("382828", "USER");
@@ -45,27 +45,29 @@ public class MongoDBConfig {
             Role newHealthWorkerRole = new Role("3920101", "HEALTHWORKER");
             roles.add(newHealthWorkerRole);
 
-            usersRepository.save(new Users("3920101", "admin", hashedPassword, "Admin", "02/02/2002",
-                    "8888 University Drive, Burnaby V3J 7H5", "MALE", roles));
-            usersRepository.save(new Users("382828", "user", hashedPassword, "User", "12/02/1992",
-                    "8888 University Drive, Burnaby V3J 7H5", "FEMALE", roles2));
+            usersRepository.save(new Users("3920101", "admin", hashedPassword, "Admin", "October 19, 2009",
+                    "8888 University Drive, Burnaby V3J 7H5", Users.Gender.MALE, roles));
+            usersRepository.save(new Users("382828", "user", hashedPassword, "User", "December 02, 1992",
+                    "8888 University Drive, Burnaby V3J 7H5", Users.Gender.FEMALE, roles2));
 
         };
     }
+
     @Bean
     CommandLineRunner commandLineRunnerAssess(AssessmentsRepository assessmentsRepository) {
         return strings -> {
-            String[] symptoms = {"cough","sings well"};
-            assessmentsRepository.save(new Assessments("1", "22", "34yrs" , "54", "sept 24", "2 weeks", 72,68,44,"Green" ,
-                    symptoms, true, true, "next week monday", true ));
-            assessmentsRepository.save(new Assessments("2", "36", "10yrs" , "115", "sept 25", "0 weeks", 44,90,10,"Red" ,
-                    symptoms, true, true, "next week tuesday", true ));
-            assessmentsRepository.save(new Assessments("4", "2", "44yrs" , "54", "sept 24, 2019", "0 weeks", 80,105,70,"Red" ,
-                    symptoms, true, true, "next week tuesday", true ));
-            assessmentsRepository.save(new Assessments("5", "1060", "44yrs" , "777", "sept 24, 2019", "0 weeks", 82,110,80,"Yellow" ,
-                    symptoms, true, true, "next week tuesday", false ));
-            assessmentsRepository.save(new Assessments("6", "1010101", "44yrs" , "777", "sept 26, 2019", "0 weeks", 74,127,84,"Green" ,
-                    symptoms, true, false, null, false ));
+
+            String[] symptoms = {"cough", "sings well"};
+            assessmentsRepository.save(new Assessments("1", "22", "34yrs", "54", "sept 24", "2 weeks", 72, 68, 44, Assessments.Color.GREEN,
+                    symptoms, true, true, "next week monday", true, Assessments.Arrow.EMPTY));
+            assessmentsRepository.save(new Assessments("2", "36", "10yrs", "115", "sept 25", "0 weeks", 44, 90, 10, Assessments.Color.RED,
+                    symptoms, true, true, "next week tuesday", true, Assessments.Arrow.UP));
+            assessmentsRepository.save(new Assessments("4", "2", "44yrs", "54", "sept 24, 2019", "0 weeks", 80, 105, 70, Assessments.Color.RED,
+                    symptoms, true, true, "next week tuesday", true, Assessments.Arrow.DOWN));
+            assessmentsRepository.save(new Assessments("5", "1060", "44yrs", "777", "sept 24, 2019", "0 weeks", 82, 110, 80, Assessments.Color.YELLOW,
+                    symptoms, true, true, "next week tuesday", false, Assessments.Arrow.UP));
+            assessmentsRepository.save(new Assessments("6", "1010101", "44yrs", "777", "sept 26, 2019", "0 weeks", 74, 127, 84, Assessments.Color.GREEN,
+                    symptoms, true, false, null, false, Assessments.Arrow.EMPTY));
         };
     }
 
@@ -80,6 +82,7 @@ public class MongoDBConfig {
 
         };
     }
+
     @Bean
     CommandLineRunner commandLineRunnerVHTs(VHTsRepository vhtsRepository) {
         return strings -> {
@@ -91,14 +94,15 @@ public class MongoDBConfig {
 
         };
     }
+
     @Bean
     CommandLineRunner commandLineRunnerCHOs(CHOsRepository chosRepository) {
         return strings -> {
             String hashedPassword = passwordEncoder.encode("password");
 
-            chosRepository.save(new CHOs("1105", "Bilbo Baggins", new String[]{"id of vht 1"},new String[]{"id of patient 1"}, new String[]{"id of assessment 1"}));
-            chosRepository.save(new CHOs("540", "Gregor the Overlander", new String[]{"id of vht 1", "id of vht 2"},new String[]{"id of patient 1"}, new String[]{"id of assessment 1", "id of assessment 2", "id of assessment 3"}));
-            chosRepository.save(new CHOs("1234", "Bill Gates", new String[]{"777"},null, null));
+            chosRepository.save(new CHOs("1105", "Bilbo Baggins", new String[]{"id of vht 1"}, new String[]{"id of patient 1"}, new String[]{"id of assessment 1"}));
+            chosRepository.save(new CHOs("540", "Gregor the Overlander", new String[]{"id of vht 1", "id of vht 2"}, new String[]{"id of patient 1"}, new String[]{"id of assessment 1", "id of assessment 2", "id of assessment 3"}));
+            chosRepository.save(new CHOs("1234", "Bill Gates", new String[]{"777"}, null, null));
 
         };
     }
@@ -106,7 +110,7 @@ public class MongoDBConfig {
     @Bean
     CommandLineRunner commandLineRunnerRole(RoleRepository roleRepository) {
         return strings -> {
-            Role newAdminRole = new Role("3920101","ADMIN");
+            Role newAdminRole = new Role("3920101", "ADMIN");
             roleRepository.save(newAdminRole);
             Role newUserRole = new Role("382828", "USER");
             roleRepository.save(newUserRole);
@@ -114,7 +118,6 @@ public class MongoDBConfig {
             roleRepository.save(newHealthWorkerRole);
         };
     }
-
 
 
 }
