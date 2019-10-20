@@ -14,20 +14,16 @@ import AssessmentList from './AssessmentList';
 import PatientNotes from './PatientNotes';
 import PatientAddMedication from './PatientAddMedication';
 import Resources from './Resources';
+import Profile from './User/Profile'
 
 
 const Navigation = () => (
   <Switch>
+    {/* Home Direction */}
     <Route exact path = "/" component = {LandingPage} />
-
+    
+    {/* User Directions */}
     <Route exact path = "/user-dashboard" component = {PatientList} />
-    <Route exact path = "/admin-dashboard" component = {Landing_List} />
-    <Route exact path = "/login" component = {Login} />
-    <PrivateRoute exact path = "/register" component = {Register} />
-    <Route exact path = "/users/AssessmentList" component = {AssessmentList} />
-    <Route path = "/login" component = {Login} />
-    <Route path = "/logout" component = {Logout} />
-    <Route path = "/users/admin/landing" component = {Landing_List} />
     <Route path = "/users/PatientList" component = {PatientList} />
     <Route path = "/PatientChart" component = {PatientChart} />
     <Route path = "/PatientNotes" component = {PatientNotes} />
@@ -36,6 +32,20 @@ const Navigation = () => (
     <Route path = "/users/newPatient" component = {NewPatient} />
     <Route path = "/users/newUser" component = {NewUser} />
     <Route path = "/resources" component = {Resources} />
+    <PrivateRoute path = "/users/profile" component = {Profile} />
+
+    {/* Login/Logout Directions */}
+    <Route exact path = "/login" component = {Login} />
+    <Route path = "/logout" component = {Logout} />
+    <Route exact path = "/users/AssessmentList" component = {AssessmentList} />
+  
+
+    {/* Admin Related Directions */}
+    <Route exact path = "/admin-dashboard" component = {Landing_List} />
+    <PrivateRoute exact path = "/register" component = {Register} />
+    <Route path = "/users/admin/landing" component = {Landing_List} />
+    
+    {/* <Route path = "/login" component = {Login} /> */}
   </Switch>
 )
 

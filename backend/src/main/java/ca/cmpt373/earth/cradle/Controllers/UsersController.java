@@ -6,6 +6,10 @@ import ca.cmpt373.earth.cradle.repository.RoleRepository;
 import ca.cmpt373.earth.cradle.repository.UsersRepository;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 @RestController
 @RequestMapping("/users")
 public class UsersController {
@@ -26,6 +31,8 @@ public class UsersController {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    private MongoTemplate mongoTemplate;
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
@@ -40,17 +47,26 @@ public class UsersController {
         return users;
     }
 
-    /*@GetMapping("/{user_id}")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public Users getUsers(@PathVariable String id) {
-        Users user = this.usersRepository.findById(id);
-        return user;
-    }*/
+    @GetMapping("/get{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public Users get(@PathVariable String id) {
+        return usersRepository.findUserById(id);
+    }
 
-
-    @PutMapping
-    public void insert(@RequestBody Users user) {
-        this.usersRepository.insert(user);
+    @PutMapping("/updateProfile")
+    public ResponseEntity<Users> updateProfile(@RequestBody Users user) {
+        System.out.println("Retrieving existing users...");
+        Users foundUser = usersRepository.findUserById(user.getId());
+        if (user.getId() == foundUser.getId()){
+            System.out.println("Found a user");
+            usersRepository.save(user);
+            return ResponseEntity.status(200).body(user);
+        }
+        else {
+            //Return a not found status
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @PostMapping("/add")

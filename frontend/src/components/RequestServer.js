@@ -90,6 +90,18 @@ class RequestServer extends Component {
         }
     }
 
+    async getUserInfo(id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/users/get' + id)
+            return response
+        }
+        catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
     async login(username, password) {
         var userObj = {
             username: username,
