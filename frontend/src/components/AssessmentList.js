@@ -22,6 +22,7 @@ class AssessmentList extends Component {
             columns: [
                 { title: 'Assessment Id', field: 'id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Early Warning Color', field: 'ews_color', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Shock Arrow', field: 'arrow', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'patient Id', field: 'patient_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'VHT Id', field: 'vht_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Gestational Age', field: 'gestational_age', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
@@ -29,7 +30,6 @@ class AssessmentList extends Component {
                 { title: 'Follow Up?', field: 'follow_up', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Recheck?', field: 'recheck', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Assessment Information', field: 'info', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                //{title: 'Arrow', field: 'arrow'}
             ],
             data: [
                 {
@@ -42,7 +42,7 @@ class AssessmentList extends Component {
                     follow_up: 'LOADING...',
                     recheck: 'LOADING...',
                     arrow: 'LOADING...',
-                    //info: <ModalPopup />
+                    info: <ModalPopup />
                 },
             ],
 
@@ -63,7 +63,6 @@ class AssessmentList extends Component {
             var heart_rate = assessment.heart_rate
             var systolic = assessment.systolic
             var diastolic = assessment.diastolic
-            var id = assessment._id
             var ews_color
             switch (String(assessment.ews_color).toUpperCase()) {
                 case "GREEN":
@@ -104,7 +103,7 @@ class AssessmentList extends Component {
                     follow_up = assessment.follow_up
             }
             var follow_up_date = assessment.follow_up_date
-            
+
             var arrow = assessment.arrow
 
 
@@ -119,7 +118,14 @@ class AssessmentList extends Component {
                 default:
                     recheck = assessment.recheck
             }
-            var info = <ModalPopup patient_id={assessment.patient_id} vht_id={assessment.vht_id}
+            var info = <ModalPopup
+                patient_id={assessment.patient_id}
+                vht_id={assessment.vht_id}
+                symptoms={assessment.symptoms}
+                systolic={assessment.systolic}
+                diastolic={assessment.diastolic}
+                heart_rate={assessment.heart_rate}
+                date={assessment.date}
             />
             var assessment_obj = {
                 id: assessment_id,
@@ -161,7 +167,6 @@ class AssessmentList extends Component {
         return (
 
             <div className="table-position">
-                <GreenLight/>
                 <MaterialTable
                     title="Assessment List"
                     columns={this.state.columns}

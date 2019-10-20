@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import './ModalPopup';
+import './ModalPopup.css';
 
 class ModalAssessment extends Component {
     constructor(props) {
@@ -20,25 +21,6 @@ class ModalAssessment extends Component {
             VHT_name: 'LOADING...',
 
         }
-    }
-
-    populatePatientData(response) {
-        // console.log(response.name)
-        var patientData = {
-            patient_name: response.name
-        }
-        this.setState({ data: patientData })
-        // this.setState(this.patient_name = response.name);
-
-    }
-    populateVHTData(response) {
-        // console.log(response.name)
-        var patientData = {
-            patient_name: response.name
-        }
-        this.setState({ data: patientData })
-        // this.setState(this.patient_name = response.name);
-
     }
 
     componentDidMount() {
@@ -86,7 +68,7 @@ class ModalAssessment extends Component {
         return (
             < div className="modal">
                 <h1>Asssessment ID: {this.props.id}</h1>
-                <div className="content">
+                <div className="temp">
                     {" "}
                     Patient Name: {this.state.patient_name}
                     <br />

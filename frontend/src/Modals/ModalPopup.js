@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Popup from "reactjs-popup";
 import './ModalPopup.css';
 import ModalAssessment from './ModalAssessment';
@@ -13,9 +12,9 @@ class ModalPopup extends Component {
                     // <a className="close" onClick={close}>
                     //     &times;
                     // </a>
-                        <ModalAssessment{...this.props} />
-                    
-                    
+                    <ModalAssessment{...this.props} />
+
+
                 )}
             </Popup >
         );
