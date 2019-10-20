@@ -3,12 +3,19 @@
     position: inherit !important;
     top: auto !important;
     left: auto !important;
-    z-index: 1;
+    z-index: 9999;
     display: block !important;
     width: 100%;
     height: 100%;
     overflow: hidden;
     outline: 0;
+}
+
+.modal.show .modal-dialog {
+
+  transform: none;
+  z-index: 9999;
+
 }
 
 .modal > .header {
