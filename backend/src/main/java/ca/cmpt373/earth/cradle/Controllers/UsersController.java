@@ -53,12 +53,13 @@ public class UsersController {
         this.usersRepository.insert(user);
     }
 
-    @PostMapping("/add")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:8040")
-    public Users add(@RequestBody Users candidate) {
-        return usersRepository.save(candidate);
-    }
+//    SAME AS "/register" - we should use register - it contains password encryption
+//    @PostMapping("/add")
+//    @ResponseStatus(code = HttpStatus.CREATED)
+//    @CrossOrigin(origins = "http://localhost:8040")
+//    public Users add(@RequestBody Users candidate) {
+//        return usersRepository.save(candidate);
+//    }
 
     @PostMapping("/login")
     @ResponseStatus(code = HttpStatus.OK)
@@ -86,24 +87,25 @@ public class UsersController {
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Users> register(@RequestBody Users user) {
+        //Only one id can exist - if id exist and change the username - possible (over-write)
+        // .. if user's name exists for different id <-- error
+        // .... unique user name only!!
+
         String workerId = user.getId();
         String name = user.getName();
         String username = user.getUsername();
         String password = user.getPassword();
         String dob = user.getDob();
         String address = user.getAddress();
-        String gender = user.getGender();
+        Users.Gender gender = user.getGender();
 
-        Set<Role> roles = new HashSet<>();
-        Role newUserRole = new Role(workerId, "USER");
-        roles.add(newUserRole);
+        Set<Role> roles = user.getRoles();
 
         String hashedPassword = bCrypt.encode(password);
 
         try {
             this.usersRepository.save(new Users(workerId, username, hashedPassword, name, dob,
                     address, gender, roles));
-//            roleRepository.save(newUserRole);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);

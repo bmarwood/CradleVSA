@@ -4,6 +4,7 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import ShowSymp from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
 import RequestServer from '../RequestServer';
+import Utility from './Utility';
 
 const Color = {
     GREEN: "GREEN",
@@ -123,16 +124,6 @@ class NewAssessment extends React.Component {
         }
     }
 
-    //set date "Month Date, Year"
-    setDate(){
-        let today = new Date();
-        const MONTH_ARR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let month = MONTH_ARR[today.getMonth()];
-        let date = today.getDate();
-        let year = today.getFullYear();
-        this.state.assessments.date = month + " " + date + ", " + year
-    }
-
     //set ews_color with an arrow
     setColor(){
         this.state.assessments.heart_rate = parseInt(this.state.assessments.heart_rate);
@@ -226,14 +217,14 @@ class NewAssessment extends React.Component {
         this.addSymptoms();
 
 
-        //delete unnecessary elements
-        delete this.state.assessments.temp_symptoms;
-        delete this.state.assessments.symptoms_arr;
-        delete this.state.assessments.initial;
-        delete this.state.assessments.time_scale;
-        delete this.state.assessments.errorMsg;
-        delete this.state.assessments.error;
-        delete this.state.assessments.msg;
+        //delete unnecessary elements - This can cause an error - just comment out for now
+        // delete this.state.assessments.temp_symptoms;
+        // delete this.state.assessments.symptoms_arr;
+        // delete this.state.assessments.initial;
+        // delete this.state.assessments.time_scale;
+        // delete this.state.assessments.errorMsg;
+        // delete this.state.assessments.error;
+        // delete this.state.assessments.msg;
     }
 
 
@@ -255,8 +246,11 @@ class NewAssessment extends React.Component {
             return;
         }
 
+        //setDate
+        let today = new Date();
+        this.state.assessments.date = Utility.convertDate(today)
+
         this.setColor();
-        this.setDate();
         this.changeType();
         console.log(this.state)
         
