@@ -16,8 +16,8 @@ class ModalAssessment extends Component {
             symptoms: '',
             date: '',
             heart_rate: '',
-            patient_name: 'Gertrude',
-            VHT_name: 'Bill',
+            patient_name: 'LOADING...',
+            VHT_name: 'LOADING...',
 
         }
     }
@@ -82,11 +82,6 @@ class ModalAssessment extends Component {
             })
     }
 
-    handleClick() {
-        // e.preventDefault()
-        console.log("Hello")
-    }
-
     render() {
         return (
             < div className="modal">
@@ -101,7 +96,7 @@ class ModalAssessment extends Component {
                     <br />
                     Current Symptoms: {this.props.symptoms}
                     <br />
-                    VHT Name:
+                    VHT Name: {this.state.vht_name}
                     <br />
                     Heart Rate: {this.props.heart_rate}
                     <br />

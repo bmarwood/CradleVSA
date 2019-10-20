@@ -19,6 +19,7 @@ class AssessmentList extends Component {
         this.getAssessmentList()
         this.setState({
             columns: [
+                { title: 'Assessment Id', field: 'id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Early Warning Color', field: 'ews_color', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'patient Id', field: 'patient_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'VHT Id', field: 'vht_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
@@ -30,10 +31,15 @@ class AssessmentList extends Component {
             ],
             data: [
                 {
-                    patient_id: 'Ann',
-                    patient_age: 'Howard',
-                    vht_id: '1987',
-                    date: 'Sept 1, 2019'
+                    assessment_id: 'LOADING...',
+                    ews_color: 'LOADING...',
+                    patient_id: 'LOADING...',
+                    vht_id: 'LOADING...',
+                    gestational_age: 'LOADING...',
+                    referred: 'LOADING...',
+                    follow_up: 'LOADING...',
+                    recheck: 'LOADING...',
+                    info: <ModalPopup />
                 },
             ],
 
@@ -45,6 +51,7 @@ class AssessmentList extends Component {
         console.log(response)
         var assessmentList = []
         response.forEach(assessment => {
+            var assessment_id = assessment._id
             var patient_id = assessment.patient_id
             var patient_age = assessment.patient_age
             var vht_id = assessment.vht_id
@@ -108,6 +115,7 @@ class AssessmentList extends Component {
             var info = <ModalPopup patient_id={assessment.patient_id} vht_id={assessment.vht_id}
             />
             var assessment_obj = {
+                assessment_id: assessment._id,
                 patient_id: patient_id,
                 ews_color: ews_color,
                 patient_age: patient_age,
@@ -155,55 +163,16 @@ class AssessmentList extends Component {
 
             <div className="table-position">
                 <MaterialTable
-
                     title="Assessment List"
                     columns={this.state.columns}
                     data={this.state.data}
-                    // editable={{
-                    //     onRowUpdate: (newData, oldData) =>
-                    //         new Promise(resolve => {
-                    //             setTimeout(() => {
-                    //                 resolve();
-                    //                 const data = [...this.state.data];
-                    //                 data[data.indexOf(oldData)] = newData;
-                    //                 this.setState({ ...this.state, data });
-                    //             }, 600);
-                    //         }),
-                    //     onRowDelete: oldData =>
-                    //         new Promise(resolve => {
-                    //             setTimeout(() => {
-                    //                 resolve();
-                    //                 const data = [...this.state.data];
-                    //                 data.splice(data.indexOf(oldData), 1);
-                    //                 this.setState({ ...this.state, data });
-                    //             }, 600);
-                    //         }),
-                    // }}
-                    Other Actions
-                    actions={[
-                        {
-                            //Graph button for patient chart
-                            icon: 'assessment',
-                            tooltip: 'Graph',
-                            onClick: () => {
-                                //Popup for Patient chart, opens PatientChart.js
-                                window.open("/users/PatientChart")
-                                //'popUpWindow',
-                                //'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-                                //window.location.pathname = "/users/PatientList";
-                            }
-                        }
-                    ]}
                 />
             </div>
 
         );
-
     }
-
-
-
 }
+
 const styles = {
     overflow: "hidden",
     display: "auto",
