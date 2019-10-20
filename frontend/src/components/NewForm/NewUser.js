@@ -5,7 +5,20 @@ import ShowRoles from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
 import RequestServer from  '../RequestServer'
 import {ToastContainer, toast} from 'react-toastify';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import 'react-toastify/dist/ReactToastify.css';
+import Utility from "./Utility";
+
+const Gender = {
+    MALE: "MALE",
+    FEMALE: "FEMALE"
+}
+const Role = {
+    USER: "USER",
+    ADMIN: "ADMIN",
+    HEALTH_WORKER: "HEALTH_WORKER"
+}
 
 //form for a new user
 class NewUser extends React.Component {
@@ -18,7 +31,7 @@ class NewUser extends React.Component {
             name: '',
             dob: '',
             address: '',
-            gender: 'male',
+            gender: Gender.MALE,
             roles: [],
             enabled: false,
 
@@ -26,39 +39,51 @@ class NewUser extends React.Component {
             error: false,
             fname: '',
             lname: '',
+            temp_dob: new Date(),
             roles_array: [
-                {id: 1, name: 'USER', checked: true},
-                {id: 2, name: 'ADMIN', checked: false},
-                {id: 3, name: 'HEALTH WORKER', checked: false}
+                {id: 1, name: Role.USER, checked: true},
+                {id: 2, name: Role.ADMIN, checked: false},
+                {id: 3, name: Role.HEALTH_WORKER, checked: false}
             ]
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleCheckbox = this.handleCheckbox.bind(this)
+        this.handleCheckbox = this.handleCheckbox.bind(this);
     }
+
+    changeDOB = date => {
+        this.setState({
+            temp_dob: date
+        });
+    };
+
+
 
 
     //make the checkboxes are changeable
     handleCheckbox(id) {
         this.setState(prevState => {
-            const updatedSymp = prevState.roles_array.map(each => {
+            const updatedRole = prevState.roles_array.map(each => {
                 if (each.id === id) {
                     each.checked = !each.checked
                 }
                 return each
             });
-            prevState.roles_array = updatedSymp;
+            prevState.roles_array = updatedRole;
             return prevState;
         })
-        console.log(this.state.roles_array)
     }
 
 
     //add selected roles in the array
     addRole() {
+        //We need to re-initialize - if error cause
+        this.state.roles = [];
         const role_array = this.state.roles_array;
+        console.log("For loop for the roles_array")
         for (let index in role_array) {
             if (role_array[index].checked) {
-                this.state.roles.push({id: role_array[index].id, role: role_array[index].name})
+                this.state.roles.push({id: this.state.id, role: role_array[index].name})
+                console.log(role_array[index].id, role_array[index].name)
             }
         }
     }
@@ -66,15 +91,15 @@ class NewUser extends React.Component {
 
     changeState() {
         this.setState({
-            name: this.state.fname + ' ' + this.state.lname
+            name: this.state.fname + ' ' + this.state.lname,
+            dob: Utility.convertDate(this.state.temp_dob)
         })
         this.addRole();
 
         //delete
-        delete this.state.fname;
-        delete this.state.lname;
-        delete this.state.error;
-        delete this.state.roles_array;
+        // delete this.state.fname;
+        // delete this.state.lname;
+        // delete this.state.error;
     }
 
 
@@ -85,6 +110,7 @@ class NewUser extends React.Component {
             error: false
         })
         for (let index in role) {
+            //check if the checkbox is selected and if so change the error to true
             if (role[index].checked && !this.state.error) {
                 this.setState({
                     error: true
@@ -92,6 +118,7 @@ class NewUser extends React.Component {
             }
         }
     }
+
 
 
     handleSubmit = async () => {
@@ -107,19 +134,25 @@ class NewUser extends React.Component {
         console.log(this.state);
 
         //connect to the database
+        //No need to re-intantiate
+            /*
+            var user = {
+                id: this.state.id,
+                name: this.state.name,
+                address: this.state.address,
+                dob: this.state.dob,
+                gender: this.state.gender,
+                username: this.state.username,
+                password: this.state.password,
+                roles: this.state.roles,
+            }
 
-        var user = {
-            id: this.state.id,
-            name: this.state.name,
-            address: this.state.address,
-            dob: this.state.dob,
-            gender: this.state.gender,
-            username: this.state.username,
-            password: this.state.password,
-            roles: this.state.roles,
-        }
+            var response = await RequestServer.addUser(user)
 
-        var response = await RequestServer.addUser(user)
+             */
+
+        //So we can just use
+        var response = await RequestServer.addUser(this.state)
 
         if (response !== null) {
             toast("User Added");
@@ -145,7 +178,7 @@ class NewUser extends React.Component {
 
 
     render() {
-        const roles = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
+        let roles_map = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
                                                                     handleChange={this.handleCheckbox}/>)
         return (
             <ValidatorForm
@@ -236,14 +269,10 @@ class NewUser extends React.Component {
                         <br/>
                     </Cell>
                     <Cell col={4}>
-                        <TextValidator
-                            label="Date of Birth"
-                            onChange={this.handleChange}
-                            name="dob"
-                            value={this.state.dob}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
-                            variant="outlined"
+                        <p>Date of Birth:</p>
+                        <DatePicker
+                            selected={this.state.temp_dob}
+                            onChange={this.changeDOB}
                         />
                         <br/>
                         <br/>
@@ -254,13 +283,13 @@ class NewUser extends React.Component {
                             onChange={this.handleChange}
                             name="gender"
                         >
-                            <option value="male"> Male</option>
-                            <option value="female"> Female</option>
+                            <option value="MALE"> Male</option>
+                            <option value="FEMALE"> Female</option>
                         </select>
                         <br/>
                         <br/>
                         <p>Select role</p>
-                        {roles}
+                        {roles_map}
                         <br/>
                         <br/>
                     </Cell>
