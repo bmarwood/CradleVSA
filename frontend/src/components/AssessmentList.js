@@ -16,6 +16,7 @@ class AssessmentList extends Component {
 
     componentDidMount() {
         this.getAssessmentList()
+        this.timer = setInterval(() => this.getAssessmentList(), 10000);
         this.setState({
             columns: [
                 {title: 'patient Id', field: 'patient_id'},
@@ -45,11 +46,16 @@ class AssessmentList extends Component {
         })
     }
 
+    componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
+    }
+
 
     populateData(response) {
-        console.log(response)
+
         var assessmentList = []
-        response.forEach(assessment => {
+        response.forEach(function(assessment) {
             var patient_id = assessment.patient_id
             var patient_age = assessment.patient_age
             var vht_id = assessment.vht_id

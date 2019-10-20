@@ -16,7 +16,7 @@ class PatientList extends Component {
 
     componentDidMount() {
         this.getPatientList()
-        this.timer = setInterval(() => this.getPatientList(), 5000);
+        this.timer = setInterval(() => this.getPatientList(), 10000);
         this.setState({
             columns: [
                 { title: 'Name', field: 'name' },
@@ -27,6 +27,11 @@ class PatientList extends Component {
             ],
             data: [],
         })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
     }
 
 
