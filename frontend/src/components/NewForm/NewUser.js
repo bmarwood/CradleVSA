@@ -26,19 +26,19 @@ class NewUser extends React.Component {
         super()
         this.state = {
             id: '',
-            username: '',
-            password: '',
-            name: '',
+            username: 'TEST',
+            password: 'TEST',
+            name: 'TEST',
             dob: '',
-            address: '',
+            address: 'TEST',
             gender: Gender.MALE,
             roles: [],
             enabled: false,
 
             //TEMPORARY VARIABLES
             error: false,
-            fname: '',
-            lname: '',
+            fname: 'TEST',
+            lname: 'TEST',
             temp_dob: new Date(),
             roles_array: [
                 {id: 1, name: Role.USER, checked: true},

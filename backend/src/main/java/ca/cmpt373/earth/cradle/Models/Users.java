@@ -14,8 +14,8 @@ public class Users {
 
     //Basic user's info
     @Id
-    private String id;              //primary key
-    private String username;
+    private String id;
+    private String username;    //primary key
     private String password;
     private String name;
     private String dob;
