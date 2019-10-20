@@ -10,6 +10,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import 'react-toastify/dist/ReactToastify.css';
 import Utility from "./Utility";
 
+const Gender = {
+    MALE: "MALE",
+    FEMALE: "FEMALE"
+}
+const Role = {
+    USER: "USER",
+    ADMIN: "ADMIN",
+    HEALTH_WORKER: "HEALTH_WORKER"
+}
 
 //form for a new user
 class NewUser extends React.Component {
@@ -22,7 +31,7 @@ class NewUser extends React.Component {
             name: '',
             dob: '',
             address: '',
-            gender: 'male',
+            gender: Gender.MALE,
             roles: [],
             enabled: false,
 
@@ -32,9 +41,9 @@ class NewUser extends React.Component {
             lname: '',
             temp_dob: new Date(),
             roles_array: [
-                {id: 1, name: 'USER', checked: true},
-                {id: 2, name: 'ADMIN', checked: false},
-                {id: 3, name: 'HEALTH WORKER', checked: false}
+                {id: 1, name: Role.USER, checked: true},
+                {id: 2, name: Role.ADMIN, checked: false},
+                {id: 3, name: Role.HEALTH_WORKER, checked: false}
             ]
         };
         this.handleChange = this.handleChange.bind(this);
@@ -67,10 +76,14 @@ class NewUser extends React.Component {
 
     //add selected roles in the array
     addRole() {
+        //We need to re-initialize - if error cause
+        this.state.roles = [];
         const role_array = this.state.roles_array;
+        console.log("For loop for the roles_array")
         for (let index in role_array) {
             if (role_array[index].checked) {
-                this.state.roles.push({id: role_array[index].id, role: role_array[index].name})
+                this.state.roles.push({id: this.state.id, role: role_array[index].name})
+                console.log(role_array[index].id, role_array[index].name)
             }
         }
     }
@@ -270,8 +283,8 @@ class NewUser extends React.Component {
                             onChange={this.handleChange}
                             name="gender"
                         >
-                            <option value="male"> Male</option>
-                            <option value="female"> Female</option>
+                            <option value="MALE"> Male</option>
+                            <option value="FEMALE"> Female</option>
                         </select>
                         <br/>
                         <br/>

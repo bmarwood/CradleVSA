@@ -50,11 +50,11 @@ class RequestServer extends Component {
             return null
         }
     }
-
-    //ALSO '/users/add' WORKS
+    
     async addUser(user) {
         try {
             var response = await axios.post(this.getServerLocation() + '/users/register', user)
+            console.log("RESPONCE IN ADD USER : ", response)
             return response
         }
         catch (error) {
