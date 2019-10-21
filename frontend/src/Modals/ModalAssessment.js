@@ -3,6 +3,7 @@ import axios from 'axios';
 import Popup from "reactjs-popup";
 import './ModalPopup';
 import './ModalPopup.css';
+import requestServer from '../components/RequestServer';
 
 class ModalAssessment extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class ModalAssessment extends Component {
             date: '',
             heart_rate: '',
             patient_name: 'LOADING...',
-            VHT_name: 'LOADING...',
+            vht_name: 'LOADING...',
 
         }
     }
@@ -28,40 +29,21 @@ class ModalAssessment extends Component {
         this.getVHT();
     }
 
-    getPatient() {
-        axios.get('http://localhost:8080/patients/get' + this.props.patient_id)
-            .then(response => {
-                // console.log("response from server: ", response)
-                this.setState({ patient_name: response.data.name })
-                console.log(response)
-                console.log(response.data.name)
-                // console.log(this.state)
-            })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-                this.setState({
-                    error: true,
-                })
-            })
+    async getPatient() {
+
+        var response = await requestServer.getPatient(this.props.patient_id)
+
+        if (response !== null) {
+            this.setState({ patient_name: response.data.name })
+        }
     }
 
-    getVHT() {
-        axios.get('http://localhost:8080/vhts/get' + this.props.vht_id)
-            .then(response => {
-                // console.log("response from server: ", response)
-                this.setState({ vht_name: response.data.name })
-                console.log(response)
-                console.log(response.data.name)
-                // console.log(this.state)
-            })
-            .catch(error => {
-                console.log('error block')
-                console.log(error)
-                this.setState({
-                    error: true,
-                })
-            })
+    async getVHT() {
+        var response = await requestServer.getPatient(this.props.patient_id)
+
+        if (response !== null) {
+            this.setState({ vht_name: response.data.name })
+        }
     }
 
     render() {
