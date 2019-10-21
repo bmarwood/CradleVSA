@@ -39,7 +39,7 @@ class ModalAssessment extends Component {
     }
 
     async getVHT() {
-        var response = await requestServer.getPatient(this.props.patient_id)
+        var response = await requestServer.getVHT(this.props.vht_id)
 
         if (response !== null) {
             this.setState({ vht_name: response.data.name })
