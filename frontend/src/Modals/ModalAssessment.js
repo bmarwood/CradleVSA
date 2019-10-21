@@ -32,9 +32,12 @@ class ModalAssessment extends Component {
     async getPatient() {
 
         var response = await requestServer.getPatient(this.props.patient_id)
-
         if (response !== null) {
-            this.setState({ patient_name: response.data.name })
+            if (response.data === "") {
+                this.setState({ patient_name: 'ID doesn\'t match to a patient' })
+            } else {
+                this.setState({ patient_name: response.data.name })
+            }
         }
     }
 
@@ -42,7 +45,11 @@ class ModalAssessment extends Component {
         var response = await requestServer.getVHT(this.props.vht_id)
 
         if (response !== null) {
-            this.setState({ vht_name: response.data.name })
+            if (response.data === "") {
+                this.setState({ vht_name: 'ID doesn\'t match to a vht' })
+            } else {
+                this.setState({ vht_name: response.data.name })
+            }
         }
     }
 
