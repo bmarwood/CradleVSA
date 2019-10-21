@@ -75,7 +75,7 @@ class Login extends Component {
     loginHandler = async (e) => {
         e.preventDefault()
         var passback = await requestServer.login(this.state.username, this.state.password)
-        console.log(passback)
+        // console.log(passback)
         if (passback === null) {
             this.setState({
                 error: true,
@@ -84,8 +84,11 @@ class Login extends Component {
 
         } else {
             localStorage.setItem("isLoggedIn", "true")
+            localStorage.setItem("userData", JSON.stringify(passback.data))
+            var user = localStorage.getItem("userData")
+            // console.log("User data is : " + user)
             this.setTheState(passback)
-            this.testConsoleLog(passback)
+            // this.testConsoleLog(passback)
             this.setRole(passback)
             this.navigate(passback)
         }
