@@ -72,7 +72,9 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         int heart_rate = Integer.parseInt(assessmentParams[8]);
         int systolic = Integer.parseInt(assessmentParams[9]);
         int diastolic = Integer.parseInt(assessmentParams[10]);
-        String ews_color = assessmentParams[11];
+        //TO-DO: ews_color
+        Assessments.Color ews_color = Assessments.Color.YELLOW;
+        //
         String[] symptoms = assessmentParams[12].split(" ");
         boolean referred = false;
         if (assessmentParams[12].equals("true")) referred = true;
@@ -84,10 +86,12 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         boolean recheck = false;
         if (assessmentParams[15].equals("true")) recheck = true;
         if (assessmentParams[15].equals("false")) recheck = false;
-
+        //TO-DO: Arrow
+        Assessments.Arrow arrow = Assessments.Arrow.EMPTY;
+        //
 
         Assessments assessment =
-                new Assessments(id, patient_id, patient_age, vht_id, date, gestational_age, heart_rate, systolic, diastolic, ews_color, symptoms, referred, follow_up, follow_up_date, recheck);
+                new Assessments(id, patient_id, patient_age, vht_id, date, gestational_age, heart_rate, systolic, diastolic, ews_color, symptoms, referred, follow_up, follow_up_date, recheck, arrow);
 
         return assessment;
     }
