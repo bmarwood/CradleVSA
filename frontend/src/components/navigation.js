@@ -11,6 +11,8 @@ import Register  from './register';
 import PatientList from './PatientList';
 import PatientChart from './PatientChart';
 import AssessmentList from './AssessmentList';
+import PatientNotes from './PatientNotes';
+import PatientAddMedication from './PatientAddMedication';
 import Resources from './Resources';
 
 
@@ -22,12 +24,14 @@ const Navigation = () => (
     <Route exact path = "/admin-dashboard" component = {Landing_List} />
     <Route exact path = "/login" component = {Login} />
     <PrivateRoute exact path = "/register" component = {Register} />
-    <Route exact path = "/users/AssessmentList" component = {AssessmentList} />
+    <PrivateRoute exact path = "/AssessmentList" component = {AssessmentList} />
     <Route path = "/login" component = {Login} />
     <Route path = "/logout" component = {Logout} />
     <Route path = "/users/admin/landing" component = {Landing_List} />
     <Route path = "/users/PatientList" component = {PatientList} />
-    <Route path = "/users/PatientChart" component = {PatientChart} />
+    <Route path = "/PatientChart" component = {PatientChart} />
+    <Route path = "/PatientNotes" component = {PatientNotes} />
+    <Route path = "/PatientAddMedication" component = {PatientAddMedication} />
     <Route path = "/users/newAssessment" component = {NewAssessment} />
     <Route path = "/users/newPatient" component = {NewPatient} />
     <Route path = "/users/newUser" component = {NewUser} />
@@ -46,6 +50,7 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
             state: { from: props.location }
           }} />
     )} />
+    
   )
 }
 
