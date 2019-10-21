@@ -56,16 +56,17 @@ public class MongoDBConfig {
     @Bean
     CommandLineRunner commandLineRunnerAssess(AssessmentsRepository assessmentsRepository) {
         return strings -> {
+
             String[] symptoms = {"cough", "sings well"};
-            assessmentsRepository.save(new Assessments("1", "22", "34yrs", "ab11", "sept 24", "2 weeks", 72, 68, 44, Assessments.Color.GREEN,
+            assessmentsRepository.save(new Assessments("1", "22", "34yrs", "54", "sept 24", "2 weeks", 72, 68, 44, Assessments.Color.GREEN,
                     symptoms, true, true, "next week monday", true, Assessments.Arrow.EMPTY));
-            assessmentsRepository.save(new Assessments("2", "44", "10yrs", "ab11", "sept 25", "0 weeks", 44, 90, 10, Assessments.Color.RED,
+            assessmentsRepository.save(new Assessments("2", "36", "10yrs", "115", "sept 25", "0 weeks", 44, 90, 10, Assessments.Color.RED,
                     symptoms, true, true, "next week tuesday", true, Assessments.Arrow.UP));
-            assessmentsRepository.save(new Assessments("4", "1", "44yrs", "777", "sept 24, 2019", "0 weeks", 80, 105, 70, Assessments.Color.RED,
+            assessmentsRepository.save(new Assessments("4", "2", "44yrs", "54", "sept 24, 2019", "0 weeks", 80, 105, 70, Assessments.Color.RED,
                     symptoms, true, true, "next week tuesday", true, Assessments.Arrow.DOWN));
-            assessmentsRepository.save(new Assessments("5", "1", "44yrs", "777", "sept 24, 2019", "0 weeks", 82, 110, 80, Assessments.Color.YELLOW,
+            assessmentsRepository.save(new Assessments("5", "1060", "44yrs", "777", "sept 24, 2019", "0 weeks", 82, 110, 80, Assessments.Color.YELLOW,
                     symptoms, true, true, "next week tuesday", false, Assessments.Arrow.UP));
-            assessmentsRepository.save(new Assessments("6", "1", "44yrs", "777", "sept 26, 2019", "0 weeks", 74, 127, 84, Assessments.Color.GREEN,
+            assessmentsRepository.save(new Assessments("6", "1010101", "44yrs", "777", "sept 26, 2019", "0 weeks", 74, 127, 84, Assessments.Color.GREEN,
                     symptoms, true, false, null, false, Assessments.Arrow.EMPTY));
         };
     }

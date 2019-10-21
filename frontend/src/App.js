@@ -17,7 +17,7 @@ class App extends Component {
                       <Link to ="/">Home</Link>
                       <Link to ="/users/admin/landing">Admin Landing page</Link>
                       <Link to ="/users/PatientList">Patient List</Link>
-                      <Link to ="/users/AssessmentList">Assessments List</Link>
+                      <Link to ="AssessmentList">Assessments List</Link>
                       <Link to ="/users/PatientNotes">Note</Link>
                   </Navigation>
               </Header>
@@ -51,7 +51,7 @@ class App extends Component {
                 <Link to ="/">Home</Link>
                 <Link to ="/users/admin/landing">Admin Landing page</Link>
                 <Link to ="/users/PatientList">Patient List</Link>
-                <Link to ="/users/AssessmentList">Assessments List</Link>
+                <Link to ="AssessmentList">Assessments List</Link>
                 <Link to ="/users/PatientChart">Patient Chart</Link>
                 <Link to ="/resources">Resources</Link>
             </Navigation>

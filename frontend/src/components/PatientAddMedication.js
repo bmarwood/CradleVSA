@@ -3,7 +3,7 @@ import {Button, Textfield, Grid, Cell} from 'react-mdl';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Formik } from 'formik';
+// import { Formik } from 'formik';
 
 class PatientAddMedication extends React.Component {
  

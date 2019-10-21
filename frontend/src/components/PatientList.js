@@ -127,7 +127,7 @@ class PatientList extends Component {
                             icon: 'assignment',
                             tooltip: 'Medications',
                             onClick: () => {
-                              //Popup for Patient chart, opens PatientChart.js
+                            //   Popup for Patient chart, opens PatientChart.js
                               window.open("/PatientNotes",'popUpWindow',
                               'height=1000,width=1200,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
                             }
