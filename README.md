@@ -38,9 +38,17 @@ npm install --save react-mdl <br>
 
 Back end Instructions: <br>
 Import from pom.xml<br>
-Also check off Import Maven Projects atomatically and create module groups for multi-module Maven Projects<br>
+Also check off Import Maven Projects automatically and create module groups for multi-module Maven Projects<br>
 next, next, and use Java 11 <br>
 Please run the backend from the main function in CradleApplication.java 
+
+SMS Instructions: <br>
+On mobile app, set up a health center with phone number +16042657476 in Settings. <br>
+This is the Twilio number that acts as gateway for passing SMS to the backend. <br>
+Then, click on a reading, select the health center, and click Send Referral. <br>
+This will open the default SMS application to send the Referral. <br>
+An appropriate response will be sent back. Upon success, the assessment will be added to the database.<br>
+
 
 Questions? Please dont hesitate to contact the Product Owner:<br>
 Iteration 1: Brian Marwood: bmarwood@sfu.ca <br>

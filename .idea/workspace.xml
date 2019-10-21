@@ -8,13 +8,15 @@
   <component name="ChangeListManager">
     <list default="true" id="e43636d1-f531-462e-8058-c454d19d5c26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/SmsWebhookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/SmsWebhookController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="cradleplatform" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -108,7 +110,7 @@
       <workItem from="1571176643180" duration="5135000" />
       <workItem from="1571196723603" duration="53000" />
       <workItem from="1571583463870" duration="3479000" />
-      <workItem from="1571621547468" duration="6364000" />
+      <workItem from="1571621547468" duration="8131000" />
     </task>
     <servers />
   </component>
