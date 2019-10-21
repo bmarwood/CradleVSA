@@ -43,7 +43,8 @@ next, next, and use Java 11 <br>
 Please run the backend from the main function in CradleApplication.java 
 
 SMS Instructions: <br>
-On mobile app, set up a health center with phone number +16042657476 in Settings. <br>
+On the VM, please run the backend. <br>
+On the mobile app, set up a health center with phone number +16042657476 in Settings. <br>
 This is the Twilio number that acts as gateway for passing SMS to the backend. <br>
 Then, click on a reading, select the health center, and click Send Referral. <br>
 This will open the default SMS application to send the Referral. <br>
