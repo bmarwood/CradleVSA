@@ -84,6 +84,9 @@ class Login extends Component {
 
         } else {
             localStorage.setItem("isLoggedIn", "true")
+            localStorage.setItem("userData", JSON.stringify(passback.data))
+            var users = localStorage.getItem("userData")
+            console.log("User data is : " + users)
             this.setTheState(passback)
             this.testConsoleLog(passback)
             this.setRole(passback)

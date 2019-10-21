@@ -29,6 +29,7 @@ class EditDetails extends Component {
             gender: credentials.gender ? credentials.gender : '',
         })
     }
+
     render() {
         return (
             <div>
