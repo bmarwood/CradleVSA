@@ -59,71 +59,7 @@ class AssessmentList extends Component {
     populateData(response) {
 
         var assessmentList = []
-        response.forEach(function(assessment) {
-            var assessment_id = assessment._id
-            var patient_id = assessment.patient_id
-            var patient_age = assessment.patient_age
-            var vht_id = assessment.vht_id
-            var date = assessment.date
-            var gestational_age = assessment.gestational_age
-            var heart_rate = assessment.heart_rate
-            var systolic = assessment.systolic
-            var diastolic = assessment.diastolic
-            var ews_color
-            switch (String(assessment.ews_color).toUpperCase()) {
-                case "GREEN":
-                    ews_color = <GreenLight />
-                    break;
-                case "YELLOW":
-                    ews_color = <YellowLight />
-                    break;
-                case "RED":
-                    ews_color = <RedLight />
-                    break;
-                default:
-                    ews_color = assessment.ews_color
-            }
-
-            var symptoms = assessment.symptoms
-            var referred
-            switch (String(assessment.referred)) {
-                case "true":
-                    referred = <i aria-hidden="true" className="check icon"></i>
-                    break;
-                case "false":
-                    referred = <i aria-hidden="true" className="x icon"></i>
-                    break;
-                default:
-                    referred = assessment.referred
-            }
-
-            var follow_up
-            switch (String(assessment.follow_up)) {
-                case "true":
-                    follow_up = <i aria-hidden="true" className="check icon"></i>
-                    break;
-                case "false":
-                    follow_up = <i aria-hidden="true" className="x icon"></i>
-                    break;
-                default:
-                    follow_up = assessment.follow_up
-            }
-            var follow_up_date = assessment.follow_up_date
-
-            var arrow = assessment.arrow
-
-
-            var recheck
-            switch (String(assessment.recheck)) {
-                case "true":
-                    recheck = <i aria-hidden="true" className="check icon"></i>
-                    break;
-                case "false":
-                    recheck = <i aria-hidden="true" className="x icon"></i>
-                    break;
-                default:
-                    recheck = assessment.recheck
-            }
+        response.forEach(function (assessment) {
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
                 vht_id={assessment.vht_id}
@@ -134,30 +70,29 @@ class AssessmentList extends Component {
                 date={assessment.date}
             />
             var assessment_obj = {
-                id: assessment_id,
-                patient_id: patient_id,
-                ews_color: ews_color,
-                patient_age: patient_age,
-                vht_id: vht_id,
-                date: date,
-                gestational_age: gestational_age,
-                heart_rate: heart_rate,
-                systolic: systolic,
-                diastolic: diastolic,
-                symptoms: symptoms,
-                referred: referred,
-                follow_up: follow_up,
-                follow_up_date: follow_up_date,
-                recheck: recheck,
+                id: assessment._id,
+                ews_color: getColorVisual(assessment.ews_color),
+                arrow: getArrowVisual(assessment.arrow),
+                patient_id: assessment.patient_id,
+                vht_id: assessment.vht_id,
+                gestational_age: assessment.gestational_age,
+                referred: getBoolVisual(assessment.referred),
+                follow_up: getBoolVisual(assessment.follow_up),
+                recheck: getBoolVisual(assessment.recheck),
+                patient_age: assessment.patient_age,
+                date: assessment.date,
+                heart_rate: assessment.heart_rate,
+                systolic: assessment.systolic,
+                diastolic: assessment.diastolic,
+                symptoms: assessment.symptoms,
+                follow_up_date: assessment.follow_up_date,
                 info: info,
-                arrow: arrow
             }
 
             assessmentList.push(assessment_obj)
         });
 
         this.setState({ data: assessmentList })
-
     }
 
     async getAssessmentList() {
@@ -166,6 +101,7 @@ class AssessmentList extends Component {
             this.populateData(passback.data)
         }
     }
+
 
 
 
@@ -183,6 +119,8 @@ class AssessmentList extends Component {
         );
     }
 }
+
+
 
 const styles = {
     overflow: "hidden",
@@ -207,5 +145,45 @@ const YellowLight = () => (
         <TrafficIcons name="yellowcircle" width={50} fill={"#CCCC00"} />
     </div>
 );
+
+
+
+function getArrowVisual(input) {
+    switch (String(input).toUpperCase()) {
+        case "UP":
+            return <i class="arrow up icon" />
+        case "DOWN":
+            return <i class="arrow down icon" />
+        case "EMPTY":
+            return <i class="window minimize icon" />
+        default:
+            return input
+    }
+}
+
+function getColorVisual(input) {
+    switch (String(input).toUpperCase()) {
+        case "GREEN":
+            return <GreenLight />
+        case "YELLOW":
+            return <YellowLight />
+        case "RED":
+            return <RedLight />
+        default:
+            return input
+    }
+}
+
+function getBoolVisual(input) {
+    switch (String(input).toUpperCase()) {
+        case "TRUE":
+            return <i aria-hidden="true" className="check icon" />
+        case "FALSE":
+            return <i aria-hidden="true" className="x icon" />
+        default:
+            return input
+    }
+}
+
 
 export default AssessmentList;
