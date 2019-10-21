@@ -20,7 +20,8 @@ public class Users {
     private String name;
     private String dob;
     private String address;
-    private Gender gender;
+    private String gender;
+//    private Gender gender;
     private Set<Role> roles;
     private boolean enabled;
 
@@ -37,7 +38,7 @@ public class Users {
 
     public Users(String id, String username, String password,
                  String name, String dob, String address,
-                 Gender gender, Set<Role> roles) {
+                 String gender, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -61,9 +62,13 @@ public class Users {
         return address;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
+
+//    public Gender getGender() {
+//        return gender;
+//    }
 
     public boolean isEnabled() {
         return enabled;
@@ -81,9 +86,13 @@ public class Users {
         this.address = address;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
+
+//    public void setGender(Gender gender) {
+//        this.gender = gender;
+//    }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;

@@ -45,10 +45,16 @@ public class MongoDBConfig {
             Role newHealthWorkerRole = new Role("3920101", "HEALTHWORKER");
             roles.add(newHealthWorkerRole);
 
-            usersRepository.save(new Users("3920101", "admin", hashedPassword, "Admin", "October 19, 2009",
-                    "8888 University Drive, Burnaby V3J 7H5", Users.Gender.MALE, roles));
-            usersRepository.save(new Users("382828", "user", hashedPassword, "User", "December 02, 1992",
-                    "8888 University Drive, Burnaby V3J 7H5", Users.Gender.FEMALE, roles2));
+            usersRepository.save(new Users("3920101", "admin", hashedPassword, "Admin", "02/02/2002",
+                    "8888 University Drive, Burnaby V3J 7H5", "MALE", roles));
+            usersRepository.save(new Users("382828", "user", hashedPassword, "User", "12/02/1992",
+                    "8888 University Drive, Burnaby V3J 7H5", "FEMALE", roles2));
+//
+//            usersRepository.save(new Users("3920101", "admin", hashedPassword, "Admin", "October 19, 2009",
+//                    "8888 University Drive, Burnaby V3J 7H5", Users.Gender.MALE, roles));
+//            usersRepository.save(new Users("382828", "user", hashedPassword, "User", "December 02, 1992",
+//                    "8888 University Drive, Burnaby V3J 7H5", Users.Gender.FEMALE, roles2));
+
 
         };
     }

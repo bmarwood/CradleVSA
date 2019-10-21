@@ -18,19 +18,19 @@ class Utility{
     
     //RETURN User username and id
     static populateUser(response) {
-        console.log(response)
         var user_array = []
         response.forEach(user => {
             var username = user.username
+            var name = user.name
             var id = user.id
 
             var user_obj = {
                 username: username,
+                name: name,
                 id: id
             }
             user_array.push(user_obj)
         });
-        console.log(user_array)
         return user_array;
     }
     

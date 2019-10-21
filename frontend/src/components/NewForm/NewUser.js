@@ -49,6 +49,7 @@ class NewUser extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
+        this.getUserList()
     }
 
     changeDOB = date => {
@@ -106,12 +107,13 @@ class NewUser extends React.Component {
         const role = this.state.roles_array;
         for (let index in role) {
             //check if the checkbox is selected and if so change the error to true
-            if (role[index].checked && !this.state.error) {
-                this.setState({
-                    error: true
-                })
+            if (role[index].checked) {
+                return;
             }
         }
+        this.setState({
+            error: true
+        })
     }
     
     
@@ -126,7 +128,19 @@ class NewUser extends React.Component {
         }
     }
 
-    checkUsername() {
+    checkUsername(){
+        for (let user of this.state.user_array){
+            if(user.username === this.state.username){
+                this.setState({
+                    error: true
+                })
+                return;
+            }
+        }
+
+    }
+
+    checkName() {
         let temp_name = this.state.fname + ' ' + this.state.lname
         for (let user of this.state.user_array){
             if(user.name === temp_name){
@@ -142,7 +156,7 @@ class NewUser extends React.Component {
         var passback = await RequestServer.getUserList()
         if (passback !== null) {
             this.setState({
-                user_array: Utility.populateData(passback.data)
+                user_array: Utility.populateUser(passback.data)
             })
             //this.state.user_array = Utility.populateData(passback.data)
         }
@@ -150,22 +164,23 @@ class NewUser extends React.Component {
 
 
     handleSubmit = async () => {
+        this.getUserList()
+
         //input validation
         this.setState({
             error: false
         })
         this.checkRole();
-        if (!this.state.error) {
+        if (this.state.error) {
             alert("Must select one role")
             return
         }
 
-        this.getUserList()
 
         console.log(this.state.user_arrays)
         //check for user id - no duplicate value
         this.checkID();
-        if (!this.state.error) {
+        if (this.state.error) {
             alert("Existing ID: Re-enter the ID")
             this.setState({
                 id: ''
@@ -173,9 +188,18 @@ class NewUser extends React.Component {
             return
         }
 
-        //check for user name - no duplicate value
         this.checkUsername();
-        if (!this.state.error) {
+        if (this.state.error) {
+            alert("Existing username: Re-enter username")
+            this.setState({
+                username: '',
+            })
+            return
+        }
+
+        //check for user name - no duplicate value
+        this.checkName();
+        if (this.state.error) {
             alert("Existing user: Re-enter first name and last name")
             this.setState({
                 fname: '',

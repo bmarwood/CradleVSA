@@ -102,8 +102,8 @@ public class UsersController {
         String password = user.getPassword();
         String dob = user.getDob();
         String address = user.getAddress();
-        Users.Gender gender = user.getGender();
-
+//        Users.Gender gender = user.getGender();
+        String gender = user.getGender();
         Set<Role> roles = user.getRoles();
 
         String hashedPassword = bCrypt.encode(password);
