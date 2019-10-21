@@ -7,7 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e43636d1-f531-462e-8058-c454d19d5c26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/SmsWebhookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/SmsWebhookController.java" afterDir="false" />
     </list>
@@ -108,7 +107,8 @@
       <workItem from="1571157492090" duration="2254000" />
       <workItem from="1571176643180" duration="5135000" />
       <workItem from="1571196723603" duration="53000" />
-      <workItem from="1571583463870" duration="2834000" />
+      <workItem from="1571583463870" duration="3479000" />
+      <workItem from="1571621547468" duration="6364000" />
     </task>
     <servers />
   </component>
