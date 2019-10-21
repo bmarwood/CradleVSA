@@ -27,14 +27,14 @@ const Navigation = () => (
     <PrivateRoute exact path = "/AssessmentList" component = {AssessmentList} />
     <Route path = "/login" component = {Login} />
     <PrivateRoute path = "/logout" component = {Logout} />
-    <PrivateRoute path = "/users/admin/landing" component = {Landing_List} />
-    <PrivateRoute path = "/users/PatientList" component = {PatientList} />
+    <PrivateRoute path = "/admin/landing" component = {Landing_List} />
+    <PrivateRoute path = "/PatientList" component = {PatientList} />
     <PrivateRoute path = "/PatientChart" component = {PatientChart} />
     <PrivateRoute path = "/PatientNotes" component = {PatientNotes} />
     <PrivateRoute path = "/PatientAddMedication" component = {PatientAddMedication} />
-    <PrivateRoute path = "/users/newAssessment" component = {NewAssessment} />
-    <PrivateRoute path = "/users/newPatient" component = {NewPatient} />
-    <PrivateRoute path = "/users/newUser" component = {NewUser} />
+    <PrivateRoute path = "/newAssessment" component = {NewAssessment} />
+    <PrivateRoute path = "/newPatient" component = {NewPatient} />
+    <PrivateRoute path = "/newUser" component = {NewUser} />
     <Route path = "/resources" component = {Resources} />
   </Switch>
 )
