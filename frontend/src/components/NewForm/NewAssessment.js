@@ -64,6 +64,7 @@ class NewAssessment extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleCheckbox = this.handleCheckbox.bind(this)
+
     }
 
 
@@ -91,6 +92,7 @@ class NewAssessment extends React.Component {
             this.state.assessments.msg  = "Must select one of the Gestational age"
             return false;
         });
+
         ValidatorForm.addValidationRule('isGreater', (value) => {
             if (parseInt(value) <= parseInt(this.state.assessments.systolic)) {
                 return true;
@@ -232,17 +234,42 @@ class NewAssessment extends React.Component {
         return <p>{this.state.assessments.errorMsg}</p>
     }
 
+    async getMatchingPatientID(patient_id) {
+        var passback = await RequestServer.getPatientByID(patient_id)
+        console.log(passback)
+        if (passback !== null) {
+            return passback.data.id
+        }
+        return null
+    }
+
+
+    async checkID(patient_id) {
+        var existing_id = await this.getMatchingPatientID(patient_id);
+        if(existing_id !== patient_id){
+            return true;
+        }
+        return false;
+    }
+
 
     //USING ALERT RIGHT NOW, SHOULD DISPLAY INSTEAD
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         this.state.assessments.error = false;
         this.state.assessments.errorMessage = '';
         this.checkSymptoms();
         this.checkGestAge();
-        console.log(this.state.assessments.error, this.state.assessments.errorMsg)
         //the error controller
         if (this.state.assessments.error) {
             alert(this.state.assessments.errorMsg)
+            return;
+        }
+        //true if id does not exist
+        let no_existing_ID = await this.checkID(this.state.assessments.patient_id)
+
+        if (no_existing_ID){
+            alert("Patient Id does NOT EXIST")
+            this.state.assessments.patient_id = ''
             return;
         }
 
@@ -386,7 +413,7 @@ class NewAssessment extends React.Component {
                             name="systolic"
                             value={this.state.assessments.systolic}
                             validators={['required', 'minNumber:10', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300']}
+                                errorMessages={['this field is required', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300', 'MUST BE BETWEEN 0-300']}
                         />
                         <br/>
                         <TextValidator

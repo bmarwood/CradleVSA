@@ -42,10 +42,37 @@ class NewPatient extends React.Component {
         // delete this.state.lname;
     }
 
+    async getMatchingPatientID(patient_id) {
+        var passback = await RequestServer.getPatientByID(patient_id)
+        console.log(passback)
+        if (passback !== null) {
+            return passback.data.id
+        }
+        return null
+    }
+
+    async checkID(patient_id) {
+        var existing_id = await this.getMatchingPatientID(patient_id);
+        if(existing_id !== patient_id){
+            return true;
+        }
+        return false;
+    }
 
     handleSubmit = async () => {
+        let no_existing_ID = await this.checkID(this.state.id)
+        //true if id does not exist
+        if (!no_existing_ID){
+            alert("Patient ID EXISTS : IT'S BEEN USING")
+            this.state.id = ''
+            return;
+        }
+
         this.changeState();
         console.log(this.state);
+        console.log("UT")
+
+
 
         // Optional
         // var patient = {

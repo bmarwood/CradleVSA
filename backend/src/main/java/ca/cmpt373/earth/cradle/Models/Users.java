@@ -14,10 +14,10 @@ public class Users {
 
     //Basic user's info
     @Id
-    private String id;
+    private String id;          //primary key
     private String username;    //primary key
     private String password;
-    private String name;
+    private String name;        //primary key - there is an error if the name is taken
     private String dob;
     private String address;
     private String gender;

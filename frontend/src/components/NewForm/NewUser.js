@@ -26,19 +26,19 @@ class NewUser extends React.Component {
         super()
         this.state = {
             id: '',
-            username: 'TEST',
-            password: 'TEST',
-            name: 'TEST',
+            username: '',
+            password: '',
+            name: '',
             dob: '',
-            address: 'TEST',
+            address: '',
             gender: Gender.MALE,
             roles: [],
             enabled: false,
 
             //TEMPORARY VARIABLES
             error: false,
-            fname: 'TEST',
-            lname: 'TEST',
+            fname: '',
+            lname: '',
             temp_dob: new Date(),
             roles_array: [
                 {id: 1, name: Role.USER, checked: true},
@@ -158,13 +158,13 @@ class NewUser extends React.Component {
             this.setState({
                 user_array: Utility.populateUser(passback.data)
             })
-            //this.state.user_array = Utility.populateData(passback.data)
         }
     }
+    
 
 
     handleSubmit = async () => {
-        this.getUserList()
+        await this.getUserList()
 
         //input validation
         this.setState({

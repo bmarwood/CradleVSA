@@ -2,8 +2,11 @@
     Helper functions for the forms:
     ..CovertDate - convert Date format to string
  */
+import { Component } from 'react';
+import RequestServer from "../RequestServer";
 
-class Utility{
+
+class Utility extends Component{
 
     //convert date to the "Month Date, Year" format
     static convertDate(prev_date) {
@@ -33,7 +36,6 @@ class Utility{
         });
         return user_array;
     }
-    
 }
 
-export default Utility;
+export default Utility; //if I use new keyword here, I can use all the methods without static keyword. but it's should be a static class

@@ -89,6 +89,19 @@ class RequestServer extends Component {
             return null
         }
     }
+    
+    //TEST : http://localhost:8080/patients/get1
+    async getPatientByID(patient_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/patients/get'+ patient_id)
+            return response
+        }
+        catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
 
     async login(username, password) {
         var userObj = {
