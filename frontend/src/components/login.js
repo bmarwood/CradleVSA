@@ -68,6 +68,8 @@ class Login extends Component {
     }
 
     testConsoleLog(response) {
+        var user = localStorage.getItem("userData")
+        console.log("User data is : " + user)
         console.log("response from server: ", response, this.state)
         console.log("decomposing response: ", response.data.id, " ", response.data.name, response.status)
     }
@@ -85,8 +87,8 @@ class Login extends Component {
         } else {
             localStorage.setItem("isLoggedIn", "true")
             localStorage.setItem("userData", JSON.stringify(passback.data))
-            var user = localStorage.getItem("userData")
-            // console.log("User data is : " + user)
+        
+
             this.setTheState(passback)
             // this.testConsoleLog(passback)
             this.setRole(passback)
