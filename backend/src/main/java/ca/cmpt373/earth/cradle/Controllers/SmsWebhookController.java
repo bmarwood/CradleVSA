@@ -90,8 +90,9 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         //
 
         Assessments assessment =
-                new Assessments(id, patient_id, patient_age, vht_id, date, gestational_age, heart_rate, systolic, diastolic, ews_color, symptoms, referred, follow_up, follow_up_date, recheck, arrow);
-
+                new Assessments(id, patient_id, patient_age, vht_id, date, gestational_age, heart_rate, systolic, diastolic,
+                        ews_color, symptoms, referred, follow_up, follow_up_date, recheck, arrow,
+                        Assessments.Gestational_unit.NOT_PREGNANT); //It has been hard-coded need to figure it out with josiah
         return assessment;
     }
 }
