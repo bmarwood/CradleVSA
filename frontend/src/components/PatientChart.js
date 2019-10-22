@@ -2,9 +2,11 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";
 import './PatientChart.css';
+import '../Modals/GraphPopup';
+import Popup from "reactjs-popup";
 
 class PatientChart extends React.Component { 
-  
+
   state = {
     dataLine: {
       labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -30,6 +32,7 @@ class PatientChart extends React.Component {
           data: [80, 89, 98, 150, 86, 81, 90, 82, 91, 95, 120, 200]
       }
       ]
+
     },
     options: {
       legend:{
@@ -51,7 +54,7 @@ class PatientChart extends React.Component {
   render() {
     return (
       <MDBContainer style = {{backgroundColor:'white'}}>
-        <h3 className="mt-5">Blood Pressure</h3>
+        <h3 className="mt-5">Blood Pressure and Heart Rate</h3>
         <Line data={this.state.dataLine} options={{ responsive: true }} />
       </MDBContainer>
       );
