@@ -1,7 +1,10 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import RequestServer from '../RequestServer'
+import RequestServer from '../RequestServer';
+import Utility from './Utility';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 //form for a new patient
 class NewPatient extends React.Component {
@@ -16,53 +19,73 @@ class NewPatient extends React.Component {
             gender: 'male',
             //TEMP VARIABLES
             fname: '',
-            lname: ''
+            lname: '',
+            dob: new Date(),
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
-
-    changeState() {
+    //handle date change
+    changeDOB = date => {
         this.setState({
-            name: this.state.fname + ' ' + this.state.lname
+            dob: date
+        });
+    };
+
+    //handle input change
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
         })
-        delete this.state.fname;
-        delete this.state.lname;
     }
 
-    checkTheInput() {
-        //remove the empty space
+    //change the format of the string
+    changeState() {
+        this.setState({
+            name: this.state.fname + ' ' + this.state.lname,
+            birth_date: Utility.convertDate(this.state.dob)
+        })
+    }
+
+    //get a single patient with matching patient_id
+    async getMatchingPatientID(patient_id) {
+        var passback = await RequestServer.getPatientByID(patient_id)
+        console.log(passback)
+        if (passback !== null) {
+            return passback.data.id
+        }
+        return null
+    }
+
+    //compare with the matching id
+    async checkID(patient_id) {
+        var existing_id = await this.getMatchingPatientID(patient_id);
+        if(existing_id !== patient_id){
+            return true;
+        }
+        return false;
     }
 
 
     handleSubmit = async () => {
-        this.changeState();
-        this.checkTheInput();
-        console.log(this.state);
-
-        var patient = {
-            id: this.state.id,
-            name: this.state.name,
-            birth_date: this.state.birth_date,
-            list_of_assessments: this.state.list_of_assessments,
-            gender: this.state.gender,
+        let no_existing_ID = await this.checkID(this.state.id)
+        //true if id does not exist
+        if (!no_existing_ID){
+            alert("Patient ID EXISTS : IT HAS BEEN USED")
+            this.setState({
+                id: ''
+            })
+            return;
         }
-
-        var response = await RequestServer.addPatient(patient)
-
+        this.changeState();
+        console.log(this.state);
+        var response = await RequestServer.addPatient(this.state)
         if (response !== null) {
             this.props.history.push(
                 '/',
                 {detail: response.data}
             )
         }
-
-    }
-
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
     }
 
 
@@ -74,8 +97,6 @@ class NewPatient extends React.Component {
                     margin: 'auto',
                     padding: '50px',
                     textAlign: 'center'
-                    // width: '400px',
-                    // height: '400px'
                 }}
                 ref="form"
                 onSubmit={this.handleSubmit}
@@ -115,17 +136,15 @@ class NewPatient extends React.Component {
                 />
                 <br/>
                 <br/>
-                <TextValidator
-                    label="Date of Birth"
-                    onChange={this.handleChange}
-                    name="birth_date"
-                    value={this.state.birth_date}
-                    validators={['required']}
-                    errorMessages={['this field is required']}
-                    variant="outlined"
+
+                <p>Date of Birth:</p>
+                <DatePicker
+                    selected={this.state.dob}
+                    onChange={this.changeDOB}
                 />
                 <br/>
                 <br/>
+
                 <label>Gender: </label>
                 <select
                     value={this.state.gender}

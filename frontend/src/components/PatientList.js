@@ -16,6 +16,7 @@ class PatientList extends Component {
 
     componentDidMount() {
         this.getPatientList()
+        this.timer = setInterval(() => this.getPatientList(), 10000);
         this.setState({
             columns: [
                 { title: 'Name', field: 'name' },
@@ -24,37 +25,13 @@ class PatientList extends Component {
                 { title: 'Birth Date', field: 'birthDate' },
                 { title: 'ID Number', field: 'id' },
             ],
-            data: [
-                {
-                    name: 'Ann',
-                    surname: 'Howard',
-                    sex: 'F',
-                    birthYear: 1987,
-                    id: 849567
-                },
-                {
-                    name: 'Kenneth',
-                    surname: 'Washington',
-                    sex: 'M',
-                    birthYear: 2017,
-                    id: 374856,
-                },
-                {
-                    name: 'Shayla',
-                    surname: 'Owens',
-                    sex: 'F',
-                    birthYear: 1991,
-                    id: 384957,
-                },
-                {
-                    name: 'Kirsten',
-                    surname: 'Turner',
-                    sex: 'F',
-                    birthYear: 1972,
-                    id: 794057,
-                },
-            ],
+            data: [],
         })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
     }
 
 
@@ -150,7 +127,7 @@ class PatientList extends Component {
                             icon: 'assignment',
                             tooltip: 'Medications',
                             onClick: () => {
-                              //Popup for Patient chart, opens PatientChart.js
+                            //   Popup for Patient chart, opens PatientChart.js
                               window.open("/PatientNotes",'popUpWindow',
                               'height=1000,width=1200,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
                             }

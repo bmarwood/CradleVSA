@@ -5,7 +5,20 @@ import ShowRoles from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
 import RequestServer from  '../RequestServer'
 import {ToastContainer, toast} from 'react-toastify';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import 'react-toastify/dist/ReactToastify.css';
+import Utility from "./Utility";
+
+const Gender = {
+    MALE: "MALE",
+    FEMALE: "FEMALE"
+}
+const Role = {
+    USER: "USER",
+    ADMIN: "ADMIN",
+    HEALTH_WORKER: "HEALTH_WORKER"
+}
 
 //form for a new user
 class NewUser extends React.Component {
@@ -18,7 +31,7 @@ class NewUser extends React.Component {
             name: '',
             dob: '',
             address: '',
-            gender: 'male',
+            gender: Gender.MALE,
             roles: [],
             enabled: false,
 
@@ -26,79 +39,167 @@ class NewUser extends React.Component {
             error: false,
             fname: '',
             lname: '',
+            temp_dob: new Date(),
             roles_array: [
-                {id: 1, name: 'USER', checked: true},
-                {id: 2, name: 'ADMIN', checked: false},
-                {id: 3, name: 'HEALTH WORKER', checked: false}
-            ]
+                {id: 1, name: Role.USER, checked: true},
+                {id: 2, name: Role.ADMIN, checked: false},
+                {id: 3, name: Role.HEALTH_WORKER, checked: false}
+            ],
+            user_array: []
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleCheckbox = this.handleCheckbox.bind(this)
+        this.handleCheckbox = this.handleCheckbox.bind(this);
+        this.getUserList()
     }
 
+    changeDOB = date => {
+        this.setState({
+            temp_dob: date
+        });
+    };
+
+    
 
     //make the checkboxes are changeable
     handleCheckbox(id) {
         this.setState(prevState => {
-            const updatedSymp = prevState.roles_array.map(each => {
+            const updatedRole = prevState.roles_array.map(each => {
                 if (each.id === id) {
                     each.checked = !each.checked
                 }
                 return each
             });
-            prevState.roles_array = updatedSymp;
+            prevState.roles_array = updatedRole;
             return prevState;
         })
-        console.log(this.state.roles_array)
     }
 
 
     //add selected roles in the array
     addRole() {
+        //We need to re-initialize - if error cause
+        this.state.roles = [];
         const role_array = this.state.roles_array;
         for (let index in role_array) {
             if (role_array[index].checked) {
-                this.state.roles.push({id: role_array[index].id, role: role_array[index].name})
+                this.state.roles.push({id: this.state.id, role: role_array[index].name})
             }
         }
     }
 
-
+    //format change
     changeState() {
         this.setState({
-            name: this.state.fname + ' ' + this.state.lname
+            name: this.state.fname + ' ' + this.state.lname,
+            dob: Utility.convertDate(this.state.temp_dob)
         })
         this.addRole();
-
-        //delete
-        delete this.state.fname;
-        delete this.state.lname;
-        delete this.state.error;
-        delete this.state.roles_array;
     }
 
 
     //check if at least one role has been selected
     checkRole() {
         const role = this.state.roles_array;
-        this.setState({
-            error: false
-        })
         for (let index in role) {
-            if (role[index].checked && !this.state.error) {
+            //check if the checkbox is selected and if so change the error to true
+            if (role[index].checked) {
+                return;
+            }
+        }
+        this.setState({
+            error: true
+        })
+    }
+    
+    //check if the id is taken
+    checkID() {
+        for (let user of this.state.user_array){
+            if(user.id === this.state.id){
                 this.setState({
                     error: true
                 })
+                return;
             }
         }
     }
 
+    //check if username is taken
+    checkUsername(){
+        for (let user of this.state.user_array){
+            if(user.username === this.state.username){
+                this.setState({
+                    error: true
+                })
+                return;
+            }
+        }
+
+    }
+
+    //check if the name is taken
+    checkName() {
+        let temp_name = this.state.fname + ' ' + this.state.lname
+        for (let user of this.state.user_array){
+            if(user.name === temp_name){
+                this.setState({
+                    error: true
+                })
+                return;
+            }
+        }
+    }
+
+    //get all the user lists
+    async getUserList() {
+        var passback = await RequestServer.getUserList()
+        if (passback !== null) {
+            this.setState({
+                user_array: Utility.populateUser(passback.data)
+            })
+        }
+    }
+    
 
     handleSubmit = async () => {
+        await this.getUserList()
+
         //input validation
+        this.setState({
+            error: false
+        })
         this.checkRole();
-        if (!this.state.error) {
+        if (this.state.error) {
             alert("Must select one role")
+            return
+        }
+
+        //check for user id - no duplicate value
+        this.checkID();
+        if (this.state.error) {
+            alert("Existing ID: Re-enter the ID")
+            this.setState({
+                id: ''
+            })
+            return
+        }
+
+        this.checkUsername();
+        if (this.state.error) {
+            alert("Existing username: Re-enter username")
+            this.setState({
+                username: '',
+            })
+            return
+        }
+
+        //check for user name - no duplicate value
+        this.checkName();
+        if (this.state.error) {
+            alert("Existing user: Re-enter first name and last name")
+            this.setState({
+                fname: '',
+                lname: '',
+            })
             return
         }
 
@@ -106,21 +207,8 @@ class NewUser extends React.Component {
         this.changeState();
         console.log(this.state);
 
-        //connect to the database
-
-        var user = {
-            id: this.state.id,
-            name: this.state.name,
-            address: this.state.address,
-            dob: this.state.dob,
-            gender: this.state.gender,
-            username: this.state.username,
-            password: this.state.password,
-            roles: this.state.roles,
-        }
-
-        var response = await RequestServer.addUser(user)
-
+        //  '/users/register/this.state'
+        var response = await RequestServer.addUser(this.state)
         if (response !== null) {
             toast("User Added");
             this.props.history.push(
@@ -145,7 +233,7 @@ class NewUser extends React.Component {
 
 
     render() {
-        const roles = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
+        let roles_map = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
                                                                     handleChange={this.handleCheckbox}/>)
         return (
             <ValidatorForm
@@ -154,8 +242,6 @@ class NewUser extends React.Component {
                     margin: 'auto',
                     padding: '50px',
                     textAlign: 'center'
-                    // width: '400px',
-                    // height: '400px'
                 }}
                 ref="form"
                 onSubmit={this.handleSubmit}
@@ -236,14 +322,10 @@ class NewUser extends React.Component {
                         <br/>
                     </Cell>
                     <Cell col={4}>
-                        <TextValidator
-                            label="Date of Birth"
-                            onChange={this.handleChange}
-                            name="dob"
-                            value={this.state.dob}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
-                            variant="outlined"
+                        <p>Date of Birth:</p>
+                        <DatePicker
+                            selected={this.state.temp_dob}
+                            onChange={this.changeDOB}
                         />
                         <br/>
                         <br/>
@@ -254,13 +336,13 @@ class NewUser extends React.Component {
                             onChange={this.handleChange}
                             name="gender"
                         >
-                            <option value="male"> Male</option>
-                            <option value="female"> Female</option>
+                            <option value="MALE"> Male</option>
+                            <option value="FEMALE"> Female</option>
                         </select>
                         <br/>
                         <br/>
                         <p>Select role</p>
-                        {roles}
+                        {roles_map}
                         <br/>
                         <br/>
                     </Cell>

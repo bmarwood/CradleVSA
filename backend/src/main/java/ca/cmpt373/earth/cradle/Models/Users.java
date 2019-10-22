@@ -7,15 +7,21 @@ import java.util.Set;
 @Document(collection = "users")
 public class Users {
 
+    public enum Gender {
+        MALE,
+        FEMALE
+    }
+
     //Basic user's info
     @Id
-    private String id;              //primary key
-    private String username;
+    private String id;          //primary key
+    private String username;    //primary key
     private String password;
-    private String name;
+    private String name;        //primary key - there is an error if the name is taken
     private String dob;
     private String address;
     private String gender;
+//    private Gender gender;
     private Set<Role> roles;
     private boolean enabled;
 
@@ -26,21 +32,7 @@ public class Users {
         this.name = "n/a";
         this.dob = "n/a";
         this.address = "n/a";
-        this.gender = "n/a";
-        this.enabled = false;
-    }
-
-
-    public Users(String id, String username, String password,
-                 String name, String dob, String address,
-                 String gender) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.dob = dob;
-        this.address = address;
-        this.gender = gender;
+        this.gender = null;
         this.enabled = false;
     }
 
@@ -74,6 +66,10 @@ public class Users {
         return gender;
     }
 
+//    public Gender getGender() {
+//        return gender;
+//    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -93,6 +89,10 @@ public class Users {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+//    public void setGender(Gender gender) {
+//        this.gender = gender;
+//    }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;

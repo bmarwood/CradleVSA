@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './AssessmentList.css';
+import TrafficIcons from "./Visuals/TrafficIcons";
+import ModalPopup from '../Modals/ModalPopup';
 import requestServer from './RequestServer';
 
 
@@ -10,80 +12,148 @@ class AssessmentList extends Component {
         super(props);
         this.state = {
             columns: [],
-            data: []
+            data: [],
         }
     }
 
     componentDidMount() {
         this.getAssessmentList()
+        this.timer = setInterval(() => this.getAssessmentList(), 10000);
         this.setState({
             columns: [
-                {title: 'patient Id', field: 'patient_id'},
-                {title: 'Patient Age', field: 'patient_age'},
-                {title: 'vht Id', field: 'vht_id'},
-                {title: 'Date', field: 'date'},
-                {title: 'Gestational Age', field: 'gestational_age'},
-                {title: 'Heart Rate', field: 'heart_rate'},
-                {title: 'Systolic', field: 'systolic'},
-                {title: 'Early Warning Color', field: 'ews_color'},
-                {title: 'Symptoms', field: 'symptoms'},
-                {title: 'Referred?', field: 'referred'},
-                {title: 'Follow Up?', field: 'follow_up'},
-                {title: 'Follow Up Date', field: 'follow_up_date'},
-                {title: 'Recheck?', field: 'recheck'},
-                {title: 'Id Number', field: 'id'},
-                {title: 'Arrow', field: 'arrow'},
+                { title: 'Assessment Id', field: 'id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Early Warning Color', field: 'ews_color', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Shock Arrow', field: 'arrow', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'patient Id', field: 'patient_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'VHT Id', field: 'vht_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Gestational Age', field: 'gestational_age', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Gestational Unit', field: 'gestational_unit', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Referred?', field: 'referred', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Follow Up?', field: 'follow_up', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Recheck?', field: 'recheck', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Assessment Information', field: 'info', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
             ],
             data: [
                 {
-                    patient_id: 'Ann',
-                    patient_age: 'Howard',
-                    vht_id: '1987',
-                    date: 'Sept 1, 2019'
+                    assessment_id: 'LOADING...',
+                    ews_color: 'LOADING...',
+                    patient_id: 'LOADING...',
+                    vht_id: 'LOADING...',
+                    gestational_age: 'LOADING...',
+                    gestational_unit: 'LOADING...',
+                    referred: 'LOADING...',
+                    follow_up: 'LOADING...',
+                    recheck: 'LOADING...',
+                    arrow: 'LOADING...',
+                    info: <ModalPopup />
                 },
             ],
+
         })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
     }
 
 
     populateData(response) {
-        console.log(response)
+
         var assessmentList = []
-        response.forEach(assessment => {
+        response.forEach(function(assessment) {
+            var assessment_id = assessment._id
             var patient_id = assessment.patient_id
             var patient_age = assessment.patient_age
             var vht_id = assessment.vht_id
             var date = assessment.date
             var gestational_age = assessment.gestational_age
+            var gestational_unit = assessment.gestational_unit
             var heart_rate = assessment.heart_rate
             var systolic = assessment.systolic
             var diastolic = assessment.diastolic
-            var ews_color = assessment.ews_color
+            var ews_color
+            switch (String(assessment.ews_color).toUpperCase()) {
+                case "GREEN":
+                    ews_color = <GreenLight />
+                    break;
+                case "YELLOW":
+                    ews_color = <YellowLight />
+                    break;
+                case "RED":
+                    ews_color = <RedLight />
+                    break;
+                default:
+                    ews_color = assessment.ews_color
+            }
+
             var symptoms = assessment.symptoms
-            var referred = assessment.referred
-            var follow_up = assessment.follow_up
+            var referred
+            switch (String(assessment.referred)) {
+                case "true":
+                    referred = <i aria-hidden="true" className="check icon"></i>
+                    break;
+                case "false":
+                    referred = <i aria-hidden="true" className="x icon"></i>
+                    break;
+                default:
+                    referred = assessment.referred
+            }
+
+            var follow_up
+            switch (String(assessment.follow_up)) {
+                case "true":
+                    follow_up = <i aria-hidden="true" className="check icon"></i>
+                    break;
+                case "false":
+                    follow_up = <i aria-hidden="true" className="x icon"></i>
+                    break;
+                default:
+                    follow_up = assessment.follow_up
+            }
             var follow_up_date = assessment.follow_up_date
-            var recheck = assessment.recheck
-            var id = assessment._id
+
             var arrow = assessment.arrow
 
 
+            var recheck
+            switch (String(assessment.recheck)) {
+                case "true":
+                    recheck = <i aria-hidden="true" className="check icon"></i>
+                    break;
+                case "false":
+                    recheck = <i aria-hidden="true" className="x icon"></i>
+                    break;
+                default:
+                    recheck = assessment.recheck
+            }
+            var info = <ModalPopup
+                patient_id={assessment.patient_id}
+                vht_id={assessment.vht_id}
+                symptoms={assessment.symptoms}
+                systolic={assessment.systolic}
+                diastolic={assessment.diastolic}
+                heart_rate={assessment.heart_rate}
+                date={assessment.date}
+            />
             var assessment_obj = {
+                id: assessment_id,
                 patient_id: patient_id,
+                ews_color: ews_color,
                 patient_age: patient_age,
                 vht_id: vht_id,
                 date: date,
                 gestational_age: gestational_age,
+                gestational_unit: gestational_unit,
                 heart_rate: heart_rate,
                 systolic: systolic,
                 diastolic: diastolic,
-                ews_color: ews_color,
                 symptoms: symptoms,
-                referred: referred.toString(),
-                follow_up: follow_up.toString(),
+                referred: referred,
+                follow_up: follow_up,
                 follow_up_date: follow_up_date,
-                recheck: recheck.toString(),
-                id: id,
+                recheck: recheck,
+                info: info,
                 arrow: arrow
             }
 
@@ -101,57 +171,45 @@ class AssessmentList extends Component {
         }
     }
 
+
+
     render() {
         return (
 
             <div className="table-position">
-
                 <MaterialTable
                     title="Assessment List"
                     columns={this.state.columns}
                     data={this.state.data}
-                    editable={{
-                        onRowUpdate: (newData, oldData) =>
-                            new Promise(resolve => {
-                                setTimeout(() => {
-                                    resolve();
-                                    const data = [...this.state.data];
-                                    data[data.indexOf(oldData)] = newData;
-                                    this.setState({ ...this.state, data });
-                                }, 600);
-                            }),
-                        onRowDelete: oldData =>
-                            new Promise(resolve => {
-                                setTimeout(() => {
-                                    resolve();
-                                    const data = [...this.state.data];
-                                    data.splice(data.indexOf(oldData), 1);
-                                    this.setState({ ...this.state, data });
-                                }, 600);
-                            }),
-                    }}
-                    //Other Actions
-                    actions={[
-                        {
-                            //Graph button for patient chart
-                            icon: 'assessment',
-                            tooltip: 'Graph',
-                            onClick: () => {
-                                //Popup for Patient chart, opens PatientChart.js
-                                window.open("/users/PatientChart")
-                                //'popUpWindow',
-                                //'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-                                //window.location.pathname = "/users/PatientList";
-                            }
-                        }
-                    ]}
                 />
             </div>
 
         );
     }
-
-
 }
+
+const styles = {
+    overflow: "hidden",
+    display: "auto",
+    flexWrap: "flex",
+    alignItems: "center",
+    fontFamily: "sans-serif",
+    justifyContent: "left"
+};
+const GreenLight = () => (
+    <div style={styles}>
+        <TrafficIcons name="greencircle" width={50} fill={"#228B22"} />
+    </div>
+);
+const RedLight = () => (
+    <div style={styles}>
+        <TrafficIcons name="redcircle" width={50} fill={"#B22222"} />
+    </div>
+);
+const YellowLight = () => (
+    <div style={styles}>
+        <TrafficIcons name="yellowcircle" width={50} fill={"#CCCC00"} />
+    </div>
+);
 
 export default AssessmentList;

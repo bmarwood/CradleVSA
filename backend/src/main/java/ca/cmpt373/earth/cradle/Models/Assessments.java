@@ -18,6 +18,12 @@ public class Assessments {
         DOWN
     }
 
+    public enum Gestational_unit{
+        WEEK,
+        MONTH,
+        NOT_PREGNANT
+    }
+
 
     @Id
     private String id;
@@ -36,10 +42,12 @@ public class Assessments {
     private String follow_up_date;
     private boolean recheck;
     private Arrow arrow;
+    private Gestational_unit gestational_unit;
 
 
     public Assessments(String id, String patient_id, String patient_age, String vht_id, String date, String gestational_age, int heart_rate,
-                       int systolic, int diastolic, Color ews_color, String[] symptoms, boolean referred, boolean follow_up, String follow_up_date, boolean recheck, Arrow arrow) {
+                       int systolic, int diastolic, Color ews_color, String[] symptoms, boolean referred, boolean follow_up, String follow_up_date,
+                       boolean recheck, Arrow arrow, Gestational_unit gestational_unit) {
         this.id = id; //assestment ID
         this.patient_id = patient_id;
         this.patient_age = patient_age;
@@ -57,6 +65,7 @@ public class Assessments {
         this.follow_up_date = follow_up_date;
         this.recheck = recheck;
         this.arrow = arrow;
+        this.gestational_unit = gestational_unit;
     }
 
 
@@ -136,16 +145,24 @@ public class Assessments {
         return ews_color;
     }
 
-    public Arrow getArrow() {
-        return arrow;
-    }
-
     public void setEws_color(Color ews_color) {
         this.ews_color = ews_color;
     }
 
+    public Arrow getArrow() {
+        return arrow;
+    }
+
     public void setarrow(Arrow arrow) {
         this.arrow = arrow;
+    }
+
+    public Gestational_unit getGestational_unit() {
+        return gestational_unit;
+    }
+
+    public void setGestational_unit(Gestational_unit gestational_unit) {
+        this.gestational_unit = gestational_unit;
     }
 
     public String[] getSymptoms() {
