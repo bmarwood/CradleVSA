@@ -20,27 +20,42 @@ const Navigation = () => (
   <Switch>
     <Route exact path = "/" component = {LandingPage} />
 
-    <Route exact path = "/user-dashboard" component = {PatientList} />
-    <Route exact path = "/admin-dashboard" component = {Landing_List} />
+    <PrivateRoute exact path = "/user-dashboard" component = {PatientList} />
+    <AdminRoute exact path = "/admin-dashboard" component = {Landing_List} />
     <Route exact path = "/login" component = {Login} />
-    <PrivateRoute exact path = "/register" component = {Register} />
+    <AdminRoute exact path = "/register" component = {Register} />
     <PrivateRoute exact path = "/AssessmentList" component = {AssessmentList} />
     <Route path = "/login" component = {Login} />
-    <Route path = "/logout" component = {Logout} />
-    <Route path = "/users/admin/landing" component = {Landing_List} />
-    <Route path = "/users/PatientList" component = {PatientList} />
-    <Route path = "/PatientChart" component = {PatientChart} />
-    <Route path = "/PatientNotes" component = {PatientNotes} />
-    <Route path = "/PatientAddMedication" component = {PatientAddMedication} />
-    <Route path = "/users/newAssessment" component = {NewAssessment} />
-    <Route path = "/users/newPatient" component = {NewPatient} />
-    <Route path = "/users/newUser" component = {NewUser} />
+    <PrivateRoute path = "/logout" component = {Logout} />
+    <AdminRoute path = "/admin/landing" component = {Landing_List} />
+    <WorkerRoute path = "/PatientList" component = {PatientList} />
+    <WorkerRoute path = "/PatientChart" component = {PatientChart} />
+    <WorkerRoute path = "/PatientNotes" component = {PatientNotes} />
+    <WorkerRoute path = "/PatientAddMedication" component = {PatientAddMedication} />
+    <WorkerRoute path = "/newAssessment" component = {NewAssessment} />
+    <WorkerRoute path = "/newPatient" component = {NewPatient} />
+    <AdminRoute path = "/newUser" component = {NewUser} />
     <Route path = "/resources" component = {Resources} />
   </Switch>
 )
 
+function getRoles() {
+  var roleArray = []
+  var user = localStorage.getItem("userData")
+  var parsedUser = JSON.parse(user)
+  if (parsedUser && parsedUser.roles) {
+    parsedUser.roles.forEach( function(role) {
+      console.log("User data is : " + role.role)
+      roleArray.push(role.role)
+    })
+  }
+
+
+  return roleArray
+}
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
+
   return (
     <Route {...rest} render={(props) => (
       localStorage.getItem('isLoggedIn') === 'true'
@@ -53,6 +68,43 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
     
   )
 }
+
+//TODO: Need to create a page for unauth access.
+function WorkerRoute ({component: Component, authed, ...rest}) {
+
+  var roles = getRoles()
+
+  return (
+    <Route {...rest} render={(props) => (
+      localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("HEALTH_WORKER") > -1 || roles.indexOf("ADMIN") > -1)
+        ? <Component {...props} />
+        : <Redirect to={{
+            pathname: '/',
+            state: { from: props.location }
+          }} />
+    )} />
+    
+  )
+}
+
+//TODO: Need to create a redirect page for unauth access.
+function AdminRoute ({component: Component, authed, ...rest}) {
+
+  var roles = getRoles()
+
+  return (
+    <Route {...rest} render={(props) => (
+      localStorage.getItem('isLoggedIn') === 'true' &&  roles.indexOf("ADMIN") > -1
+        ? <Component {...props} />
+        : <Redirect to={{
+            pathname: '/',
+            state: { from: props.location }
+          }} />
+    )} />
+    
+  )
+}
+
 
 
 export default Navigation;

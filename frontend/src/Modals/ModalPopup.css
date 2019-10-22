@@ -12,10 +12,8 @@
 }
 
 .modal.show .modal-dialog {
-
   transform: none;
   z-index: 9999;
-
 }
 
 .modal > .header {
