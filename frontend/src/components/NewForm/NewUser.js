@@ -212,27 +212,8 @@ class NewUser extends React.Component {
         this.changeState();
         console.log(this.state);
 
-        //connect to the database
-        //No need to re-intantiate
-            /*
-            var user = {
-                id: this.state.id,
-                name: this.state.name,
-                address: this.state.address,
-                dob: this.state.dob,
-                gender: this.state.gender,
-                username: this.state.username,
-                password: this.state.password,
-                roles: this.state.roles,
-            }
 
-            var response = await RequestServer.addUser(user)
-
-             */
-
-        //So we can just use
         var response = await RequestServer.addUser(this.state)
-
         if (response !== null) {
             toast("User Added");
             this.props.history.push(

@@ -24,7 +24,7 @@ const Navigation = () => (
     <Route exact path = "/admin-dashboard" component = {Landing_List} />
     <Route exact path = "/login" component = {Login} />
     <PrivateRoute exact path = "/register" component = {Register} />
-    <Route exact path = "/users/AssessmentList" component = {AssessmentList} />
+    <PrivateRoute exact path = "/AssessmentList" component = {AssessmentList} />
     <Route path = "/login" component = {Login} />
     <Route path = "/logout" component = {Logout} />
     <Route path = "/users/admin/landing" component = {Landing_List} />

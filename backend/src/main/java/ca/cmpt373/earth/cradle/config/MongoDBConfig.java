@@ -62,6 +62,7 @@ public class MongoDBConfig {
     @Bean
     CommandLineRunner commandLineRunnerAssess(AssessmentsRepository assessmentsRepository) {
         return strings -> {
+
             String[] symptoms = {"cough", "sings well"};
             assessmentsRepository.save(new Assessments("1", "22", "34", "ab11", "sept 24", "2w", 72, 68, 44, Assessments.Color.GREEN,
                     symptoms, true, true, "next week monday", true, Assessments.Arrow.EMPTY));

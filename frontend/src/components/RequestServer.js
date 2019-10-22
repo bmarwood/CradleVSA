@@ -54,7 +54,7 @@ class RequestServer extends Component {
     async addUser(user) {
         try {
             var response = await axios.post(this.getServerLocation() + '/users/register', user)
-            console.log("RESPONCE IN ADD USER : ", response)
+            console.log("RESPONSE IN ADD USER : ", response)
             return response
         }
         catch (error) {
@@ -65,6 +65,29 @@ class RequestServer extends Component {
     }
     
     
+    async getPatient(id){
+        try {
+            var response = await axios.get(this.getServerLocation() + '/patients/get' + id)
+            return response
+        }
+        catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    async getVHT(id){
+        try {
+            var response = await axios.get(this.getServerLocation() + '/vhts/get' + id)
+            return response
+        }
+        catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
 
     async getAssessmentsList() {
         try {
