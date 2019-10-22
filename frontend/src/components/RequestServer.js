@@ -64,7 +64,6 @@ class RequestServer extends Component {
         }
     }
     
-    
     async getPatient(id){
         try {
             var response = await axios.get(this.getServerLocation() + '/patients/get' + id)
