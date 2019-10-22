@@ -63,29 +63,17 @@ class NewPatient extends React.Component {
         let no_existing_ID = await this.checkID(this.state.id)
         //true if id does not exist
         if (!no_existing_ID){
-            alert("Patient ID EXISTS : IT'S BEEN USING")
-            this.state.id = ''
+            alert("Patient ID EXISTS : IT HAS BEEN USED")
+            this.setState({
+                id: ''
+            })
             return;
         }
 
         this.changeState();
         console.log(this.state);
-        console.log("UT")
-
-
-
-        // Optional
-        // var patient = {
-        //     id: this.state.id,
-        //     name: this.state.name,
-        //     birth_date: this.state.birth_date,
-        //     list_of_assessments: this.state.list_of_assessments,
-        //     gender: this.state.gender,
-        // }
-        // var response = await RequestServer.addPatient(patient)
 
         var response = await RequestServer.addPatient(this.state)
-
         if (response !== null) {
             this.props.history.push(
                 '/',
@@ -110,8 +98,6 @@ class NewPatient extends React.Component {
                     margin: 'auto',
                     padding: '50px',
                     textAlign: 'center'
-                    // width: '400px',
-                    // height: '400px'
                 }}
                 ref="form"
                 onSubmit={this.handleSubmit}

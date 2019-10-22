@@ -177,7 +177,6 @@ class NewUser extends React.Component {
         }
 
 
-        console.log(this.state.user_arrays)
         //check for user id - no duplicate value
         this.checkID();
         if (this.state.error) {
@@ -247,8 +246,6 @@ class NewUser extends React.Component {
                     margin: 'auto',
                     padding: '50px',
                     textAlign: 'center'
-                    // width: '400px',
-                    // height: '400px'
                 }}
                 ref="form"
                 onSubmit={this.handleSubmit}
