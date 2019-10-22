@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import WorkerNav from './components/workerNav'
 import AdminNav from './components/adminNav'
 import LoggedOutNav from './components/loggedOutNav'
+import HealthWorkerDrawer from './components/healthWorkerDrawer'
+import AdminDrawer from './components/adminDrawer'
 
 class App extends Component {
 
@@ -26,15 +28,12 @@ class App extends Component {
     }
 
     ifLoggedIn() {
-        if(localStorage.getItem('isLoggedIn') === 'true') {
-            return (
-                <Navigation>
-                    <Link to ="/logout">Logout</Link>
-                    <Link to ="/newAssessment">New Assessment</Link>
-                    <Link to ="/newPatient">New Patient</Link>
-                    <Link to ="/newUser">New User</Link>
-                </Navigation>
-            )
+        var roles = this.getRoles()
+
+        if (localStorage.getItem('isLoggedIn') === 'true' && this.isHealthWorker(roles))  {
+            return (<HealthWorkerDrawer/>)
+        } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isAdmin(roles)) {
+            return (<AdminDrawer/>)
         } else {
             return (
                 <Navigation>
