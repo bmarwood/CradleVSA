@@ -36,7 +36,8 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         Body body;
         String introMessage = "New referral";
         String[] assessmentParams = smsBody.split(", ");
-        int correctParamsLength = 17;
+        final int correctParamsLength = 17;
+
         if (assessmentParams[0].equals(introMessage) && (assessmentParams.length == correctParamsLength)){
         Assessments candidate = StringToAssessment(assessmentParams);
             assessmentsRepository.save(candidate);
@@ -44,6 +45,7 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
                     .Builder("Reading successfully received!")
                     .build();
         }
+
         else {
             body = new Body
                     .Builder("Reading failed to be received. Please send reading again.")
@@ -78,14 +80,11 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         String[] symptoms = assessmentParams[12].split(" ");
         boolean referred = false;
         if (assessmentParams[12].equals("true")) referred = true;
-        if (assessmentParams[12].equals("false")) referred = false;
         boolean follow_up = false;
         if (assessmentParams[13].equals("true")) follow_up = true;
-        if (assessmentParams[13].equals("false")) follow_up = false;
         String follow_up_date = assessmentParams[14];
         boolean recheck = false;
         if (assessmentParams[15].equals("true")) recheck = true;
-        if (assessmentParams[15].equals("false")) recheck = false;
         //TO-DO: Arrow
         Assessments.Arrow arrow = Assessments.Arrow.EMPTY;
         //
