@@ -20,21 +20,21 @@ const Navigation = () => (
   <Switch>
     <Route exact path = "/" component = {LandingPage} />
 
-    <Route exact path = "/user-dashboard" component = {PatientList} />
-    <Route exact path = "/admin-dashboard" component = {Landing_List} />
+    <PrivateRoute exact path = "/user-dashboard" component = {PatientList} />
+    <PrivateRoute exact path = "/admin-dashboard" component = {Landing_List} />
     <Route exact path = "/login" component = {Login} />
     <PrivateRoute exact path = "/register" component = {Register} />
     <PrivateRoute exact path = "/AssessmentList" component = {AssessmentList} />
     <Route path = "/login" component = {Login} />
-    <Route path = "/logout" component = {Logout} />
-    <Route path = "/users/admin/landing" component = {Landing_List} />
-    <Route path = "/users/PatientList" component = {PatientList} />
-    <Route path = "/PatientChart" component = {PatientChart} />
-    <Route path = "/PatientNotes" component = {PatientNotes} />
-    <Route path = "/PatientAddMedication" component = {PatientAddMedication} />
-    <Route path = "/users/newAssessment" component = {NewAssessment} />
-    <Route path = "/users/newPatient" component = {NewPatient} />
-    <Route path = "/users/newUser" component = {NewUser} />
+    <PrivateRoute path = "/logout" component = {Logout} />
+    <PrivateRoute path = "/admin/landing" component = {Landing_List} />
+    <PrivateRoute path = "/PatientList" component = {PatientList} />
+    <PrivateRoute path = "/PatientChart" component = {PatientChart} />
+    <PrivateRoute path = "/PatientNotes" component = {PatientNotes} />
+    <PrivateRoute path = "/PatientAddMedication" component = {PatientAddMedication} />
+    <PrivateRoute path = "/newAssessment" component = {NewAssessment} />
+    <PrivateRoute path = "/newPatient" component = {NewPatient} />
+    <PrivateRoute path = "/newUser" component = {NewUser} />
     <Route path = "/resources" component = {Resources} />
   </Switch>
 )
