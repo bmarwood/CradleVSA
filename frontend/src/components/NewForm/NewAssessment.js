@@ -18,12 +18,18 @@ const Arrow = {
     EMPTY: "EMPTY"
 }
 
+const Gestational_unit = {
+    EMPTY: "EMPTY",
+    WEEK : "WEEK",
+    MONTH: "MONTH",
+    NOT_PREGNANT: "NOT_PREGNANT"
+}
+
 //Form for a new assessment
 class NewAssessment extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
             //use get method to get the assessment id <- should be equal to # of assessments + 1
             id: '',
             patient_id: "",
@@ -43,12 +49,12 @@ class NewAssessment extends React.Component {
             arrow: null, // pass in as an arrow
 
             //Temporary variables
-            time_scale: "",
+            gestational_unit: null,
             initial: "",
             temp_symptoms: "",
-            error: false,
-            errorMsg: '',
-            msg: '',
+            error: false,   //to handle submit
+            errorMsg: '',   //to handle submit
+            msg: '',        //for the componenetDidMount error message
 
             //Symptoms
             symptoms_arr: [
@@ -64,12 +70,11 @@ class NewAssessment extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleCheckbox = this.handleCheckbox.bind(this)
-
     }
 
 
     componentDidMount() {
-        // custom rule will have name 'isValidEWS'
+        //check if systolic > diastolic
         ValidatorForm.addValidationRule('isGreater', (value) => {
             if (parseInt(value) <= parseInt(this.state.systolic)) {
                 return true;
@@ -79,29 +84,30 @@ class NewAssessment extends React.Component {
         
         //check the gestational age
         ValidatorForm.addValidationRule('checkPregnancy', (value) => {
-            if (this.state.time_scale == 'w') {
-                this.state.msg = 'Value must be between 1 to 47'
+            if (this.state.gestational_unit == Gestational_unit.WEEK) {
+                this.setState({
+                    msg: 'Value must be between 1 to 47'
+                })
                 return value <= 47 && value > 0;
-            }else if (this.state.time_scale == 'm'){
-                this.state.msg = 'Value must be between 1 to 11'
+            }else if (this.state.gestational_unit == Gestational_unit.MONTH){
+                this.setState({
+                    msg: 'Value must be between 1 to 11'
+                })
                 return value <= 11 && value > 0;
-            }else if (this.state.time_scale == 'n/a'){
-                this.state.msg  = 'Value must be 0'
+            }else if (this.state.gestational_unit == Gestational_unit.NOT_PREGNANT){
+                this.setState({
+                    msg: 'Value must be 0'
+                })
                 return value == 0;
             }
-            this.state.msg  = "Must select one of the Gestational age"
-            return false;
-        });
-
-        ValidatorForm.addValidationRule('isGreater', (value) => {
-            if (parseInt(value) <= parseInt(this.state.systolic)) {
-                return true;
-            }
+            this.setState({
+                msg: 'Must select one of the Gestational age'
+            })
             return false;
         });
     }
 
-
+    //checkbox change handler
     handleCheckbox(id) {
         this.setState(prevState => {
             const updatedSymp = prevState.symptoms_arr.map(each => {
@@ -115,9 +121,9 @@ class NewAssessment extends React.Component {
         })
     }
 
-
     //add checked symptoms in the array
     addSymptoms() {
+        this.setState({symptoms: []}) //re-instantiate
         let symp = this.state.symptoms_arr;
         for (let index in symp) {
             if (symp[index].checked) {
@@ -178,9 +184,12 @@ class NewAssessment extends React.Component {
         let symp = this.state.symptoms_arr;
         let checked = false; //check if at least one of the checkbox is selected
         for (let index in symp) {
+            // should not check n/a and other symptoms
             if (index > 0 && symp[0].checked && symp[index].checked) {
-                this.state.error = true;
-                this.state.errorMsg = "Please double check the Symptoms";
+                this.setState({
+                    error: true,
+                    errorMsg: "Please double check the Symptoms"
+                })
                 return;
             }
             if(!checked){
@@ -189,61 +198,50 @@ class NewAssessment extends React.Component {
         }
         //no checkbox is selected and other symptoms textfield is empty
         if (!this.state.error && !checked && this.state.temp_symptoms === "") {
-            this.state.error = true;
-            this.state.errorMsg = "Please select at least one check box";
+            this.setState({
+                error: true,
+                errorMsg: "Please select at least one check box"
+            })
             return;
         }
         //No Symptoms is selected && other symptoms field has information
         if (symp[0].checked && this.state.temp_symptoms !== "") {
-            this.state.error = true;
-            this.state.errorMsg = "Please double check the Symptoms: Cannot use textbox if healthy is selected"
+            this.setState({
+                error: true,
+                errorMsg: "Please double check the Symptoms: Cannot use textbox if healthy is selected"
+            })
         }
     }
 
 
     checkGestAge(){
-        if(this.state.gestational_age == ''){
-            this.state.error = true;
-            this.state.errorMsg += "Please select at least one gestational age";
+        if(this.state.gestational_unit === Gestational_unit.EMPTY){
+            this.setState({
+                error: true,
+                errorMsg: this.state.errorMsg += "Please select at least one gestational age"
+            })
         }
 
         //combine the number and time scale
         if(!this.state.error) {
-            if (this.state.gestational_age != 0) {
-                this.state.gestational_age += this.state.time_scale
-            } else {
-                this.state.gestational_age = this.state.time_scale
-            }
+            this.setState({
+                gestational_age: this.state.gestational_age
+            })
         }
     }
 
 
     changeType() {
-        //change the input type, change all the ews color to lowercase
         //add the symptoms in the text field
         if (this.state.temp_symptoms !== "") {
             this.state.symptoms.push(this.state.temp_symptoms);
         }
-
         //add the checked symptoms
         this.addSymptoms();
-
-
-        //delete unnecessary elements - This can cause an error - just comment out for now
-        // delete this.state.temp_symptoms;
-        // delete this.state.symptoms_arr;
-        // delete this.state.initial;
-        // delete this.state.time_scale;
-        // delete this.state.errorMsg;
-        // delete this.state.error;
-        // delete this.state.msg;
     }
 
 
-    showErrorMsg() {
-        return <p>{this.state.errorMsg}</p>
-    }
-
+    //get a single patient with matching patient_id
     async getMatchingPatientID(patient_id) {
         var passback = await RequestServer.getPatientByID(patient_id)
         console.log(passback)
@@ -254,6 +252,7 @@ class NewAssessment extends React.Component {
     }
 
 
+    //compare with the matching id
     async checkID(patient_id) {
         var existing_id = await this.getMatchingPatientID(patient_id);
         if(existing_id !== patient_id){
@@ -265,8 +264,10 @@ class NewAssessment extends React.Component {
 
     //USING ALERT RIGHT NOW, SHOULD DISPLAY INSTEAD
     handleSubmit = async () => {
-        this.state.error = false;
-        this.state.errorMessage = '';
+        this.setState({
+            error: false,
+            errorMessage: ''
+        })
         this.checkSymptoms();
         this.checkGestAge();
         //the error controller
@@ -287,12 +288,12 @@ class NewAssessment extends React.Component {
 
         //setDate
         let today = new Date();
-        this.state.date = Utility.convertDate(today)
-
+        this.setState({date: Utility.convertDate(today)})
         this.setColor();
         this.changeType();
         console.log(this.state)
-        
+
+        //assessment
         this.addAssessment();
     }
 
@@ -300,16 +301,13 @@ class NewAssessment extends React.Component {
     async addAssessment() {
         console.log("this.state")
         var passback = await RequestServer.addAssessment(this.state)
-
         if (passback !== null) {
-
             this.props.history.push(
                 '/',
                 {detail: passback.data}
             )
         }
     }
-
 
 
     handleChange(event) {
@@ -381,14 +379,14 @@ class NewAssessment extends React.Component {
                         <br/>
                         <label>Gestational Age:</label>
                         <select
-                            value={this.state.time_scale}
+                            value={this.state.gestational_unit}
                             onChange={this.handleChange}
-                            name="time_scale"
+                            name="gestational_unit"
                         >
-                            <option value=""> --SELECT ONE---</option>
-                            <option value="w"> Weeks</option>
-                            <option value="m"> Months</option>
-                            <option value="n/a"> Not Pregnant</option>
+                            <option value="EMPTY"> --SELECT ONE---</option>
+                            <option value="WEEK"> Weeks</option>
+                            <option value="MONTH"> Months</option>
+                            <option value="NOT_PREGNANT"> Not Pregnant</option>
                         </select>
                         <br/>
 
@@ -449,9 +447,6 @@ class NewAssessment extends React.Component {
                     </Cell>
                 </Grid>
                 <br/>
-                <div className='errorMsg'>
-                    {(this.state.error ? this.showErrorMsg() : '')}
-                </div>
                 <br/>
                 <Button type="submit" style={{
                     backgroundColor: 'blue',

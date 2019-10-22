@@ -25,23 +25,29 @@ class NewPatient extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    //handle date change
     changeDOB = date => {
         this.setState({
             dob: date
         });
     };
 
+    //handle input change
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
 
+    //change the format of the string
     changeState() {
         this.setState({
             name: this.state.fname + ' ' + this.state.lname,
             birth_date: Utility.convertDate(this.state.dob)
         })
-
-        // delete this.state.fname;
-        // delete this.state.lname;
     }
 
+    //get a single patient with matching patient_id
     async getMatchingPatientID(patient_id) {
         var passback = await RequestServer.getPatientByID(patient_id)
         console.log(passback)
@@ -51,6 +57,7 @@ class NewPatient extends React.Component {
         return null
     }
 
+    //compare with the matching id
     async checkID(patient_id) {
         var existing_id = await this.getMatchingPatientID(patient_id);
         if(existing_id !== patient_id){
@@ -58,6 +65,7 @@ class NewPatient extends React.Component {
         }
         return false;
     }
+
 
     handleSubmit = async () => {
         let no_existing_ID = await this.checkID(this.state.id)
@@ -69,10 +77,8 @@ class NewPatient extends React.Component {
             })
             return;
         }
-
         this.changeState();
         console.log(this.state);
-
         var response = await RequestServer.addPatient(this.state)
         if (response !== null) {
             this.props.history.push(
@@ -80,13 +86,6 @@ class NewPatient extends React.Component {
                 {detail: response.data}
             )
         }
-
-    }
-
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
     }
 
 

@@ -114,6 +114,7 @@ class RequestServer extends Component {
     }
     
     //TEST : http://localhost:8080/patients/get1
+    //get only signle patient by the id
     async getPatientByID(patient_id) {
         try {
             var response = await axios.get(this.getServerLocation() + '/patients/get'+ patient_id)

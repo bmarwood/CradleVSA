@@ -87,18 +87,13 @@ class NewUser extends React.Component {
         }
     }
 
-
+    //format change
     changeState() {
         this.setState({
             name: this.state.fname + ' ' + this.state.lname,
             dob: Utility.convertDate(this.state.temp_dob)
         })
         this.addRole();
-
-        //delete
-        // delete this.state.fname;
-        // delete this.state.lname;
-        // delete this.state.error;
     }
 
 
@@ -116,7 +111,7 @@ class NewUser extends React.Component {
         })
     }
     
-    
+    //check if the id is taken
     checkID() {
         for (let user of this.state.user_array){
             if(user.id === this.state.id){
@@ -128,6 +123,7 @@ class NewUser extends React.Component {
         }
     }
 
+    //check if username is taken
     checkUsername(){
         for (let user of this.state.user_array){
             if(user.username === this.state.username){
@@ -140,6 +136,7 @@ class NewUser extends React.Component {
 
     }
 
+    //check if the name is taken
     checkName() {
         let temp_name = this.state.fname + ' ' + this.state.lname
         for (let user of this.state.user_array){
@@ -152,6 +149,7 @@ class NewUser extends React.Component {
         }
     }
 
+    //get all the user lists
     async getUserList() {
         var passback = await RequestServer.getUserList()
         if (passback !== null) {
@@ -161,7 +159,6 @@ class NewUser extends React.Component {
         }
     }
     
-
 
     handleSubmit = async () => {
         await this.getUserList()
@@ -175,7 +172,6 @@ class NewUser extends React.Component {
             alert("Must select one role")
             return
         }
-
 
         //check for user id - no duplicate value
         this.checkID();
@@ -211,7 +207,7 @@ class NewUser extends React.Component {
         this.changeState();
         console.log(this.state);
 
-
+        //  '/users/register/this.state'
         var response = await RequestServer.addUser(this.state)
         if (response !== null) {
             toast("User Added");
