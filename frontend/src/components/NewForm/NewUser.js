@@ -44,10 +44,12 @@ class NewUser extends React.Component {
                 {id: 1, name: Role.USER, checked: true},
                 {id: 2, name: Role.ADMIN, checked: false},
                 {id: 3, name: Role.HEALTH_WORKER, checked: false}
-            ]
+            ],
+            user_array: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
+        this.getUserList()
     }
 
     changeDOB = date => {
@@ -56,8 +58,7 @@ class NewUser extends React.Component {
         });
     };
 
-
-
+    
 
     //make the checkboxes are changeable
     handleCheckbox(id) {
@@ -79,53 +80,126 @@ class NewUser extends React.Component {
         //We need to re-initialize - if error cause
         this.state.roles = [];
         const role_array = this.state.roles_array;
-        console.log("For loop for the roles_array")
         for (let index in role_array) {
             if (role_array[index].checked) {
                 this.state.roles.push({id: this.state.id, role: role_array[index].name})
-                console.log(role_array[index].id, role_array[index].name)
             }
         }
     }
 
-
+    //format change
     changeState() {
         this.setState({
             name: this.state.fname + ' ' + this.state.lname,
             dob: Utility.convertDate(this.state.temp_dob)
         })
         this.addRole();
-
-        //delete
-        // delete this.state.fname;
-        // delete this.state.lname;
-        // delete this.state.error;
     }
 
 
     //check if at least one role has been selected
     checkRole() {
         const role = this.state.roles_array;
-        this.setState({
-            error: false
-        })
         for (let index in role) {
             //check if the checkbox is selected and if so change the error to true
-            if (role[index].checked && !this.state.error) {
+            if (role[index].checked) {
+                return;
+            }
+        }
+        this.setState({
+            error: true
+        })
+    }
+    
+    //check if the id is taken
+    checkID() {
+        for (let user of this.state.user_array){
+            if(user.id === this.state.id){
                 this.setState({
                     error: true
                 })
+                return;
             }
         }
     }
 
+    //check if username is taken
+    checkUsername(){
+        for (let user of this.state.user_array){
+            if(user.username === this.state.username){
+                this.setState({
+                    error: true
+                })
+                return;
+            }
+        }
 
+    }
+
+    //check if the name is taken
+    checkName() {
+        let temp_name = this.state.fname + ' ' + this.state.lname
+        for (let user of this.state.user_array){
+            if(user.name === temp_name){
+                this.setState({
+                    error: true
+                })
+                return;
+            }
+        }
+    }
+
+    //get all the user lists
+    async getUserList() {
+        var passback = await RequestServer.getUserList()
+        if (passback !== null) {
+            this.setState({
+                user_array: Utility.populateUser(passback.data)
+            })
+        }
+    }
+    
 
     handleSubmit = async () => {
+        await this.getUserList()
+
         //input validation
+        this.setState({
+            error: false
+        })
         this.checkRole();
-        if (!this.state.error) {
+        if (this.state.error) {
             alert("Must select one role")
+            return
+        }
+
+        //check for user id - no duplicate value
+        this.checkID();
+        if (this.state.error) {
+            alert("Existing ID: Re-enter the ID")
+            this.setState({
+                id: ''
+            })
+            return
+        }
+
+        this.checkUsername();
+        if (this.state.error) {
+            alert("Existing username: Re-enter username")
+            this.setState({
+                username: '',
+            })
+            return
+        }
+
+        //check for user name - no duplicate value
+        this.checkName();
+        if (this.state.error) {
+            alert("Existing user: Re-enter first name and last name")
+            this.setState({
+                fname: '',
+                lname: '',
+            })
             return
         }
 
@@ -133,27 +207,8 @@ class NewUser extends React.Component {
         this.changeState();
         console.log(this.state);
 
-        //No need to re-intantiate
-        /*
-        var user = {
-            id: this.state.id,
-            name: this.state.name,
-            address: this.state.address,
-            dob: this.state.dob,
-            gender: this.state.gender,
-            username: this.state.username,
-            password: this.state.password,
-            roles: this.state.roles,
-        }
-        
-        var response = await RequestServer.addUser(user)
-        
-        */
-       
-       //So we can just use
-       //connect to the database
-       var response = await RequestServer.addUser(this.state)
-       
+        //  '/users/register/this.state'
+        var response = await RequestServer.addUser(this.state)
         if (response !== null) {
             toast("User Added");
             this.props.history.push(
@@ -187,8 +242,6 @@ class NewUser extends React.Component {
                     margin: 'auto',
                     padding: '50px',
                     textAlign: 'center'
-                    // width: '400px',
-                    // height: '400px'
                 }}
                 ref="form"
                 onSubmit={this.handleSubmit}

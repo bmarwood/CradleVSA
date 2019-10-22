@@ -27,6 +27,7 @@ class AssessmentList extends Component {
                 { title: 'patient Id', field: 'patient_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'VHT Id', field: 'vht_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Gestational Age', field: 'gestational_age', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Gestational Unit', field: 'gestational_unit', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Referred?', field: 'referred', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Follow Up?', field: 'follow_up', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Recheck?', field: 'recheck', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
@@ -39,6 +40,7 @@ class AssessmentList extends Component {
                     patient_id: 'LOADING...',
                     vht_id: 'LOADING...',
                     gestational_age: 'LOADING...',
+                    gestational_unit: 'LOADING...',
                     referred: 'LOADING...',
                     follow_up: 'LOADING...',
                     recheck: 'LOADING...',
@@ -66,6 +68,7 @@ class AssessmentList extends Component {
             var vht_id = assessment.vht_id
             var date = assessment.date
             var gestational_age = assessment.gestational_age
+            var gestational_unit = assessment.gestational_unit
             var heart_rate = assessment.heart_rate
             var systolic = assessment.systolic
             var diastolic = assessment.diastolic
@@ -141,6 +144,7 @@ class AssessmentList extends Component {
                 vht_id: vht_id,
                 date: date,
                 gestational_age: gestational_age,
+                gestational_unit: gestational_unit,
                 heart_rate: heart_rate,
                 systolic: systolic,
                 diastolic: diastolic,
