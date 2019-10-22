@@ -5,20 +5,35 @@ import {Link} from 'react-router-dom';
 import Nav from './components/navigation';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
-
+import WorkerNav from './components/workerNav'
+import AdminNav from './components/adminNav'
+import LoggedOutNav from './components/loggedOutNav'
+import HealthWorkerDrawer from './components/healthWorkerDrawer'
+import AdminDrawer from './components/adminDrawer'
 
 class App extends Component {
 
+    getRoles() {
+        var roleArray = []
+        var user = localStorage.getItem("userData")
+        var parsedUser = JSON.parse(user)
+        if (parsedUser && parsedUser.roles) {
+            parsedUser.roles.forEach( function(role) {
+                console.log("User data is : " + role.role)
+                roleArray.push(role.role)
+            })
+        }
+        
+        return roleArray
+    }
+
     ifLoggedIn() {
-        if(localStorage.getItem('isLoggedIn') === 'true') {
-            return (
-                <Navigation>
-                    <Link to ="/logout">Logout</Link>
-                    <Link to ="/newAssessment">New Assessment</Link>
-                    <Link to ="/newPatient">New Patient</Link>
-                    <Link to ="/newUser">New User</Link>
-                </Navigation>
-            )
+        var roles = this.getRoles()
+
+        if (localStorage.getItem('isLoggedIn') === 'true' && this.isHealthWorker(roles))  {
+            return (<HealthWorkerDrawer/>)
+        } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isAdmin(roles)) {
+            return (<AdminDrawer/>)
         } else {
             return (
                 <Navigation>
@@ -28,24 +43,36 @@ class App extends Component {
         }
     }
 
+    isHealthWorker(roles) {
+        if (roles.indexOf("HEALTH_WORKER") > -1) {
+            return true
+        }
+        
+        return false 
+    }
+
+    isAdmin(roles) {
+        if (roles.indexOf("ADMIN") > -1) {
+            return true
+        }
+        
+        return false 
+    }
+
     navBasedOnLogin() {
-        if(localStorage.getItem('isLoggedIn') === 'true') {
-            return (                        
-            <Navigation>
-                <Link to ="/">Home</Link>
-                <Link to ="/admin/landing">Admin Landing page</Link>
-                <Link to ="/PatientList">Patient List</Link>
-                <Link to ="/AssessmentList">Assessments List</Link>
-                <Link to ="/PatientChart">Patient Chart</Link>
-                <Link to ="/resources">Resources</Link>
-            </Navigation>
+        var roles = this.getRoles()
+
+        if (localStorage.getItem('isLoggedIn') === 'true' && this.isHealthWorker(roles)) {
+            return (                  
+                <WorkerNav/>      
+            )
+        } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isAdmin(roles)) {
+            return (                  
+                <AdminNav/>      
             )
         } else {
             return (                        
-            <Navigation>
-                <Link to ="/">Home</Link>
-                <Link to ="/resources">Resources</Link>
-            </Navigation>
+                <LoggedOutNav/>
             )
         }
     }
