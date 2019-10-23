@@ -136,18 +136,6 @@ class NewUser extends React.Component {
 
     }
 
-    //check if the name is taken
-    checkName() {
-        let temp_name = this.state.fname + ' ' + this.state.lname
-        for (let user of this.state.user_array){
-            if(user.name === temp_name){
-                this.setState({
-                    error: true
-                })
-                return;
-            }
-        }
-    }
 
     //get all the user lists
     async getUserList() {
@@ -188,17 +176,6 @@ class NewUser extends React.Component {
             alert("Existing username: Re-enter username")
             this.setState({
                 username: '',
-            })
-            return
-        }
-
-        //check for user name - no duplicate value
-        this.checkName();
-        if (this.state.error) {
-            alert("Existing user: Re-enter first name and last name")
-            this.setState({
-                fname: '',
-                lname: '',
             })
             return
         }
