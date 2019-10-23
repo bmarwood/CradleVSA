@@ -128,24 +128,7 @@ class PatientList extends Component {
                                     resolve();
                                 }, 1000);
                             }),
-                        // onRowAdd: newData =>
-                        //     new Promise((resolve) => {
-                        //       console.log("onrowadd", newData)
-                        //     }),
-
                     }}
-
-                    //Other Actions
-                    actions={[
-                        {
-                            icon: 'assignment',
-                            tooltip: 'Medications',
-                            onClick: () => {
-                            //   Popup for Patient chart, opens PatientChart.js
-                              window.open("/PatientNotes")
-                            }
-                        }
-                      ]}
                 />
             </div>
 
