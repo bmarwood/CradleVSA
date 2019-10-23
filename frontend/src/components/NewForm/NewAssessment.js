@@ -31,7 +31,7 @@ class NewAssessment extends React.Component {
         super(props)
         this.state = {
             //use get method to get the assessment id <- should be equal to # of assessments + 1
-            id: '',
+            id: this.getUserID(),
             patient_id: "",
             patient_age: "",
             vht_id: null,
@@ -70,6 +70,18 @@ class NewAssessment extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleCheckbox = this.handleCheckbox.bind(this)
+    }
+
+
+    //return logged in user's id
+    getUserID() {
+        var roleArray = []
+        var user = localStorage.getItem("userData")
+        var parsedUser = JSON.parse(user)
+        if (parsedUser) {
+            return parsedUser.id
+        }
+        return null
     }
 
 
@@ -340,11 +352,8 @@ class NewAssessment extends React.Component {
                         <h4> Patient Form </h4>
                         <TextValidator
                             label="Assigned Worker Id"
-                            onChange={this.handleChange}
                             name="id"
                             value={this.state.id}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
                         />
                         <br/>
                         <TextValidator
