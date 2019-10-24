@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import axios from 'axios';
+import Utility from './NewForm/Utility'
 import '../App.css';
 
 var IsVM = false;
@@ -14,18 +15,6 @@ class RequestServer extends Component {
         }
         return 'http://localhost:8080'
     }
-
-    // getPatient(patient_ID) {
-    //     try {
-    //         var response = await axios.get(getServerLocation() + '/patients/all')
-    //         return response
-    //     }
-    //     catch (error) {
-    //         console.log('error block')
-    //         console.log(error)
-    //         return null
-    //     }
-    // }
 
     async addAssessment(assessment) {
         try {
@@ -100,6 +89,19 @@ class RequestServer extends Component {
         }
     }
 
+    //need to look into it *****
+    async getNextAssessmentID(){
+        try {
+            let next_id = await this.getAssessmentsList().size();
+            return next_id.toString()
+        }
+        catch (error) {
+            console.log('error block')
+            console.log(error)
+        }
+        return null
+    }
+
      async getPatientList() {
         try {
             var response = await axios.get(this.getServerLocation() + '/patients/all')
@@ -149,6 +151,28 @@ class RequestServer extends Component {
             return response
         }
         catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    //update patient.assessment list
+    async updatePatientAssessmentList(patient_id, assessment){
+        try{
+            let patient = await this.getPatientByID(patient_id)
+            console.log(patient.data.list_of_assessments)
+            let new_patient = Utility.populatePatient(patient.data)
+            // new_patient.list_of_assessments.push(assessment)
+            // new_patient.list_of_assessments.push([assessment.name, assessment.id])
+            console.log("\n/n\n/n patient.data")
+            console.log(new_patient)
+            console.log(new_patient)
+
+            var response = await axios.post(this.getServerLocation() + '/patients/update/' + patient_id, new_patient)
+            return response
+        }
+        catch(error){
             console.log('error block')
             console.log(error)
             return null

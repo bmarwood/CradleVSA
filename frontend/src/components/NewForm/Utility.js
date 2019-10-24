@@ -36,6 +36,17 @@ class Utility extends Component{
         });
         return user_array;
     }
+
+    static populatePatient(response) {
+        var patient = {
+            id: response.id,
+            name: response.name,
+            birth_date: response.birth_date,
+            list_of_assessments: response.list_of_assessments,
+            gender: response.gender
+        }
+        return patient;
+    }
 }
 
 export default Utility; //if I use new keyword here, I can use all the methods without static keyword. but it's should be a static class

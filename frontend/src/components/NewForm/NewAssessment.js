@@ -31,15 +31,15 @@ class NewAssessment extends React.Component {
         super(props)
         this.state = {
             //use get method to get the assessment id <- should be equal to # of assessments + 1
-            id: this.getUserID(),
-            patient_id: "",
-            patient_age: "",
-            vht_id: null,
+            id: null,
+            patient_id: "TEST",
+            patient_age: "20",
+            vht_id: this.getUserID(),
             date: "",
             gestational_age: "",
-            heart_rate: "",
-            systolic: "",
-            diastolic: "",
+            heart_rate: "100",
+            systolic: "100",
+            diastolic: "100",
             ews_color: null,
             symptoms: [],
             referred: false,
@@ -278,8 +278,10 @@ class NewAssessment extends React.Component {
     handleSubmit = async () => {
         this.setState({
             error: false,
-            errorMessage: ''
+            errorMessage: '',
+            id : await RequestServer.getNextAssessmentID()
         })
+
         this.checkSymptoms();
         this.checkGestAge();
         //the error controller
@@ -307,12 +309,23 @@ class NewAssessment extends React.Component {
 
         //assessment
         this.addAssessment();
+        this.updateAssessment();
     }
 
 
     async addAssessment() {
         console.log("this.state")
         var passback = await RequestServer.addAssessment(this.state)
+        if (passback !== null) {
+            this.props.history.push(
+                '/',
+                {detail: passback.data}
+            )
+        }
+    }
+
+    async updateAssessment(){
+        var passback = await RequestServer.updatePatientAssessmentList(this.state.patient_id, this.state)
         if (passback !== null) {
             this.props.history.push(
                 '/',
@@ -352,8 +365,8 @@ class NewAssessment extends React.Component {
                         <h4> Patient Form </h4>
                         <TextValidator
                             label="Assigned Worker Id"
-                            name="id"
-                            value={this.state.id}
+                            name="vht_id"       //filling up vht id with a worker id //need to change later
+                            value={this.state.vht_id}
                         />
                         <br/>
                         <TextValidator
