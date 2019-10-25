@@ -18,7 +18,7 @@ public class Users {
     private String username;    //primary key
     private String password;
     private String name;        //primary key - there is an error if the name is taken
-    private String dob;
+    private String birth_date;
     private String address;
     private String gender;
 //    private Gender gender;
@@ -30,20 +30,20 @@ public class Users {
         this.username = "n/a";
         this.password = "n/a";
         this.name = "n/a";
-        this.dob = "n/a";
+        this.birth_date = "n/a";
         this.address = "n/a";
         this.gender = null;
         this.enabled = false;
     }
 
     public Users(String id, String username, String password,
-                 String name, String dob, String address,
+                 String name, String birth_date, String address,
                  String gender, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.name = name;
-        this.dob = dob;
+        this.birth_date = birth_date;
         this.address = address;
         this.gender = gender;
         this.enabled = false;
@@ -55,7 +55,7 @@ public class Users {
     }
 
     public String getDob() {
-        return dob;
+        return birth_date;
     }
 
     public String getAddress() {
@@ -78,8 +78,8 @@ public class Users {
         enabled = true;
     }
 
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setDob(String birth_date) {
+        this.birth_date = birth_date;
     }
 
     public void setAddress(String address) {

@@ -2,6 +2,8 @@ package ca.cmpt373.earth.cradle.Models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Set;
+
 @Document(collection = "patients")
 public class Patients {
 
@@ -9,11 +11,11 @@ public class Patients {
     private String id; //primary key
     private String name;
     private String birth_date;
-    private String[] list_of_assessments;
+    private Set<Assessments> list_of_assessments;
     private String gender;
 
 
-    public Patients(String id, String name, String birth_date, String[] list_of_assessments, String gender) {
+    public Patients(String id, String name, String birth_date, Set<Assessments> list_of_assessments, String gender) {
         this.id = id;
         this.name = name;
         this.birth_date = birth_date;
@@ -45,11 +47,11 @@ public class Patients {
         this.birth_date = birth_date;
     }
 
-    public String[] getList_of_assessments() {
+    public Set<Assessments>  getList_of_assessments() {
         return list_of_assessments;
     }
 
-    public void setList_of_assessments(String[] list_of_assessments) {
+    public void setList_of_assessments(Set<Assessments>  list_of_assessments) {
         this.list_of_assessments = list_of_assessments;
     }
 
