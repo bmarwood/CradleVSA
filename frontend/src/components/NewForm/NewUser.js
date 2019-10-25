@@ -41,19 +41,45 @@ class NewUser extends React.Component {
             fname: '',
             lname: '',
             temp_dob: new Date(),
-            roles_array: [
+            roles_array: this.getRoleArray()/*[
                 {id: 1, name: Role.USER, checked: true},
                 {id: 2, name: Role.ADMIN, checked: false},
                 {id: 3, name: Role.HEALTH_WORKER, checked: false},
                 {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}
-            ],
+            ]*/,
             user_array: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
-        this.getUserList()
+        this.getUserList();
+        this.getRoleArray();
     }
 
+    getRoles(){
+        var roleArray = []
+        var user = localStorage.getItem("userData")
+        var parsedUser = JSON.parse(user)
+        if (parsedUser && parsedUser.roles) {
+            parsedUser.roles.forEach( function(role) {
+                console.log("User data is : " + role.role)
+                roleArray.push(role.role)
+            })
+        }
+        return roleArray
+    }
+
+    getRoleArray() {
+        var roles = this.getRoles()
+        if (roles.indexOf("ADMIN") > -1) {
+            return [{id: 1, name: Role.USER, checked: true},
+                {id: 2, name: Role.ADMIN, checked: false},
+                {id: 3, name: Role.HEALTH_WORKER, checked: false},
+                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
+        } else if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > -1) {
+            return [{id: 1, name: Role.USER, checked: true}]
+        }
+    }
+    
     changeDOB = date => {
         this.setState({
             temp_dob: date
@@ -235,6 +261,7 @@ class NewUser extends React.Component {
 
 
     render() {
+        //this.getRoleArray();
         let roles_map = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
                                                                     handleChange={this.handleCheckbox}/>)
         return (

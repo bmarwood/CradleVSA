@@ -34,7 +34,7 @@ const Navigation = () => (
     <WorkerRoute path = "/PatientAddMedication" component = {PatientAddMedication} />
     <WorkerRoute path = "/newAssessment" component = {NewAssessment} />
     <WorkerRoute path = "/newPatient" component = {NewPatient} />
-    <AdminRoute path = "/newUser" component = {NewUser} />
+    <ManageRoute path = "/newUser" component = {NewUser} />
     <Route path = "/resources" component = {Resources} />
   </Switch>
 )
@@ -105,6 +105,22 @@ function AdminRoute ({component: Component, authed, ...rest}) {
   )
 }
 
+function ManageRoute ({component: Component, authed, ...rest}) {
+
+    var roles = getRoles()
+
+    return (
+        <Route {...rest} render={(props) => (
+            localStorage.getItem('isLoggedIn') === 'true' &&  (roles.indexOf("ADMIN") > -1 || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > -1 )
+                ? <Component {...props} />
+                : <Redirect to={{
+                    pathname: '/',
+                    state: { from: props.location }
+                }} />
+        )} />
+
+    )
+}
 
 
 export default Navigation;
