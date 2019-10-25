@@ -34,7 +34,7 @@ const Navigation = () => (
     <WorkerRoute path = "/PatientAddMedication" component = {PatientAddMedication} />
     <WorkerRoute path = "/newAssessment" component = {NewAssessment} />
     <WorkerRoute path = "/newPatient" component = {NewPatient} />
-    <ManageRoute path = "/newUser" component = {NewUser} />
+    <ManagerRoute path = "/newUser" component = {NewUser} />
     <Route path = "/resources" component = {Resources} />
   </Switch>
 )
@@ -105,7 +105,7 @@ function AdminRoute ({component: Component, authed, ...rest}) {
   )
 }
 
-function ManageRoute ({component: Component, authed, ...rest}) {
+function ManagerRoute ({component: Component, authed, ...rest}) {
 
     var roles = getRoles()
 
