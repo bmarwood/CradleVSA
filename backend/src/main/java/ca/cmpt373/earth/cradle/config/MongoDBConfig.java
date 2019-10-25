@@ -81,10 +81,11 @@ public class MongoDBConfig {
     CommandLineRunner commandLineRunnerPatients(PatientsRepository patientsRepository) {
         return strings -> {
             String hashedPassword = passwordEncoder.encode("password");
+            Set<Assessments> assessment = new HashSet<>();
 
-            patientsRepository.save(new Patients("36", "Peter Parker", "April 31, 1996", new String[]{"id of assessment 1", "id of assessment2"}, "female"));
-            patientsRepository.save(new Patients("5", "Sam Smith", "December 16, 1960", new String[]{"id of assessment 1", "id of assessment2"}, "male"));
-            patientsRepository.save(new Patients("1", "Michael Bublé", "September 9, 1975", new String[]{"4", "5", "6"}, "male"));
+            patientsRepository.save(new Patients("36", "Peter Parker", "April 31, 1996", assessment, "female"));
+            patientsRepository.save(new Patients("5", "Sam Smith", "December 16, 1960", assessment, "male"));
+            patientsRepository.save(new Patients("1", "Michael Bublé", "September 9, 1975", assessment, "male"));
 
         };
     }
