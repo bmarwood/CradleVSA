@@ -28,22 +28,11 @@ class PatientList extends Component {
                 { title: 'ID Number', field: 'id' },
                 { title: 'Patient History', field: 'graph', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Medications', field: 'medications', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-
             ],
-                        data: [
+            data: [
                 {
-                    assessment_id: 'LOADING...',
-                    ews_color: 'LOADING...',
-                    patient_id: 'LOADING...',
-                    vht_id: 'LOADING...',
-                    gestational_age: 'LOADING...',
-                    gestational_unit: 'LOADING...',
-                    referred: 'LOADING...',
-                    follow_up: 'LOADING...',
-                    recheck: 'LOADING...',
-                    arrow: 'LOADING...',
-                    graph: <GraphPopup />,
-                    medications: <MedicationPopup />
+                graph: <GraphPopup />,
+                medications: <MedicationPopup />
                 },
             ],
         })
