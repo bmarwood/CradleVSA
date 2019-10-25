@@ -76,7 +76,8 @@ class NewUser extends React.Component {
                 {id: 3, name: Role.HEALTH_WORKER, checked: false},
                 {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
         } else if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > -1) {
-            return [{id: 1, name: Role.USER, checked: true}]
+            return [{id: 1, name: Role.USER, checked: true},
+                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
         }
     }
     
