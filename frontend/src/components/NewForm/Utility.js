@@ -2,23 +2,33 @@
     Helper functions for the forms:
     ..CovertDate - convert Date format to string
  */
-import { Component } from 'react';
+import {Component} from 'react';
 import RequestServer from "../RequestServer";
 
 
-class Utility extends Component{
+class Utility extends Component {
+    static MONTH_ARR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     //convert date to the "Month Date, Year" format
     static convertDate(prev_date) {
-        const MONTH_ARR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let month = MONTH_ARR[prev_date.getMonth()];
+        let month = this.MONTH_ARR[prev_date.getMonth()];
         let date = prev_date.getDate();
         let year = prev_date.getFullYear();
-        var date_string = month + " " + date + ", " + year
-        return date_string;
+        var string_date = month + " " + date + ", " + year
+        return string_date;
     }
 
-    
+    static convertStringToDate(string_date) {
+        let date = new Date();
+        let mmAndDD = string_date.split(", ")[0]
+        let yy = parseInt(string_date.split(", ")[1])
+        let dd = parseInt(mmAndDD.split(" ")[1])
+        let mm = this.MONTH_ARR.indexOf(mmAndDD.split(" ")[0])
+        date.setFullYear(yy, mm, dd);
+        return date;
+    }
+
+
     //RETURN User username and id
     static populateUser(response) {
         var user_array = []

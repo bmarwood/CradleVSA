@@ -20,7 +20,7 @@ class NewPatient extends React.Component {
             //TEMP VARIABLES
             fname: '',
             lname: '',
-            dob: new Date(),
+            temp_dob: new Date(),
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -28,7 +28,7 @@ class NewPatient extends React.Component {
     //handle date change
     changeDOB = date => {
         this.setState({
-            dob: date
+            temp_dob: date
         });
     };
 
@@ -43,7 +43,7 @@ class NewPatient extends React.Component {
     changeState() {
         this.setState({
             name: this.state.fname + ' ' + this.state.lname,
-            birth_date: Utility.convertDate(this.state.dob)
+            birth_date: Utility.convertDate(this.state.temp_dob)
         })
     }
 
@@ -139,7 +139,7 @@ class NewPatient extends React.Component {
 
                 <p>Date of Birth:</p>
                 <DatePicker
-                    selected={this.state.dob}
+                    selected={this.state.temp_dob}
                     onChange={this.changeDOB}
                 />
                 <br/>

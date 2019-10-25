@@ -29,7 +29,7 @@ class NewUser extends React.Component {
             username: '',
             password: '',
             name: '',
-            dob: '',
+            birth_date: '',
             address: '',
             gender: Gender.MALE,
             roles: [],
@@ -91,7 +91,7 @@ class NewUser extends React.Component {
     changeState() {
         this.setState({
             name: this.state.fname + ' ' + this.state.lname,
-            dob: Utility.convertDate(this.state.temp_dob)
+            birth_date: Utility.convertDate(this.state.temp_dob)
         })
         this.addRole();
     }
