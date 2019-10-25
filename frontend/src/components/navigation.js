@@ -76,7 +76,7 @@ function WorkerRoute ({component: Component, authed, ...rest}) {
 
   return (
     <Route {...rest} render={(props) => (
-      localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("HEALTH_WORKER") > -1 || roles.indexOf("ADMIN") > -1)
+      localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("HEALTH_WORKER") > -1 || roles.indexOf("ADMIN") > -1 || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > -1 )
         ? <Component {...props} />
         : <Redirect to={{
             pathname: '/',

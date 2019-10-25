@@ -17,7 +17,8 @@ const Gender = {
 const Role = {
     USER: "USER",
     ADMIN: "ADMIN",
-    HEALTH_WORKER: "HEALTH_WORKER"
+    HEALTH_WORKER: "HEALTH_WORKER",
+    COMMUNITY_HEALTH_OFFICER: "COMMUNITY_HEALTH_OFFICER"
 }
 
 //form for a new user
@@ -43,7 +44,8 @@ class NewUser extends React.Component {
             roles_array: [
                 {id: 1, name: Role.USER, checked: true},
                 {id: 2, name: Role.ADMIN, checked: false},
-                {id: 3, name: Role.HEALTH_WORKER, checked: false}
+                {id: 3, name: Role.HEALTH_WORKER, checked: false},
+                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}
             ],
             user_array: []
         };
