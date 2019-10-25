@@ -16,6 +16,7 @@ class UserList extends Component {
 
     componentDidMount() {
         this.getUserList()
+        this.timer = setInterval(() => this.getUserList(), 10000);
         this.setState({
             columns: [
                 { title: 'Username', field: 'username' },
@@ -43,11 +44,16 @@ class UserList extends Component {
         })
     }
 
+    componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
+    }
+
     getUserRoles(user) {
         var roleString = ''
         if (user && user.roles) {
             user.roles.forEach(role => {
-                roleString = roleString + " " + role.role
+                roleString = roleString + " " + role.role + ", "
             })
             console.log('returning roles: ', roleString)
             return roleString
