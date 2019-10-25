@@ -11,6 +11,7 @@ export default function WorkerNav() {
             <Link to ="/PatientList">Patient List</Link>
             <Link to ="/AssessmentList">Assessments List</Link>
             <Link to ="/PatientChart">Patient Chart</Link>
+            <Link to ="/Resources">Resources</Link>
         </Navigation>
     )
 }
