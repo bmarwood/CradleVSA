@@ -64,7 +64,6 @@ class RequestServer extends Component {
         }
     }
     
-    
     async getPatient(id){
         try {
             var response = await axios.get(this.getServerLocation() + '/patients/get' + id)
@@ -112,6 +111,20 @@ class RequestServer extends Component {
             return null
         }
     }
+    
+    //TEST : http://localhost:8080/patients/get1
+    //get only signle patient by the id
+    async getPatientByID(patient_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/patients/get'+ patient_id)
+            return response
+        }
+        catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
 
     async login(username, password) {
         var userObj = {
@@ -120,6 +133,19 @@ class RequestServer extends Component {
         }
         try {
             var response = await axios.post(this.getServerLocation() + '/users/login', userObj)
+            return response
+        }
+        catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+
+    async getUserList() {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/users/all')
             return response
         }
         catch (error) {

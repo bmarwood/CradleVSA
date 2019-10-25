@@ -27,6 +27,7 @@ class AssessmentList extends Component {
                 { title: 'patient Id', field: 'patient_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'VHT Id', field: 'vht_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Gestational Age', field: 'gestational_age', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Gestational Unit', field: 'gestational_unit', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Referred?', field: 'referred', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Follow Up?', field: 'follow_up', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Recheck?', field: 'recheck', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
@@ -39,6 +40,7 @@ class AssessmentList extends Component {
                     patient_id: 'LOADING...',
                     vht_id: 'LOADING...',
                     gestational_age: 'LOADING...',
+                    gestational_unit: 'LOADING...',
                     referred: 'LOADING...',
                     follow_up: 'LOADING...',
                     recheck: 'LOADING...',
@@ -59,7 +61,76 @@ class AssessmentList extends Component {
     populateData(response) {
 
         var assessmentList = []
+<<<<<<< HEAD
         response.forEach(function (assessment) {
+=======
+        response.forEach(function(assessment) {
+            var assessment_id = assessment._id
+            var patient_id = assessment.patient_id
+            var patient_age = assessment.patient_age
+            var vht_id = assessment.vht_id
+            var date = assessment.date
+            var gestational_age = assessment.gestational_age
+            var gestational_unit = assessment.gestational_unit
+            var heart_rate = assessment.heart_rate
+            var systolic = assessment.systolic
+            var diastolic = assessment.diastolic
+            var ews_color
+            switch (String(assessment.ews_color).toUpperCase()) {
+                case "GREEN":
+                    ews_color = <GreenLight />
+                    break;
+                case "YELLOW":
+                    ews_color = <YellowLight />
+                    break;
+                case "RED":
+                    ews_color = <RedLight />
+                    break;
+                default:
+                    ews_color = assessment.ews_color
+            }
+
+            var symptoms = assessment.symptoms
+            var referred
+            switch (String(assessment.referred)) {
+                case "true":
+                    referred = <i aria-hidden="true" className="check icon"></i>
+                    break;
+                case "false":
+                    referred = <i aria-hidden="true" className="x icon"></i>
+                    break;
+                default:
+                    referred = assessment.referred
+            }
+
+            var follow_up
+            switch (String(assessment.follow_up)) {
+                case "true":
+                    follow_up = <i aria-hidden="true" className="check icon"></i>
+                    break;
+                case "false":
+                    follow_up = <i aria-hidden="true" className="x icon"></i>
+                    break;
+                default:
+                    follow_up = assessment.follow_up
+            }
+            var follow_up_date = assessment.follow_up_date
+
+            var arrow = assessment.arrow
+
+
+            var recheck
+            switch (String(assessment.recheck)) {
+                case "true":
+                    recheck = <i aria-hidden="true" className="check icon"></i>
+                    break;
+                case "false":
+                    recheck = <i aria-hidden="true" className="x icon"></i>
+                    break;
+                default:
+                    recheck = assessment.recheck
+            }
+>>>>>>> fbba3d5beb1663e65526273cfebdb6cf5fb88a52
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
                 vht_id={assessment.vht_id}
@@ -70,6 +141,7 @@ class AssessmentList extends Component {
                 date={assessment.date}
             />
             var assessment_obj = {
+<<<<<<< HEAD
                 id: assessment._id,
                 ews_color: getColorVisual(assessment.ews_color),
                 arrow: getArrowVisual(assessment.arrow),
@@ -86,6 +158,24 @@ class AssessmentList extends Component {
                 diastolic: assessment.diastolic,
                 symptoms: assessment.symptoms,
                 follow_up_date: assessment.follow_up_date,
+=======
+                id: assessment_id,
+                patient_id: patient_id,
+                ews_color: ews_color,
+                patient_age: patient_age,
+                vht_id: vht_id,
+                date: date,
+                gestational_age: gestational_age,
+                gestational_unit: gestational_unit,
+                heart_rate: heart_rate,
+                systolic: systolic,
+                diastolic: diastolic,
+                symptoms: symptoms,
+                referred: referred,
+                follow_up: follow_up,
+                follow_up_date: follow_up_date,
+                recheck: recheck,
+>>>>>>> fbba3d5beb1663e65526273cfebdb6cf5fb88a52
                 info: info,
             }
 
