@@ -27,7 +27,7 @@ public class Users {
         this.dob = "n/a";
         this.address = "n/a";
         this.gender = "n/a";
-        this.enabled = false;
+        this.enabled = false; //activate or deactivate the user
     }
 
 

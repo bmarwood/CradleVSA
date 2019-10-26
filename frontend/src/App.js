@@ -81,7 +81,7 @@ class App extends Component {
                             <Link to ="/users/newAssessment">New Assessment</Link>
                             <Link to ="/users/newPatient">New Patient</Link>
                             <Link to ="/users/newUser">New User</Link>
-                            <Link to ="/users/profile">Edit Profile</Link>
+                            <Link to ="/users/profile">Profile</Link>
                         </Navigation>
                     </Drawer>
                     <Content>

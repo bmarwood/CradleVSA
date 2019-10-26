@@ -8,7 +8,12 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import { Grid, Cell } from 'react-mdl';
+import {Tabs, Tab, Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, IconButton } from 'react-mdl';
+import PieChart from '../Chart/PieChart';
+import StatIcon from '../../stat-icon.png';
+
+
+
 //Profile class which gets user data from localStorage and display accordingly
 export default class Profile extends Component {
     
@@ -103,143 +108,148 @@ export default class Profile extends Component {
     renderDefaultView = () => {
         //const classes = useStyles();
         return (
-        <div style={{width: '90%', margin: 'auto', backgroundColor: 'white', textAlign: 'center'}}>
-        <form className="demo-form" noValidate autoComplete="off">
-            <Grid className = "demo-grid-ruler">
-                <Cell col = {4}>
-                    <TextField
-                        id="id"
-                        label="Worker ID"
-                        defaultValue= {this.state.user.id}
-                        className="demo-text"
-                        margin="normal"
-                        InputProps={{
-                        readOnly: true,
-                        }}
-                        variant="outlined"
-                    />  
-                </Cell>
-
-                <Cell col = {4}>
-                    <TextField
-                        id="text-username"
-                        label="User Name"
-                        className="demo-text"
-                        value={this.state.user.username}
-                        onChange= {this.handleChange.bind(this)}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                </Cell>
-
-                <Cell col = {4}>
-                    <TextField
-                        required
-                        id="outlined-name"
-                        label="Name"
-                        //className={classes.textField}
-                        value={this.state.user.name}
-                        //onChange={handleChange('name')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                </Cell>
-
-                <Cell col = {4}>
-                    <TextField
-                        id="outlined-password-input"
-                        label="Password"
-                        //className={classes.textField}
-                        type="password"
-                        value="password"
-                        autoComplete="current-password"
-                        margin="normal"
-                        variant="outlined"
-                    />
-                </Cell>
-
-                <Cell col = {4}>
-                    <TextField
-                        id="outlined-password-input"
-                        label="Retype Password"
-                        //className={classes.textField}
-                        type="password"
-                        value="password"
-                        autoComplete="current-password"
-                        margin="normal"
-                        variant="outlined"
-                    />
-                </Cell>
-
-                <Cell col = {4}>
-                    <TextField
-                        id="outlined-username"
-                        label="User Name"
-                        //className={classes.textField}
-                        value={this.state.user.username}
-                        //onChange={handleChange('userName')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                </Cell>
-
-                <Cell col = {4}>
-                    <TextField
-                        id="outlined-dob"
-                        label="Date of Birth"
-                        //className={classes.textField}
-                        value={this.state.user.dob}
-                        //onChange={handleChange('dob')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                </Cell>
-
-                <Cell col = {4}>
-                    <TextField
-                        id="outlined-address"
-                        label="Address"
-                        //className={classes.textField}
-                        value={this.state.user.address}
-                        //onChange={handleChange('address')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                </Cell>
-
-                <Cell col = {4}>
-                    <TextField
-                        id="outlined-gender"
-                        label="Gender"
-                        //className={classes.textField}
-                        value={this.state.user.gender}
-                        //onChange={handleChange('gender')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                </Cell>
-
-                {/* <Cell col = {4}>
-                    <TextField
-                        id="outlined-status"
-                        label="Status"
-                        className={classes.textField}
-                        value={values.status}
-                        onChange={handleChange('status')}
-                        margin="normal"
-                        InputProps={{
+        <div style={{margin: 'auto', textAlign: 'center'}}>
+            <div style={{margin: 'auto', backgroundColor: 'white', textAlign: 'center', width : '100%'}}>
+            <form className="demo-form" noValidate autoComplete="off">
+                <Grid className = "demo-grid-ruler">
+                    <Cell col = {12}>
+                        <h3>Edit User Information</h3> 
+                    </Cell>
+                    <Cell col = {4}>
+                        <TextField
+                            id="id"
+                            label="Worker ID"
+                            defaultValue= {this.state.user.id}
+                            className="demo-text"
+                            margin="normal"
+                            InputProps={{
                             readOnly: true,
                             }}
-                        variant="outlined"
-                    />
-                </Cell> */}
+                            variant="outlined"
+                        />  
+                    </Cell>
 
-            </Grid>
-        </form>
+                    <Cell col = {4}>
+                        <TextField
+                            id="text-username"
+                            label="User Name"
+                            className="demo-text"
+                            value={this.state.user.username}
+                            onChange= {this.handleChange.bind(this)}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </Cell>
 
-        <Button variant="outlined" color="secondary" className= "demo-button">
-        Submit
-      </Button>
+                    <Cell col = {4}>
+                        <TextField
+                            required
+                            id="outlined-name"
+                            label="Name"
+                            //className={classes.textField}
+                            value={this.state.user.name}
+                            //onChange={handleChange('name')}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </Cell>
+
+                    <Cell col = {4}>
+                        <TextField
+                            id="outlined-password-input"
+                            label="Password"
+                            //className={classes.textField}
+                            type="password"
+                            value="password"
+                            autoComplete="current-password"
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </Cell>
+
+                    <Cell col = {4}>
+                        <TextField
+                            id="outlined-password-input"
+                            label="Retype Password"
+                            //className={classes.textField}
+                            type="password"
+                            value="password"
+                            autoComplete="current-password"
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </Cell>
+
+                    <Cell col = {4}>
+                        <TextField
+                            id="outlined-username"
+                            label="User Name"
+                            //className={classes.textField}
+                            value={this.state.user.username}
+                            //onChange={handleChange('userName')}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </Cell>
+
+                    <Cell col = {4}>
+                        <TextField
+                            id="outlined-dob"
+                            label="Date of Birth"
+                            //className={classes.textField}
+                            value={this.state.user.dob}
+                            //onChange={handleChange('dob')}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </Cell>
+
+                    <Cell col = {4}>
+                        <TextField
+                            id="outlined-address"
+                            label="Address"
+                            //className={classes.textField}
+                            value={this.state.user.address}
+                            //onChange={handleChange('address')}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </Cell>
+
+                    <Cell col = {4}>
+                        <TextField
+                            id="outlined-gender"
+                            label="Gender"
+                            //className={classes.textField}
+                            value={this.state.user.gender}
+                            //onChange={handleChange('gender')}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </Cell>
+
+                    {/* <Cell col = {4}>
+                        <TextField
+                            id="outlined-status"
+                            label="Status"
+                            className={classes.textField}
+                            value={values.status}
+                            onChange={handleChange('status')}
+                            margin="normal"
+                            InputProps={{
+                                readOnly: true,
+                                }}
+                            variant="outlined"
+                        />
+                    </Cell> */}
+
+                </Grid>
+            </form>
+
+            <Button style = {{ padding: '10px'}} variant="outlined" color="secondary" className= "demo-button">
+            Submit
+        </Button>
+        </div>
     </div>
         )
     }

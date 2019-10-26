@@ -7,11 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e43636d1-f531-462e-8058-c454d19d5c26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/config/MongoDBConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/config/MongoDBConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/test/java/ca/cmpt373/earth/cradle/CradleApplicationTests.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/User/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/User/Profile.js" afterDir="false" />
@@ -92,7 +92,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/CradleApplication.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="76">
@@ -101,11 +101,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
+            <state relative-caret-position="395">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
             </state>
           </provider>
         </entry>
@@ -136,10 +136,11 @@
       <list>
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java" />
+        <option value="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="134" />
     <option name="y" value="3" />
     <option name="width" value="1760" />
@@ -186,6 +187,15 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="cradle" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="cradle" type="462c0819:PsiDirectoryNode" />
+              <item name="Models" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -197,7 +207,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1572053962175" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1572118400307" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -283,10 +293,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="134" y="3" width="1760" height="1128" extended-state="1" />
+    <frame x="134" y="3" width="1760" height="1128" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.46545666" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25702575" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -301,7 +311,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32940018" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3284169" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3284169" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5017564" side_tool="true" weight="0.32940018" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32940018" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49824357" weight="0.32940018" />
@@ -478,13 +488,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/UsersRepository.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -513,6 +516,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
         </state>
       </provider>
     </entry>
