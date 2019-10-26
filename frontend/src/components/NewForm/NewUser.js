@@ -4,7 +4,7 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import ShowRoles from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
 import RequestServer from  '../RequestServer'
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-toastify/dist/ReactToastify.css';
@@ -104,7 +104,9 @@ class NewUser extends React.Component {
     //add selected roles in the array
     addRole() {
         //We need to re-initialize - if error cause
-        this.state.roles = [];
+        this.setState({
+           roles: []
+        })
         const role_array = this.state.roles_array;
         for (let index in role_array) {
             if (role_array[index].checked) {

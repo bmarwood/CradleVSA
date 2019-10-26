@@ -2,15 +2,15 @@
 import React, {Component} from 'react';
 import {Layout, Header, Navigation, Drawer, Content} from 'react-mdl';
 import {Link} from 'react-router-dom';
-import Nav from './components/navigation';
+import Nav from './components/Navigation/navigation';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
-import WorkerNav from './components/workerNav'
-import AdminNav from './components/adminNav'
-import LoggedOutNav from './components/loggedOutNav'
-import HealthWorkerDrawer from './components/healthWorkerDrawer'
-import AdminDrawer from './components/adminDrawer'
-import ChoDrawer from "./components/choDrawer";
+import WorkerNav from './components/Navigation/workerNav'
+import AdminNav from './components/AdminComponents/adminNav'
+import LoggedOutNav from './components/Navigation/loggedOutNav'
+import HealthWorkerDrawer from './components/Navigation/healthWorkerDrawer'
+import AdminDrawer from './components/AdminComponents/adminDrawer'
+import ChoDrawer from "./components/Navigation/choDrawer";
 
 const Role_Termination_Integer = -1
 

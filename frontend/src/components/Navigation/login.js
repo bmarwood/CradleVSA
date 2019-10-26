@@ -2,9 +2,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import React, { Component } from 'react';
-import requestServer from './RequestServer';
+import requestServer from '../RequestServer';
 
-import '../App.css';
+import '../../App.css';
 
 class Login extends Component {
     constructor(props) {

@@ -111,6 +111,18 @@ class RequestServer extends Component {
             return null
         }
     }
+
+    async getAssessmentsByUserId(id){
+        try{
+            var response = await axios.get(this.getServerLocation() + '/assessments/getByUserId'+ id)
+            return response
+        }
+        catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
     
     //TEST : http://localhost:8080/patients/get1
     //get only signle patient by the id
