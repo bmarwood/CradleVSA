@@ -56,4 +56,12 @@ public class AssessmentsController {
     public Assessments get(@PathVariable String assessment_id) {
         return assessmentsRepository.findCustomById(assessment_id);
     }
+
+    @GetMapping("/getByUserId{user_id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public List<Assessments> getByUserId(@PathVariable String user_id) {
+        return assessmentsRepository.findCustomByUserId(user_id);
+    }
+
 }

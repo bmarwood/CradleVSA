@@ -27,7 +27,7 @@ import java.util.Set;
 
 @Configuration
 public class MongoDBConfig {
-
+/*
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Bean
@@ -126,5 +126,5 @@ public class MongoDBConfig {
         };
     }
 
-
+    */
 }

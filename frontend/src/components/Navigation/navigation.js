@@ -1,19 +1,19 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
-import LandingPage from './landingpage';
-import NewAssessment from './NewForm/NewAssessment';
-import NewPatient from './NewForm/NewPatient';
-import NewUser from './NewForm/NewUser';
-import Landing_List from './AdminLanding';
+import LandingPage from '../landingpage';
+import NewAssessment from '../NewForm/NewAssessment';
+import NewPatient from '../NewForm/NewPatient';
+import NewUser from '../NewForm/NewUser';
+import Landing_List from '../AdminComponents/AdminLanding';
 import Login  from './login';
 import Logout  from './logout';
-import Register  from './register';
-import PatientList from './PatientList';
-import PatientChart from './PatientChart';
-import AssessmentList from './AssessmentList';
-import PatientNotes from './PatientNotes';
-import PatientAddMedication from './PatientAddMedication';
-import Resources from './Resources';
+import Register  from '../register';
+import PatientList from '../PatientComponents/PatientList';
+import PatientChart from '../PatientComponents/PatientChart';
+import AssessmentList from '../AssessmentComponents/AssessmentList';
+import PatientNotes from '../PatientComponents/PatientNotes';
+import PatientAddMedication from '../PatientComponents/PatientAddMedication';
+import Resources from '../Resources';
 
 
 const Navigation = () => (
@@ -28,16 +28,18 @@ const Navigation = () => (
     <Route path = "/login" component = {Login} />
     <PrivateRoute path = "/logout" component = {Logout} />
     <AdminRoute path = "/admin/landing" component = {Landing_List} />
-    <WorkerRoute path = "/PatientList" component = {PatientList} />
-    <WorkerRoute path = "/PatientChart" component = {PatientChart} />
-    <WorkerRoute path = "/PatientNotes" component = {PatientNotes} />
-    <WorkerRoute path = "/PatientAddMedication" component = {PatientAddMedication} />
+    <WorkerRoute  path = "/PatientList" component = {PatientList} />
+    <WorkerRoute  path = "/PatientChart" component = {PatientChart} />
+    <WorkerRoute  path = "/PatientNotes" component = {PatientNotes} />
+    <WorkerRoute  path = "/PatientAddMedication" component = {PatientAddMedication} />
     <WorkerRoute path = "/newAssessment" component = {NewAssessment} />
     <WorkerRoute path = "/newPatient" component = {NewPatient} />
-    <AdminRoute path = "/newUser" component = {NewUser} />
+    <ManagerRoute path = "/newUser" component = {NewUser} />
     <Route path = "/resources" component = {Resources} />
   </Switch>
 )
+
+const Role_Termination_Integer = -1
 
 function getRoles() {
   var roleArray = []
@@ -76,7 +78,7 @@ function WorkerRoute ({component: Component, authed, ...rest}) {
 
   return (
     <Route {...rest} render={(props) => (
-      localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("HEALTH_WORKER") > -1 || roles.indexOf("ADMIN") > -1)
+      localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer || roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer )
         ? <Component {...props} />
         : <Redirect to={{
             pathname: '/',
@@ -94,7 +96,7 @@ function AdminRoute ({component: Component, authed, ...rest}) {
 
   return (
     <Route {...rest} render={(props) => (
-      localStorage.getItem('isLoggedIn') === 'true' &&  roles.indexOf("ADMIN") > -1
+      localStorage.getItem('isLoggedIn') === 'true' &&  roles.indexOf("ADMIN") > Role_Termination_Integer
         ? <Component {...props} />
         : <Redirect to={{
             pathname: '/',
@@ -105,6 +107,22 @@ function AdminRoute ({component: Component, authed, ...rest}) {
   )
 }
 
+function ManagerRoute ({component: Component, authed, ...rest}) {
+
+    var roles = getRoles()
+
+    return (
+        <Route {...rest} render={(props) => (
+            localStorage.getItem('isLoggedIn') === 'true' &&  (roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer )
+                ? <Component {...props} />
+                : <Redirect to={{
+                    pathname: '/',
+                    state: { from: props.location }
+                }} />
+        )} />
+
+    )
+}
 
 
 export default Navigation;

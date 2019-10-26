@@ -2,7 +2,7 @@
     Helper functions for the forms:
     ..CovertDate - convert Date format to string
  */
-import {Component} from 'react';
+import { Component } from 'react';
 import RequestServer from "../RequestServer";
 
 

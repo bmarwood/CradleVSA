@@ -4,7 +4,7 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import ShowRoles from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
 import RequestServer from  '../RequestServer'
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,8 +17,11 @@ const Gender = {
 const Role = {
     USER: "USER",
     ADMIN: "ADMIN",
-    HEALTH_WORKER: "HEALTH_WORKER"
+    HEALTH_WORKER: "HEALTH_WORKER",
+    COMMUNITY_HEALTH_OFFICER: "COMMUNITY_HEALTH_OFFICER"
 }
+
+const Role_Termination_Integer = -1
 
 //form for a new user
 class NewUser extends React.Component {
@@ -40,18 +43,41 @@ class NewUser extends React.Component {
             fname: '',
             lname: '',
             temp_dob: new Date(),
-            roles_array: [
-                {id: 1, name: Role.USER, checked: true},
-                {id: 2, name: Role.ADMIN, checked: false},
-                {id: 3, name: Role.HEALTH_WORKER, checked: false}
-            ],
+            roles_array: this.getRoleArray(),
             user_array: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
-        this.getUserList()
+        this.getUserList();
+        this.getRoleArray();
     }
 
+    getRoles(){
+        var roleArray = []
+        var user = localStorage.getItem("userData")
+        var parsedUser = JSON.parse(user)
+        if (parsedUser && parsedUser.roles) {
+            parsedUser.roles.forEach( function(role) {
+                console.log("User data is : " + role.role)
+                roleArray.push(role.role)
+            })
+        }
+        return roleArray
+    }
+
+    getRoleArray() {
+        var roles = this.getRoles()
+        if (roles.indexOf("ADMIN") > Role_Termination_Integer) {
+            return [{id: 1, name: Role.USER, checked: true},
+                {id: 2, name: Role.ADMIN, checked: false},
+                {id: 3, name: Role.HEALTH_WORKER, checked: false},
+                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
+        } else if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer) {
+            return [{id: 1, name: Role.USER, checked: true},
+                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
+        }
+    }
+    
     changeDOB = date => {
         this.setState({
             temp_dob: date
@@ -78,7 +104,9 @@ class NewUser extends React.Component {
     //add selected roles in the array
     addRole() {
         //We need to re-initialize - if error cause
-        this.state.roles = [];
+        this.setState({
+           roles: []
+        })
         const role_array = this.state.roles_array;
         for (let index in role_array) {
             if (role_array[index].checked) {
