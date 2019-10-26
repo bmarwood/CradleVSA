@@ -26,8 +26,14 @@ public class PatientsController {
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Patients> getAll() {
-        List<Patients> patients = this.patientsRepository.findAll();
-        return patients;
+        try{
+            List<Patients> patients = this.patientsRepository.findAll();
+            return patients;
+        }
+        catch(Throwable e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
