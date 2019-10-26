@@ -106,10 +106,17 @@ class AssessmentList extends Component {
                 this.populateData(passback.data)
             }
         } else {
-            // userData.roles.forEach(id => {
-            //     console.log(id)
-            // });
-        }
+            userData = JSON.parse(userData)
+            var id;
+            userData.roles.forEach(data => {
+                console.log(data.id)
+                id = data.id
+            });
+            var passback = await requestServer.getAssessmentsByUserId(id)
+                if (passback !== null) {
+                    this.populateData(passback.data)
+                }
+       }
     }
 
 
@@ -158,11 +165,11 @@ const YellowLight = () => (
 function getArrowVisual(input) {
     switch (String(input).toUpperCase()) {
         case "UP":
-            return <i class="arrow up icon" />
+            return <i className="arrow up icon" />
         case "DOWN":
-            return <i class="arrow down icon" />
+            return <i className="arrow down icon" />
         case "EMPTY":
-            return <i class="window minimize icon" />
+            return <i className="window minimize icon" />
         default:
             return input
     }
