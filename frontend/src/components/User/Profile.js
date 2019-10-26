@@ -4,12 +4,19 @@ import SimpleList from './SimpleList'
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import RequestServer from '../RequestServer';
 
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import { Grid, Cell } from 'react-mdl';
 //Profile class which gets user data from localStorage and display accordingly
-class Profile extends Component {
+export default class Profile extends Component {
+    
     constructor(props) {
         super(props);
         let userData = JSON.parse(localStorage.getItem('userData'));
         this.state = {
+            user: {
             id : userData.id,
             username: userData.username,
             password: userData.password,
@@ -19,13 +26,30 @@ class Profile extends Component {
             gender: userData.gender,
             roles: userData.roles,
             isInEditMode: false
+            }
         }
         console.log(this.state)
 
     }
 
-
+    useStyles = makeStyles(theme => ({
+        container: {
+          display: 'flex',
+          flexWrap: 'wrap',
+        },
+        textField: {
+          marginLeft: theme.spacing(1),
+          marginRight: theme.spacing(1),
+        },
+        dense: {
+          marginTop: theme.spacing(2),
+        },
+        menu: {
+          width: 200,
+        },
+      }));
     
+/*     
     //Submit button handler to the back-end
     handleSubmit(event) {
         event.preventDefault();
@@ -63,23 +87,171 @@ class Profile extends Component {
             <button onClick={this.updateComponentValue}>Submit</button>
         </div> 
     }
-
+ 
     renderDefaultView = () => {
         return <div className="landing-form" style = {{color : "white"}} onDoubleClick={this.changeEditMode}>
             {this.state.name}
         </div>
+    } */
+
+    handleChange(event) {
+        this.setState({ 
+            [event.target.name] : event.target.value
+        });
+    }
+
+    renderDefaultView = () => {
+        //const classes = useStyles();
+        return (
+        <div style={{width: '90%', margin: 'auto', backgroundColor: 'white', textAlign: 'center'}}>
+        <form className="demo-form" noValidate autoComplete="off">
+            <Grid className = "demo-grid-ruler">
+                <Cell col = {4}>
+                    <TextField
+                        id="id"
+                        label="Worker ID"
+                        defaultValue= {this.state.user.id}
+                        className="demo-text"
+                        margin="normal"
+                        InputProps={{
+                        readOnly: true,
+                        }}
+                        variant="outlined"
+                    />  
+                </Cell>
+
+                <Cell col = {4}>
+                    <TextField
+                        id="text-username"
+                        label="User Name"
+                        className="demo-text"
+                        value={this.state.user.username}
+                        onChange= {this.handleChange.bind(this)}
+                        margin="normal"
+                        variant="outlined"
+                    />
+                </Cell>
+
+                <Cell col = {4}>
+                    <TextField
+                        required
+                        id="outlined-name"
+                        label="Name"
+                        //className={classes.textField}
+                        value={this.state.user.name}
+                        //onChange={handleChange('name')}
+                        margin="normal"
+                        variant="outlined"
+                    />
+                </Cell>
+
+                <Cell col = {4}>
+                    <TextField
+                        id="outlined-password-input"
+                        label="Password"
+                        //className={classes.textField}
+                        type="password"
+                        value="password"
+                        autoComplete="current-password"
+                        margin="normal"
+                        variant="outlined"
+                    />
+                </Cell>
+
+                <Cell col = {4}>
+                    <TextField
+                        id="outlined-password-input"
+                        label="Retype Password"
+                        //className={classes.textField}
+                        type="password"
+                        value="password"
+                        autoComplete="current-password"
+                        margin="normal"
+                        variant="outlined"
+                    />
+                </Cell>
+
+                <Cell col = {4}>
+                    <TextField
+                        id="outlined-username"
+                        label="User Name"
+                        //className={classes.textField}
+                        value={this.state.user.username}
+                        //onChange={handleChange('userName')}
+                        margin="normal"
+                        variant="outlined"
+                    />
+                </Cell>
+
+                <Cell col = {4}>
+                    <TextField
+                        id="outlined-dob"
+                        label="Date of Birth"
+                        //className={classes.textField}
+                        value={this.state.user.dob}
+                        //onChange={handleChange('dob')}
+                        margin="normal"
+                        variant="outlined"
+                    />
+                </Cell>
+
+                <Cell col = {4}>
+                    <TextField
+                        id="outlined-address"
+                        label="Address"
+                        //className={classes.textField}
+                        value={this.state.user.address}
+                        //onChange={handleChange('address')}
+                        margin="normal"
+                        variant="outlined"
+                    />
+                </Cell>
+
+                <Cell col = {4}>
+                    <TextField
+                        id="outlined-gender"
+                        label="Gender"
+                        //className={classes.textField}
+                        value={this.state.user.gender}
+                        //onChange={handleChange('gender')}
+                        margin="normal"
+                        variant="outlined"
+                    />
+                </Cell>
+
+                {/* <Cell col = {4}>
+                    <TextField
+                        id="outlined-status"
+                        label="Status"
+                        className={classes.textField}
+                        value={values.status}
+                        onChange={handleChange('status')}
+                        margin="normal"
+                        InputProps={{
+                            readOnly: true,
+                            }}
+                        variant="outlined"
+                    />
+                </Cell> */}
+
+            </Grid>
+        </form>
+
+        <Button variant="outlined" color="secondary" className= "demo-button">
+        Submit
+      </Button>
+    </div>
+        )
     }
 
     render() {
-        return this.state.isInEditMode ? 
-        this.renderEditView() : 
-        this.renderDefaultView()
+        // return this.state.isInEditMode ? 
+        // this.renderEditView() : 
+        // this.renderDefaultView()
+        return this.renderDefaultView()
         
     }
 }
-
-export default Profile;
-
 
 // <div className="landing-form" style = {{color : "white"}}>
             //     <h1> Your Profile</h1>
