@@ -10,6 +10,9 @@ import AdminNav from './components/adminNav'
 import LoggedOutNav from './components/loggedOutNav'
 import HealthWorkerDrawer from './components/healthWorkerDrawer'
 import AdminDrawer from './components/adminDrawer'
+import ChoDrawer from "./components/choDrawer";
+
+const Role_Termination_Integer = -1
 
 class App extends Component {
 
@@ -30,8 +33,10 @@ class App extends Component {
     ifLoggedIn() {
         var roles = this.getRoles()
 
-        if (localStorage.getItem('isLoggedIn') === 'true' && this.isHealthWorker(roles))  {
+        if (localStorage.getItem('isLoggedIn') === 'true' && this.isHealthWorker(roles)) {
             return (<HealthWorkerDrawer/>)
+        } else if(localStorage.getItem('isLoggedIn') === 'true' && this.isCHO(roles)) {
+            return (<ChoDrawer/>)
         } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isAdmin(roles)) {
             return (<AdminDrawer/>)
         } else {
@@ -44,7 +49,7 @@ class App extends Component {
     }
 
     isHealthWorker(roles) {
-        if (roles.indexOf("HEALTH_WORKER") > -1) {
+        if (roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer) {
             return true
         }
         
@@ -52,25 +57,37 @@ class App extends Component {
     }
 
     isAdmin(roles) {
-        if (roles.indexOf("ADMIN") > -1) {
+        if (roles.indexOf("ADMIN") > Role_Termination_Integer) {
             return true
         }
         
         return false 
     }
-
+    isCHO(roles){
+        if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer){
+            return true
+        }
+        return false
+    }
     navBasedOnLogin() {
         var roles = this.getRoles()
 
         if (localStorage.getItem('isLoggedIn') === 'true' && this.isHealthWorker(roles)) {
             return (                  
-                <WorkerNav/>      
+                <WorkerNav/>
             )
-        } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isAdmin(roles)) {
+        }
+        else if (localStorage.getItem('isLoggedIn') === 'true' && this.isAdmin(roles)) {
             return (                  
                 <AdminNav/>      
             )
-        } else {
+        }
+        else if (localStorage.getItem('isLoggedIn') === 'true' && this.isCHO(roles)) {
+            return (
+                <WorkerNav/>
+            )
+        }
+        else {
             return (                        
                 <LoggedOutNav/>
             )
