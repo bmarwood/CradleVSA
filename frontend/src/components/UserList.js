@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MaterialTable from 'material-table';
-import './PatientList.css';
+import './PatientComponents/PatientList.css';
 import requestServer from './RequestServer';
 
 

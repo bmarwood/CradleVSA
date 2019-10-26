@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import MaterialTable from 'material-table';
 import './AdminLanding.css';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,8 +7,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import PatientList from './PatientList'
-import UserList from  './UserList'
+import PatientList from '../PatientComponents/PatientList'
+import UserList from  '../UserList'
 
 class Landing_List extends Component {
     render() {
