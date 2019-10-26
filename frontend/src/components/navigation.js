@@ -4,15 +4,15 @@ import LandingPage from './landingpage';
 import NewAssessment from './NewForm/NewAssessment';
 import NewPatient from './NewForm/NewPatient';
 import NewUser from './NewForm/NewUser';
-import Landing_List from './AdminLanding';
+import Landing_List from './AdminComponents/AdminLanding';
 import Login  from './login';
 import Logout  from './logout';
 import Register  from './register';
-import PatientList from './PatientList';
-import PatientChart from './PatientChart';
-import AssessmentList from './AssessmentList';
-import PatientNotes from './PatientNotes';
-import PatientAddMedication from './PatientAddMedication';
+import PatientList from './PatientComponents/PatientList';
+import PatientChart from './PatientComponents/PatientChart';
+import AssessmentList from './AssessmentComponents/AssessmentList';
+import PatientNotes from './PatientComponents/PatientNotes';
+import PatientAddMedication from './PatientComponents/PatientAddMedication';
 import Resources from './Resources';
 
 
@@ -28,10 +28,10 @@ const Navigation = () => (
     <Route path = "/login" component = {Login} />
     <PrivateRoute path = "/logout" component = {Logout} />
     <AdminRoute path = "/admin/landing" component = {Landing_List} />
-    <WorkerRoute path = "/PatientList" component = {PatientList} />
-    <WorkerRoute path = "/PatientChart" component = {PatientChart} />
-    <WorkerRoute path = "/PatientNotes" component = {PatientNotes} />
-    <WorkerRoute path = "/PatientAddMedication" component = {PatientAddMedication} />
+    <WorkerRoute  path = "/PatientList" component = {PatientList} />
+    <WorkerRoute  path = "/PatientChart" component = {PatientChart} />
+    <WorkerRoute  path = "/PatientNotes" component = {PatientNotes} />
+    <WorkerRoute  path = "/PatientAddMedication" component = {PatientAddMedication} />
     <WorkerRoute path = "/newAssessment" component = {NewAssessment} />
     <WorkerRoute path = "/newPatient" component = {NewPatient} />
     <ManagerRoute path = "/newUser" component = {NewUser} />

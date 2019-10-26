@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './PatientList.css';
-import requestServer from './RequestServer';
+import requestServer from '../RequestServer';
 
 
 class PatientList extends Component {

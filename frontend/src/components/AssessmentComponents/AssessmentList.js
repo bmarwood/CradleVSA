@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './AssessmentList.css';
-import TrafficIcons from "./Visuals/TrafficIcons";
-import ModalPopup from '../Modals/ModalPopup';
-import requestServer from './RequestServer';
+import TrafficIcons from "../Visuals/TrafficIcons";
+import ModalPopup from "../../Modals/ModalPopup";
+import requestServer from '../RequestServer';
 
 
 class AssessmentList extends Component {

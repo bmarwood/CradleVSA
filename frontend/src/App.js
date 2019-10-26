@@ -6,10 +6,10 @@ import Nav from './components/navigation';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import WorkerNav from './components/workerNav'
-import AdminNav from './components/adminNav'
+import AdminNav from './components/AdminComponents/adminNav'
 import LoggedOutNav from './components/loggedOutNav'
 import HealthWorkerDrawer from './components/healthWorkerDrawer'
-import AdminDrawer from './components/adminDrawer'
+import AdminDrawer from './components/AdminComponents/adminDrawer'
 import ChoDrawer from "./components/choDrawer";
 
 const Role_Termination_Integer = -1
