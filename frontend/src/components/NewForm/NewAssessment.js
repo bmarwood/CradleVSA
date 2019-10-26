@@ -74,6 +74,14 @@ class NewAssessment extends React.Component {
 
 
     componentDidMount() {
+        //get id of user
+        var userData = JSON.parse(localStorage.getItem("userData"))
+        this.setState({
+            vht_id: userData.id
+        })
+
+        //TODO: add locking grab for assessment #
+
         //check if systolic > diastolic
         ValidatorForm.addValidationRule('isGreater', (value) => {
             if (parseInt(value) <= parseInt(this.state.systolic)) {
@@ -300,6 +308,7 @@ class NewAssessment extends React.Component {
 
     async addAssessment() {
         console.log("this.state")
+
         var passback = await RequestServer.addAssessment(this.state)
         if (passback !== null) {
             this.props.history.push(
@@ -338,14 +347,14 @@ class NewAssessment extends React.Component {
                 <Grid>
                     <Cell col={4}>
                         <h4> Patient Form </h4>
-                        <TextValidator
+                        {/* <TextValidator
                             label="Assigned Worker Id"
                             onChange={this.handleChange}
                             name="id"
                             value={this.state.id}
                             validators={['required']}
                             errorMessages={['this field is required']}
-                        />
+                        /> */}
                         <br/>
                         <TextValidator
                             label="Patient ID"

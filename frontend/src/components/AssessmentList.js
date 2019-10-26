@@ -116,18 +116,22 @@ class AssessmentList extends Component {
         return false
     }
 
+    //gets assessments for admin if that role is given, otherwise dynamically populates based on current user
     async getAssessmentList() {
         var userData = localStorage.getItem("userData")
         userData = JSON.parse(userData)
         var roles = this.getRoles(userData)
+        var passback
         if (this.isAdmin(roles)) {
-            var passback = await requestServer.getAssessmentsList()
+            passback = await requestServer.getAssessmentsList()
+
             if (passback !== null) {
                 this.populateData(passback.data)
             }
+
         } else {
-            var id = userData.id;
-            var passback = await requestServer.getAssessmentsByUserId(id)
+            passback = await requestServer.getAssessmentsByUserId(userData.id)
+
             if (passback !== null) {
                 this.populateData(passback.data)
             }
