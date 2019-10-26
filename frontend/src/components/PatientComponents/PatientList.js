@@ -4,6 +4,7 @@ import './PatientList.css';
 import requestServer from './RequestServer';
 import GraphPopup from '../Modals/GraphPopup';
 import MedicationPopup from '../Modals/MedicationPopup';
+import requestServer from '../RequestServer';
 
 
 class PatientList extends Component {
@@ -120,11 +121,8 @@ class PatientList extends Component {
                     }}
                 />
             </div>
-
         );
     }
-
-
 }
 
 export default PatientList;

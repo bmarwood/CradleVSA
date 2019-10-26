@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import {Textfield, Grid, Cell} from 'react-mdl';
+import React from 'react';
 import MaterialTable from 'material-table';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ButtonToolbar, Button} from 'react-bootstrap';

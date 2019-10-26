@@ -2,9 +2,13 @@
     Helper functions for the forms:
     ..CovertDate - convert Date format to string
  */
+<<<<<<< HEAD
 import {Component} from 'react';
 import RequestServer from "../RequestServer";
 
+=======
+import { Component } from 'react';
+>>>>>>> a2152cffa91d3b8da00043d4a7599c8efe6547a6
 
 class Utility extends Component {
     static MONTH_ARR = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
