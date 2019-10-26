@@ -21,13 +21,11 @@ class AssessmentList extends Component {
         this.timer = setInterval(() => this.getAssessmentList(), 10000);
         this.setState({
             columns: [
-                { title: 'Assessment Id', field: 'id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Patient Id', field: 'patient_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Cradle Professional Id', field: 'vht_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Early Warning Color', field: 'ews_color', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Shock Arrow', field: 'arrow', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'patient Id', field: 'patient_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'VHT Id', field: 'vht_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Gestational Age', field: 'gestational_age', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'Gestational Unit', field: 'gestational_unit', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Referred?', field: 'referred', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Follow Up?', field: 'follow_up', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
                 { title: 'Recheck?', field: 'recheck', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
@@ -77,7 +75,7 @@ class AssessmentList extends Component {
                 arrow: getArrowVisual(assessment.arrow),
                 patient_id: assessment.patient_id,
                 vht_id: assessment.vht_id,
-                gestational_age: assessment.gestational_age,
+                gestational_age: getGestationalAge(assessment),
                 referred: getBoolVisual(assessment.referred),
                 follow_up: getBoolVisual(assessment.follow_up),
                 recheck: getBoolVisual(assessment.recheck),
@@ -118,8 +116,7 @@ class AssessmentList extends Component {
 
     //gets assessments for admin if that role is given, otherwise dynamically populates based on current user
     async getAssessmentList() {
-        var userData = localStorage.getItem("userData")
-        userData = JSON.parse(userData)
+        var userData = JSON.parse(localStorage.getItem("userData"))
         var roles = this.getRoles(userData)
         var passback
         if (this.isAdmin(roles)) {
@@ -215,6 +212,17 @@ function getBoolVisual(input) {
             return <i aria-hidden="true" className="x icon" />
         default:
             return input
+    }
+}
+
+function getGestationalAge(assessment){
+    switch(String(assessment.gestational_unit).toUpperCase()){
+        case "WEEK":
+            return (assessment.gestational_age + " Week(s)")
+        case "MONTH":
+            return (assessment.gestational_age + " Month(s)")
+        default:
+            return <i aria-hidden="true" className="dont icon" />
     }
 }
 
