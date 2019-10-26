@@ -20,7 +20,6 @@ class UserList extends Component {
         this.setState({
             columns: [
                 { title: 'Username', field: 'username' },
-                { title: 'Password', field: 'password' },
                 { title: 'Role', field: 'role', type: 'array' },
                 { title: 'Name', field: 'name' },
                 { title: 'Surname', field: 'surname' },
@@ -31,7 +30,6 @@ class UserList extends Component {
             Data:[
                 {
                     username: 'Loading',
-                    password: 'Loading',
                     role: ["Loading "],
                     name: 'Loading',
                     surname: 'Loading',
@@ -70,8 +68,7 @@ class UserList extends Component {
             var roleString = this.getUserRoles(user)
   
             var username = user.username
-            var password = user.password
-            var name = user.name
+            var name = user.name.split(' ')[0]
             var surname = user.name.split(' ')[1]
             var sex = user.gender
             var birthYear = user.dob
@@ -79,7 +76,6 @@ class UserList extends Component {
 
             var user_obj = {
                 username: username,
-                password: password,
                 role: roleString,
                 name: name,
                 surname: surname,
