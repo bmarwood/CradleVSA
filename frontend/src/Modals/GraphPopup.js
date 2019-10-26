@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Popup from "reactjs-popup";
-import PatientChart from '../components/PatientChart';
+import PatientChart from '../components/PatientComponents/PatientChart';
 
 class GraphPopup extends Component {
     render() {

@@ -21,13 +21,8 @@ const Arrow = {
 
 const Gestational_unit = {
     EMPTY: "EMPTY",
-<<<<<<< HEAD
-    WEEK: "WEEK",
-    MONTH: "MONTH",
-=======
     WEEK: "WEEK(S)",
     MONTH: "MONTH(S)",
->>>>>>> a2152cffa91d3b8da00043d4a7599c8efe6547a6
     NOT_PREGNANT: "NOT_PREGNANT"
 }
 
@@ -117,28 +112,6 @@ class NewAssessment extends React.Component {
             return false;
         });
 
-<<<<<<< HEAD
-        //set the field based on the database value
-        ValidatorForm.addValidationRule('getMatchedContent', (value) => {
-            this.getMatchingPatientData(value)
-                .catch(() => {
-                    this.setState({
-                        fname: '',
-                        lname: '',
-                        temp_dob: new Date()
-                    })
-                    return true;
-                });
-            return true;
-            // Promise.getMatchingPatientData(value).then(r =>
-            //     r(true)
-            // )
-            // return false;
-
-        })
-
-=======
->>>>>>> a2152cffa91d3b8da00043d4a7599c8efe6547a6
         //check the gestational age
         ValidatorForm.addValidationRule('checkPregnancy', (value) => {
             if (this.state.gestational_unit === Gestational_unit.WEEK) {
@@ -146,20 +119,12 @@ class NewAssessment extends React.Component {
                     msg: 'Value must be between 1 to 47'
                 })
                 return value <= 47 && value > 0;
-<<<<<<< HEAD
-            } else if (this.state.gestational_unit == Gestational_unit.MONTH) {
-=======
             } else if (this.state.gestational_unit === Gestational_unit.MONTH) {
->>>>>>> a2152cffa91d3b8da00043d4a7599c8efe6547a6
                 this.setState({
                     msg: 'Value must be between 1 to 11'
                 })
                 return value <= 11 && value > 0;
-<<<<<<< HEAD
-            } else if (this.state.gestational_unit == Gestational_unit.NOT_PREGNANT) {
-=======
             } else if (this.state.gestational_unit === Gestational_unit.NOT_PREGNANT) {
->>>>>>> a2152cffa91d3b8da00043d4a7599c8efe6547a6
                 this.setState({
                     msg: 'Value must be 0'
                 })
@@ -199,17 +164,11 @@ class NewAssessment extends React.Component {
 
     //set ews_color with an arrow
     setColor() {
-<<<<<<< HEAD
-        this.state.heart_rate = parseInt(this.state.heart_rate);
-        this.state.systolic = parseInt(this.state.systolic);
-        this.state.diastolic = parseInt(this.state.diastolic);
-=======
         this.setState({ 
             heart_rate:  parseInt(this.state.heart_rate),
             systolic:  parseInt(this.state.systolic),
             diastolic:  parseInt(this.state.diastolic),
         })
->>>>>>> a2152cffa91d3b8da00043d4a7599c8efe6547a6
         const RED_SYSTOLIC = 160;
         const RED_DIASTOLIC = 110;
         const YELLOW_SYSTOLIC = 140;
@@ -330,24 +289,6 @@ class NewAssessment extends React.Component {
         return null
     }
 
-<<<<<<< HEAD
-    //
-    // //compare with the matching id
-    // async checkID(patient_id) {
-    //     var existing_id = await this.getMatchingPatientID(patient_id);
-    //     if (existing_id !== patient_id) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
-    //format change
-    changeState() {
-        this.setState({
-            name: this.state.fname + ' ' + this.state.lname,
-            birth_date: Utility.convertDate(this.state.temp_dob)
-        })
-=======
 
     //compare with the matching id
     async checkID(patient_id) {
@@ -356,7 +297,6 @@ class NewAssessment extends React.Component {
             return true;
         }
         return false;
->>>>>>> a2152cffa91d3b8da00043d4a7599c8efe6547a6
     }
 
 
@@ -375,19 +315,6 @@ class NewAssessment extends React.Component {
             alert(this.state.errorMsg)
             return;
         }
-<<<<<<< HEAD
-        //will be handled in the backend
-        // //true if id does not exist
-        // let no_existing_ID = await this.checkID(this.state.patient_id)
-        //
-        // if (no_existing_ID) {
-        //     alert("Patient ID does NOT EXIST")
-        //     this.setState({
-        //         patient_id: ''
-        //     })
-        //     return;
-        // }
-=======
         //true if id does not exist
         let no_existing_ID = await this.checkID(this.state.patient_id)
 
@@ -398,7 +325,6 @@ class NewAssessment extends React.Component {
             })
             return;
         }
->>>>>>> a2152cffa91d3b8da00043d4a7599c8efe6547a6
 
         //setDate
         let today = new Date();
@@ -447,11 +373,7 @@ class NewAssessment extends React.Component {
     // use variant="outlined" to wrap up the box
     render() {
         let symptom = this.state.symptoms_arr.map(item => <ShowSymp key={item.id} item={item}
-<<<<<<< HEAD
-                                                                    handleChange={this.handleCheckbox}/>)
-=======
             handleChange={this.handleCheckbox} />)
->>>>>>> a2152cffa91d3b8da00043d4a7599c8efe6547a6
         return (
             <ValidatorForm
                 style={{
@@ -471,12 +393,6 @@ class NewAssessment extends React.Component {
                         <h4> Patient Form </h4>
                         {/* <TextValidator
                             label="Assigned Worker Id"
-<<<<<<< HEAD
-                            name="vht_id"       //filling up vht id with a worker id //need to change later
-                            value={this.state.vht_id}
-                        />
-                        <br/>
-=======
                             onChange={this.handleChange}
                             name="id"
                             value={this.state.id}
@@ -484,7 +400,6 @@ class NewAssessment extends React.Component {
                             errorMessages={['this field is required']}
                         /> */}
                         <br />
->>>>>>> a2152cffa91d3b8da00043d4a7599c8efe6547a6
                         <TextValidator
                             label="Patient ID"
                             onChange={this.handleChange}
