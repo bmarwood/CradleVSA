@@ -34,10 +34,12 @@ const Navigation = () => (
     <WorkerRoute path = "/PatientAddMedication" component = {PatientAddMedication} />
     <WorkerRoute path = "/newAssessment" component = {NewAssessment} />
     <WorkerRoute path = "/newPatient" component = {NewPatient} />
-    <AdminRoute path = "/newUser" component = {NewUser} />
+    <ManagerRoute path = "/newUser" component = {NewUser} />
     <Route path = "/resources" component = {Resources} />
   </Switch>
 )
+
+const Role_Termination_Integer = -1
 
 function getRoles() {
   var roleArray = []
@@ -76,7 +78,7 @@ function WorkerRoute ({component: Component, authed, ...rest}) {
 
   return (
     <Route {...rest} render={(props) => (
-      localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("HEALTH_WORKER") > -1 || roles.indexOf("ADMIN") > -1)
+      localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer || roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer )
         ? <Component {...props} />
         : <Redirect to={{
             pathname: '/',
@@ -94,7 +96,7 @@ function AdminRoute ({component: Component, authed, ...rest}) {
 
   return (
     <Route {...rest} render={(props) => (
-      localStorage.getItem('isLoggedIn') === 'true' &&  roles.indexOf("ADMIN") > -1
+      localStorage.getItem('isLoggedIn') === 'true' &&  roles.indexOf("ADMIN") > Role_Termination_Integer
         ? <Component {...props} />
         : <Redirect to={{
             pathname: '/',
@@ -105,6 +107,22 @@ function AdminRoute ({component: Component, authed, ...rest}) {
   )
 }
 
+function ManagerRoute ({component: Component, authed, ...rest}) {
+
+    var roles = getRoles()
+
+    return (
+        <Route {...rest} render={(props) => (
+            localStorage.getItem('isLoggedIn') === 'true' &&  (roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer )
+                ? <Component {...props} />
+                : <Redirect to={{
+                    pathname: '/',
+                    state: { from: props.location }
+                }} />
+        )} />
+
+    )
+}
 
 
 export default Navigation;
