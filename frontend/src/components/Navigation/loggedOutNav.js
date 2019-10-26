@@ -4,13 +4,11 @@ import {Navigation} from 'react-mdl';
 import {Link} from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function AdminDrawer() {
+export default function LoggedOutNav() {
     return (
         <Navigation>
-            <Link to ="/logout">Logout</Link>
-            <Link to ="/newAssessment">New Assessment</Link>
-            <Link to ="/newPatient">New Patient</Link>
-            <Link to ="/newUser">New User</Link>
+            <Link to ="/">Home</Link>
+            <Link to ="/resources">Resources</Link>
         </Navigation>
     )
 }

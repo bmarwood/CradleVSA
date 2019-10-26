@@ -90,21 +90,21 @@ class NewAssessment extends React.Component {
 
         //check the gestational age
         ValidatorForm.addValidationRule('checkPregnancy', (value) => {
-            if (this.state.gestational_unit == Gestational_unit.WEEK) {
+            if (this.state.gestational_unit === Gestational_unit.WEEK) {
                 this.setState({
                     msg: 'Value must be between 1 to 47'
                 })
                 return value <= 47 && value > 0;
-            } else if (this.state.gestational_unit == Gestational_unit.MONTH) {
+            } else if (this.state.gestational_unit === Gestational_unit.MONTH) {
                 this.setState({
                     msg: 'Value must be between 1 to 11'
                 })
                 return value <= 11 && value > 0;
-            } else if (this.state.gestational_unit == Gestational_unit.NOT_PREGNANT) {
+            } else if (this.state.gestational_unit === Gestational_unit.NOT_PREGNANT) {
                 this.setState({
                     msg: 'Value must be 0'
                 })
-                return value == 0;
+                return value === 0;
             }
             this.setState({
                 msg: 'Must select one of the Gestational age'
@@ -140,9 +140,11 @@ class NewAssessment extends React.Component {
 
     //set ews_color with an arrow
     setColor() {
-        this.state.heart_rate = parseInt(this.state.heart_rate);
-        this.state.systolic = parseInt(this.state.systolic);
-        this.state.diastolic = parseInt(this.state.diastolic);
+        this.setState({ 
+            heart_rate:  parseInt(this.state.heart_rate),
+            systolic:  parseInt(this.state.systolic),
+            diastolic:  parseInt(this.state.diastolic),
+        })
         const RED_SYSTOLIC = 160;
         const RED_DIASTOLIC = 110;
         const YELLOW_SYSTOLIC = 140;
@@ -224,7 +226,7 @@ class NewAssessment extends React.Component {
         if (this.state.gestational_unit === Gestational_unit.EMPTY) {
             this.setState({
                 error: true,
-                errorMsg: this.state.errorMsg += "Please select at least one gestational age"
+                errorMsg: this.state.errorMsg + "Please select at least one gestational age"
             })
         }
 

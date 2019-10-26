@@ -1,19 +1,19 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
-import LandingPage from './landingpage';
-import NewAssessment from './NewForm/NewAssessment';
-import NewPatient from './NewForm/NewPatient';
-import NewUser from './NewForm/NewUser';
-import Landing_List from './AdminComponents/AdminLanding';
+import LandingPage from '../landingpage';
+import NewAssessment from '../NewForm/NewAssessment';
+import NewPatient from '../NewForm/NewPatient';
+import NewUser from '../NewForm/NewUser';
+import Landing_List from '../AdminComponents/AdminLanding';
 import Login  from './login';
 import Logout  from './logout';
-import Register  from './register';
-import PatientList from './PatientComponents/PatientList';
-import PatientChart from './PatientComponents/PatientChart';
-import AssessmentList from './AssessmentComponents/AssessmentList';
-import PatientNotes from './PatientComponents/PatientNotes';
-import PatientAddMedication from './PatientComponents/PatientAddMedication';
-import Resources from './Resources';
+import Register  from '../register';
+import PatientList from '../PatientComponents/PatientList';
+import PatientChart from '../PatientComponents/PatientChart';
+import AssessmentList from '../AssessmentComponents/AssessmentList';
+import PatientNotes from '../PatientComponents/PatientNotes';
+import PatientAddMedication from '../PatientComponents/PatientAddMedication';
+import Resources from '../Resources';
 
 
 const Navigation = () => (
