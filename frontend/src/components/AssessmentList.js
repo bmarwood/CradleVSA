@@ -97,26 +97,41 @@ class AssessmentList extends Component {
         this.setState({ data: assessmentList })
     }
 
-    async getAssessmentList() {
+    getRoles(parsedUser) {
+        var roleArray = []
+        if (parsedUser && parsedUser.roles) {
+            parsedUser.roles.forEach(function (role) {
+                console.log("User data is : " + role.role)
+                roleArray.push(role.role)
+            })
+        }
 
+        return roleArray
+    }
+
+    isAdmin(roles) {
+        if (roles.indexOf("ADMIN") > -1) {
+            return true
+        }
+        return false
+    }
+
+    async getAssessmentList() {
         var userData = localStorage.getItem("userData")
-        if (userData === null) {
+        userData = JSON.parse(userData)
+        var roles = this.getRoles(userData)
+        if (this.isAdmin(roles)) {
             var passback = await requestServer.getAssessmentsList()
             if (passback !== null) {
                 this.populateData(passback.data)
             }
         } else {
-            userData = JSON.parse(userData)
-            var id;
-            userData.roles.forEach(data => {
-                console.log(data.id)
-                id = data.id
-            });
+            var id = userData.id;
             var passback = await requestServer.getAssessmentsByUserId(id)
-                if (passback !== null) {
-                    this.populateData(passback.data)
-                }
-       }
+            if (passback !== null) {
+                this.populateData(passback.data)
+            }
+        }
     }
 
 
