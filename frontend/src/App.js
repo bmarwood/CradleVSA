@@ -12,6 +12,8 @@ import HealthWorkerDrawer from './components/healthWorkerDrawer'
 import AdminDrawer from './components/adminDrawer'
 import ChoDrawer from "./components/choDrawer";
 
+const Role_Termination_Integer = -1
+
 class App extends Component {
 
     getRoles() {
@@ -47,7 +49,7 @@ class App extends Component {
     }
 
     isHealthWorker(roles) {
-        if (roles.indexOf("HEALTH_WORKER") > -1) {
+        if (roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer) {
             return true
         }
         
@@ -55,14 +57,14 @@ class App extends Component {
     }
 
     isAdmin(roles) {
-        if (roles.indexOf("ADMIN") > -1) {
+        if (roles.indexOf("ADMIN") > Role_Termination_Integer) {
             return true
         }
         
         return false 
     }
     isCHO(roles){
-        if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > -1){
+        if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer){
             return true
         }
         return false
@@ -74,15 +76,18 @@ class App extends Component {
             return (                  
                 <WorkerNav/>
             )
-        } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isAdmin(roles)) {
+        }
+        else if (localStorage.getItem('isLoggedIn') === 'true' && this.isAdmin(roles)) {
             return (                  
                 <AdminNav/>      
             )
-        } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isCHO(roles)) {
+        }
+        else if (localStorage.getItem('isLoggedIn') === 'true' && this.isCHO(roles)) {
             return (
                 <WorkerNav/>
             )
-        } else {
+        }
+        else {
             return (                        
                 <LoggedOutNav/>
             )

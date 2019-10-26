@@ -21,6 +21,8 @@ const Role = {
     COMMUNITY_HEALTH_OFFICER: "COMMUNITY_HEALTH_OFFICER"
 }
 
+const Role_Termination_Integer = -1
+
 //form for a new user
 class NewUser extends React.Component {
     constructor() {
@@ -41,12 +43,7 @@ class NewUser extends React.Component {
             fname: '',
             lname: '',
             temp_dob: new Date(),
-            roles_array: this.getRoleArray()/*[
-                {id: 1, name: Role.USER, checked: true},
-                {id: 2, name: Role.ADMIN, checked: false},
-                {id: 3, name: Role.HEALTH_WORKER, checked: false},
-                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}
-            ]*/,
+            roles_array: this.getRoleArray(),
             user_array: []
         };
         this.handleChange = this.handleChange.bind(this);
@@ -70,12 +67,12 @@ class NewUser extends React.Component {
 
     getRoleArray() {
         var roles = this.getRoles()
-        if (roles.indexOf("ADMIN") > -1) {
+        if (roles.indexOf("ADMIN") > Role_Termination_Integer) {
             return [{id: 1, name: Role.USER, checked: true},
                 {id: 2, name: Role.ADMIN, checked: false},
                 {id: 3, name: Role.HEALTH_WORKER, checked: false},
                 {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
-        } else if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > -1) {
+        } else if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer) {
             return [{id: 1, name: Role.USER, checked: true},
                 {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
         }
@@ -262,7 +259,6 @@ class NewUser extends React.Component {
 
 
     render() {
-        //this.getRoleArray();
         let roles_map = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
                                                                     handleChange={this.handleCheckbox}/>)
         return (

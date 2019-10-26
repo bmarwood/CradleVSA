@@ -39,6 +39,8 @@ const Navigation = () => (
   </Switch>
 )
 
+const Role_Termination_Integer = -1
+
 function getRoles() {
   var roleArray = []
   var user = localStorage.getItem("userData")
@@ -76,7 +78,7 @@ function WorkerRoute ({component: Component, authed, ...rest}) {
 
   return (
     <Route {...rest} render={(props) => (
-      localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("HEALTH_WORKER") > -1 || roles.indexOf("ADMIN") > -1 || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > -1 )
+      localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer || roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer )
         ? <Component {...props} />
         : <Redirect to={{
             pathname: '/',
@@ -94,7 +96,7 @@ function AdminRoute ({component: Component, authed, ...rest}) {
 
   return (
     <Route {...rest} render={(props) => (
-      localStorage.getItem('isLoggedIn') === 'true' &&  roles.indexOf("ADMIN") > -1
+      localStorage.getItem('isLoggedIn') === 'true' &&  roles.indexOf("ADMIN") > Role_Termination_Integer
         ? <Component {...props} />
         : <Redirect to={{
             pathname: '/',
@@ -111,7 +113,7 @@ function ManagerRoute ({component: Component, authed, ...rest}) {
 
     return (
         <Route {...rest} render={(props) => (
-            localStorage.getItem('isLoggedIn') === 'true' &&  (roles.indexOf("ADMIN") > -1 || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > -1 )
+            localStorage.getItem('isLoggedIn') === 'true' &&  (roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer )
                 ? <Component {...props} />
                 : <Redirect to={{
                     pathname: '/',
