@@ -22,9 +22,9 @@ export default class ChangePassword extends Component {
         this.state = {
             id: userData.id,
             username: userData.username,
-            old_password: 'password',
-            new_password:'password',
-            recheck: 'password'
+            old_password: '',
+            new_password:'',
+            recheck: ''
         }
     }
 
@@ -34,7 +34,7 @@ export default class ChangePassword extends Component {
  
          //check if systolic > diastolic
          ValidatorForm.addValidationRule('isSame', (value) => {
-             if (this.state.new_password === this.state.recheck) {
+             if (this.state.new_password === this.state.recheck && this.state.old_password !== '' && this.state.new_password !== '') {
                  return true;
              }
              return false;
@@ -83,6 +83,7 @@ export default class ChangePassword extends Component {
                 if (response != null) {
                     localStorage.setItem("userData", JSON.stringify(response.data))
                     console.log(response.data)
+                    window.alert("Password change succeed")
                     window.location.reload()
                 } 
                 else {
@@ -137,6 +138,7 @@ export default class ChangePassword extends Component {
                             label="New Password"
                             onChange={this.handleChange.bind(this)}
                             name="new_password"
+                            type= "password"
                             value={this.state.new_password}
                             variant="outlined"
                         />
@@ -164,7 +166,9 @@ export default class ChangePassword extends Component {
                 
                 
             </ValidatorForm>
-            
+            <div style={{margin: 'auto', padding: '20px',textAlign: 'center'}}>
+                <Link to = "/profile">Go Back</Link>
+            </div>
                 
         </div>
     </div>

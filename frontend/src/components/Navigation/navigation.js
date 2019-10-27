@@ -31,7 +31,6 @@ const Navigation = () => (
     <PrivateRoute path = "/logout" component = {Logout} />
     <AdminRoute path = "/admin/landing" component = {Landing_List} />
     <WorkerRoute  path = "/PatientList" component = {PatientList} />
-    <WorkerRoute  path = "/PatientChart" component = {PatientChart} />
     <WorkerRoute  path = "/PatientNotes" component = {PatientNotes} />
     <WorkerRoute  path = "/PatientAddMedication" component = {PatientAddMedication} />
     <WorkerRoute path = "/newAssessment" component = {NewAssessment} />
