@@ -20,7 +20,7 @@ class NewPatient extends React.Component {
             //TEMP VARIABLES
             fname: '',
             lname: '',
-            dob: new Date(),
+            temp_dob: new Date(),
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -28,7 +28,7 @@ class NewPatient extends React.Component {
     //handle date change
     changeDOB = date => {
         this.setState({
-            dob: date
+            temp_dob: date
         });
     };
 
@@ -43,7 +43,7 @@ class NewPatient extends React.Component {
     changeState() {
         this.setState({
             name: this.state.fname + ' ' + this.state.lname,
-            birth_date: Utility.convertDate(this.state.dob)
+            birth_date: Utility.convertDate(this.state.temp_dob)
         })
     }
 
@@ -60,7 +60,7 @@ class NewPatient extends React.Component {
     //compare with the matching id
     async checkID(patient_id) {
         var existing_id = await this.getMatchingPatientID(patient_id);
-        if(existing_id !== patient_id){
+        if (existing_id !== patient_id) {
             return true;
         }
         return false;
@@ -70,7 +70,7 @@ class NewPatient extends React.Component {
     handleSubmit = async () => {
         let no_existing_ID = await this.checkID(this.state.id)
         //true if id does not exist
-        if (!no_existing_ID){
+        if (!no_existing_ID) {
             alert("Patient ID EXISTS : IT HAS BEEN USED")
             this.setState({
                 id: ''
@@ -139,7 +139,7 @@ class NewPatient extends React.Component {
 
                 <p>Date of Birth:</p>
                 <DatePicker
-                    selected={this.state.dob}
+                    selected={this.state.temp_dob}
                     onChange={this.changeDOB}
                 />
                 <br/>
@@ -151,8 +151,8 @@ class NewPatient extends React.Component {
                     onChange={this.handleChange}
                     name="gender"
                 >
-                    <option value="male"> Male</option>
-                    <option value="female"> Female</option>
+                    <option value="MALE"> Male</option>
+                    <option value="FEMALE"> Female</option>
                 </select>
                 <br/>
                 <br/>

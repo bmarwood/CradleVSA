@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import ShowRoles from "./SymptomsForm";
 import {Grid, Cell} from 'react-mdl';
-import RequestServer from  '../RequestServer'
+import RequestServer from '../RequestServer'
 import {toast} from 'react-toastify';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -52,12 +52,12 @@ class NewUser extends React.Component {
         this.getRoleArray();
     }
 
-    getRoles(){
+    getRoles() {
         var roleArray = []
         var user = localStorage.getItem("userData")
         var parsedUser = JSON.parse(user)
         if (parsedUser && parsedUser.roles) {
-            parsedUser.roles.forEach( function(role) {
+            parsedUser.roles.forEach(function (role) {
                 console.log("User data is : " + role.role)
                 roleArray.push(role.role)
             })
@@ -77,14 +77,13 @@ class NewUser extends React.Component {
                 {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
         }
     }
-    
+
     changeDOB = date => {
         this.setState({
             temp_dob: date
         });
     };
 
-    
 
     //make the checkboxes are changeable
     handleCheckbox(id) {
@@ -105,7 +104,7 @@ class NewUser extends React.Component {
     addRole() {
         //We need to re-initialize - if error cause
         this.setState({
-           roles: []
+            roles: []
         })
         const role_array = this.state.roles_array;
         for (let index in role_array) {
@@ -138,11 +137,11 @@ class NewUser extends React.Component {
             error: true
         })
     }
-    
+
     //check if the id is taken
     checkID() {
-        for (let user of this.state.user_array){
-            if(user.id === this.state.id){
+        for (let user of this.state.user_array) {
+            if (user.id === this.state.id) {
                 this.setState({
                     error: true
                 })
@@ -152,9 +151,9 @@ class NewUser extends React.Component {
     }
 
     //check if username is taken
-    checkUsername(){
-        for (let user of this.state.user_array){
-            if(user.username === this.state.username){
+    checkUsername() {
+        for (let user of this.state.user_array) {
+            if (user.username === this.state.username) {
                 this.setState({
                     error: true
                 })
@@ -167,8 +166,8 @@ class NewUser extends React.Component {
     //check if the name is taken
     checkName() {
         let temp_name = this.state.fname + ' ' + this.state.lname
-        for (let user of this.state.user_array){
-            if(user.name === temp_name){
+        for (let user of this.state.user_array) {
+            if (user.name === temp_name) {
                 this.setState({
                     error: true
                 })
@@ -186,7 +185,7 @@ class NewUser extends React.Component {
             })
         }
     }
-    
+
 
     handleSubmit = async () => {
         await this.getUserList()
@@ -262,7 +261,7 @@ class NewUser extends React.Component {
 
     render() {
         let roles_map = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
-                                                                    handleChange={this.handleCheckbox}/>)
+                                                                      handleChange={this.handleCheckbox}/>)
         return (
             <ValidatorForm
                 style={{
