@@ -3,19 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ae400cbd-b201-4b96-a43f-e94fe84dd57d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Patients.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Patients.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/config/MongoDBConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/config/MongoDBConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/Modals/GraphPopup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Modals/GraphPopup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/Modals/MedicationPopup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Modals/MedicationPopup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AdminComponents/adminNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AdminComponents/adminNav.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navigation/navigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navigation/navigation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navigation/workerNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navigation/workerNav.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/Utility.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/Utility.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientChart.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/backend/target/" />
@@ -30,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/CradleApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+            <state relative-caret-position="165">
+              <caret line="20" column="9" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -51,7 +40,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -103,11 +92,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1572116085227" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1572134868257" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -156,9 +145,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="712" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2819063" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2907916" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -189,8 +177,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/CradleApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="165">
+          <caret line="20" column="9" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
         </state>
       </provider>
     </entry>
