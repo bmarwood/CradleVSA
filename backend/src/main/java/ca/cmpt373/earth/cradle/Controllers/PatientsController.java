@@ -26,11 +26,10 @@ public class PatientsController {
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Patients> getAll() {
-        try{
+        try {
             List<Patients> patients = this.patientsRepository.findAll();
             return patients;
-        }
-        catch(Throwable e){
+        } catch (Throwable e) {
             e.printStackTrace();
             return null;
         }
@@ -46,9 +45,9 @@ public class PatientsController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @CrossOrigin(origins = "http://localhost:8040")
     public Patients add(@RequestBody Patients candidate) {
-        try{
+        try {
             return patientsRepository.save(candidate);
-        }catch(Throwable e){
+        } catch (Throwable e) {
             e.printStackTrace();
             return null;
         }
@@ -58,10 +57,10 @@ public class PatientsController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @CrossOrigin(origins = "http://localhost:8040")
     public Patients updateAssessment(@PathVariable String patient_id, @RequestBody Patients candidate) {
-        try{
+        try {
             patientsRepository.deleteById(patient_id);
             return patientsRepository.save(candidate);
-        }catch(Throwable e){
+        } catch (Throwable e) {
             e.printStackTrace();
             return null;
         }
@@ -86,10 +85,10 @@ public class PatientsController {
     //deleteWorks
     @DeleteMapping("/delete/{patient_id}")
     public String deleteById(@PathVariable String id) {
-        try{
+        try {
             patientsRepository.deleteById(id);
             return id;
-        }catch(Throwable e){
+        } catch (Throwable e) {
             e.printStackTrace();
             return null;
         }

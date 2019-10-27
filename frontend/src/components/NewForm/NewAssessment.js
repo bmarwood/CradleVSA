@@ -35,7 +35,7 @@ class NewAssessment extends React.Component {
             id: '',
             patient_id: '',
             birth_date: '',
-            vht_id: this.getUserID(),
+            vht_id: '',
             name: '',
             date: "",
             gestational_age: "",
@@ -86,18 +86,6 @@ class NewAssessment extends React.Component {
     };
 
 
-    //return logged in user's id
-    getUserID() {
-        var roleArray = []
-        var user = localStorage.getItem("userData")
-        var parsedUser = JSON.parse(user)
-        if (parsedUser) {
-            return parsedUser.id
-        }
-        return null
-    }
-
-
     componentDidMount() {
         //get id of user
         var userData = JSON.parse(localStorage.getItem("userData"))
@@ -144,7 +132,7 @@ class NewAssessment extends React.Component {
                 this.setState({
                     msg: 'Value must be 0'
                 })
-                return value === 0;
+                return value == 0;
             }
             this.setState({
                 msg: 'Must select one of the Gestational age'
@@ -305,15 +293,25 @@ class NewAssessment extends React.Component {
         return null
     }
 
-    //
-    // //compare with the matching id
-    // async checkID(patient_id) {
-    //     var existing_id = await this.getMatchingPatientID(patient_id);
-    //     if (existing_id !== patient_id) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
+
+    //get a single patient with matching patient_id
+    async getMatchingPatientID(patient_id) {
+        var passback = await RequestServer.getPatientByID(patient_id)
+        console.log(passback)
+        if (passback !== null) {
+            return passback.data.id
+        }
+        return null
+    }
+    
+    //compare with the matching id
+    async checkID(patient_id) {
+        var existing_id = await this.getMatchingPatientID(patient_id);
+        if (existing_id !== patient_id) {
+            return true;
+        }
+        return false;
+    }
 
     //format change
     changeState() {
@@ -328,8 +326,7 @@ class NewAssessment extends React.Component {
     handleSubmit = async () => {
         this.setState({
             error: false,
-            errorMessage: '',
-            id: await RequestServer.getNextAssessmentID()
+            errorMessage: ''
         })
         this.checkSymptoms();
         this.checkGestAge();
@@ -338,17 +335,17 @@ class NewAssessment extends React.Component {
             alert(this.state.errorMsg)
             return;
         }
-        //will be handled in the backend
-        // //true if id does not exist
-        // let no_existing_ID = await this.checkID(this.state.patient_id)
-        //
-        // if (no_existing_ID) {
-        //     alert("Patient ID does NOT EXIST")
-        //     this.setState({
-        //         patient_id: ''
-        //     })
-        //     return;
-        // }
+        //To do : handle in the backend
+        //true if id does not exist
+        let no_existing_ID = await this.checkID(this.state.patient_id)
+
+        if (no_existing_ID) {
+            alert("Patient ID does NOT EXIST")
+            this.setState({
+                patient_id: ''
+            })
+            return;
+        }
 
         //setDate
         let today = new Date();

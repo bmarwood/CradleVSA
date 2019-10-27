@@ -1,4 +1,5 @@
 package ca.cmpt373.earth.cradle.Models;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,10 +19,10 @@ public class Users {
     private String username;    //primary key
     private String password;
     private String name;        //primary key - there is an error if the name is taken
-    private String birth_date;
+    private String dob;
     private String address;
     private String gender;
-//    private Gender gender;
+    //    private Gender gender;
     private Set<Role> roles;
     private boolean enabled;
 
@@ -30,20 +31,20 @@ public class Users {
         this.username = "n/a";
         this.password = "n/a";
         this.name = "n/a";
-        this.birth_date = "n/a";
+        this.dob = "n/a";
         this.address = "n/a";
         this.gender = null;
         this.enabled = false;
     }
 
     public Users(String id, String username, String password,
-                 String name, String birth_date, String address,
+                 String name, String dob, String address,
                  String gender, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.name = name;
-        this.birth_date = birth_date;
+        this.dob = dob;
         this.address = address;
         this.gender = gender;
         this.enabled = false;
@@ -55,7 +56,7 @@ public class Users {
     }
 
     public String getDob() {
-        return birth_date;
+        return dob;
     }
 
     public String getAddress() {
@@ -78,8 +79,8 @@ public class Users {
         enabled = true;
     }
 
-    public void setDob(String birth_date) {
-        this.birth_date = birth_date;
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     public void setAddress(String address) {
@@ -106,13 +107,21 @@ public class Users {
         return name;
     }
 
-    public void setUsername(String username) { this.username = username; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public void setPassword(String password) { this.password = password; }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
-    public String getPassword() { return password; }
+    public String getPassword() {
+        return password;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -122,7 +131,7 @@ public class Users {
         return roles;
     }
 
-    public void addRoles(Role role){
+    public void addRoles(Role role) {
         this.roles.add(role);
     }
 
