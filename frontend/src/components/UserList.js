@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import './PatientComponents/PatientList.css';
 import requestServer from './RequestServer';
@@ -19,13 +19,13 @@ class UserList extends Component {
         this.timer = setInterval(() => this.getUserList(), 10000);
         this.setState({
             columns: [
-                { title: 'Username', field: 'username' },
-                { title: 'Role', field: 'role', type: 'array' },
-                { title: 'Name', field: 'name' },
-                { title: 'Surname', field: 'surname' },
-                { title: 'Sex', field: 'sex'},
-                { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-                { title: 'ID Number', field: 'id', type: 'numberic'}
+                {title: 'Username', field: 'username'},
+                {title: 'Role', field: 'role', type: 'array'},
+                {title: 'Name', field: 'name'},
+                {title: 'Surname', field: 'surname'},
+                {title: 'Sex', field: 'sex'},
+                {title: 'Birth Year', field: 'birthYear', type: 'numeric'},
+                {title: 'ID Number', field: 'id', type: 'numberic'}
             ],
             Data: [
                 {
@@ -35,10 +35,10 @@ class UserList extends Component {
                     surname: 'Loading',
                     sex: 'Loading',
                     birthYear: 'Loading',
-                    id: 'Loading' 
+                    id: 'Loading'
                 }
             ]
-    
+
         })
     }
 
@@ -66,7 +66,7 @@ class UserList extends Component {
 
         response.forEach(user => {
             var roleString = this.getUserRoles(user)
-  
+
             var username = user.username
             var name = user.name.split(' ')[0]
             var surname = user.name.split(' ')[1]
@@ -81,13 +81,13 @@ class UserList extends Component {
                 surname: surname,
                 sex: sex,
                 birthYear: birthYear,
-                id: id 
+                id: id
             }
 
             UserList.push(user_obj)
         });
 
-        this.setState({ data: UserList })
+        this.setState({data: UserList})
 
     }
 
