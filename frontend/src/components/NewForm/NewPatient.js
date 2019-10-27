@@ -20,58 +20,72 @@ class NewPatient extends React.Component {
             //TEMP VARIABLES
             fname: '',
             lname: '',
-            dob: new Date(),
+            temp_dob: new Date(),
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
+    //handle date change
     changeDOB = date => {
         this.setState({
-            dob: date
+            temp_dob: date
         });
     };
 
+    //handle input change
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
 
+    //change the format of the string
     changeState() {
         this.setState({
             name: this.state.fname + ' ' + this.state.lname,
-            birth_date: Utility.convertDate(this.state.dob)
+            birth_date: Utility.convertDate(this.state.temp_dob)
         })
+    }
 
-        // delete this.state.fname;
-        // delete this.state.lname;
+    //get a single patient with matching patient_id
+    async getMatchingPatientID(patient_id) {
+        var passback = await RequestServer.getPatientByID(patient_id)
+        console.log(passback)
+        if (passback !== null) {
+            return passback.data.id
+        }
+        return null
+    }
+
+    //compare with the matching id
+    async checkID(patient_id) {
+        var existing_id = await this.getMatchingPatientID(patient_id);
+        if (existing_id !== patient_id) {
+            return true;
+        }
+        return false;
     }
 
 
     handleSubmit = async () => {
+        let no_existing_ID = await this.checkID(this.state.id)
+        //true if id does not exist
+        if (!no_existing_ID) {
+            alert("Patient ID EXISTS : IT HAS BEEN USED")
+            this.setState({
+                id: ''
+            })
+            return;
+        }
         this.changeState();
         console.log(this.state);
-
-        // Optional
-        // var patient = {
-        //     id: this.state.id,
-        //     name: this.state.name,
-        //     birth_date: this.state.birth_date,
-        //     list_of_assessments: this.state.list_of_assessments,
-        //     gender: this.state.gender,
-        // }
-        // var response = await RequestServer.addPatient(patient)
-
         var response = await RequestServer.addPatient(this.state)
-
         if (response !== null) {
             this.props.history.push(
                 '/',
                 {detail: response.data}
             )
         }
-
-    }
-
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
     }
 
 
@@ -83,8 +97,6 @@ class NewPatient extends React.Component {
                     margin: 'auto',
                     padding: '50px',
                     textAlign: 'center'
-                    // width: '400px',
-                    // height: '400px'
                 }}
                 ref="form"
                 onSubmit={this.handleSubmit}
@@ -127,7 +139,7 @@ class NewPatient extends React.Component {
 
                 <p>Date of Birth:</p>
                 <DatePicker
-                    selected={this.state.dob}
+                    selected={this.state.temp_dob}
                     onChange={this.changeDOB}
                 />
                 <br/>
@@ -139,8 +151,8 @@ class NewPatient extends React.Component {
                     onChange={this.handleChange}
                     name="gender"
                 >
-                    <option value="male"> Male</option>
-                    <option value="female"> Female</option>
+                    <option value="MALE"> Male</option>
+                    <option value="FEMALE"> Female</option>
                 </select>
                 <br/>
                 <br/>

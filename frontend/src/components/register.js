@@ -7,6 +7,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RequestServer from './RequestServer'
 
+//********
 class Register extends Component {
     constructor(props) {
         super(props);

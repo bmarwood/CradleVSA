@@ -20,5 +20,8 @@ public interface AssessmentsRepository extends MongoRepository<Assessments,Strin
 
     @Query("{id: '?0'}")
     Assessments findCustomById(String id);
+
+    @Query("{vht_id: '?0'}")
+    List<Assessments> findCustomByUserId(String user_id);
 }
 

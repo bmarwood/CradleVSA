@@ -11,7 +11,8 @@ class Resources extends Component {
 
                 <div className="vid-container">
                     <div className = "block">
-                        <iframe width="672"
+                        <iframe title="How To Use Cradle VSA"
+                                width="672"
                                 height="378"
                                 src="https://www.youtube.com/embed/QainNBCHKAg"
                                 frameborder="0"
@@ -23,7 +24,8 @@ class Resources extends Component {
                         This film shows how to check blood pressure and heart rate using the CRADLE VSA. It also outlines the first steps to take if there is an abnormality in these readings.</p>
                     </div>
                     <div className = "block">
-                        <iframe width="672"
+                        <iframe title="Microlife CRADLE- trained"
+                                width="672"
                                 height="378"
                                 src="https://www.youtube.com/embed/TTi3WWamINM"
                                 frameborder="0"
@@ -33,7 +35,8 @@ class Resources extends Component {
                         <p>Microlife CRADLE Vital Sign Alert Tutorial - for trained health care providers</p>
                     </div>
                     <div className = "block">
-                        <iframe width="672"
+                        <iframe title="Microlife CRADLE- non-traditional"
+                                width="672"
                                 height="378"
                                 src="https://www.youtube.com/embed/elLIcWDhi7Y"
                                 frameborder="0"
@@ -43,7 +46,8 @@ class Resources extends Component {
                         <p>Microlife CRADLE Vital Sign Alert Tutorial - for health care providers with non traditional training</p>
                     </div>
                     <div className = "block">
-                        <iframe width="672"
+                        <iframe title="Microlife CRADLE-  taking an accurate blood pressure"
+                                width="672"
                                 height="378"
                                 src="https://www.youtube.com/embed/aL11ljB3S68"
                                 frameborder="0"

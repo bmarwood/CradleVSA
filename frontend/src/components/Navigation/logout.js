@@ -1,4 +1,4 @@
-import '../App.css';
+import '../../App.css';
 
 function Logout(props) {
 
@@ -6,6 +6,9 @@ function Logout(props) {
     const logout = () => {
         if (localStorage.getItem('isLoggedIn') === 'true') {
             localStorage.setItem("isLoggedIn", "false")
+            localStorage.setItem("userData", JSON.stringify("{}"))
+            var user = localStorage.getItem("userData")
+            console.log(user)
             props.history.push('/')
             window.location.reload()
         } else {

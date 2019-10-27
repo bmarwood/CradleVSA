@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import {Textfield, Grid, Cell} from 'react-mdl';
+import React from 'react';
 import MaterialTable from 'material-table';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
@@ -95,20 +94,6 @@ export default function PatientNotes() {
             }, 600);
               }),
         }}
-    
-    //Other Actions
-    actions={[
-      {
-        //Graph button for patient chart
-        icon: 'assessment',
-        tooltip: 'Graph',
-        onClick: () => {
-          //Popup for Patient chart, opens PatientChart.js
-          window.open("/PatientChart",'popUpWindow',
-          'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-        }
-      },
-    ]}
       />
       <div>
       <ButtonToolbar>

@@ -2,9 +2,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import React, { Component } from 'react';
-import requestServer from './RequestServer';
+import requestServer from '../RequestServer';
 
-import '../App.css';
+import '../../App.css';
 
 class Login extends Component {
     constructor(props) {
@@ -68,6 +68,8 @@ class Login extends Component {
     }
 
     testConsoleLog(response) {
+        var user = localStorage.getItem("userData")
+        console.log("User data is : " + user)
         console.log("response from server: ", response, this.state)
         console.log("decomposing response: ", response.data.id, " ", response.data.name, response.status)
     }
@@ -75,7 +77,7 @@ class Login extends Component {
     loginHandler = async (e) => {
         e.preventDefault()
         var passback = await requestServer.login(this.state.username, this.state.password)
-        console.log(passback)
+        // console.log(passback)
         if (passback === null) {
             this.setState({
                 error: true,
@@ -84,8 +86,11 @@ class Login extends Component {
 
         } else {
             localStorage.setItem("isLoggedIn", "true")
+            localStorage.setItem("userData", JSON.stringify(passback.data))
+        
+
             this.setTheState(passback)
-            this.testConsoleLog(passback)
+            // this.testConsoleLog(passback)
             this.setRole(passback)
             this.navigate(passback)
         }
