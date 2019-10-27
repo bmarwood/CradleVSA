@@ -11,7 +11,6 @@ export default function AdminNav() {
             <Link to ="/admin/landing">Admin Landing page</Link>
             <Link to ="/PatientList">Patient List</Link>
             <Link to ="/AssessmentList">Assessments List</Link>
-            <Link to ="/PatientChart">Patient Chart</Link>
             <Link to ="/Resources">Resources</Link>
         </Navigation>
     )
