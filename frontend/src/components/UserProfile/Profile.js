@@ -1,9 +1,8 @@
 import React, { Component, PostForm } from 'react';
 import Button from '@material-ui/core/Button';
-import SimpleList from './SimpleList'
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import RequestServer from '../RequestServer';
-
+import {Link} from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -11,8 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import {Tabs, Tab, Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, IconButton } from 'react-mdl';
 import PieChart from '../Chart/PieChart';
 import StatIcon from '../../stat-icon.png';
-
-
+import UserList from '../UserList';
+import axios from 'axios';
 
 //Profile class which gets user data from localStorage and display accordingly
 export default class Profile extends Component {
@@ -21,7 +20,6 @@ export default class Profile extends Component {
         super(props);
         let userData = JSON.parse(localStorage.getItem('userData'));
         this.state = {
-            user: {
             id : userData.id,
             username: userData.username,
             password: userData.password,
@@ -30,11 +28,24 @@ export default class Profile extends Component {
             address: userData.address,
             gender: userData.gender,
             roles: userData.roles,
-            isInEditMode: false
-            }
+            roles_temp: this.getUserRoles(userData), 
+            enabled: userData.enabled
         }
         console.log(this.state)
+    }
 
+    getUserRoles(user) {
+        var roleString = ''
+        if (user && user.roles) {
+            user.roles.forEach(role => {
+                roleString = roleString + " " + role.role + ", "
+            })
+            console.log('returning roles: ', roleString)
+            return roleString
+        }
+        console.log('returning empty roles: ')
+
+        return roleString
     }
 
     useStyles = makeStyles(theme => ({
@@ -54,50 +65,39 @@ export default class Profile extends Component {
         },
       }));
     
-/*     
+     
     //Submit button handler to the back-end
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-        
-        fetch('/api/form-submit-url', {
-          method: 'POST',
-          body: data,
-        });
+        delete(this.state.roles_temp);
+        console.log("Before Submit" , this.state);
+        try {
+            var user = {
+                id : this.state.id,
+                username: this.state.username,
+                password: this.state.password,
+                name: this.state.name,
+                dob: this.state.dob,
+                address: this.state.address,
+                gender: this.state.gender,
+                roles: this.state.roles, 
+                enabled: this.state.enabled
+            }
+
+            var response = await axios.post('http://localhost:8080/users/update/' +  this.state.id, user)
+
+            if (response != null) {
+                localStorage.setItem("userData", JSON.stringify(response.data))
+                console.log(response.data)
+                window.location.reload()
+            }
+            
+        }
+        catch(e) {
+            console.log(e)
+        }
       }
-
-    changeEditMode = () => {
-        this.setState({
-            isInEditMode: !this.state.isInEditMode
-        })
-    }
-
-    //update the component after user clicks submit
-    updateComponentValue = () => {
-        this.setState({
-            isInEditMode: false,
-            name: this.refs.theTextInput.value
-        })
-    }
-
-    renderEditView = () => {
-        return <div className="landing-form" style = {{color : "white"}}>
-            <input
-                type = "text"
-                defaultValue = {this.state.name}
-                ref = "theTextInput"
-            />
-            SimpleList.SimpleList()
-            <button onClick={this.changeEditMode}>X</button>
-            <button onClick={this.updateComponentValue}>Submit</button>
-        </div> 
-    }
- 
-    renderDefaultView = () => {
-        return <div className="landing-form" style = {{color : "white"}} onDoubleClick={this.changeEditMode}>
-            {this.state.name}
-        </div>
-    } */
 
     handleChange(event) {
         this.setState({ 
@@ -105,21 +105,23 @@ export default class Profile extends Component {
         });
     }
 
+
     renderDefaultView = () => {
         //const classes = useStyles();
         return (
         <div style={{margin: 'auto', textAlign: 'center'}}>
             <div style={{margin: 'auto', backgroundColor: 'white', textAlign: 'center', width : '100%'}}>
-            <form className="demo-form" noValidate autoComplete="off">
+            <form className="demo-form" noValidate autoComplete="off" onSubmit = {this.handleSubmit.bind(this)}>
                 <Grid className = "demo-grid-ruler">
                     <Cell col = {12}>
-                        <h3>Edit User Information</h3> 
+                        <h3>User Information</h3> 
                     </Cell>
                     <Cell col = {4}>
                         <TextField
                             id="id"
                             label="Worker ID"
-                            defaultValue= {this.state.user.id}
+                            name = "id"
+                            defaultValue= {this.state.id}
                             className="demo-text"
                             margin="normal"
                             InputProps={{
@@ -131,10 +133,11 @@ export default class Profile extends Component {
 
                     <Cell col = {4}>
                         <TextField
-                            id="text-username"
+                            id="username"
                             label="User Name"
+                            name = "username"
                             className="demo-text"
-                            value={this.state.user.username}
+                            value={this.state.username}
                             onChange= {this.handleChange.bind(this)}
                             margin="normal"
                             variant="outlined"
@@ -144,61 +147,43 @@ export default class Profile extends Component {
                     <Cell col = {4}>
                         <TextField
                             required
-                            id="outlined-name"
+                            id="name"
                             label="Name"
-                            //className={classes.textField}
-                            value={this.state.user.name}
-                            //onChange={handleChange('name')}
+                            name = "name"
+                            className="demo-text"
+                            value={this.state.name}
+                            onChange= {this.handleChange.bind(this)}
                             margin="normal"
                             variant="outlined"
                         />
                     </Cell>
 
-                    <Cell col = {4}>
+                    {/* <Cell col = {4}>
                         <TextField
                             id="outlined-password-input"
                             label="Password"
-                            //className={classes.textField}
+                            name = "password"
+                            className="demo-text"
                             type="password"
-                            value="password"
+                            value={this.state.password}
+                            onChange= {this.handleChange.bind(this)}
+                            InputProps={{
+                                readOnly: true,
+                                }}
                             autoComplete="current-password"
                             margin="normal"
                             variant="outlined"
                         />
-                    </Cell>
+                    </Cell> */}
 
                     <Cell col = {4}>
                         <TextField
-                            id="outlined-password-input"
-                            label="Retype Password"
-                            //className={classes.textField}
-                            type="password"
-                            value="password"
-                            autoComplete="current-password"
-                            margin="normal"
-                            variant="outlined"
-                        />
-                    </Cell>
-
-                    <Cell col = {4}>
-                        <TextField
-                            id="outlined-username"
-                            label="User Name"
-                            //className={classes.textField}
-                            value={this.state.user.username}
-                            //onChange={handleChange('userName')}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                    </Cell>
-
-                    <Cell col = {4}>
-                        <TextField
-                            id="outlined-dob"
+                            id="dob"
                             label="Date of Birth"
-                            //className={classes.textField}
-                            value={this.state.user.dob}
-                            //onChange={handleChange('dob')}
+                            name = "dob"
+                            className="demo-text"
+                            value={this.state.dob}
+                            onChange= {this.handleChange.bind(this)}
                             margin="normal"
                             variant="outlined"
                         />
@@ -206,11 +191,12 @@ export default class Profile extends Component {
 
                     <Cell col = {4}>
                         <TextField
-                            id="outlined-address"
+                            id="address"
                             label="Address"
-                            //className={classes.textField}
-                            value={this.state.user.address}
-                            //onChange={handleChange('address')}
+                            name = "address"
+                            className="demo-text"
+                            value={this.state.address}
+                            onChange= {this.handleChange.bind(this)}
                             margin="normal"
                             variant="outlined"
                         />
@@ -218,16 +204,33 @@ export default class Profile extends Component {
 
                     <Cell col = {4}>
                         <TextField
-                            id="outlined-gender"
+                            id="gender"
                             label="Gender"
-                            //className={classes.textField}
-                            value={this.state.user.gender}
-                            //onChange={handleChange('gender')}
+                            name = "gender"
+                            className="demo-text"
+                            value={this.state.gender}
+                            onChange= {this.handleChange.bind(this)}
                             margin="normal"
                             variant="outlined"
                         />
                     </Cell>
 
+                    <Cell col = {4}>
+                        <TextField
+                            id="roles"
+                            label="Roles"
+                            name = "roles"
+                            className="demo-text"
+                            value={this.state.roles_temp}
+                            InputProps={{
+                                readOnly: true,
+                                }}
+                            onChange= {this.handleChange.bind(this)}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </Cell>
+                    
                     {/* <Cell col = {4}>
                         <TextField
                             id="outlined-status"
@@ -244,11 +247,17 @@ export default class Profile extends Component {
                     </Cell> */}
 
                 </Grid>
+                <Button style = {{ padding: '10px'}} variant="outlined" color="secondary" className= "demo-button" type = "submit">
+                    Submit
+                </Button>
+                
+                
+                
             </form>
-
-            <Button style = {{ padding: '10px'}} variant="outlined" color="secondary" className= "demo-button">
-            Submit
-        </Button>
+            <div style={{margin: 'auto', padding: '20px',textAlign: 'center'}}>
+                <Link to = "/changePassword">Change Password</Link>
+            </div>
+                
         </div>
     </div>
         )

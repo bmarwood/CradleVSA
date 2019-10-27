@@ -2,66 +2,94 @@
 import React, {Component} from 'react';
 import {Layout, Header, Navigation, Drawer, Content} from 'react-mdl';
 import {Link} from 'react-router-dom';
-import Nav from './components/navigation';
+import Nav from './components/Navigation/navigation';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
+import WorkerNav from './components/Navigation/workerNav'
+import AdminNav from './components/AdminComponents/adminNav'
+import LoggedOutNav from './components/Navigation/loggedOutNav'
+import HealthWorkerDrawer from './components/Navigation/healthWorkerDrawer'
+import AdminDrawer from './components/AdminComponents/adminDrawer'
+import ChoDrawer from "./components/Navigation/choDrawer";
 
+const Role_Termination_Integer = -1
 
 class App extends Component {
-  render() {
-    return (
-      <div className="demo-big-content">
-          <Layout fixedHeader>
-              <Header className = "header-color" title="CRADLE" transparent scroll waterfall seamed>
-                  <Navigation>
-                      <Link to ="/">Home</Link>
-                      <Link to ="/users/admin/landing">Admin Landing page</Link>
-                      <Link to ="/users/PatientList">Patient List</Link>
-                      <Link to ="/users/AssessmentList">Assessments List</Link>
-                      <Link to ="/users/PatientNotes">Note</Link>
-                  </Navigation>
-              </Header>
-              <Drawer title="CRADLE">
-                  <Navigation>
-                      <Link to ="/login">Login</Link>
-                      <Link to ="/users/form">New Assessment</Link>
-                  </Navigation>
-              </Drawer>
-              <Content>
-                  <div className="page-content" />
-                  <Nav/>
-              </Content>
-          </Layout>
-      </div>
-    );
-  }
+
+    getRoles() {
+        var roleArray = []
+        var user = localStorage.getItem("userData")
+        var parsedUser = JSON.parse(user)
+        if (parsedUser && parsedUser.roles) {
+            parsedUser.roles.forEach( function(role) {
+                console.log("User data is : " + role.role)
+                roleArray.push(role.role)
+            })
+        }
+        
+        return roleArray
+    }
 
     ifLoggedIn() {
-        if(localStorage.getItem('isLoggedIn') === 'true') {
-            return (<Link to ="/logout">Logout</Link>)
+        var roles = this.getRoles()
+
+        if (localStorage.getItem('isLoggedIn') === 'true' && this.isHealthWorker(roles)) {
+            return (<HealthWorkerDrawer/>)
+        } else if(localStorage.getItem('isLoggedIn') === 'true' && this.isCHO(roles)) {
+            return (<ChoDrawer/>)
+        } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isAdmin(roles)) {
+            return (<AdminDrawer/>)
         } else {
-            return (<Link to ="/login">Login</Link>)
+            return (
+                <Navigation>
+                    <Link to ="/login">Login</Link>
+                </Navigation>
+            )
         }
     }
 
+    isHealthWorker(roles) {
+        if (roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer) {
+            return true
+        }
+        
+        return false 
+    }
+
+    isAdmin(roles) {
+        if (roles.indexOf("ADMIN") > Role_Termination_Integer) {
+            return true
+        }
+        
+        return false 
+    }
+    isCHO(roles){
+        if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer){
+            return true
+        }
+        return false
+    }
     navBasedOnLogin() {
-        if(localStorage.getItem('isLoggedIn') === 'true') {
-            return (                        
-            <Navigation>
-                <Link to ="/">Home</Link>
-                <Link to ="/users/admin/landing">Admin Landing page</Link>
-                <Link to ="/users/PatientList">Patient List</Link>
-                <Link to ="/users/AssessmentList">Assessments List</Link>
-                <Link to ="/users/PatientChart">Patient Chart</Link>
-                <Link to ="/resources">Resources</Link>
-            </Navigation>
+        var roles = this.getRoles()
+
+        if (localStorage.getItem('isLoggedIn') === 'true' && this.isHealthWorker(roles)) {
+            return (                  
+                <WorkerNav/>
             )
-        } else {
+        }
+        else if (localStorage.getItem('isLoggedIn') === 'true' && this.isAdmin(roles)) {
+            return (                  
+                <AdminNav/>      
+            )
+        }
+        else if (localStorage.getItem('isLoggedIn') === 'true' && this.isCHO(roles)) {
+            return (
+                <WorkerNav/>
+            )
+        }
+        else {
             return (                        
-            <Navigation>
-                <Link to ="/">Home</Link>
-                <Link to ="/resources">Resources</Link>
-            </Navigation>
+                <LoggedOutNav/>
             )
         }
     }
@@ -76,13 +104,7 @@ class App extends Component {
 
                     </Header>
                     <Drawer title="CRADLE">
-                        <Navigation>
                             {this.ifLoggedIn()}
-                            <Link to ="/users/newAssessment">New Assessment</Link>
-                            <Link to ="/users/newPatient">New Patient</Link>
-                            <Link to ="/users/newUser">New User</Link>
-                            <Link to ="/users/profile">Profile</Link>
-                        </Navigation>
                     </Drawer>
                     <Content>
                         <div className="page-content" />

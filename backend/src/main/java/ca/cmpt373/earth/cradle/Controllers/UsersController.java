@@ -6,6 +6,7 @@ import ca.cmpt373.earth.cradle.repository.RoleRepository;
 import ca.cmpt373.earth.cradle.repository.UsersRepository;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -16,10 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
 @RestController
@@ -32,7 +32,7 @@ public class UsersController {
     @Autowired
     private RoleRepository roleRepository;
 
-    private MongoTemplate mongoTemplate;
+    //private MongoTemplate mongoTemplate;
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
@@ -43,8 +43,13 @@ public class UsersController {
     @GetMapping("/all")
     //@CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Users> getAll() {
-        List<Users> users = this.usersRepository.findAll();
-        return users;
+        try {
+            List<Users> users = this.usersRepository.findAll();
+            return users;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @GetMapping("/get{id}")
@@ -54,27 +59,84 @@ public class UsersController {
         return usersRepository.findUserById(id);
     }
 
-    @PutMapping("/updateProfile")
-    public ResponseEntity<Users> updateProfile(@RequestBody Users user) {
-        System.out.println("Retrieving existing users...");
-        Users foundUser = usersRepository.findUserById(user.getId());
-        if (user.getId() == foundUser.getId()){
-            System.out.println("Found a user");
-            usersRepository.save(user);
-            return ResponseEntity.status(200).body(user);
+    @PostMapping("/update/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Users> updateUser(@RequestBody Users user) {
+        //Update user's information
+
+        String workerId = user.getId();
+        String name = user.getName();
+        String username = user.getUsername();
+        String password = user.getPassword();
+        String dob = user.getDob();
+        String address = user.getAddress();
+//        Users.Gender gender = user.getGender();
+        String gender = user.getGender();
+        Set<Role> roles = user.getRoles();
+
+        try {
+            this.usersRepository.save(new Users(workerId, username, password, name, dob,
+                    address, gender, roles));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        return ResponseEntity.status(200).body(user);
+
+    }
+
+
+    @PostMapping("/updatePassword/{id}/{username}/{old_password}/{new_password}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Users> updatePassword(@PathVariable String id, @PathVariable String username, @PathVariable String old_password, @PathVariable String new_password) {
+        //Update user's password
+        Users user = this.usersRepository.findByUsername(username);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         else {
-            //Return a not found status
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            if (bCrypt.matches(old_password, user.getPassword())) {
+                String hashedPassword = bCrypt.encode(new_password);
+                user.setPassword(hashedPassword);
+                try {
+                    this.usersRepository.save(user);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+                }
+                return ResponseEntity.status(200).body(user);
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
         }
     }
 
-    @PostMapping("/add")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:8040")
-    public Users add(@RequestBody Users candidate) {
-        return usersRepository.save(candidate);
-    }
+//    @PutMapping("/updateProfile")
+//    public ResponseEntity<Users> updateProfile(@RequestBody Users user) {
+//        System.out.println("Retrieving existing users...");
+//        Users foundUser = usersRepository.findUserById(user.getId());
+//        if (user.getId() == foundUser.getId()){
+//            System.out.println("Found a user");
+//            usersRepository.save(user);
+//            return ResponseEntity.status(200).body(user);
+//        }
+//        else {
+//            //Return a not found status
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+//    }
+
+//    SAME AS "/register" - we should use register - it contains password encryption
+//    @PostMapping("/add")
+//    @ResponseStatus(code = HttpStatus.CREATED)
+//    @CrossOrigin(origins = "http://localhost:8040")
+//    public Users add(@RequestBody Users candidate) {
+//        return usersRepository.save(candidate);
+//    }
 
     @PostMapping("/login")
     @ResponseStatus(code = HttpStatus.OK)
@@ -102,24 +164,25 @@ public class UsersController {
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Users> register(@RequestBody Users user) {
+        //Only one id can exist - if id exist and change the username - possible (over-write)
+        // .. if user's name exists for different id <-- error
+        // .... unique user name only!!
+
         String workerId = user.getId();
         String name = user.getName();
         String username = user.getUsername();
         String password = user.getPassword();
         String dob = user.getDob();
         String address = user.getAddress();
+//        Users.Gender gender = user.getGender();
         String gender = user.getGender();
-
-        Set<Role> roles = new HashSet<>();
-        Role newUserRole = new Role(workerId, "USER");
-        roles.add(newUserRole);
+        Set<Role> roles = user.getRoles();
 
         String hashedPassword = bCrypt.encode(password);
 
         try {
             this.usersRepository.save(new Users(workerId, username, hashedPassword, name, dob,
                     address, gender, roles));
-//            roleRepository.save(newUserRole);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
