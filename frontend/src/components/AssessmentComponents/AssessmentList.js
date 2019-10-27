@@ -124,7 +124,7 @@ class AssessmentList extends Component {
                 referred: getBoolVisual(assessment.referred),
                 follow_up: getBoolVisual(assessment.follow_up),
                 recheck: getBoolVisual(assessment.recheck),
-                patient_age: assessment.patient_age,
+                date_birth: assessment.date_birth,
                 date: assessment.date,
                 heart_rate: assessment.heart_rate,
                 systolic: assessment.systolic,

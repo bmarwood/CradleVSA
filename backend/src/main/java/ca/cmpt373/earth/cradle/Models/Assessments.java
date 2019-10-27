@@ -155,7 +155,7 @@ public class Assessments {
         return arrow;
     }
 
-    public void setArrow(Arrow arrow) {
+    public void setarrow(Arrow arrow) {
         this.arrow = arrow;
     }
 

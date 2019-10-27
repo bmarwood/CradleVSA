@@ -3,6 +3,7 @@ import axios from 'axios';
 import Utility from './NewForm/Utility'
 import '../App.css';
 
+
 var IsVM = false;
 
 
@@ -14,6 +15,18 @@ class RequestServer extends Component {
         }
         return 'http://localhost:8080'
     }
+
+    // getPatient(patient_ID) {
+    //     try {
+    //         var response = await axios.get(getServerLocation() + '/patients/all')
+    //         return response
+    //     }
+    //     catch (error) {
+    //         console.log('error block')
+    //         console.log(error)
+    //         return null
+    //     }
+    // }
 
     async addAssessment(assessment) {
         try {
@@ -36,7 +49,6 @@ class RequestServer extends Component {
             return null
         }
     }
-
     async addUser(user) {
         try {
             var response = await axios.post(this.getServerLocation() + '/users/register', user)

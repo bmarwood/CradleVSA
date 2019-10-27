@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './PatientList.css';
+import GraphPopup from '../../Modals/GraphPopup';
+import MedicationPopup from '../../Modals/MedicationPopup';
 import requestServer from '../RequestServer';
-
 
 class PatientList extends Component {
 
@@ -19,13 +20,20 @@ class PatientList extends Component {
         this.timer = setInterval(() => this.getPatientList(), 10000);
         this.setState({
             columns: [
-                {title: 'Name', field: 'name'},
-                {title: 'Surname', field: 'surname'},
-                {title: 'Sex', field: 'sex'},
-                {title: 'Birth Date', field: 'birthDate'},
-                {title: 'ID Number', field: 'id'},
+                { title: 'Name', field: 'name' },
+                { title: 'Surname', field: 'surname' },
+                { title: 'Sex', field: 'sex' },
+                { title: 'Birth Date', field: 'birthDate' },
+                { title: 'ID Number', field: 'id' },
+                { title: 'Patient History', field: 'graph', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                { title: 'Medications', field: 'medications', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
             ],
-            data: [],
+            data: [
+                {
+                graph: <GraphPopup />,
+                medications: <MedicationPopup />
+                },
+            ],
         })
     }
 
@@ -44,13 +52,17 @@ class PatientList extends Component {
             var birthDate = patient.birth_date
             var sex = patient.gender[0]
             var id = patient.id
+            var graph = <GraphPopup />
+            var medications = <MedicationPopup />
 
             var patient_obj = {
                 name: name,
                 surname: surname,
                 birthDate: birthDate,
                 sex: sex,
-                id: id
+                id: id,
+                graph: graph,
+                medications: medications
             }
 
             patientList.push(patient_obj)
@@ -110,35 +122,10 @@ class PatientList extends Component {
                         //     }),
 
                     }}
-
-                    actions={[
-                        {
-                            //Graph button for patient chart
-                            icon: 'assessment',
-                            tooltip: 'Graph',
-                            onClick: () => {
-                                //Popup for Patient chart, opens PatientChart.js
-                                window.open("/PatientChart", 'popUpWindow',
-                                    'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-                            }
-                        },
-                        {
-                            icon: 'assignment',
-                            tooltip: 'Medications',
-                            onClick: () => {
-                                //   Popup for Patient chart, opens PatientChart.js
-                                window.open("/PatientNotes", 'popUpWindow',
-                                    'height=1000,width=1200,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-                            }
-                        }
-                    ]}
                 />
             </div>
-
         );
     }
-
-
 }
 
 export default PatientList;
