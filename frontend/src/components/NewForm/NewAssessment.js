@@ -74,7 +74,7 @@ class NewAssessment extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleCheckbox = this.handleCheckbox.bind(this)
-        RequestServer.getNextAssessmentID()
+        // RequestServer.getNextAssessmentID()
     }
 
 
@@ -145,7 +145,16 @@ class NewAssessment extends React.Component {
     handleCheckbox(id) {
         this.setState(prevState => {
             const updatedSymp = prevState.symptoms_arr.map(each => {
-                if (each.id === id) {
+                // auto deselect n/a
+                if (id !== 1 && each.id === id) {
+                    each.checked = !each.checked
+                    this.state.symptoms_arr[0].checked = false;
+                } else if (id === 1) {
+                    //auto deselect other symptoms
+                    if (each.checked === true || each.id === 1) {
+                        each.checked = !each.checked
+                    }
+                } else if (each.id === id) {
                     each.checked = !each.checked
                 }
                 return each
@@ -303,7 +312,7 @@ class NewAssessment extends React.Component {
         }
         return null
     }
-    
+
     //compare with the matching id
     async checkID(patient_id) {
         var existing_id = await this.getMatchingPatientID(patient_id);

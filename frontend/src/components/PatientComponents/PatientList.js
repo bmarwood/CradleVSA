@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import './PatientList.css';
 import requestServer from '../RequestServer';
@@ -19,11 +19,11 @@ class PatientList extends Component {
         this.timer = setInterval(() => this.getPatientList(), 10000);
         this.setState({
             columns: [
-                { title: 'Name', field: 'name' },
-                { title: 'Surname', field: 'surname' },
-                { title: 'Sex', field: 'sex' },
-                { title: 'Birth Date', field: 'birthDate' },
-                { title: 'ID Number', field: 'id' },
+                {title: 'Name', field: 'name'},
+                {title: 'Surname', field: 'surname'},
+                {title: 'Sex', field: 'sex'},
+                {title: 'Birth Date', field: 'birthDate'},
+                {title: 'ID Number', field: 'id'},
             ],
             data: [],
         })
@@ -56,13 +56,13 @@ class PatientList extends Component {
             patientList.push(patient_obj)
         });
 
-        this.setState({ data: patientList })
+        this.setState({data: patientList})
 
     }
 
     async getPatientList() {
         var passback = await requestServer.getPatientList()
-        if (passback !== null) {
+        if (passback !== null && passback.data !== "") {
             this.populateData(passback.data)
         }
     }
@@ -113,25 +113,25 @@ class PatientList extends Component {
 
                     actions={[
                         {
-                          //Graph button for patient chart
-                          icon: 'assessment',
-                          tooltip: 'Graph',
-                          onClick: () => {
-                            //Popup for Patient chart, opens PatientChart.js
-                            window.open("/PatientChart",'popUpWindow',
-                            'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-                          }
+                            //Graph button for patient chart
+                            icon: 'assessment',
+                            tooltip: 'Graph',
+                            onClick: () => {
+                                //Popup for Patient chart, opens PatientChart.js
+                                window.open("/PatientChart", 'popUpWindow',
+                                    'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
+                            }
                         },
                         {
                             icon: 'assignment',
                             tooltip: 'Medications',
                             onClick: () => {
-                            //   Popup for Patient chart, opens PatientChart.js
-                              window.open("/PatientNotes",'popUpWindow',
-                              'height=1000,width=1200,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
+                                //   Popup for Patient chart, opens PatientChart.js
+                                window.open("/PatientNotes", 'popUpWindow',
+                                    'height=1000,width=1200,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
                             }
                         }
-                      ]}
+                    ]}
                 />
             </div>
 

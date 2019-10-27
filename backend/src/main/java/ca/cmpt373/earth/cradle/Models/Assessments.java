@@ -28,7 +28,7 @@ public class Assessments {
     @Id
     private String id;
     private String patient_id;
-    //    private String name;
+    private String name;
     private String birth_date;
     private String vht_id;
     private String date;
@@ -67,7 +67,7 @@ public class Assessments {
         this.recheck = recheck;
         this.arrow = arrow;
         this.gestational_unit = gestational_unit;
-//        this.name = name;
+        this.name = name;
     }
 
 
