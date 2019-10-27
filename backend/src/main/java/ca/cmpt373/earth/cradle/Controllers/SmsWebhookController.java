@@ -65,7 +65,7 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         //Parsing SMS String body into an Assessment object
         String id = assessmentParams[1];
         String patient_id = assessmentParams[2];
-        String patient_age = assessmentParams[3];
+        String date_birth = assessmentParams[3];
         String vht_id = assessmentParams[4];
         String date = assessmentParams[5] + assessmentParams[6];
         String gestational_age = assessmentParams[7];
@@ -88,7 +88,7 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         //
 
         Assessments assessment =
-                new Assessments(id, patient_id, patient_age, vht_id, date, gestational_age, heart_rate, systolic, diastolic,
+                new Assessments(id, patient_id, date_birth, vht_id, date, gestational_age, heart_rate, systolic, diastolic,
                         ews_color, symptoms, referred, follow_up, follow_up_date, recheck, arrow,
                         Assessments.Gestational_unit.NOT_PREGNANT, "HARDCODE"); //It has been hard-coded need to figure it out with josiah
         return assessment;
