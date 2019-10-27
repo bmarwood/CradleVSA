@@ -51,7 +51,7 @@ public class Patients {
         return list_of_assessments;
     }
 
-    public void setList_of_assessments(Set<Assessments>  list_of_assessments) {
+    public void setList_of_assessments(Set<Assessments> list_of_assessments) {
         this.list_of_assessments = list_of_assessments;
     }
 
