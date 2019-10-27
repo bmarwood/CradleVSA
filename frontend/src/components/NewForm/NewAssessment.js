@@ -62,7 +62,7 @@ class NewAssessment extends React.Component {
 
             //Symptoms
             symptoms_arr: [
-                {id: 1, name: 'No Symptoms (patient healthy)', checked: true},
+                {id: 1, name: 'No Symptoms', checked: true},
                 {id: 2, name: 'Headache', checked: false},
                 {id: 3, name: 'Blurred vision', checked: false},
                 {id: 4, name: 'Abdominal pain', checked: false},
@@ -74,6 +74,7 @@ class NewAssessment extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleCheckbox = this.handleCheckbox.bind(this)
+        let count = 0
         // RequestServer.getNextAssessmentID()
     }
 
@@ -159,9 +160,22 @@ class NewAssessment extends React.Component {
                 }
                 return each
             });
-            prevState.symptoms_arr = updatedSymp;
+            prevState.symptoms_arr = this.countChecked(updatedSymp);
             return prevState;
         })
+    }
+
+    countChecked(updatedSymp) {
+        let count = 0
+        updatedSymp.map(each => {
+            if (each.checked) {
+                count++
+            }
+        });
+        if (count === 0) {
+            this.state.symptoms_arr[0].checked = true;
+        }
+        return updatedSymp
     }
 
     //add checked symptoms in the array
