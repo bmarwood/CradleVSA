@@ -18,7 +18,7 @@ public class Assessments {
         DOWN
     }
 
-    public enum Gestational_unit{
+    public enum Gestational_unit {
         WEEK,
         MONTH,
         NOT_PREGNANT
@@ -28,6 +28,7 @@ public class Assessments {
     @Id
     private String id;
     private String patient_id;
+    //    private String name;
     private String birth_date;
     private String vht_id;
     private String date;
@@ -47,7 +48,7 @@ public class Assessments {
 
     public Assessments(String id, String patient_id, String birth_date, String vht_id, String date, String gestational_age, int heart_rate,
                        int systolic, int diastolic, Color ews_color, String[] symptoms, boolean referred, boolean follow_up, String follow_up_date,
-                       boolean recheck, Arrow arrow, Gestational_unit gestational_unit) {
+                       boolean recheck, Arrow arrow, Gestational_unit gestational_unit, String name) {
         this.id = id; //assestment ID
         this.patient_id = patient_id;
         this.birth_date = birth_date;
@@ -66,6 +67,7 @@ public class Assessments {
         this.recheck = recheck;
         this.arrow = arrow;
         this.gestational_unit = gestational_unit;
+//        this.name = name;
     }
 
 
@@ -153,7 +155,7 @@ public class Assessments {
         return arrow;
     }
 
-    public void setarrow(Arrow arrow) {
+    public void setArrow(Arrow arrow) {
         this.arrow = arrow;
     }
 
