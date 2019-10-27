@@ -35,7 +35,7 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
     public String respondToSms(@RequestParam(value = "Body") String smsBody) {
         Body body;
         String introMessage = "New referral";
-        String[] assessmentParams = smsBody.split(", ");
+        String[] assessmentParams = smsBody.split("; ");
         final int correctParamsLength = 17;
 
         if (assessmentParams[0].equals(introMessage) && (assessmentParams.length == correctParamsLength)) {
@@ -67,25 +67,43 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         String patient_id = assessmentParams[2];
         String date_birth = assessmentParams[3];
         String vht_id = assessmentParams[4];
-        String date = assessmentParams[5] + assessmentParams[6];
-        String gestational_age = assessmentParams[7];
-        int heart_rate = Integer.parseInt(assessmentParams[8]);
-        int systolic = Integer.parseInt(assessmentParams[9]);
-        int diastolic = Integer.parseInt(assessmentParams[10]);
-        //TO-DO: ews_color
-        Assessments.Color ews_color = Assessments.Color.YELLOW;
-        //
-        String[] symptoms = assessmentParams[12].split(" ");
-        boolean referred = false;
-        if (assessmentParams[12].equals("true")) referred = true;
-        boolean follow_up = false;
-        if (assessmentParams[13].equals("true")) follow_up = true;
-        String follow_up_date = assessmentParams[14];
-        boolean recheck = false;
-        if (assessmentParams[15].equals("true")) recheck = true;
-        //TO-DO: Arrow
+        String date = assessmentParams[5];
+        String gestational_age = assessmentParams[6];
+        int heart_rate = Integer.parseInt(assessmentParams[7]);
+        int systolic = Integer.parseInt(assessmentParams[8]);
+        int diastolic = Integer.parseInt(assessmentParams[9]);
+
+        Assessments.Color ews_color = Assessments.Color.YELLOW ;
+        if (assessmentParams[10].equals("YELLOW")) {
+            ews_color = Assessments.Color.YELLOW;
+        }
+        else if (assessmentParams[10].equals("RED")) {
+            ews_color = Assessments.Color.RED;
+        }
+        else if (assessmentParams[10].equals("GREEN")) {
+            ews_color = Assessments.Color.GREEN;
+        }
+
         Assessments.Arrow arrow = Assessments.Arrow.EMPTY;
-        //
+        if (assessmentParams[11].equals("UP")) {
+            arrow = Assessments.Arrow.UP;
+        }
+        else if (assessmentParams[11].equals("DOWN")) {
+            arrow = Assessments.Arrow.DOWN;
+        }
+        else if (assessmentParams[11].equals("EMPTY")) {
+            arrow = Assessments.Arrow.EMPTY;
+        }
+        String[] symptoms = assessmentParams[12].split(", ");
+
+        boolean referred = false;
+        if (assessmentParams[13].equals("true")) referred = true;
+        boolean follow_up = false;
+        if (assessmentParams[14].equals("true")) follow_up = true;
+        String follow_up_date = assessmentParams[15];
+        boolean recheck = false;
+        if (assessmentParams[16].equals("true")) recheck = true;
+
 
         Assessments assessment =
                 new Assessments(id, patient_id, date_birth, vht_id, date, gestational_age, heart_rate, systolic, diastolic,
