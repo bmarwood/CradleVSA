@@ -90,6 +90,7 @@ export default class Profile extends Component {
             if (response != null) {
                 localStorage.setItem("userData", JSON.stringify(response.data))
                 console.log(response.data)
+                window.alert("Profile changed successfully")
                 window.location.reload()
             }
             
