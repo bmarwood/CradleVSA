@@ -62,7 +62,7 @@ class NewAssessment extends React.Component {
 
             //Symptoms
             symptoms_arr: [
-                {id: 1, name: 'No Symptoms (patient healthy)', checked: true},
+                {id: 1, name: 'No Symptoms', checked: true},
                 {id: 2, name: 'Headache', checked: false},
                 {id: 3, name: 'Blurred vision', checked: false},
                 {id: 4, name: 'Abdominal pain', checked: false},
@@ -74,7 +74,8 @@ class NewAssessment extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleCheckbox = this.handleCheckbox.bind(this)
-        RequestServer.getNextAssessmentID()
+        let count = 0
+        // RequestServer.getNextAssessmentID()
     }
 
 
@@ -145,14 +146,36 @@ class NewAssessment extends React.Component {
     handleCheckbox(id) {
         this.setState(prevState => {
             const updatedSymp = prevState.symptoms_arr.map(each => {
-                if (each.id === id) {
+                // auto deselect n/a
+                if (id !== 1 && each.id === id) {
+                    each.checked = !each.checked
+                    this.state.symptoms_arr[0].checked = false;
+                } else if (id === 1) {
+                    //auto deselect other symptoms
+                    if (each.checked === true || each.id === 1) {
+                        each.checked = !each.checked
+                    }
+                } else if (each.id === id) {
                     each.checked = !each.checked
                 }
                 return each
             });
-            prevState.symptoms_arr = updatedSymp;
+            prevState.symptoms_arr = this.countChecked(updatedSymp);
             return prevState;
         })
+    }
+
+    countChecked(updatedSymp) {
+        let count = 0
+        updatedSymp.map(each => {
+            if (each.checked) {
+                count++
+            }
+        });
+        if (count === 0) {
+            this.state.symptoms_arr[0].checked = true;
+        }
+        return updatedSymp
     }
 
     //add checked symptoms in the array
@@ -303,7 +326,7 @@ class NewAssessment extends React.Component {
         }
         return null
     }
-    
+
     //compare with the matching id
     async checkID(patient_id) {
         var existing_id = await this.getMatchingPatientID(patient_id);
