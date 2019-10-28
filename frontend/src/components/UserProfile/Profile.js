@@ -140,6 +140,9 @@ export default class Profile extends Component {
                             className="demo-text"
                             value={this.state.username}
                             onChange= {this.handleChange.bind(this)}
+                            InputProps={{
+                                readOnly: true,
+                                }}
                             margin="normal"
                             variant="outlined"
                         />
