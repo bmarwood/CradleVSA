@@ -88,7 +88,7 @@ public class Assessments {
     }
     
     public String getName() {
-    	this.name;
+    	return this.name;
     }
 
     public String getBirth_date() {
