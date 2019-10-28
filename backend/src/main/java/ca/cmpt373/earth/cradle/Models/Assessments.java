@@ -86,6 +86,10 @@ public class Assessments {
     public void setPatient_id(String patient_id) {
         this.patient_id = patient_id;
     }
+    
+    public String getName() {
+    	return this.name;
+    }
 
     public String getBirth_date() {
         return birth_date;
