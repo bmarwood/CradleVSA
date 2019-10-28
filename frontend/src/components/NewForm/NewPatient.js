@@ -16,7 +16,7 @@ class NewPatient extends React.Component {
             name: '',
             birth_date: '',
             list_of_assessments: [], // NOT SURE IF WE NEED IT HERE //LEAVE FOR LATER
-            gender: 'male',
+            gender: 'MALE',
             //TEMP VARIABLES
             fname: '',
             lname: '',

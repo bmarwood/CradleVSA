@@ -43,7 +43,7 @@ class NewUser extends React.Component {
             fname: '',
             lname: '',
             temp_dob: new Date(),
-            roles_array: this.getRoleArray(),
+            roles_array: [],
             user_array: []
         };
         this.handleChange = this.handleChange.bind(this);
@@ -65,15 +65,45 @@ class NewUser extends React.Component {
         return roleArray
     }
 
+    componentDidMount() {
+        this.getUserList()
+            .catch(() => {
+                return true;
+            });
+
+        this.setState({
+            roles_array: this.getRoleArray()
+        })
+        //
+        //check for user id - no duplicate value
+        ValidatorForm.addValidationRule('checkID', (value) => {
+            for (let user of this.state.user_array) {
+                if (user.id === value) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        ValidatorForm.addValidationRule('checkUsername', (value) => {
+            for (let user of this.state.user_array) {
+                if (user.username === value) {
+                    return false;
+                }
+            }
+            return true;
+        });
+    }
+
     getRoleArray() {
         var roles = this.getRoles()
         if (roles.indexOf("ADMIN") > Role_Termination_Integer) {
-            return [{id: 1, name: Role.USER, checked: true},
+            return [//{id: 1, name: Role.USER, checked: true},
                 {id: 2, name: Role.ADMIN, checked: false},
                 {id: 3, name: Role.HEALTH_WORKER, checked: false},
                 {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
         } else if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer) {
-            return [{id: 1, name: Role.USER, checked: true},
+            return [//{id: 1, name: Role.USER, checked: true},
                 {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
         }
     }
@@ -89,7 +119,7 @@ class NewUser extends React.Component {
     handleCheckbox(id) {
         this.setState(prevState => {
             const updatedRole = prevState.roles_array.map(each => {
-                if (each.id === id) {
+                if (each.id === id && each.id !== 1) {
                     each.checked = !each.checked
                 }
                 return each
@@ -112,6 +142,8 @@ class NewUser extends React.Component {
                 this.state.roles.push({id: this.state.id, role: role_array[index].name})
             }
         }
+        //hard code the user to do not display the user
+        this.state.roles.push({id: 1, role: Role.USER})
     }
 
     //format change
@@ -138,43 +170,18 @@ class NewUser extends React.Component {
         })
     }
 
-    //check if the id is taken
-    checkID() {
-        for (let user of this.state.user_array) {
-            if (user.id === this.state.id) {
-                this.setState({
-                    error: true
-                })
-                return;
-            }
-        }
-    }
-
-    //check if username is taken
-    checkUsername() {
-        for (let user of this.state.user_array) {
-            if (user.username === this.state.username) {
-                this.setState({
-                    error: true
-                })
-                return;
-            }
-        }
-
-    }
-
-    //check if the name is taken
-    checkName() {
-        let temp_name = this.state.fname + ' ' + this.state.lname
-        for (let user of this.state.user_array) {
-            if (user.name === temp_name) {
-                this.setState({
-                    error: true
-                })
-                return;
-            }
-        }
-    }
+    // //check if the name is taken
+    // checkName() {
+    //     let temp_name = this.state.fname + ' ' + this.state.lname
+    //     for (let user of this.state.user_array) {
+    //         if (user.name === temp_name) {
+    //             this.setState({
+    //                 error: true
+    //             })
+    //             return;
+    //         }
+    //     }
+    // }
 
     //get all the user lists
     async getUserList() {
@@ -188,8 +195,6 @@ class NewUser extends React.Component {
 
 
     handleSubmit = async () => {
-        await this.getUserList()
-
         //input validation
         this.setState({
             error: false
@@ -200,35 +205,16 @@ class NewUser extends React.Component {
             return
         }
 
-        //check for user id - no duplicate value
-        this.checkID();
-        if (this.state.error) {
-            alert("Existing ID: Re-enter the ID")
-            this.setState({
-                id: ''
-            })
-            return
-        }
-
-        this.checkUsername();
-        if (this.state.error) {
-            alert("Existing username: Re-enter username")
-            this.setState({
-                username: '',
-            })
-            return
-        }
-
-        //check for user name - no duplicate value
-        this.checkName();
-        if (this.state.error) {
-            alert("Existing user: Re-enter first name and last name")
-            this.setState({
-                fname: '',
-                lname: '',
-            })
-            return
-        }
+        // //check for user name - no duplicate value
+        // this.checkName();
+        // if (this.state.error) {
+        //     alert("Existing user: Re-enter first name and last name")
+        //     this.setState({
+        //         fname: '',
+        //         lname: '',
+        //     })
+        //     return
+        // }
 
         //remove and change the inputs
         this.changeState();
@@ -319,8 +305,8 @@ class NewUser extends React.Component {
                             onChange={this.handleChange}
                             name="id"
                             value={this.state.id}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
+                            validators={['required', 'checkID']}
+                            errorMessages={['this field is required', 'Existing ID: Re-enter the ID']}
                             variant="outlined"
                         />
                         <br/>
@@ -330,8 +316,8 @@ class NewUser extends React.Component {
                             onChange={this.handleChange}
                             name="username"
                             value={this.state.username}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
+                            validators={['required', 'checkUsername']}
+                            errorMessages={['this field is required', 'Existing Username: Re-enter the username']}
                             variant="outlined"
                         />
                         <br/>
@@ -341,6 +327,7 @@ class NewUser extends React.Component {
                             onChange={this.handleChange}
                             name="password"
                             value={this.state.password}
+                            type="password"
                             validators={['required']}
                             errorMessages={['this field is required']}
                             variant="outlined"

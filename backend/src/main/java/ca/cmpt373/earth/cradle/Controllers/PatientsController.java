@@ -71,7 +71,13 @@ public class PatientsController {
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "http://localhost:8040")
     public Patients get(@PathVariable String patient_id) {
-        return patientsRepository.findCustomById(patient_id);
+        try {
+            Patients patient = patientsRepository.findCustomById(patient_id);
+            return patient;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 //    @GetMapping("/delete/{patient_id}")

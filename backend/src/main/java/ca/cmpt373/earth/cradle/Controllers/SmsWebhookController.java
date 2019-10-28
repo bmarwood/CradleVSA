@@ -30,23 +30,21 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
     private static final String AUTH_TOKEN =
             "e84609dc660df4ac695d3f4727c5f853";
 
-    @GetMapping(path="/sms", produces="application/xml")
+    @GetMapping(path = "/sms", produces = "application/xml")
     @ResponseBody
-    public String respondToSms(@RequestParam(value = "Body") String smsBody){
+    public String respondToSms(@RequestParam(value = "Body") String smsBody) {
         Body body;
         String introMessage = "New referral";
         String[] assessmentParams = smsBody.split("; ");
         final int correctParamsLength = 17;
 
-        if (assessmentParams[0].equals(introMessage) && (assessmentParams.length == correctParamsLength)){
-        Assessments candidate = StringToAssessment(assessmentParams);
+        if (assessmentParams[0].equals(introMessage) && (assessmentParams.length == correctParamsLength)) {
+            Assessments candidate = StringToAssessment(assessmentParams);
             assessmentsRepository.save(candidate);
             body = new Body
                     .Builder("Reading successfully received!")
                     .build();
-        }
-
-        else {
+        } else {
             body = new Body
                     .Builder("Reading failed to be received. Please send reading again.")
                     .build();
@@ -62,12 +60,12 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         return twiml.toXml();
     }
 
-    private Assessments StringToAssessment(String[] assessmentParams){
+    private Assessments StringToAssessment(String[] assessmentParams) {
 
         //Parsing SMS String body into an Assessment object
         String id = assessmentParams[1];
         String patient_id = assessmentParams[2];
-        String patient_age = assessmentParams[3];
+        String birth_date = assessmentParams[3];
         String vht_id = assessmentParams[4];
         String date = assessmentParams[5];
         String gestational_age = assessmentParams[6];
@@ -75,25 +73,21 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         int systolic = Integer.parseInt(assessmentParams[8]);
         int diastolic = Integer.parseInt(assessmentParams[9]);
 
-        Assessments.Color ews_color = Assessments.Color.YELLOW ;
+        Assessments.Color ews_color = Assessments.Color.YELLOW;
         if (assessmentParams[10].equals("YELLOW")) {
             ews_color = Assessments.Color.YELLOW;
-        }
-        else if (assessmentParams[10].equals("RED")) {
+        } else if (assessmentParams[10].equals("RED")) {
             ews_color = Assessments.Color.RED;
-        }
-        else if (assessmentParams[10].equals("GREEN")) {
+        } else if (assessmentParams[10].equals("GREEN")) {
             ews_color = Assessments.Color.GREEN;
         }
 
         Assessments.Arrow arrow = Assessments.Arrow.EMPTY;
         if (assessmentParams[11].equals("UP")) {
             arrow = Assessments.Arrow.UP;
-        }
-        else if (assessmentParams[11].equals("DOWN")) {
+        } else if (assessmentParams[11].equals("DOWN")) {
             arrow = Assessments.Arrow.DOWN;
-        }
-        else if (assessmentParams[11].equals("EMPTY")) {
+        } else if (assessmentParams[11].equals("EMPTY")) {
             arrow = Assessments.Arrow.EMPTY;
         }
         String[] symptoms = assessmentParams[12].split(", ");
@@ -108,9 +102,9 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
 
 
         Assessments assessment =
-                new Assessments(id, patient_id, patient_age, vht_id, date, gestational_age, heart_rate, systolic, diastolic,
+                new Assessments(id, patient_id, birth_date, vht_id, date, gestational_age, heart_rate, systolic, diastolic,
                         ews_color, symptoms, referred, follow_up, follow_up_date, recheck, arrow,
-                        Assessments.Gestational_unit.NOT_PREGNANT); //It has been hard-coded need to figure it out with josiah
+                        Assessments.Gestational_unit.NOT_PREGNANT, "HARDCODE"); //It has been hard-coded need to figure it out with josiah
         return assessment;
     }
 }
