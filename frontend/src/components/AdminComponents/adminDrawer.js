@@ -11,6 +11,7 @@ export default function AdminDrawer() {
             <Link to ="/newAssessment">New Assessment</Link>
             <Link to ="/newPatient">New Patient</Link>
             <Link to ="/newUser">New User</Link>
+            <Link to ="/profile">Profile</Link>
         </Navigation>
     )
 }
