@@ -36,7 +36,7 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         Body body;
         String introMessage = "New referral";
         String[] assessmentParams = smsBody.split("; ");
-        final int correctParamsLength = 17;
+        final int correctParamsLength = 19;
 
         if (assessmentParams[0].equals(introMessage) && (assessmentParams.length == correctParamsLength)) {
             Assessments candidate = StringToAssessment(assessmentParams);
@@ -72,39 +72,39 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         int heart_rate = Integer.parseInt(assessmentParams[7]);
         int systolic = Integer.parseInt(assessmentParams[8]);
         int diastolic = Integer.parseInt(assessmentParams[9]);
-
         Assessments.Color ews_color = Assessments.Color.YELLOW;
-        if (assessmentParams[10].equals("YELLOW")) {
-            ews_color = Assessments.Color.YELLOW;
-        } else if (assessmentParams[10].equals("RED")) {
+        if (assessmentParams[10].equals("RED")) {
             ews_color = Assessments.Color.RED;
         } else if (assessmentParams[10].equals("GREEN")) {
             ews_color = Assessments.Color.GREEN;
         }
-
-        Assessments.Arrow arrow = Assessments.Arrow.EMPTY;
-        if (assessmentParams[11].equals("UP")) {
-            arrow = Assessments.Arrow.UP;
-        } else if (assessmentParams[11].equals("DOWN")) {
-            arrow = Assessments.Arrow.DOWN;
-        } else if (assessmentParams[11].equals("EMPTY")) {
-            arrow = Assessments.Arrow.EMPTY;
-        }
-        String[] symptoms = assessmentParams[12].split(", ");
-
+        String[] symptoms = assessmentParams[11].split(", ");
         boolean referred = false;
-        if (assessmentParams[13].equals("true")) referred = true;
+        if (assessmentParams[12].equals("true")) referred = true;
         boolean follow_up = false;
-        if (assessmentParams[14].equals("true")) follow_up = true;
-        String follow_up_date = assessmentParams[15];
+        if (assessmentParams[13].equals("true")) follow_up = true;
+        String follow_up_date = assessmentParams[14];
         boolean recheck = false;
-        if (assessmentParams[16].equals("true")) recheck = true;
-
-
+        if (assessmentParams[15].equals("true")) recheck = true;
+        Assessments.Arrow arrow = Assessments.Arrow.EMPTY;
+        if (assessmentParams[16].equals("UP")) {
+            arrow = Assessments.Arrow.UP;
+        } else if (assessmentParams[16].equals("DOWN")) {
+            arrow = Assessments.Arrow.DOWN;
+        }
+        Assessments.Gestational_unit Gestational_unit = Assessments.Gestational_unit.NOT_PREGNANT;
+        if (assessmentParams[17].equals("WEEK")){
+            Gestational_unit = Assessments.Gestational_unit.WEEK;
+        }
+        else if (assessmentParams[17].equals("MONTH")){
+            Gestational_unit = Assessments.Gestational_unit.MONTH;
+        }
+        String name = assessmentParams[18];
         Assessments assessment =
-                new Assessments(id, patient_id, birth_date, vht_id, date, gestational_age, heart_rate, systolic, diastolic,
-                        ews_color, symptoms, referred, follow_up, follow_up_date, recheck, arrow,
-                        Assessments.Gestational_unit.NOT_PREGNANT, "HARDCODE"); //It has been hard-coded need to figure it out with josiah
+                new Assessments(id, patient_id, birth_date, vht_id, date, gestational_age,
+                        heart_rate, systolic,  diastolic,  ews_color, symptoms,
+                        referred,  follow_up,  follow_up_date, recheck,
+                        arrow, Gestational_unit,  name);
         return assessment;
     }
 }
