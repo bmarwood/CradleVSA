@@ -14,6 +14,8 @@ import AssessmentList from '../AssessmentComponents/AssessmentList';
 import PatientNotes from '../PatientComponents/PatientNotes';
 import PatientAddMedication from '../PatientComponents/PatientAddMedication';
 import Resources from '../Resources';
+import ChangePassword from '../UserProfile/ChangePassword'
+import Profile from '../UserProfile/Profile';
 
 
 const Navigation = () => (
@@ -34,6 +36,8 @@ const Navigation = () => (
     <WorkerRoute path = "/newAssessment" component = {NewAssessment} />
     <WorkerRoute path = "/newPatient" component = {NewPatient} />
     <ManagerRoute path = "/newUser" component = {NewUser} />
+    <PrivateRoute path = "/profile" component = {Profile} />
+    <PrivateRoute path = "/changePassword" component = {ChangePassword} />
     <Route path = "/resources" component = {Resources} />
   </Switch>
 )

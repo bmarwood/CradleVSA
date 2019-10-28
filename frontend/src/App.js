@@ -108,7 +108,6 @@ class App extends Component {
                     </Header>
                     <Drawer title="CRADLE">
                             {this.ifLoggedIn()}
-
                     </Drawer>
                     <Content>
                         <div className="page-content" />
