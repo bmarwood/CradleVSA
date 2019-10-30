@@ -85,7 +85,7 @@ export default class Profile extends Component {
                 enabled: this.state.enabled
             }
 
-            var response = await axios.post('http://localhost:8080/users/update/' +  this.state.id, user)
+            var response = await axios.post('http://cmpt373.csil.sfu.ca:8083/users/update/' +  this.state.id, user)
 
             if (response != null) {
                 localStorage.setItem("userData", JSON.stringify(response.data))
