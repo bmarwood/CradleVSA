@@ -3,6 +3,7 @@ import axios from 'axios';
 import Utility from './NewForm/Utility'
 import '../App.css';
 
+
 var IsVM = true;
 
 
@@ -48,7 +49,6 @@ class RequestServer extends Component {
             return null
         }
     }
-    
     async addUser(user) {
         try {
             var response = await axios.post(this.getServerLocation() + '/users/register', user)
@@ -177,13 +177,10 @@ class RequestServer extends Component {
         }
     }
 
-    async getNextAssessmentID() {
-        let assessment_list = await this.getAssessmentsList();
-        console.log(assessment_list.data)
-        console.log(typeof (assessment_list.data))
-        console.log(assessment_list.data.length)
-        return assessment_list.data.length
 
+    async updateUser(user) {
+        var response = await axios.post(this.getServerLocation() + '/users/updatePassword/' + user.id + "/" + user.username + "/" + user.old_password + "/" + user.new_password)
+        return response
     }
 }
 
