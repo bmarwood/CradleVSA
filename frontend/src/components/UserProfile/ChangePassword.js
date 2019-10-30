@@ -78,7 +78,6 @@ export default class ChangePassword extends Component {
                     old_password: this.state.old_password,
                     new_password: this.state.new_password
                 }
-                //var response = await axios.post('http://cmpt373.csil.sfu.ca:8083/users/updatePassword/' + this.state.id + "/" + this.state.username + "/" + this.state.old_password + "/" + this.state.new_password)
                 var response = await RequestServer.updateUserPassword(this.state)
                 console.log(response)
                 if (response !== null) {
