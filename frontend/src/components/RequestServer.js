@@ -180,13 +180,26 @@ class RequestServer extends Component {
 
 
     async updateUserPassword(user) {
-        var response = await axios.post(this.getServerLocation() + '/users/updatePassword/' + user.id + "/" + user.username + "/" + user.old_password + "/" + user.new_password)
-        return response
+        try {
+            var response = await axios.post(this.getServerLocation() + '/users/updatePassword/' + user.id + "/" + user.username + "/" + user.old_password + "/" + user.new_password)
+            return response
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
     }
 
     async updateUser(user) {
-        var response = await axios.post(this.getServerLocation() + '/users/update/' + user.id, user)
-        return response
+        try {
+            var response = await axios.post(this.getServerLocation() + '/users/update/' + user.id, user)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
     }
 }
 

@@ -78,15 +78,16 @@ export default class ChangePassword extends Component {
                     old_password: this.state.old_password,
                     new_password: this.state.new_password
                 }
-                var response = RequestServer.updateUserPassword(this.state)
+                //var response = await axios.post('http://cmpt373.csil.sfu.ca:8083/users/updatePassword/' + this.state.id + "/" + this.state.username + "/" + this.state.old_password + "/" + this.state.new_password)
+                var response = await RequestServer.updateUserPassword(this.state)
                 console.log(response)
-                if (response != null) {
+                if (response !== null) {
                     localStorage.setItem("userData", JSON.stringify(response.data))
                     console.log(response.data)
                     window.alert("Password change succeed")
                     window.location.reload()
                 } else {
-
+                    window.alert("Your current password is wrong")
                 }
             } catch (e) {
                 window.alert("Your current password is wrong")
