@@ -78,7 +78,7 @@ export default class ChangePassword extends Component {
                     old_password: this.state.old_password,
                     new_password: this.state.new_password
                 }
-                var response = RequestServer.updateUser(this.state)
+                var response = RequestServer.updateUserPassword(this.state)
                 console.log(response)
                 if (response != null) {
                     localStorage.setItem("userData", JSON.stringify(response.data))

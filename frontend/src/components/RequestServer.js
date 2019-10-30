@@ -49,6 +49,7 @@ class RequestServer extends Component {
             return null
         }
     }
+
     async addUser(user) {
         try {
             var response = await axios.post(this.getServerLocation() + '/users/register', user)
@@ -178,8 +179,13 @@ class RequestServer extends Component {
     }
 
 
-    async updateUser(user) {
+    async updateUserPassword(user) {
         var response = await axios.post(this.getServerLocation() + '/users/updatePassword/' + user.id + "/" + user.username + "/" + user.old_password + "/" + user.new_password)
+        return response
+    }
+
+    async updateUser(user) {
+        var response = await axios.post(this.getServerLocation() + '/users/update/' + user.id, user)
         return response
     }
 }
