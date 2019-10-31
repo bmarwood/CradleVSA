@@ -4,7 +4,7 @@ import Utility from './NewForm/Utility'
 import '../App.css';
 
 
-var IsVM = true;
+var IsVM = false;
 
 
 class RequestServer extends Component {

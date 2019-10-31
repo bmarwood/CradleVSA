@@ -9,7 +9,7 @@
     <list default="true" id="6c5c52e7-f2b7-4154-8017-85c0c31bb73f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/RequestServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/RequestServer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/UserProfile/ChangePassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/UserProfile/ChangePassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/setupProxy.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/setupProxy.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="43-SmsAddon" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -80,6 +80,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.CradleApplication" />
+        <item itemvalue="Application.CradleApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -88,7 +89,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e43636d1-f531-462e-8058-c454d19d5c26" name="Default Changelist" comment="" />
+      <changelist id="6c5c52e7-f2b7-4154-8017-85c0c31bb73f" name="Default Changelist" comment="" />
       <created>1570347832870</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -96,6 +97,7 @@
       <workItem from="1570390690418" duration="2679000" />
       <workItem from="1570509159428" duration="438000" />
       <workItem from="1570509748392" duration="856000" />
+      <workItem from="1572497843434" duration="391000" />
     </task>
     <servers />
   </component>
