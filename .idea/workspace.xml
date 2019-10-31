@@ -9,6 +9,7 @@
     <list default="true" id="6c5c52e7-f2b7-4154-8017-85c0c31bb73f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/UserProfile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/UserProfile/Profile.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -96,7 +97,7 @@
       <workItem from="1570390690418" duration="2679000" />
       <workItem from="1570509159428" duration="438000" />
       <workItem from="1570509748392" duration="856000" />
-      <workItem from="1572497843434" duration="810000" />
+      <workItem from="1572497843434" duration="1204000" />
     </task>
     <servers />
   </component>

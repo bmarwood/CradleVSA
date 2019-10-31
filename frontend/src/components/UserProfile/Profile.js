@@ -160,24 +160,6 @@ export default class Profile extends Component {
                                 />
                             </Cell>
 
-                            {/* <Cell col = {4}>
-                        <TextField
-                            id="outlined-password-input"
-                            label="Password"
-                            name = "password"
-                            className="demo-text"
-                            type="password"
-                            value={this.state.password}
-                            onChange= {this.handleChange.bind(this)}
-                            InputProps={{
-                                readOnly: true,
-                                }}
-                            autoComplete="current-password"
-                            margin="normal"
-                            variant="outlined"
-                        />
-                    </Cell> */}
-
                             <Cell col={4}>
                                 <TextField
                                     id="dob"
