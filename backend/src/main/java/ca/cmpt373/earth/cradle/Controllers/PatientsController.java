@@ -1,11 +1,13 @@
 package ca.cmpt373.earth.cradle.Controllers;
 
 import ca.cmpt373.earth.cradle.Models.Patients;
+import ca.cmpt373.earth.cradle.repository.AssessmentsRepository;
 import ca.cmpt373.earth.cradle.repository.PatientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ca.cmpt373.earth.cradle.update.UpdatePatients;
 
 import java.util.List;
 
@@ -15,6 +17,13 @@ public class PatientsController {
 
     @Autowired
     private PatientsRepository patientsRepository;
+
+    @Autowired
+    private AssessmentsRepository assessmentsRepository;
+
+    private AssessmentsController assessmentsController = new AssessmentsController(assessmentsRepository);
+
+    private UpdatePatients updatePatients = new UpdatePatients(assessmentsController);
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
@@ -28,7 +37,9 @@ public class PatientsController {
     public List<Patients> getAll() {
         try {
             List<Patients> patients = this.patientsRepository.findAll();
-            return patients;
+            patients.get(1);
+            List<Patients> updated_patients = updatePatients.updateList(patients);
+            return updated_patients;
         } catch (Throwable e) {
             e.printStackTrace();
             return null;
@@ -58,7 +69,7 @@ public class PatientsController {
     @CrossOrigin(origins = "http://localhost:8040")
     public Patients updateAssessment(@PathVariable String patient_id, @RequestBody Patients candidate) {
         try {
-            patientsRepository.deleteById(patient_id);
+//            patientsRepository.deleteById(patient_id);
             return patientsRepository.save(candidate);
         } catch (Throwable e) {
             e.printStackTrace();

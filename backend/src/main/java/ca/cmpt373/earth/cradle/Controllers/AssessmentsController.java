@@ -59,11 +59,20 @@ public class AssessmentsController {
         return assessmentsRepository.findCustomById(assessment_id);
     }
 
+    //vht_id
     @GetMapping("/getByUserId{user_id}")
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "http://localhost:8040")
     public List<Assessments> getByUserId(@PathVariable String user_id) {
-        return assessmentsRepository.findCustomByUserId(user_id);
+        return assessmentsRepository.findByUserId(user_id);
+    }
+
+    //patient_id
+    @GetMapping("/getAByPatientId{patient_id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public List<Assessments> getAByPatientId(@PathVariable String patient_id) {
+        return assessmentsRepository.findByPatientId(patient_id);
     }
 
 }

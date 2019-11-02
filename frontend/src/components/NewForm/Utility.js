@@ -2,7 +2,7 @@
     Helper functions for the forms:
     ..CovertDate - convert Date format to string
  */
-import { Component } from 'react';
+import {Component} from 'react';
 import RequestServer from "../RequestServer";
 
 
@@ -32,6 +32,7 @@ class Utility extends Component {
     //RETURN User username and id
     static populateUser(response) {
         var user_array = []
+        this.populateVHT(response);
         response.forEach(user => {
             var username = user.username
             var name = user.name
@@ -46,6 +47,26 @@ class Utility extends Component {
         });
         return user_array;
     }
+
+
+    //RETURN valid VHT ID
+    static populateVHT(response) {
+        var user_array = []
+        response.forEach(user => {
+            var roles = user.roles;
+            var id = user.id;
+            roles.forEach(role => {
+                if (role.role === "VHT") {
+                    var user_obj = {
+                        id: id
+                    }
+                    user_array.push(user_obj)
+                }
+            });
+        });
+        return user_array;
+    }
+
 
     static populatePatient(response) {
         var patient = {
