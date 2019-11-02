@@ -42,6 +42,7 @@ class NewUser extends React.Component {
             gender: Gender.MALE,
             roles: [],
             enabled: false,
+            area: "", // need to talk about the field name
 
             //TEMPORARY VARIABLES
             error: false,
@@ -243,7 +244,7 @@ class NewUser extends React.Component {
                 onSubmit={this.handleSubmit}
                 onError={errors => console.log(errors)}
             >
-                <h4>New User </h4>
+                <h4>New Worker </h4>
 
                 <Grid>
                     <Cell col={4}>
@@ -274,8 +275,6 @@ class NewUser extends React.Component {
                             onChange={this.handleChange}
                             name="address"
                             value={this.state.address}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
                             variant="outlined"
                         />
                         <br/>
@@ -311,6 +310,17 @@ class NewUser extends React.Component {
                             name="password"
                             value={this.state.password}
                             type="password"
+                            validators={['required']}
+                            errorMessages={['this field is required']}
+                            variant="outlined"
+                        />
+                        <br/>
+                        <br/>
+                        <TextValidator
+                            label="Assigned Area"
+                            onChange={this.handleChange}
+                            name="area"
+                            value={this.state.area}
                             validators={['required']}
                             errorMessages={['this field is required']}
                             variant="outlined"
