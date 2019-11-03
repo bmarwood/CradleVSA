@@ -1,5 +1,6 @@
 package ca.cmpt373.earth.cradle.Controllers;
 
+import ca.cmpt373.earth.cradle.Models.Assessments;
 import ca.cmpt373.earth.cradle.Models.Patients;
 import ca.cmpt373.earth.cradle.repository.AssessmentsRepository;
 import ca.cmpt373.earth.cradle.repository.PatientsRepository;
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import ca.cmpt373.earth.cradle.update.UpdatePatients;
 
 import java.util.List;
 
@@ -21,9 +21,8 @@ public class PatientsController {
     @Autowired
     private AssessmentsRepository assessmentsRepository;
 
+    @Autowired
     private AssessmentsController assessmentsController = new AssessmentsController(assessmentsRepository);
-
-    private UpdatePatients updatePatients = new UpdatePatients(assessmentsController);
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
@@ -38,8 +37,13 @@ public class PatientsController {
         try {
             List<Patients> patients = this.patientsRepository.findAll();
             patients.get(1);
-            List<Patients> updated_patients = updatePatients.updateList(patients);
-            return updated_patients;
+            // return patients with updated assessment_list
+            for (Patients eachPatient : patients) {
+                String id = eachPatient.getId();
+                List<Assessments> assessments = this.assessmentsController.getAByPatientId(id);
+                eachPatient.setList_of_assessments(assessments);
+            }
+            return patients;
         } catch (Throwable e) {
             e.printStackTrace();
             return null;

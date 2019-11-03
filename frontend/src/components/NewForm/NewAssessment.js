@@ -398,7 +398,7 @@ class NewAssessment extends React.Component {
 
         //assessment
         this.addAssessment();
-        this.updateAssessment();
+        //this.updateAssessment(); //update patient's assessment list once new assessment is updated
     }
 
 
@@ -414,6 +414,7 @@ class NewAssessment extends React.Component {
         }
     }
 
+    /*  // update patient's assessment list once new assessment is updated
     async updateAssessment() {
         var passback = await RequestServer.updatePatientAssessmentList(this.state.patient_id, this.state)
         if (passback !== null) {
@@ -423,7 +424,7 @@ class NewAssessment extends React.Component {
             )
         }
     }
-
+    */
 
     handleChange(event) {
         this.setState({
