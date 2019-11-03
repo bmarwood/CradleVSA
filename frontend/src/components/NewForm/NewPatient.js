@@ -38,6 +38,8 @@ class NewPatient extends React.Component {
         ValidatorForm.addValidationRule('checkID', (value) => {
             let validID = this.checkID(value)
                 .catch(() => {
+                    console.log("validID", validID)
+
                     return true;
                 });
             return validID;

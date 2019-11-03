@@ -22,7 +22,7 @@ public class PatientsController {
     private AssessmentsRepository assessmentsRepository;
 
     @Autowired
-    private AssessmentsController assessmentsController = new AssessmentsController(assessmentsRepository);
+    private AssessmentsController assessmentsController;
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 

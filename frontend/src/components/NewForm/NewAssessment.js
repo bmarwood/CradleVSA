@@ -61,6 +61,7 @@ class NewAssessment extends React.Component {
             temp_dob: new Date(),
             vht_array: [],
             create_patient: false,
+            submit: false,
 
             //Symptoms
             symptoms_arr: [
@@ -77,6 +78,7 @@ class NewAssessment extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleCheckbox = this.handleCheckbox.bind(this)
         this.setGestational_age = this.setGestational_age.bind(this)
+        this.setSubmit = this.setState.bind(this)
     }
 
 
@@ -86,6 +88,10 @@ class NewAssessment extends React.Component {
             temp_dob: date
         });
     };
+
+    componentWillUnmount() {
+
+    }
 
 
 //componentWillUpdate
@@ -105,22 +111,6 @@ class NewAssessment extends React.Component {
             return false;
         });
 
-        //set the field based on the database value
-        ValidatorForm.addValidationRule('getMatchedContent', (value) => {
-            this.getMatchingPatientData(value)
-                .catch(() => {
-                    this.setState({
-                        fname: '',
-                        lname: '',
-                        temp_dob: new Date(),
-                        vht_id: "EMPTY",
-                        create_patient: true,
-                    })
-                    return true;
-                });
-            return true;
-
-        })
 
         //check the gestational age
         ValidatorForm.addValidationRule('checkPregnancy', (value) => {
@@ -314,8 +304,8 @@ class NewAssessment extends React.Component {
     //get a single patient with matching patient_id
     async getMatchingPatientData(patient_id) {
         let passback = await RequestServer.getPatientByID(patient_id)
-        //console.log(passback)
-        if (passback !== null) {
+        console.log("this.state.submit", this.state.submit)
+        if (!this.state.submit && passback !== null && passback.data !== '') {
             let patient_data = passback.data
 
             this.setState({
@@ -325,28 +315,16 @@ class NewAssessment extends React.Component {
                 vht_id: patient_data.vht_id,
                 create_patient: false
             })
+        } else if (!this.state.submit) {
+            this.setState({
+                fname: '',
+                lname: '',
+                temp_dob: new Date(),
+                vht_id: "EMPTY",
+                create_patient: true,
+            })
         }
-        return null
-    }
-
-
-    //get a single patient with matching patient_id
-    async getMatchingPatientID(patient_id) {
-        var passback = await RequestServer.getPatientByID(patient_id)
-        //console.log(passback)
-        if (passback !== null) {
-            return passback.data.id
-        }
-        return null
-    }
-
-    //compare with the matching id
-    async checkID(patient_id) {
-        var existing_id = await this.getMatchingPatientID(patient_id);
-        if (existing_id !== patient_id) {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     //format change
@@ -362,29 +340,25 @@ class NewAssessment extends React.Component {
     handleSubmit = async () => {
         this.setState({
             error: false,
-            errorMessage: ''
+            errorMessage: '',
+            submit: true
         })
         this.checkSymptoms();
         this.checkGestAge();
         //check VHT
         if (this.state.vht_id === "EMPTY") {
+            this.setState({
+                submit: false
+            })
             alert("Please select at least one VHT")
             return false;
         }
         //the error controller
         if (this.state.error) {
-            alert(this.state.errorMsg)
-            return;
-        }
-        //To do : handle in the backend
-        //true if id does not exist
-        let no_existing_ID = await this.checkID(this.state.patient_id)
-
-        if (no_existing_ID) {
-            alert("Patient ID does NOT EXIST")
             this.setState({
-                patient_id: ''
+                submit: false
             })
+            alert(this.state.errorMsg)
             return;
         }
 
@@ -425,11 +399,22 @@ class NewAssessment extends React.Component {
         }
     }
     */
+    setSubmit() {
+        this.setState({
+            submit: true
+        })
+    }
 
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         })
+        if (event.target.name === "patient_id") {
+            this.getMatchingPatientData(event.target.value)
+                .catch(() => {
+                    return true;
+                });
+        }
     }
 
 
@@ -467,7 +452,7 @@ class NewAssessment extends React.Component {
                             onChange={this.handleChange}
                             name="patient_id"
                             value={this.state.patient_id}
-                            validators={['required', 'getMatchedContent']}
+                            validators={['required']}
                             errorMessages={['this field is required']}
                         />
                         <br/>
@@ -591,7 +576,7 @@ class NewAssessment extends React.Component {
                 </Grid>
                 <br/>
                 <br/>
-                <Button type="submit" style={{
+                <Button onClick={this.setSubmit} type="submit" style={{
                     backgroundColor: 'blue',
                     color: 'white'
                 }}>Submit</Button>
