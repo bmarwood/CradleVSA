@@ -50,6 +50,7 @@ class NewAssessment extends React.Component {
             recheck: false,
             arrow: null, // pass in as an arrow
             gestational_unit: Gestational_unit.EMPTY,
+            cvsa_id: 'EMPTY', //worker id
 
             //Temporary variables
             fname: "",
@@ -62,6 +63,8 @@ class NewAssessment extends React.Component {
             vht_array: [],
             create_patient: false,
             submit: false,
+            user_array: [],
+            worker_id: '',
 
             //Symptoms
             symptoms_arr: [
@@ -89,10 +92,6 @@ class NewAssessment extends React.Component {
         });
     };
 
-    componentWillUnmount() {
-
-    }
-
 
 //componentWillUpdate
     componentDidMount() {
@@ -102,6 +101,20 @@ class NewAssessment extends React.Component {
                 return true;
             });
 
+        this.getUserList()
+            .catch(() => {
+                this.setState({
+                    user_array: []
+                })
+            })
+
+
+        //get cvsa_id
+        var user = localStorage.getItem("userData")
+        var parsedUser = JSON.parse(user)
+        this.setState({
+            worker_id: parsedUser.id
+        })
 
         //check if systolic > diastolic
         ValidatorForm.addValidationRule('isGreater', (value) => {
@@ -127,6 +140,16 @@ class NewAssessment extends React.Component {
             }
             return true;
         });
+    }
+
+    //get all the user lists
+    async getUserList() {
+        var passback = await RequestServer.getUserList()
+        if (passback !== null) {
+            this.setState({
+                user_array: Utility.populateUser(passback.data)
+            })
+        }
     }
 
     //checkbox change handler
@@ -298,13 +321,19 @@ class NewAssessment extends React.Component {
         }
         //add the checked symptoms
         this.addSymptoms();
+
+        ///ERRP *************
+        if (!this.state.vht_array.includes(this.state.cvsa_id)) {
+            this.setState({
+                vht_id: "EMPTY"
+            })
+        }
     }
 
 
     //get a single patient with matching patient_id
     async getMatchingPatientData(patient_id) {
         let passback = await RequestServer.getPatientByID(patient_id)
-        console.log("this.state.submit", this.state.submit)
         if (!this.state.submit && passback !== null && passback.data !== '') {
             let patient_data = passback.data
 
@@ -345,14 +374,7 @@ class NewAssessment extends React.Component {
         })
         this.checkSymptoms();
         this.checkGestAge();
-        //check VHT
-        if (this.state.vht_id === "EMPTY") {
-            this.setState({
-                submit: false
-            })
-            alert("Please select at least one VHT")
-            return false;
-        }
+
         //the error controller
         if (this.state.error) {
             this.setState({
@@ -424,6 +446,8 @@ class NewAssessment extends React.Component {
                                                                     handleChange={this.handleCheckbox}/>)
         let vht_select_option = this.state.vht_array.map(item => <option key={item.id}
                                                                          value={item.id}> {item.id} </option>)
+        let user_select_option = this.state.user_array.map(user => <option key={user.id}
+                                                                           value={user.id}> {user.id} </option>)
         return (
             <ValidatorForm
                 style={{
@@ -476,27 +500,49 @@ class NewAssessment extends React.Component {
                                 errorMessages={['this field is required', 'Invalid input (only letters)']}
                             />
                             <br/>
-                            <br/>
 
-                            <label>Date of Birth:</label>
-                            <br/>
-                            <DatePicker
-                                selected={this.state.temp_dob}
-                                onChange={this.changeDOB}
-                                maxDate={new Date()}
+                            {/*<label>Date of Birth:</label>*/}
+                            {/*<br/>*/}
+                            {/*<DatePicker*/}
+                            {/*    selected={this.state.temp_dob}*/}
+                            {/*    onChange={this.changeDOB}*/}
+                            {/*    maxDate={new Date()}*/}
+                            {/*/>*/}
+                            <TextValidator
+                                label="Date of birth"
+                                onChange={this.handleChange}
+                                name="birth_date"
+                                value={this.state.birth_date}
+                                validators={['required']}
+                                errorMessages={['this field is required']}
                             />
                             <br/>
                             <br/>
 
-                            <label>VHT: </label>
+                            {/*<label>VHT: </label>*/}
+                            {/*<br/>*/}
+                            {/*<select*/}
+                            {/*    value={this.state.vht_id}*/}
+                            {/*    onChange={this.handleChange}*/}
+                            {/*    name="vht_id"*/}
+                            {/*>*/}
+                            {/*    <option value="EMPTY"> --SELECT ONE--</option>*/}
+                            {/*    <option value={this.state.cvsa_id}> Use my ID</option>*/}
+                            {/*    {vht_select_option}*/}
+                            {/*</select>*/}
+                            {/*<br/>*/}
+                            {/*<br/>*/}
+
+                            <label>CSVA ID: </label>
                             <br/>
                             <select
-                                value={this.state.vht_id}
+                                value={this.state.cvsa_id}
                                 onChange={this.handleChange}
-                                name="vht_id"
+                                name="cvsa_id"
                             >
                                 <option value="EMPTY"> --SELECT ONE--</option>
-                                {vht_select_option}
+                                <option value={this.state.worker_id}> Use my ID</option>
+                                {user_select_option}
                             </select>
                             <br/>
                         </div>
