@@ -36,7 +36,6 @@ public class PatientsController {
     public List<Patients> getAll() {
         try {
             List<Patients> patients = this.patientsRepository.findAll();
-            patients.get(1);
             // return patients with updated assessment_list
             for (Patients eachPatient : patients) {
                 String id = eachPatient.getId();
