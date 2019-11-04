@@ -16,17 +16,16 @@ class RequestServer extends Component {
         return 'http://localhost:8080'
     }
 
-    // getPatient(patient_ID) {
-    //     try {
-    //         var response = await axios.get(getServerLocation() + '/patients/all')
-    //         return response
-    //     }
-    //     catch (error) {
-    //         console.log('error block')
-    //         console.log(error)
-    //         return null
-    //     }
-    // }
+    async getPatient(patient_ID) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/patients/all')
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
 
     async addAssessment(assessment) {
         try {
@@ -49,6 +48,7 @@ class RequestServer extends Component {
             return null
         }
     }
+
     async addUser(user) {
         try {
             var response = await axios.post(this.getServerLocation() + '/users/register', user)
@@ -105,6 +105,7 @@ class RequestServer extends Component {
         }
     }
 
+    //get list of assessments based on the worker id
     async getAssessmentsByUserId(id) {
         try {
             var response = await axios.get(this.getServerLocation() + '/assessments/getByUserId' + id)
@@ -116,8 +117,20 @@ class RequestServer extends Component {
         }
     }
 
+    //get list of assessments based on the patient id
+    async getAssessmentsByPatientId(patient_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/assessments/getAByPatientId' + patient_id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
     //TEST : http://localhost:8080/patients/get1
-    //get only signle patient by the id
+    //get only single patient by the patient id
     async getPatientByID(patient_id) {
         try {
             var response = await axios.get(this.getServerLocation() + '/patients/get' + patient_id)
@@ -177,13 +190,27 @@ class RequestServer extends Component {
         }
     }
 
-    async getNextAssessmentID() {
-        let assessment_list = await this.getAssessmentsList();
-        console.log(assessment_list.data)
-        console.log(typeof (assessment_list.data))
-        console.log(assessment_list.data.length)
-        return assessment_list.data.length
 
+    async updateUserPassword(user) {
+        try {
+            let response = await axios.post(this.getServerLocation() + '/users/updatePassword/' + user.id + "/" + user.username + "/" + user.old_password + "/" + user.new_password)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    async updateUser(user) {
+        try {
+            let response = await axios.post(this.getServerLocation() + '/users/update/' + user.id, user)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
     }
 }
 

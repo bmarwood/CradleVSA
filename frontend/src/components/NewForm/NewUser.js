@@ -18,9 +18,14 @@ const Role = {
     USER: "USER",
     ADMIN: "ADMIN",
     HEALTH_WORKER: "HEALTH_WORKER",
-    COMMUNITY_HEALTH_OFFICER: "COMMUNITY_HEALTH_OFFICER"
+    COMMUNITY_HEALTH_OFFICER: "COMMUNITY_HEALTH_OFFICER",
+    VHT: "VHT"
 }
 
+
+// add working area
+// address = optional
+// change to add worker
 const Role_Termination_Integer = -1
 
 //form for a new user
@@ -37,6 +42,7 @@ class NewUser extends React.Component {
             gender: Gender.MALE,
             roles: [],
             enabled: false,
+            area: "", // need to talk about the field name
 
             //TEMPORARY VARIABLES
             error: false,
@@ -58,7 +64,7 @@ class NewUser extends React.Component {
         var parsedUser = JSON.parse(user)
         if (parsedUser && parsedUser.roles) {
             parsedUser.roles.forEach(function (role) {
-                console.log("User data is : " + role.role)
+                //console.log("User data is : " + role.role)
                 roleArray.push(role.role)
             })
         }
@@ -73,8 +79,8 @@ class NewUser extends React.Component {
 
         this.setState({
             roles_array: this.getRoleArray()
-        })
-        //
+        });
+
         //check for user id - no duplicate value
         ValidatorForm.addValidationRule('checkID', (value) => {
             for (let user of this.state.user_array) {
@@ -101,10 +107,12 @@ class NewUser extends React.Component {
             return [//{id: 1, name: Role.USER, checked: true},
                 {id: 2, name: Role.ADMIN, checked: false},
                 {id: 3, name: Role.HEALTH_WORKER, checked: false},
-                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
+                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false},
+                {id: 5, name: Role.VHT, checked: false}]
         } else if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer) {
             return [//{id: 1, name: Role.USER, checked: true},
-                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false}]
+                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false},
+                {id: 5, name: Role.VHT, checked: false}]
         }
     }
 
@@ -170,19 +178,6 @@ class NewUser extends React.Component {
         })
     }
 
-    // //check if the name is taken
-    // checkName() {
-    //     let temp_name = this.state.fname + ' ' + this.state.lname
-    //     for (let user of this.state.user_array) {
-    //         if (user.name === temp_name) {
-    //             this.setState({
-    //                 error: true
-    //             })
-    //             return;
-    //         }
-    //     }
-    // }
-
     //get all the user lists
     async getUserList() {
         var passback = await RequestServer.getUserList()
@@ -205,20 +200,9 @@ class NewUser extends React.Component {
             return
         }
 
-        // //check for user name - no duplicate value
-        // this.checkName();
-        // if (this.state.error) {
-        //     alert("Existing user: Re-enter first name and last name")
-        //     this.setState({
-        //         fname: '',
-        //         lname: '',
-        //     })
-        //     return
-        // }
-
         //remove and change the inputs
         this.changeState();
-        console.log(this.state);
+        //console.log(this.state);
 
         //  '/users/register/this.state'
         var response = await RequestServer.addUser(this.state)
@@ -260,7 +244,7 @@ class NewUser extends React.Component {
                 onSubmit={this.handleSubmit}
                 onError={errors => console.log(errors)}
             >
-                <h4>New User </h4>
+                <h4>New Worker </h4>
 
                 <Grid>
                     <Cell col={4}>
@@ -291,8 +275,6 @@ class NewUser extends React.Component {
                             onChange={this.handleChange}
                             name="address"
                             value={this.state.address}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
                             variant="outlined"
                         />
                         <br/>
@@ -334,12 +316,24 @@ class NewUser extends React.Component {
                         />
                         <br/>
                         <br/>
+                        <TextValidator
+                            label="Assigned Area"
+                            onChange={this.handleChange}
+                            name="area"
+                            value={this.state.area}
+                            validators={['required']}
+                            errorMessages={['this field is required']}
+                            variant="outlined"
+                        />
+                        <br/>
+                        <br/>
                     </Cell>
                     <Cell col={4}>
                         <p>Date of Birth:</p>
                         <DatePicker
                             selected={this.state.temp_dob}
                             onChange={this.changeDOB}
+                            maxDate={new Date()}
                         />
                         <br/>
                         <br/>

@@ -7,10 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c5c52e7-f2b7-4154-8017-85c0c31bb73f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/cradle_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/SmsWebhookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/SmsWebhookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,7 +18,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="43-SmsAddon" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -34,12 +31,6 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="118" />
-    <option name="y" value="8" />
-    <option name="width" value="1760" />
-    <option name="height" value="1012" />
-  </component>
   <component name="ProjectId" id="1RqNVEVk5Zpo0xb9wJrwUl4DIcF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
@@ -47,6 +38,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570348118439" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JAVA" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
@@ -63,7 +55,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.CradleApplication">
+  <component name="RunManager" selected="Node.js.NewAssessment.js">
     <configuration name="CradleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ca.cmpt373.earth.cradle.CradleApplication" />
       <module name="cradle" />
@@ -77,6 +69,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="NewAssessment.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" working-dir="$PROJECT_DIR$/frontend/src/components/NewForm">
+      <method v="2" />
+    </configuration>
     <configuration name="CradleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="cradle" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="ca.cmpt373.earth.cradle.CradleApplication" />
@@ -86,6 +81,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.NewAssessment.js" />
+        <item itemvalue="Application.CradleApplication" />
         <item itemvalue="Application.CradleApplication" />
       </list>
     </recent_temporary>
@@ -95,7 +92,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e43636d1-f531-462e-8058-c454d19d5c26" name="Default Changelist" comment="" />
+      <changelist id="6c5c52e7-f2b7-4154-8017-85c0c31bb73f" name="Default Changelist" comment="" />
       <created>1570347832870</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -103,6 +100,9 @@
       <workItem from="1570390690418" duration="2679000" />
       <workItem from="1570509159428" duration="438000" />
       <workItem from="1570509748392" duration="856000" />
+      <workItem from="1572497843434" duration="37498000" />
+      <workItem from="1572762994428" duration="169000" />
+      <workItem from="1572826490737" duration="583000" />
     </task>
     <servers />
   </component>

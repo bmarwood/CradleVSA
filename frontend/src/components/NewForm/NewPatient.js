@@ -5,6 +5,7 @@ import RequestServer from '../RequestServer';
 import Utility from './Utility';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import './newForm.css';
 
 //form for a new patient
 class NewPatient extends React.Component {
@@ -17,12 +18,46 @@ class NewPatient extends React.Component {
             birth_date: '',
             list_of_assessments: [], // NOT SURE IF WE NEED IT HERE //LEAVE FOR LATER
             gender: 'MALE',
+            vht_id: 'EMPTY',
             //TEMP VARIABLES
             fname: '',
             lname: '',
             temp_dob: new Date(),
+            vht_array: []
         };
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.getVHTList()
+            .catch(() => {
+                return true;
+            });
+
+        //check for patient id - no duplicate value
+        ValidatorForm.addValidationRule('checkID', (value) => {
+            let validID = this.checkID(value)
+                .catch(() => {
+                    console.log("validID", validID)
+
+                    return true;
+                });
+            return validID;
+        });
+
+        ValidatorForm.addValidationRule('check_vht_id', (value) => {
+            //check for existing vht id
+            return true;
+        });
+    }
+
+    async getVHTList() {
+        var passback = await RequestServer.getUserList()
+        if (passback !== null) {
+            this.setState({
+                vht_array: Utility.populateVHT(passback.data)
+            })
+        }
     }
 
     //handle date change
@@ -50,7 +85,7 @@ class NewPatient extends React.Component {
     //get a single patient with matching patient_id
     async getMatchingPatientID(patient_id) {
         var passback = await RequestServer.getPatientByID(patient_id)
-        console.log(passback)
+        //console.log(passback)
         if (passback !== null) {
             return passback.data.id
         }
@@ -68,17 +103,12 @@ class NewPatient extends React.Component {
 
 
     handleSubmit = async () => {
-        let no_existing_ID = await this.checkID(this.state.id)
-        //true if id does not exist
-        if (!no_existing_ID) {
-            alert("Patient ID EXISTS : IT HAS BEEN USED")
-            this.setState({
-                id: ''
-            })
-            return;
-        }
         this.changeState();
-        console.log(this.state);
+        //console.log(this.state);
+        if (this.state.vht_id === "EMPTY") {
+            alert("Please select at least one VHT")
+            return false;
+        }
         var response = await RequestServer.addPatient(this.state)
         if (response !== null) {
             this.props.history.push(
@@ -90,6 +120,9 @@ class NewPatient extends React.Component {
 
 
     render() {
+        let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
+                                                                         value={item.id}> {item.id} </option>)
+
         return (
             <ValidatorForm
                 style={{
@@ -130,17 +163,30 @@ class NewPatient extends React.Component {
                     onChange={this.handleChange}
                     name="id"
                     value={this.state.id}
-                    validators={['required']}
-                    errorMessages={['this field is required']}
+                    validators={['required', 'checkID']}
+                    errorMessages={['this field is required', 'Existing ID: Re-enter the ID']}
                     variant="outlined"
                 />
                 <br/>
                 <br/>
+                <label>VHT: </label>
+                <select
+                    value={this.state.vht_id}
+                    onChange={this.handleChange}
+                    name="vht_id"
+                >
+                    <option value="EMPTY"> --SELECT ONE--</option>
+                    {vht_select_option}
+                </select>
+                <br/>
+                <br/>
+
 
                 <p>Date of Birth:</p>
                 <DatePicker
                     selected={this.state.temp_dob}
                     onChange={this.changeDOB}
+                    maxDate={new Date()}
                 />
                 <br/>
                 <br/>
