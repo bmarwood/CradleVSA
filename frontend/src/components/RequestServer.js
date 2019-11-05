@@ -6,7 +6,6 @@ import '../App.css';
 
 var IsVM = false;
 
-
 class RequestServer extends Component {
 
     getServerLocation() {
@@ -14,6 +13,17 @@ class RequestServer extends Component {
             return 'http://cmpt373.csil.sfu.ca:8083'
         }
         return 'http://localhost:8080'
+    }
+
+    async getLocations() {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/location/all')
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
     }
 
     async getPatient(patient_ID) {

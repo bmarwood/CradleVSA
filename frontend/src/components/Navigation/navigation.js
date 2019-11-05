@@ -16,12 +16,12 @@ import PatientAddMedication from '../PatientComponents/PatientAddMedication';
 import Resources from '../Resources';
 import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
-
+import Location from '../location';
 
 const Navigation = () => (
     <Switch>
         <Route exact path="/" component={LandingPage}/>
-
+        <Route path="/location" component={Location}/>
         <PrivateRoute exact path="/user-dashboard" component={PatientList}/>
         <AdminRoute exact path="/admin-dashboard" component={Landing_List}/>
         <Route exact path="/login" component={Login}/>
