@@ -37,6 +37,17 @@ class RequestServer extends Component {
         }
     }
 
+    async deleteLocation(id) {
+        try {
+            var response = await axios.delete(this.getServerLocation() + '/location/delete/' + id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
     async getPatient(patient_ID) {
         try {
             var response = await axios.get(this.getServerLocation() + '/patients/all')

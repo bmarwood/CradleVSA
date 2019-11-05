@@ -15,6 +15,7 @@ class Location extends Component {
         }
 
         this.addLocation = this.addLocation.bind(this)
+        this.deleteLocation = this.deleteLocation.bind(this)
     }
 
     async componentDidMount() {
@@ -36,6 +37,15 @@ class Location extends Component {
         )
     }
 
+
+    async deleteLocation(data) {
+        var response = await RequestServer.deleteLocation(data.id)
+        if (response !== null) {
+            return true
+        }
+        return false
+    }
+
     render() {
         return (
             <div className='table-position'>
@@ -43,6 +53,24 @@ class Location extends Component {
                     title="Locations"
                     columns={this.state.columns}
                     data={this.state.locations}
+                    editable={{
+                        onRowDelete: oldData => 
+                        new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve();
+                                var didDelete = this.deleteLocation(oldData)
+                                if (didDelete) {
+                                    const data = [...this.state.locations];
+                                    data.splice(data.indexOf(oldData), 1);
+                                    this.setState({ 
+                                        locations: data 
+                                    });
+                                }
+                            }, 600);
+                        }),
+                            
+                        
+                    }}
                 />
                 <br/>
                 <Button className="button-location" onClick={this.addLocation}>Add Location</Button>

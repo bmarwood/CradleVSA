@@ -32,7 +32,7 @@ class NewLocation extends React.Component {
         var response = await RequestServer.addLocation(this.state)
         if (response !== null) {
             this.props.history.push(
-                '/',
+                '/location',
                 {detail: response.data}
             )
         }
@@ -58,8 +58,8 @@ class NewLocation extends React.Component {
                     onChange={this.handleChange}
                     name="name"
                     value={this.state.name}
-                    validators={['required', 'matchRegexp:^[A-Za-z]+$']}
-                    errorMessages={['this field is required', 'Invalid input (only letters)']}
+                    validators={['required', 'matchRegexp:^[a-zA-Z0-9_." *"]*$']}
+                    errorMessages={['this field is required', 'Invalid input ']}
                     variant="outlined"
                 />
                 <br/>
@@ -69,8 +69,8 @@ class NewLocation extends React.Component {
                     onChange={this.handleChange}
                     name="address"
                     value={this.state.address}
-                    validators={['required', 'matchRegexp:^[A-Za-z]+$']}
-                    errorMessages={['this field is required', 'Invalid input (only letters)']}
+                    validators={['required', 'matchRegexp:^[a-zA-Z0-9_." *"]*$']}
+                    errorMessages={['this field is required', 'Invalid input ']}
                     variant="outlined"
                 />
                 <br/>
