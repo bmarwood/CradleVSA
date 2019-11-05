@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import '../App.css';
 import RequestServer from './RequestServer';
 import MaterialTable from 'material-table';
+import { Button } from '@material-ui/core';
 
 class Location extends Component {
 
@@ -12,6 +13,8 @@ class Location extends Component {
         this.state = {
             locations: []
         }
+
+        this.addLocation = this.addLocation.bind(this)
     }
 
     async componentDidMount() {
@@ -27,17 +30,11 @@ class Location extends Component {
         })
     }
 
-    displayLocations() {
-        var locations = []
-        if (this.state.locations.length != 0) {
-            this.state.locations.forEach(location => {
-                console.log('location: ', location)
-                locations.push(<p style={{color: "white"}}>{location.name}</p>)
-            })
-            return locations
-        }
+    addLocation() {
+        this.props.history.push(
+            '/newlocation',
+        )
     }
-
 
     render() {
         return (
@@ -47,7 +44,9 @@ class Location extends Component {
                     columns={this.state.columns}
                     data={this.state.locations}
                 />
-                
+                <br/>
+                <Button className="button-location" onClick={this.addLocation}>Add Location</Button>
+
             </div>
         );
 
