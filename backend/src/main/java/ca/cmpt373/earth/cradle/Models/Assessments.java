@@ -21,7 +21,8 @@ public class Assessments {
     public enum Gestational_unit {
         WEEK,
         MONTH,
-        NOT_PREGNANT
+        NOT_PREGNANT,
+        EMPTY
     }
 
 
@@ -86,9 +87,9 @@ public class Assessments {
     public void setPatient_id(String patient_id) {
         this.patient_id = patient_id;
     }
-    
+
     public String getName() {
-    	return this.name;
+        return this.name;
     }
 
     public String getBirth_date() {

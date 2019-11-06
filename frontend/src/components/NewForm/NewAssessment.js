@@ -498,20 +498,22 @@ class NewAssessment extends React.Component {
                                 {user_select_option}
                             </select>
                             <br/>
+
+                            <br/>
+                            <label>Gender: </label>
+                            <select
+                                value={this.state.gender}
+                                onChange={this.handleChange}
+                                name="gender"
+                            >
+                                <option value="MALE"> Male</option>
+                                <option value="FEMALE"> Female</option>
+                            </select>
+                            <br/>
                         </div>
                         <br/>
-                        <label>Gender: </label>
-                        <select
-                            value={this.state.gender}
-                            onChange={this.handleChange}
-                            name="gender"
-                        >
-                            <option value="MALE"> Male</option>
-                            <option value="FEMALE"> Female</option>
-                        </select>
-                        <br/>
-                        <br/>
-                        <div style={{display: (this.state.gender === "FEMALE")}}>
+                        
+                        <div style={{display: (this.state.gender === "FEMALE" ? 'block' : 'none')}}>
                             <label>Gestational Age:</label>
                             <br/>
                             <select
