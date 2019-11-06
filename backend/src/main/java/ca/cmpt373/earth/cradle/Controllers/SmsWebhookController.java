@@ -20,7 +20,7 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
     private AssessmentsRepository assessmentsRepository;
 
     @Autowired
-    private AssessmentController assessmentController;
+    private AssessmentsController assessmentController;
 
 
     public SmsWebhookController(AssessmentsRepository assessmentsRepository) {

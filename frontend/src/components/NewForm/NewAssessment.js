@@ -36,6 +36,7 @@ class NewAssessment extends React.Component {
             patient_id: '',
             birth_date: '',
             vht_id: "EMPTY",
+            gender: "MALE",
             name: '',
             date: "",
             gestational_age: "0",
@@ -59,7 +60,6 @@ class NewAssessment extends React.Component {
             error: false,   //to handle submit
             errorMsg: '',   //to handle submit
             msg: '',        //for the componenetDidMount error message
-            temp_dob: new Date(),
             vht_array: [],
             create_patient: false,
             submit: false,
@@ -83,15 +83,6 @@ class NewAssessment extends React.Component {
         this.setGestational_age = this.setGestational_age.bind(this)
         this.setSubmit = this.setState.bind(this)
     }
-
-
-    //handle date change
-    changeDOB = date => {
-        this.setState({
-            temp_dob: date
-        });
-    };
-
 
 //componentWillUpdate
     componentDidMount() {
@@ -340,17 +331,19 @@ class NewAssessment extends React.Component {
             this.setState({
                 fname: patient_data.name.split(" ")[0],
                 lname: patient_data.name.split(" ")[1],
-                temp_dob: Utility.convertStringToDate(patient_data.birth_date),
+                birth_date: patient_data.birth_date,
                 vht_id: patient_data.vht_id,
+                gender: patient_data.gender,
                 create_patient: false
             })
         } else if (!this.state.submit) {
             this.setState({
                 fname: '',
                 lname: '',
-                temp_dob: new Date(),
+                birth_date: '',
                 vht_id: "EMPTY",
-                create_patient: true,
+                gender: "MALE",
+                create_patient: true
             })
         }
         return true;
@@ -359,8 +352,7 @@ class NewAssessment extends React.Component {
     //format change
     changeState() {
         this.setState({
-            name: this.state.fname + ' ' + this.state.lname,
-            birth_date: Utility.convertDate(this.state.temp_dob)
+            name: this.state.fname + ' ' + this.state.lname
         })
     }
 
@@ -394,7 +386,6 @@ class NewAssessment extends React.Component {
 
         //assessment
         this.addAssessment();
-        //this.updateAssessment(); //update patient's assessment list once new assessment is updated
     }
 
 
@@ -410,17 +401,7 @@ class NewAssessment extends React.Component {
         }
     }
 
-    /*  // update patient's assessment list once new assessment is updated
-    async updateAssessment() {
-        var passback = await RequestServer.updatePatientAssessmentList(this.state.patient_id, this.state)
-        if (passback !== null) {
-            this.props.history.push(
-                '/',
-                {detail: passback.data}
-            )
-        }
-    }
-    */
+
     setSubmit() {
         this.setState({
             submit: true
@@ -463,21 +444,14 @@ class NewAssessment extends React.Component {
                 <Grid>
                     <Cell col={4}>
                         <h4> Patient Form </h4>
-                        {/*
+
                         <TextValidator
-                            label="Assigned Worker Id"
-                            name="vht_id"       //filling up vht id with a worker id //need to change later
-                            value={this.state.vht_id}
-                        />
-                        <br/>
-                         */}
-                        <TextValidator
-                            label="Patient ID"
+                            label="Attestation ID"
                             onChange={this.handleChange}
                             name="patient_id"
                             value={this.state.patient_id}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
+                            validators={['required', 'matchRegexp:^[0-9]{11}$']}
+                            errorMessages={['this field is required', 'Must be 11 digits']}
                         />
                         <br/>
                         <div style={{display: (this.state.create_patient ? 'block' : 'none')}}>
@@ -501,13 +475,6 @@ class NewAssessment extends React.Component {
                             />
                             <br/>
 
-                            {/*<label>Date of Birth:</label>*/}
-                            {/*<br/>*/}
-                            {/*<DatePicker*/}
-                            {/*    selected={this.state.temp_dob}*/}
-                            {/*    onChange={this.changeDOB}*/}
-                            {/*    maxDate={new Date()}*/}
-                            {/*/>*/}
                             <TextValidator
                                 label="Date of birth"
                                 onChange={this.handleChange}
@@ -518,20 +485,6 @@ class NewAssessment extends React.Component {
                             />
                             <br/>
                             <br/>
-
-                            {/*<label>VHT: </label>*/}
-                            {/*<br/>*/}
-                            {/*<select*/}
-                            {/*    value={this.state.vht_id}*/}
-                            {/*    onChange={this.handleChange}*/}
-                            {/*    name="vht_id"*/}
-                            {/*>*/}
-                            {/*    <option value="EMPTY"> --SELECT ONE--</option>*/}
-                            {/*    <option value={this.state.cvsa_id}> Use my ID</option>*/}
-                            {/*    {vht_select_option}*/}
-                            {/*</select>*/}
-                            {/*<br/>*/}
-                            {/*<br/>*/}
 
                             <label>CSVA ID: </label>
                             <br/>
@@ -547,32 +500,45 @@ class NewAssessment extends React.Component {
                             <br/>
                         </div>
                         <br/>
-                        <label>Gestational Age:</label>
-                        <br/>
+                        <label>Gender: </label>
                         <select
-                            value={this.state.gestational_unit}
+                            value={this.state.gender}
                             onChange={this.handleChange}
-                            name="gestational_unit"
-                            onClick={this.setGestational_age}
+                            name="gender"
                         >
-                            <option value="EMPTY"> --SELECT ONE--</option>
-                            <option value="WEEK"> Week(s)</option>
-                            <option value="MONTH"> Month(s)</option>
-                            <option value="NOT_PREGNANT"> Not Pregnant</option>
+                            <option value="MALE"> Male</option>
+                            <option value="FEMALE"> Female</option>
                         </select>
                         <br/>
-
-                        <div
-                            style={{display: (this.state.gestational_unit !== Gestational_unit.NOT_PREGNANT && this.state.gestational_unit !== Gestational_unit.EMPTY ? 'block' : 'none')}}>
-
-                            <TextValidator
-                                label="Gestational Age"
+                        <br/>
+                        <div style={{display: (this.state.gender === "FEMALE")}}>
+                            <label>Gestational Age:</label>
+                            <br/>
+                            <select
+                                value={this.state.gestational_unit}
                                 onChange={this.handleChange}
-                                name="gestational_age"
-                                value={this.state.gestational_age}
-                                validators={['required', 'checkPregnancy', 'minNumber:0', 'maxNumber:60', 'matchRegexp:^[0-9]*$']}
-                                errorMessages={['this field is required', this.state.msg, 'MUST BE BETWEEN 0-60']}
-                            />
+                                name="gestational_unit"
+                                onClick={this.setGestational_age}
+                            >
+                                <option value="EMPTY"> --SELECT ONE--</option>
+                                <option value="WEEK"> Week(s)</option>
+                                <option value="MONTH"> Month(s)</option>
+                                <option value="NOT_PREGNANT"> Not Pregnant</option>
+                            </select>
+                            <br/>
+
+                            <div
+                                style={{display: (this.state.gestational_unit !== Gestational_unit.NOT_PREGNANT && this.state.gestational_unit !== Gestational_unit.EMPTY ? 'block' : 'none')}}>
+
+                                <TextValidator
+                                    label="Gestational Age"
+                                    onChange={this.handleChange}
+                                    name="gestational_age"
+                                    value={this.state.gestational_age}
+                                    validators={['required', 'checkPregnancy', 'minNumber:0', 'maxNumber:60', 'matchRegexp:^[0-9]*$']}
+                                    errorMessages={['this field is required', this.state.msg, 'MUST BE BETWEEN 0-60']}
+                                />
+                            </div>
                         </div>
                     </Cell>
                     <Cell col={4}>
@@ -622,7 +588,7 @@ class NewAssessment extends React.Component {
                 </Grid>
                 <br/>
                 <br/>
-                <Button onClick={this.setSubmit} type="submit" style={{
+                <Button type="submit" style={{
                     backgroundColor: 'blue',
                     color: 'white'
                 }}>Submit</Button>

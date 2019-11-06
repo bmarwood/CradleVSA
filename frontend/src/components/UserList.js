@@ -12,6 +12,7 @@ class UserList extends Component {
             columns: [],
             data: []
         }
+        this.deleteUser = this.deleteUser.bind(this)
     }
 
     componentDidMount() {
@@ -47,6 +48,14 @@ class UserList extends Component {
         this.timer = null;
     }
 
+    async deleteUser(user) {
+        let response = await requestServer.deleteUser(user.id)
+        if (response !== null) {
+            return true
+        }
+        return false
+    }
+    
     getUserRoles(user) {
         var roleString = ''
         if (user && user.roles) {
@@ -106,6 +115,25 @@ class UserList extends Component {
                     title="User"
                     columns={this.state.columns}
                     data={this.state.data}
+                    editable={{
+                        onRowDelete: oldData =>
+                            new Promise(resolve => {
+                                setTimeout(() => {
+                                    resolve();
+                                    var didDelete = this.deleteUser(oldData)
+                                    console.log(oldData)
+                                    if (didDelete) {
+                                        const data = [...this.state.data];
+                                        data.splice(data.indexOf(oldData), 1);
+                                        this.setState({
+                                            locations: data
+                                        });
+                                    }
+                                }, 600);
+                            }),
+
+
+                    }}
                 />
             </div>
 

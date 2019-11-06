@@ -94,4 +94,27 @@ public class AssessmentsController {
         return assessmentsRepository.findByPatientId(patient_id);
     }
 
+    @DeleteMapping("/delete/{assessment_id}")
+    public String deleteById(@PathVariable String assessment_id) {
+        try {
+            assessmentsRepository.deleteById(assessment_id);
+            return assessment_id;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //not working  need to research more
+    @DeleteMapping("/deleteByPatientId/{patient_id}")
+    public String deleteByPatientId(@PathVariable String patient_id) {
+        try {
+            assessmentsRepository.deleteAll(getAByPatientId(patient_id));
+            return patient_id;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
