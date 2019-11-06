@@ -58,7 +58,7 @@ class NewLocation extends React.Component {
                     onChange={this.handleChange}
                     name="name"
                     value={this.state.name}
-                    validators={['required', 'matchRegexp:^[a-zA-Z0-9_." *"]*$']}
+                    validators={['required', 'matchRegexp:^[a-zA-Z0-9_.," *"]*$']}
                     errorMessages={['this field is required', 'Invalid input ']}
                     variant="outlined"
                 />
@@ -69,7 +69,7 @@ class NewLocation extends React.Component {
                     onChange={this.handleChange}
                     name="address"
                     value={this.state.address}
-                    validators={['required', 'matchRegexp:^[a-zA-Z0-9_." *"]*$']}
+                    validators={['required', 'matchRegexp:^[a-zA-Z0-9_.," *"]*$']}
                     errorMessages={['this field is required', 'Invalid input ']}
                     variant="outlined"
                 />
