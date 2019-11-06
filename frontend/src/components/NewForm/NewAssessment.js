@@ -52,6 +52,7 @@ class NewAssessment extends React.Component {
             arrow: null, // pass in as an arrow
             gestational_unit: Gestational_unit.EMPTY,
             cvsa_id: 'EMPTY', //worker id
+            location: 'EMPTY',
 
             //Temporary variables
             fname: "",
@@ -65,6 +66,7 @@ class NewAssessment extends React.Component {
             submit: false,
             user_array: [],
             worker_id: '',
+            location_array: [],
 
             //Symptoms
             symptoms_arr: [
@@ -96,6 +98,13 @@ class NewAssessment extends React.Component {
             .catch(() => {
                 this.setState({
                     user_array: []
+                })
+            })
+
+        this.getLocation()
+            .catch(() => {
+                this.setState({
+                    location_array: []
                 })
             })
 
@@ -408,6 +417,16 @@ class NewAssessment extends React.Component {
         })
     }
 
+    async getLocation() {
+        let response = await RequestServer.getLocations()
+        if (response !== null) {
+            this.setState({
+                location: response.data
+            })
+        }
+        return [];
+    }
+
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
@@ -429,6 +448,11 @@ class NewAssessment extends React.Component {
                                                                          value={item.id}> {item.id} </option>)
         let user_select_option = this.state.user_array.map(user => <option key={user.id}
                                                                            value={user.id}> {user.id} </option>)
+
+
+        let location_select_option = this.state.location_array.map(location => <option key={location.id}
+                                                                                       value={location.id}> {location.name}</option>)
+
         return (
             <ValidatorForm
                 style={{
@@ -443,6 +467,18 @@ class NewAssessment extends React.Component {
             >
                 <Grid>
                     <Cell col={4}>
+
+                        {/*<label>Location: </label>*/}
+                        <h4> Location </h4>
+                        <br/>
+                        <select
+                            value={this.state.location}
+                            onChange={this.handleChange}
+                            name="location"
+                        >
+                            <option value="EMPTY"> --SELECT ONE--</option>
+                            {location_select_option}
+                        </select>
                         <h4> Patient Form </h4>
 
                         <TextValidator
@@ -512,7 +548,7 @@ class NewAssessment extends React.Component {
                             <br/>
                         </div>
                         <br/>
-                        
+
                         <div style={{display: (this.state.gender === "FEMALE" ? 'block' : 'none')}}>
                             <label>Gestational Age:</label>
                             <br/>
