@@ -217,7 +217,8 @@ class RequestServer extends Component {
     async deletePatient(patient_id) {
         try {
             let response = await axios.delete(this.getServerLocation() + '/patients/delete/' + patient_id)
-            await axios.delete(this.getServerLocation() + '/assessments/deleteByPatientId/' + patient_id)
+            // delete corresponding assessments
+            // await axios.delete(this.getServerLocation() + '/assessments/deleteByPatientId/' + patient_id)
             return response
 
         } catch (error) {

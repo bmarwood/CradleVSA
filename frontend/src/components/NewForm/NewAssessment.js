@@ -296,7 +296,7 @@ class NewAssessment extends React.Component {
 
 
     checkGestAge() {
-        if (this.state.gestational_unit === Gestational_unit.EMPTY) {
+        if (this.state.gender === "FEMALE" && this.state.gestational_unit === Gestational_unit.EMPTY) {
             this.setState({
                 error: true,
                 errorMsg: this.state.errorMsg + "Please select at least one gestational age"
