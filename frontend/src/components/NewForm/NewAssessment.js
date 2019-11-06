@@ -421,7 +421,7 @@ class NewAssessment extends React.Component {
         let response = await RequestServer.getLocations()
         if (response !== null) {
             this.setState({
-                location: response.data
+                location_array: response.data
             })
         }
         return [];

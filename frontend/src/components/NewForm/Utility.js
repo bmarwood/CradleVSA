@@ -47,7 +47,7 @@ class Utility extends Component {
         });
         return user_array;
     }
-
+    
 
     //RETURN valid VHT ID
     static populateVHT(response) {
