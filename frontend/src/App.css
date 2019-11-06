@@ -2,6 +2,9 @@
   text-align: center;
 }
 
+.button-location {
+  background-color: white !important;
+}
 .errorMsg {
   font-size: 18px;
   color: red;
