@@ -376,6 +376,11 @@ class NewAssessment extends React.Component {
         this.checkSymptoms();
         this.checkGestAge();
 
+        if (this.state.location === "EMPTY") {
+            alert(this.state.errorMsg + "\nPlease select one of the location")
+            return;
+        }
+
         //the error controller
         if (this.state.error) {
             this.setState({
