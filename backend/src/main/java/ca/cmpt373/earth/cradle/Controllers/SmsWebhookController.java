@@ -74,6 +74,8 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         String vht_id = assessmentParams[4];
         String date = assessmentParams[5];
         String gestational_age = assessmentParams[6];
+        String location = "EMPTY";
+        String gender = "MALE";
         int heart_rate = Integer.parseInt(assessmentParams[7]);
         int systolic = Integer.parseInt(assessmentParams[8]);
         int diastolic = Integer.parseInt(assessmentParams[9]);
@@ -108,7 +110,7 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
                 new Assessments(id, patient_id, birth_date, vht_id, date, gestational_age,
                         heart_rate, systolic, diastolic, ews_color, symptoms,
                         referred, follow_up, follow_up_date, recheck,
-                        arrow, Gestational_unit, name);
+                        arrow, Gestational_unit, name, location, gender);
         return assessment;
     }
 }

@@ -62,7 +62,7 @@ public class AssessmentsController {
         String patient_id = assessment.getPatient_id();
 
         //adding new patient
-        Patients new_patient = new Patients(patient_id, assessment.getName(), assessment.getBirth_date(), list_of_assessments, "FEMALE"//need to update
+        Patients new_patient = new Patients(patient_id, assessment.getName(), assessment.getBirth_date(), list_of_assessments, assessment.getGender()
                 , assessment.getVht_id());
         if (patientsController.get(patient_id) == null) {
             patientsController.add(new_patient);
