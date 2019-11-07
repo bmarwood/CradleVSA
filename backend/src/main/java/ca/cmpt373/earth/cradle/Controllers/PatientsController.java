@@ -104,14 +104,14 @@ public class PatientsController {
 
     //deleteWorks
     @DeleteMapping("/delete/{patient_id}")
-    public String deleteById(@PathVariable String id) {
+    public String deleteById(@PathVariable String patient_id) {
         try {
-            patientsRepository.deleteById(id);
-            return id;
+            patientsRepository.deleteById(patient_id);
+            return patient_id;
         } catch (Throwable e) {
             e.printStackTrace();
             return null;
         }
-
     }
+
 }

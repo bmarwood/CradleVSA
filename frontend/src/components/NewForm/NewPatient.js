@@ -159,12 +159,12 @@ class NewPatient extends React.Component {
                 <br/>
                 <br/>
                 <TextValidator
-                    label="ID"
+                    label="Attestation ID"
                     onChange={this.handleChange}
                     name="id"
                     value={this.state.id}
-                    validators={['required', 'checkID']}
-                    errorMessages={['this field is required', 'Existing ID: Re-enter the ID']}
+                    validators={['required', 'matchRegexp:^[0-9]{11}$', 'checkID']}
+                    errorMessages={['this field is required', 'Must be 11 digits', 'Existing ID: Re-enter the ID']}
                     variant="outlined"
                 />
                 <br/>
