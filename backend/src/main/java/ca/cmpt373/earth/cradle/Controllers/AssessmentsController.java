@@ -51,7 +51,7 @@ public class AssessmentsController {
     public void insert(@RequestBody Assessments assessment) {
         this.assessmentsRepository.insert(assessment);
     }
-
+/*
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     @CrossOrigin(origins = "http://localhost:8040")
@@ -70,7 +70,7 @@ public class AssessmentsController {
 
         return assessmentsRepository.save(assessment);
     }
-
+*/
     @GetMapping("/get{assessment_id}")
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "http://localhost:8040")

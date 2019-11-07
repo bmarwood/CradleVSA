@@ -43,7 +43,7 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
 
         if (assessmentParams[0].equals(introMessage) && (assessmentParams.length == correctParamsLength)) {
             Assessments candidate = StringToAssessment(assessmentParams);
-            assessmentController.add(candidate);
+           // assessmentController.add(candidate);
             /////
             // assessmentsRepository.save(candidate);
             body = new Body
