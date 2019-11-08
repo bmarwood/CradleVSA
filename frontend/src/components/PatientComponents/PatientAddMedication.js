@@ -44,7 +44,6 @@ class PatientAddMedication extends React.Component {
         const { dose } = this.state;
         return (
             <div style={{width: '100%', margin: 'auto'}}>
-        
             <ValidatorForm
             style={{
             backgroundColor: 'white',

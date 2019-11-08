@@ -30,21 +30,23 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
     private static final String AUTH_TOKEN =
             "e84609dc660df4ac695d3f4727c5f853";
 
-    @GetMapping(path = "/sms", produces = "application/xml")
+    @GetMapping(path="/sms", produces="application/xml")
     @ResponseBody
-    public String respondToSms(@RequestParam(value = "Body") String smsBody) {
+    public String respondToSms(@RequestParam(value = "Body") String smsBody){
         Body body;
         String introMessage = "New referral";
-        String[] assessmentParams = smsBody.split("; ");
-        final int correctParamsLength = 19;
+        String[] assessmentParams = smsBody.split(", ");
+        final int correctParamsLength = 17;
 
-        if (assessmentParams[0].equals(introMessage) && (assessmentParams.length == correctParamsLength)) {
-            Assessments candidate = StringToAssessment(assessmentParams);
+        if (assessmentParams[0].equals(introMessage) && (assessmentParams.length == correctParamsLength)){
+        Assessments candidate = StringToAssessment(assessmentParams);
             assessmentsRepository.save(candidate);
             body = new Body
                     .Builder("Reading successfully received!")
                     .build();
-        } else {
+        }
+
+        else {
             body = new Body
                     .Builder("Reading failed to be received. Please send reading again.")
                     .build();
@@ -60,25 +62,22 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         return twiml.toXml();
     }
 
-    private Assessments StringToAssessment(String[] assessmentParams) {
+    private Assessments StringToAssessment(String[] assessmentParams){
 
         //Parsing SMS String body into an Assessment object
         String id = assessmentParams[1];
         String patient_id = assessmentParams[2];
-        String birth_date = assessmentParams[3];
+        String patient_age = assessmentParams[3];
         String vht_id = assessmentParams[4];
-        String date = assessmentParams[5];
-        String gestational_age = assessmentParams[6];
-        int heart_rate = Integer.parseInt(assessmentParams[7]);
-        int systolic = Integer.parseInt(assessmentParams[8]);
-        int diastolic = Integer.parseInt(assessmentParams[9]);
+        String date = assessmentParams[5] + assessmentParams[6];
+        String gestational_age = assessmentParams[7];
+        int heart_rate = Integer.parseInt(assessmentParams[8]);
+        int systolic = Integer.parseInt(assessmentParams[9]);
+        int diastolic = Integer.parseInt(assessmentParams[10]);
+        //TO-DO: ews_color
         Assessments.Color ews_color = Assessments.Color.YELLOW;
-        if (assessmentParams[10].equals("RED")) {
-            ews_color = Assessments.Color.RED;
-        } else if (assessmentParams[10].equals("GREEN")) {
-            ews_color = Assessments.Color.GREEN;
-        }
-        String[] symptoms = assessmentParams[11].split(", ");
+        //
+        String[] symptoms = assessmentParams[12].split(" ");
         boolean referred = false;
         if (assessmentParams[12].equals("true")) referred = true;
         boolean follow_up = false;
@@ -86,25 +85,14 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         String follow_up_date = assessmentParams[14];
         boolean recheck = false;
         if (assessmentParams[15].equals("true")) recheck = true;
+        //TO-DO: Arrow
         Assessments.Arrow arrow = Assessments.Arrow.EMPTY;
-        if (assessmentParams[16].equals("UP")) {
-            arrow = Assessments.Arrow.UP;
-        } else if (assessmentParams[16].equals("DOWN")) {
-            arrow = Assessments.Arrow.DOWN;
-        }
-        Assessments.Gestational_unit Gestational_unit = Assessments.Gestational_unit.NOT_PREGNANT;
-        if (assessmentParams[17].equals("WEEK")){
-            Gestational_unit = Assessments.Gestational_unit.WEEK;
-        }
-        else if (assessmentParams[17].equals("MONTH")){
-            Gestational_unit = Assessments.Gestational_unit.MONTH;
-        }
-        String name = assessmentParams[18];
+        //
+
         Assessments assessment =
-                new Assessments(id, patient_id, birth_date, vht_id, date, gestational_age,
-                        heart_rate, systolic,  diastolic,  ews_color, symptoms,
-                        referred,  follow_up,  follow_up_date, recheck,
-                        arrow, Gestational_unit,  name);
+                new Assessments(id, patient_id, patient_age, vht_id, date, gestational_age, heart_rate, systolic, diastolic,
+                        ews_color, symptoms, referred, follow_up, follow_up_date, recheck, arrow,
+                        Assessments.Gestational_unit.NOT_PREGNANT); //It has been hard-coded need to figure it out with josiah
         return assessment;
     }
 }

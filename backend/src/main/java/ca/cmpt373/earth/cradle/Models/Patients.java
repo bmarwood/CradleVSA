@@ -1,9 +1,8 @@
 package ca.cmpt373.earth.cradle.Models;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Set;
 
 @Document(collection = "patients")
 public class Patients {
@@ -12,18 +11,16 @@ public class Patients {
     private String id; //primary key
     private String name;
     private String birth_date;
-    private List<Assessments> list_of_assessments;
+    private Set<Assessments> list_of_assessments;
     private String gender;
-    private String vht_id;
 
 
-    public Patients(String id, String name, String birth_date, List<Assessments> list_of_assessments, String gender, String vht_id) {
+    public Patients(String id, String name, String birth_date, Set<Assessments> list_of_assessments, String gender) {
         this.id = id;
         this.name = name;
         this.birth_date = birth_date;
         this.list_of_assessments = list_of_assessments;
         this.gender = gender;
-        this.vht_id = vht_id;
     }
 
     public String getId() {
@@ -50,11 +47,11 @@ public class Patients {
         this.birth_date = birth_date;
     }
 
-    public List<Assessments> getList_of_assessments() {
+    public Set<Assessments>  getList_of_assessments() {
         return list_of_assessments;
     }
 
-    public void setList_of_assessments(List<Assessments> list_of_assessments) {
+    public void setList_of_assessments(Set<Assessments> list_of_assessments) {
         this.list_of_assessments = list_of_assessments;
     }
 
@@ -65,15 +62,5 @@ public class Patients {
     public void setGender(String gender) {
         this.gender = gender;
     }
-
-    public String getVht_id() {
-        return vht_id;
-    }
-
-    public void setVht_id(String vht_id) {
-        this.vht_id = vht_id;
-    }
-
-
 }
 

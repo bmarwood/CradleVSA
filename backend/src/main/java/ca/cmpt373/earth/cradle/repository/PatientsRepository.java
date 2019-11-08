@@ -8,7 +8,7 @@ import java.util.List;
 
 
 //Define patient repository
-public interface PatientsRepository extends MongoRepository<Patients, String> {
+public interface PatientsRepository extends MongoRepository<Patients,String> {
 
     Patients findFirstByName(String name);
 
