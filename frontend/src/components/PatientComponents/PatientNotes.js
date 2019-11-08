@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import requestServer from '../RequestServer';
+import RequestServer from '../RequestServer';
 import NewMedicationPopup from '../../Modals/NewMedicationPopup';
 
 class PatientNotes extends Component {
@@ -14,9 +14,11 @@ class PatientNotes extends Component {
     }
 
     componentDidMount() {
-        this.getPatientList()
-        this.timer = setInterval(() => this.getPatientList(), 10000);
-        this.setState({
+      // this.getMatchingPatientID("81991")
+      // this.timer = setInterval(() => this.getMatchingPatientID("81991"), 10000);
+      this.getMedicationList()
+      this.timer = setInterval(() => this.getMedicationList(), 10000);
+      this.setState({
             columns: [
                 { title: 'Medication', field: 'medication' },
                 { title: 'Dose', field: 'dose' },
@@ -47,40 +49,47 @@ class PatientNotes extends Component {
         this.timer = null;
     }
     populateData(response) {
-      console.log(response)
-      var patientList = []
-      response.forEach(patient => {
-          var name = (patient.name.split(" "))[0]
-          var surname = (patient.name.split(" "))[1]
-          var birthDate = patient.birth_date
-          var sex = patient.gender[0]
-          var id = patient.id
+      var medicationsList = []
+      response.forEach(medications => {
+        var medicationName = medications.medication_name
+        var dose = medications.dose
+        var startDate = medications.start_date
+        var endDate = medications.end_date
+        var sideEffects = medications.side_effects
 
-          var patient_obj = {
-              name: name,
-              surname: surname,
-              birthDate: birthDate,
-              sex: sex,
-              id: id,
-          }
+        var medications_obj = {
+          medicationName: medicationName,
+          dose: dose,
+          startDate: startDate,
+          endDate: endDate,
+          sideEffects: sideEffects
+      }
 
-          patientList.push(patient_obj)
-      });
-
-      this.setState({data: patientList})
-
-  }
-    async getPatientList() {
-      var passback = await requestServer.getPatientList()
+      medicationsList.push(medications_obj)
+    });
+    this.setState({data: medicationsList})
+}
+    async getMedicationList() {
+      var passback = await RequestServer.getMedicationList()
       if (passback !== null && passback.data !== "") {
           this.populateData(passback.data)
       }
   }
+  async getMatchingPatientID(patient_id) {
+    var passback = await RequestServer.getPatientByID(patient_id)
+    if (passback != null) {
+        this.populateData(passback.data.list_of_medications
+        )
+        console.log(passback.data.list_of_medications)
+        console.log("passback.data.list_of_assessments[0]")
+        console.log(passback.data.list_of_medications[0])
+    }
+}
 render(){
     return (
         <div className = "table-position" >
         <MaterialTable
-        title="Patient Name"
+        title="Medications"
         columns={this.state.columns}
         data={this.state.data}
         editable={{

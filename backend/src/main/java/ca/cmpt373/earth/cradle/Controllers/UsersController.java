@@ -6,21 +6,16 @@ import ca.cmpt373.earth.cradle.repository.RoleRepository;
 import ca.cmpt373.earth.cradle.repository.UsersRepository;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.*;
-
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -31,8 +26,6 @@ public class UsersController {
 
     @Autowired
     private RoleRepository roleRepository;
-
-    //private MongoTemplate mongoTemplate;
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
@@ -52,82 +45,26 @@ public class UsersController {
         return null;
     }
 
-    @GetMapping("/get{id}")
-    @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "http://localhost:8040")
-    public Users get(@PathVariable String id) {
-        return usersRepository.findUserById(id);
-    }
-
-    @PostMapping("/update/{id}")
-    @ResponseStatus(code = HttpStatus.OK)
+    /*@GetMapping("/{user_id}")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<Users> updateUser(@RequestBody Users user) {
-        //Update user's information
+    public Users getUsers(@PathVariable String id) {
+        Users user = this.usersRepository.findById(id);
+        return user;
+    }*/
 
-        String workerId = user.getId();
-        String name = user.getName();
-        String username = user.getUsername();
-        String password = user.getPassword();
-        String dob = user.getDob();
-        String address = user.getAddress();
-//        Users.Gender gender = user.getGender();
-        String gender = user.getGender();
-        Set<Role> roles = user.getRoles();
 
-        try {
-            this.usersRepository.save(new Users(workerId, username, password, name, dob,
-                    address, gender, roles));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-
-        return ResponseEntity.status(200).body(user);
-
+    @PutMapping
+    public void insert(@RequestBody Users user) {
+        this.usersRepository.insert(user);
     }
 
-
-    @PostMapping("/updatePassword/{id}/{username}/{old_password}/{new_password}")
-    @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<Users> updatePassword(@PathVariable String id, @PathVariable String username, @PathVariable String old_password, @PathVariable String new_password) {
-        //Update user's password
-        Users user = this.usersRepository.findByUsername(username);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        } else {
-            if (bCrypt.matches(old_password, user.getPassword())) {
-                String hashedPassword = bCrypt.encode(new_password);
-                user.setPassword(hashedPassword);
-                try {
-                    this.usersRepository.save(user);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-                }
-                return ResponseEntity.status(200).body(user);
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-            }
-        }
-    }
-
-//    @PutMapping("/updateProfile")
-//    public ResponseEntity<Users> updateProfile(@RequestBody Users user) {
-//        System.out.println("Retrieving existing users...");
-//        Users foundUser = usersRepository.findUserById(user.getId());
-//        if (user.getId() == foundUser.getId()){
-//            System.out.println("Found a user");
-//            usersRepository.save(user);
-//            return ResponseEntity.status(200).body(user);
-//        }
-//        else {
-//            //Return a not found status
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
+//    SAME AS "/register" - we should use register - it contains password encryption
+//    @PostMapping("/add")
+//    @ResponseStatus(code = HttpStatus.CREATED)
+//    @CrossOrigin(origins = "http://localhost:8040")
+//    public Users add(@RequestBody Users candidate) {
+//        return usersRepository.save(candidate);
 //    }
-
 
     @PostMapping("/login")
     @ResponseStatus(code = HttpStatus.OK)
@@ -182,12 +119,6 @@ public class UsersController {
         return ResponseEntity.status(200).body(user);
 
 
-    }
-
-    @DeleteMapping("/delete/{userID}")
-    public String deleteById(@PathVariable String userId) {
-        usersRepository.deleteById(userId);
-        return userId;
     }
 
 
