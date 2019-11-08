@@ -18,7 +18,7 @@ public class Assessments {
         DOWN
     }
 
-    public enum Gestational_unit{
+    public enum Gestational_unit {
         WEEK,
         MONTH,
         NOT_PREGNANT
@@ -28,7 +28,8 @@ public class Assessments {
     @Id
     private String id;
     private String patient_id;
-    private String patient_age;
+    private String name;
+    private String birth_date;
     private String vht_id;
     private String date;
     private String gestational_age;
@@ -45,12 +46,12 @@ public class Assessments {
     private Gestational_unit gestational_unit;
 
 
-    public Assessments(String id, String patient_id, String patient_age, String vht_id, String date, String gestational_age, int heart_rate,
+    public Assessments(String id, String patient_id, String birth_date, String vht_id, String date, String gestational_age, int heart_rate,
                        int systolic, int diastolic, Color ews_color, String[] symptoms, boolean referred, boolean follow_up, String follow_up_date,
-                       boolean recheck, Arrow arrow, Gestational_unit gestational_unit) {
+                       boolean recheck, Arrow arrow, Gestational_unit gestational_unit, String name) {
         this.id = id; //assestment ID
         this.patient_id = patient_id;
-        this.patient_age = patient_age;
+        this.birth_date = birth_date;
         //this.time_scale = time_scale;
         this.vht_id = vht_id;
         this.date = date;
@@ -66,6 +67,7 @@ public class Assessments {
         this.recheck = recheck;
         this.arrow = arrow;
         this.gestational_unit = gestational_unit;
+        this.name = name;
     }
 
 
@@ -84,13 +86,17 @@ public class Assessments {
     public void setPatient_id(String patient_id) {
         this.patient_id = patient_id;
     }
-
-    public String getPatient_age() {
-        return patient_age;
+    
+    public String getName() {
+    	return this.name;
     }
 
-    public void setPatient_age(String patient_age) {
-        this.patient_age = patient_age;
+    public String getBirth_date() {
+        return birth_date;
+    }
+
+    public void setBirth_date(String birth_date) {
+        this.birth_date = birth_date;
     }
 
     public String getVht_id() {

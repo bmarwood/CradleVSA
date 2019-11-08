@@ -8,7 +8,7 @@ import java.util.List;
 
 
 //Define Assessments repository
-public interface AssessmentsRepository extends MongoRepository<Assessments,String > {
+public interface AssessmentsRepository extends MongoRepository<Assessments, String> {
 
     Assessments findFirstById(String id);
 
@@ -22,6 +22,9 @@ public interface AssessmentsRepository extends MongoRepository<Assessments,Strin
     Assessments findCustomById(String id);
 
     @Query("{vht_id: '?0'}")
-    List<Assessments> findCustomByUserId(String user_id);
+    List<Assessments> findByUserId(String vht_id);
+
+    @Query("{patient_id: '?0'}")
+    List<Assessments> findByPatientId(String patient_id);
 }
 

@@ -34,7 +34,7 @@ public class Users {
         this.dob = "n/a";
         this.address = "n/a";
         this.gender = null;
-        this.enabled = false;
+        this.enabled = false; //enaled or disable the user from log in
     }
 
     public Users(String id, String username, String password,
