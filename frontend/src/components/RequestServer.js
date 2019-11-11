@@ -137,6 +137,17 @@ class RequestServer extends Component {
         }
     }
 
+    async getVHTList() {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/vhts/all')
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
     //get list of assessments based on the worker id
     async getAssessmentsByUserId(id) {
         try {
