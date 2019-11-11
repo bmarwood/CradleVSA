@@ -6,7 +6,6 @@ import ca.cmpt373.earth.cradle.repository.PatientsRepository;
 import ca.cmpt373.earth.cradle.repository.MedicationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,27 +17,20 @@ public class MedicationsController {
     @Autowired
     private MedicationsRepository medicationsRepository;
 
-    private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
-
-    public MedicationsController(MedicationsRepository medicationsRepository) {
-        this.medicationsRepository = medicationsRepository;
-    }
-   
-//     @GetMapping("/getMedicationByPatientId{patient_id}")
+    //     @GetMapping("/getMedicationByPatientId{patient_id}")
 //     @ResponseStatus(code = HttpStatus.OK)
 //     @CrossOrigin(origins = "http://localhost:8040")
 //     public List<Medications> getMedicationByPatientId(@PathVariable String patient_id) {
 //         return medicationsRepository.findByPatientId(patient_id);
 //     }
+
     @GetMapping("/get{patient_id}")
-    @ResponseStatus(code = HttpStatus.OK)
-    @CrossOrigin(origins = "http://localhost:8040")
     public List<Medications> getMedicationByPatientId(@PathVariable String patient_id) {
         return medicationsRepository.findByPatientId(patient_id);
     }
 
-//     @GetMapping("/all")
+    //     @GetMapping("/all")
 //     @ResponseStatus(code = HttpStatus.OK)
 //     @CrossOrigin(origins = "*", allowedHeaders = "*")
 //     public List<Medications> getAll() {
@@ -50,10 +42,10 @@ public class MedicationsController {
 //         }
 //         return medications;
 //     }
-@GetMapping("/all")
-public List<Medications> getAll() {
-    List<Medications> medications = this.medicationsRepository.findAll();
-    return medications;
-}
-    
+    @GetMapping("/all")
+    public List<Medications> getAll() {
+        List<Medications> medications = this.medicationsRepository.findAll();
+        return medications;
+    }
+
 }

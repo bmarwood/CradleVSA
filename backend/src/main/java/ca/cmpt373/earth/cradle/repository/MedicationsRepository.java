@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface MedicationsRepository extends MongoRepository<Medications, String> {
 
-    Medications findByID(String id);
+//    Medications findByID(String id);
 
     @Query("{id: '?0'}")
-    Medications findCustomById(String id);
-    
+    Medications findMedicationById(String id);
+
     @Query("{patient_id: '?0'}")
     List<Medications> findByPatientId(String patient_id);
 }
