@@ -14,8 +14,8 @@ class PatientNotes extends Component {
     }
 
     componentDidMount() {
-      // this.getMatchingPatientID("81991")
-      // this.timer = setInterval(() => this.getMatchingPatientID("81991"), 10000);
+      //this.getMatchingPatientID("81991")
+      //this.timer = setInterval(() => this.getMatchingPatientID("81991"), 10000);
       this.getMedicationList()
       this.timer = setInterval(() => this.getMedicationList(), 10000);
       this.setState({
@@ -50,15 +50,15 @@ class PatientNotes extends Component {
     }
     populateData(response) {
       var medicationsList = []
-      response.forEach(medications => {
-        var medicationName = medications.medication_name
-        var dose = medications.dose
-        var startDate = medications.start_date
-        var endDate = medications.end_date
-        var sideEffects = medications.side_effects
+      response.forEach(list_of_medications => {
+        var medication = list_of_medications.medication_name
+        var dose = list_of_medications.dose
+        var startDate = list_of_medications.start_date
+        var endDate = list_of_medications.end_date
+        var sideEffects = list_of_medications.side_effects
 
         var medications_obj = {
-          medicationName: medicationName,
+          medication: medication,
           dose: dose,
           startDate: startDate,
           endDate: endDate,
@@ -69,8 +69,8 @@ class PatientNotes extends Component {
     });
     this.setState({data: medicationsList})
 }
-    async getMedicationList() {
-      var passback = await RequestServer.getMedicationList()
+  async getMedicationList() {
+      var passback = await RequestServer.getMedicationListByID(this.props.patient_id)
       if (passback !== null && passback.data !== "") {
           this.populateData(passback.data)
       }
@@ -85,6 +85,7 @@ class PatientNotes extends Component {
         console.log(passback.data.list_of_medications[0])
     }
 }
+
 render(){
     return (
         <div className = "table-position" >

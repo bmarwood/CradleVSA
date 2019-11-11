@@ -291,6 +291,16 @@ class RequestServer extends Component {
             return null
         }
     }
+    async getMedicationListByID(patient_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/medications/get' + patient_id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
 
 }
 
