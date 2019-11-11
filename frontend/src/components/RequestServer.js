@@ -244,6 +244,44 @@ class RequestServer extends Component {
             return null
         }
     }
+
+    //delete patient & delete assessments
+    async deletePatient(patient_id) {
+        try {
+            let response = await axios.delete(this.getServerLocation() + '/patients/delete/' + patient_id)
+            // delete corresponding assessments
+            // await axios.delete(this.getServerLocation() + '/assessments/deleteByPatientId/' + patient_id)
+            return response
+
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    async deleteUser(user_id) {
+        try {
+            var response = await axios.delete(this.getServerLocation() + '/users/delete/' + user_id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    async deleteAssessment(assessment_id) {
+        try {
+            var response = await axios.delete(this.getServerLocation() + '/assessments/delete/' + assessment_id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
 }
 
 export default new RequestServer();

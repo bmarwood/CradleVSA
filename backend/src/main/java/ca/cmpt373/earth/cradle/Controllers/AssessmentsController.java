@@ -61,7 +61,8 @@ public class AssessmentsController {
 
         String patient_id = assessment.getPatient_id();
 
-        Patients new_patient = new Patients(patient_id, assessment.getName(), assessment.getBirth_date(), list_of_assessments, "FEMALE"//need to update
+        //adding new patient
+        Patients new_patient = new Patients(patient_id, assessment.getName(), assessment.getBirth_date(), list_of_assessments, assessment.getGender()
                 , assessment.getVht_id());
         if (patientsController.get(patient_id) == null) {
             patientsController.add(new_patient);
@@ -91,6 +92,29 @@ public class AssessmentsController {
     @CrossOrigin(origins = "http://localhost:8040")
     public List<Assessments> getAByPatientId(@PathVariable String patient_id) {
         return assessmentsRepository.findByPatientId(patient_id);
+    }
+
+    @DeleteMapping("/delete/{assessment_id}")
+    public String deleteById(@PathVariable String assessment_id) {
+        try {
+            assessmentsRepository.deleteById(assessment_id);
+            return assessment_id;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //not working  need to research more
+    @DeleteMapping("/deleteByPatientId/{patient_id}")
+    public String deleteByPatientId(@PathVariable String patient_id) {
+        try {
+            assessmentsRepository.deleteAll(getAByPatientId(patient_id));
+            return patient_id;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

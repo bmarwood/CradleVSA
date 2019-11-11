@@ -19,6 +19,9 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
     @Autowired
     private AssessmentsRepository assessmentsRepository;
 
+    @Autowired
+    private AssessmentsController assessmentController;
+
 
     public SmsWebhookController(AssessmentsRepository assessmentsRepository) {
         this.assessmentsRepository = assessmentsRepository;
@@ -40,7 +43,9 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
 
         if (assessmentParams[0].equals(introMessage) && (assessmentParams.length == correctParamsLength)) {
             Assessments candidate = StringToAssessment(assessmentParams);
-            assessmentsRepository.save(candidate);
+            assessmentController.add(candidate);
+            /////
+            // assessmentsRepository.save(candidate);
             body = new Body
                     .Builder("Reading successfully received!")
                     .build();
@@ -69,6 +74,8 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
         String vht_id = assessmentParams[4];
         String date = assessmentParams[5];
         String gestational_age = assessmentParams[6];
+        String location = "EMPTY";
+        String gender = "MALE";
         int heart_rate = Integer.parseInt(assessmentParams[7]);
         int systolic = Integer.parseInt(assessmentParams[8]);
         int diastolic = Integer.parseInt(assessmentParams[9]);
@@ -93,18 +100,17 @@ public class SmsWebhookController { //Controller for  Twilio Webhook when Sms co
             arrow = Assessments.Arrow.DOWN;
         }
         Assessments.Gestational_unit Gestational_unit = Assessments.Gestational_unit.NOT_PREGNANT;
-        if (assessmentParams[17].equals("WEEK")){
+        if (assessmentParams[17].equals("WEEK")) {
             Gestational_unit = Assessments.Gestational_unit.WEEK;
-        }
-        else if (assessmentParams[17].equals("MONTH")){
+        } else if (assessmentParams[17].equals("MONTH")) {
             Gestational_unit = Assessments.Gestational_unit.MONTH;
         }
         String name = assessmentParams[18];
         Assessments assessment =
                 new Assessments(id, patient_id, birth_date, vht_id, date, gestational_age,
-                        heart_rate, systolic,  diastolic,  ews_color, symptoms,
-                        referred,  follow_up,  follow_up_date, recheck,
-                        arrow, Gestational_unit,  name);
+                        heart_rate, systolic, diastolic, ews_color, symptoms,
+                        referred, follow_up, follow_up_date, recheck,
+                        arrow, Gestational_unit, name, location, gender);
         return assessment;
     }
 }
