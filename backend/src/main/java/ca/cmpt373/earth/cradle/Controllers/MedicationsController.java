@@ -20,11 +20,6 @@ public class MedicationsController {
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
-    @Autowired
-    private PatientsRepository patientsRepository;
-
-    @Autowired
-    private MedicationsController medicationsController;
 
     public MedicationsController(MedicationsRepository medicationsRepository) {
         this.medicationsRepository = medicationsRepository;

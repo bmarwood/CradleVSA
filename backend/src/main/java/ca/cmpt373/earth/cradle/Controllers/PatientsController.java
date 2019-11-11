@@ -27,6 +27,9 @@ public class PatientsController {
     private AssessmentsController assessmentsController;
 
     @Autowired
+    private MedicationsRepository medicationsRepository;
+
+    @Autowired
     private MedicationsController medicationsController;
 
     private BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
