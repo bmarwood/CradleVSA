@@ -7,52 +7,7 @@ import RequestServer from '../RequestServer';
 
 
 class PatientChart extends React.Component {
-    /*
-      state = {
-        dataLine: {
-          labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-          datasets: [
-            {
-              label: "Systolic",
-              fill: true,
-              backgroundColor: "rgba(255, 157, 148, .3)",
-              borderColor: "red",
-              data: [65, 59, 80, 81, 56, 55, 40, 50, 62, 81, 90, 100]
-            },
-            {
-              label: "Diastolic",
-              fill: true,
-              backgroundColor: "rgba(97, 105, 255, .3)",
-              borderColor: "blue",
-              data: [60, 102, 98, 80, 86, 90, 90, 82, 91, 95, 85, 80]
-            },
-            {label: "Heart Rate",
-              fill: true,
-              backgroundColor: "rgba(159, 255, 133, .3)",
-              borderColor: "Green",
-              data: [80, 89, 98, 150, 86, 81, 90, 82, 91, 95, 120, 200]
-          }
-          ]
 
-        },
-        options: {
-          legend:{
-            labels:{
-              fontColor: "white"
-            }
-          },
-          scales:{
-            yAxes:[{
-              ticks:{
-                fontColor: "white",
-                fontSize: 15
-              }
-            }]
-          }
-        }
-      };
-    
-   */
     constructor(props) {
         super(props);
         this.state = {
@@ -75,7 +30,7 @@ class PatientChart extends React.Component {
                         fill: true,
                         backgroundColor: "rgba(255, 157, 148, .3)",
                         borderColor: "red",
-                        data: [2, 3 ,4]
+                        data: [2, 3, 4]
                     },
                     {
                         label: "Diastolic",
@@ -118,14 +73,14 @@ class PatientChart extends React.Component {
 
     populateData(response) {
         console.log(response)
-        
+
         var dataLineArray = []
         var labels = []
 
         var systolicData = []
         var diastolicData = []
         var heartRateData = []
-        response.forEach(list_of_assessments =>{
+        response.forEach(list_of_assessments => {
             systolicData.push(list_of_assessments.systolic)
             diastolicData.push(list_of_assessments.diastolic)
             heartRateData.push(list_of_assessments.heart_rate)
@@ -155,12 +110,12 @@ class PatientChart extends React.Component {
             }
         ]
         response.forEach(list_of_assessments => {
-            
+
             labels.push(list_of_assessments.date)
 
-              var dataLine_obj= {
-              labels: labels,
-              datasets: datasets
+            var dataLine_obj = {
+                labels: labels,
+                datasets: datasets
             }
             dataLineArray.push(dataLine_obj)
         });
@@ -169,16 +124,16 @@ class PatientChart extends React.Component {
 
     }
 
-   async getMatchingPatientID(patient_id) {
-    var passback = await RequestServer.getPatientByID(patient_id)
-    if (passback != null) {
-        this.populateData(passback.data.list_of_assessments
-        )
-        console.log(passback.data.list_of_assessments)
-        console.log("passback.data.list_of_assessments[0]")
-        console.log(passback.data.list_of_assessments[0].heart_rate)
+    async getMatchingPatientID(patient_id) {
+        var passback = await RequestServer.getPatientByID(patient_id)
+        if (passback != null) {
+            this.populateData(passback.data.list_of_assessments
+            )
+            console.log(passback.data.list_of_assessments)
+            console.log("passback.data.list_of_assessments[0]")
+            console.log(passback.data.list_of_assessments[0].heart_rate)
+        }
     }
-}
 
     async getPatientList() {
         var passback = await RequestServer.getPatientList()

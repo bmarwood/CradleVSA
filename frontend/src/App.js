@@ -43,6 +43,7 @@ class App extends Component {
             return (
                 <Navigation>
                     <Link to ="/login">Login</Link>
+                    {this.navBasedOnLogin()}
                 </Navigation>
             )
         }
@@ -97,14 +98,16 @@ class App extends Component {
         }
     }
 
+    getTitle() {
+        return "Headers"
+    }
+
     render() {
         return (
             <div className="demo-big-content">
-                <Layout fixedHeader>
-                    <Header className = "header-color" title="CRADLE" transparent scroll waterfall seamed>
-                        {this.navBasedOnLogin()}
-
-
+                <Layout fixedHeader fixedDrawer>
+                    <Header className = "header-color" title={this.getTitle()} transparent scroll waterfall seamed>
+                    
                     </Header>
                     <Drawer title="CRADLE">
                             {this.ifLoggedIn()}

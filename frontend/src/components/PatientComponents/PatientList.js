@@ -68,13 +68,13 @@ class PatientList extends Component {
             patientList.push(patient_obj)
         });
 
-        this.setState({ data: patientList })
+        this.setState({data: patientList})
 
     }
 
     async getPatientList() {
         var passback = await requestServer.getPatientList()
-        if (passback !== null) {
+        if (passback !== null && passback.data !== "") {
             this.populateData(passback.data)
         }
     }
@@ -116,6 +116,11 @@ class PatientList extends Component {
                         //             resolve();
                         //         }, 1000);
                         //     }),
+                        // onRowAdd: newData =>
+                        //     new Promise((resolve) => {
+                        //       console.log("onrowadd", newData)
+                        //     }),
+
                     }}
                 />
             </div>

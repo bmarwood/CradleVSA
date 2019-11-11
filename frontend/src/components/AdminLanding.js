@@ -77,6 +77,13 @@ function SimpleTabs() {
             <Tab label="Users" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
+
+        <HeaderTabs ripple activeTab={1} onChange={(tabId) => {}}>
+                <Tab>Tab1</Tab>
+                <Tab>Tab2</Tab>
+                <Tab>Tab3</Tab>
+            </HeaderTabs>
+
         <TabPanel value={value} index={0}>
           <PatientList/>
         </TabPanel>
