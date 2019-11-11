@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import './AssessmentList.css';
 import TrafficIcons from "../Visuals/TrafficIcons";
@@ -21,15 +21,60 @@ class AssessmentList extends Component {
         this.timer = setInterval(() => this.getAssessmentList(), 10000);
         this.setState({
             columns: [
-                { title: 'Patient Id', field: 'patient_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'Cradle Professional Id', field: 'vht_id', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'Early Warning Color', field: 'ews_color', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'Shock Arrow', field: 'arrow', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'Gestational Age', field: 'gestational_age', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'Referred?', field: 'referred', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'Follow Up?', field: 'follow_up', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'Recheck?', field: 'recheck', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'Assessment Information', field: 'info', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                {
+                    title: 'Patient Id',
+                    field: 'patient_id',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
+                    title: 'Cradle Professional Id',
+                    field: 'vht_id',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
+                    title: 'Early Warning Color',
+                    field: 'ews_color',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
+                    title: 'Shock Arrow',
+                    field: 'arrow',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
+                    title: 'Gestational Age',
+                    field: 'gestational_age',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
+                    title: 'Referred?',
+                    field: 'referred',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
+                    title: 'Follow Up?',
+                    field: 'follow_up',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
+                    title: 'Recheck?',
+                    field: 'recheck',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
+                    title: 'Assessment Information',
+                    field: 'info',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
             ],
             data: [
                 {
@@ -43,7 +88,7 @@ class AssessmentList extends Component {
                     follow_up: 'LOADING...',
                     recheck: 'LOADING...',
                     arrow: 'LOADING...',
-                    info: <ModalPopup />
+                    info: <ModalPopup/>
                 },
             ],
 
@@ -79,7 +124,7 @@ class AssessmentList extends Component {
                 referred: getBoolVisual(assessment.referred),
                 follow_up: getBoolVisual(assessment.follow_up),
                 recheck: getBoolVisual(assessment.recheck),
-                patient_age: assessment.patient_age,
+                birth_date: assessment.birth_date,
                 date: assessment.date,
                 heart_rate: assessment.heart_rate,
                 systolic: assessment.systolic,
@@ -92,7 +137,7 @@ class AssessmentList extends Component {
             assessmentList.push(assessment_obj)
         });
 
-        this.setState({ data: assessmentList })
+        this.setState({data: assessmentList})
     }
 
     getRoles(parsedUser) {
@@ -122,14 +167,14 @@ class AssessmentList extends Component {
         if (this.isAdmin(roles)) {
             passback = await requestServer.getAssessmentsList()
 
-            if (passback !== null) {
+            if (passback !== null && passback.data !== "") {
                 this.populateData(passback.data)
             }
 
         } else {
             passback = await requestServer.getAssessmentsByUserId(userData.id)
 
-            if (passback !== null) {
+            if (passback !== null && passback.data !== "") {
                 this.populateData(passback.data)
             }
         }
@@ -151,7 +196,6 @@ class AssessmentList extends Component {
 }
 
 
-
 const styles = {
     overflow: "hidden",
     display: "auto",
@@ -162,30 +206,29 @@ const styles = {
 };
 const GreenLight = () => (
     <div style={styles}>
-        <TrafficIcons name="greencircle" width={50} fill={"#228B22"} />
+        <TrafficIcons name="greencircle" width={50} fill={"#228B22"}/>
     </div>
 );
 const RedLight = () => (
     <div style={styles}>
-        <TrafficIcons name="redcircle" width={50} fill={"#B22222"} />
+        <TrafficIcons name="redcircle" width={50} fill={"#B22222"}/>
     </div>
 );
 const YellowLight = () => (
     <div style={styles}>
-        <TrafficIcons name="yellowcircle" width={50} fill={"#CCCC00"} />
+        <TrafficIcons name="yellowcircle" width={50} fill={"#CCCC00"}/>
     </div>
 );
-
 
 
 function getArrowVisual(input) {
     switch (String(input).toUpperCase()) {
         case "UP":
-            return <i className="arrow up icon" />
+            return <i className="arrow up icon"/>
         case "DOWN":
-            return <i className="arrow down icon" />
+            return <i className="arrow down icon"/>
         case "EMPTY":
-            return <i className="window minimize icon" />
+            return <i className="window minimize icon"/>
         default:
             return input
     }
@@ -194,11 +237,11 @@ function getArrowVisual(input) {
 function getColorVisual(input) {
     switch (String(input).toUpperCase()) {
         case "GREEN":
-            return <GreenLight />
+            return <GreenLight/>
         case "YELLOW":
-            return <YellowLight />
+            return <YellowLight/>
         case "RED":
-            return <RedLight />
+            return <RedLight/>
         default:
             return input
     }
@@ -207,22 +250,22 @@ function getColorVisual(input) {
 function getBoolVisual(input) {
     switch (String(input).toUpperCase()) {
         case "TRUE":
-            return <i aria-hidden="true" className="check icon" />
+            return <i aria-hidden="true" className="check icon"/>
         case "FALSE":
-            return <i aria-hidden="true" className="x icon" />
+            return <i aria-hidden="true" className="x icon"/>
         default:
             return input
     }
 }
 
-function getGestationalAge(assessment){
-    switch(String(assessment.gestational_unit).toUpperCase()){
+function getGestationalAge(assessment) {
+    switch (String(assessment.gestational_unit).toUpperCase()) {
         case "WEEK":
             return (assessment.gestational_age + " Week(s)")
         case "MONTH":
             return (assessment.gestational_age + " Month(s)")
         default:
-            return <i aria-hidden="true" className="dont icon" />
+            return <i aria-hidden="true" className="dont icon"/>
     }
 }
 

@@ -16,7 +16,7 @@ class LandingPage extends Component {
             <div className="landing-form">
                 <h1 style={{color: "white"}}> Welcome to CRADLE</h1>
                 <p style={{color: "white"}}>Cradle VSA provides Blood pressure monitoring and Gestational Tracking</p>
-                <img src={heart} alt="logo" onClick={() => this.goToLogin()} />
+                <img src={heart} alt="heart" onClick={() => this.goToLogin()} />
 
             </div>
 

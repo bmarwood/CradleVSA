@@ -46,12 +46,21 @@ SMS Instructions: <br>
 On the VM, please run the backend. <br>
 On the mobile app, set up a health center with phone number +16042657476 in Settings. <br>
 This is the Twilio number that acts as gateway for passing SMS to the backend. <br>
+Your own phone number will need to be verified on Twilio. Instructions below.<br>
 Then, click on a reading, select the health center, and click Send Referral. <br>
 This will open the default SMS application to send the Referral. <br>
 An appropriate response will be sent back. Upon success, the assessment will be added to the database.<br>
 
+Verifying number on Twilio:
+This is a restriction applied to all trial accounts so as to prevent spams.<br>
+Login to www.twilio.com using: <br>
+Email: khangv@sfu.ca <br>
+Password: earthisawesome <br>
+On the left sidebar, click on Phone Numbers then Verify Caller IDs. <br>
+Go through the appropriate steps to add a phone number. <br>
+This only needs to be done once. <br>
 
 Questions? Please dont hesitate to contact the Product Owner:<br>
 Iteration 1: Brian Marwood: bmarwood@sfu.ca <br>
-Iteration 2:<br>
-Iteration 3:<br>
+Iteration 2: Richard Elsele: reisele@sfu.ca <br>
+Iteration 3: Josiah Lee: josiahl@sfu.ca <br>
