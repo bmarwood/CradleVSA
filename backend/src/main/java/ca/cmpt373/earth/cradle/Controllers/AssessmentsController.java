@@ -1,6 +1,7 @@
 package ca.cmpt373.earth.cradle.Controllers;
 
 import ca.cmpt373.earth.cradle.Models.Assessments;
+import ca.cmpt373.earth.cradle.Models.Medications;
 import ca.cmpt373.earth.cradle.Models.Patients;
 import ca.cmpt373.earth.cradle.repository.AssessmentsRepository;
 import ca.cmpt373.earth.cradle.repository.PatientsRepository;
@@ -58,11 +59,12 @@ public class AssessmentsController {
     public Assessments add(@RequestBody Assessments assessment) {
         Assessments testdata = assessment;
         List<Assessments> list_of_assessments = new ArrayList<>();
+        List<Medications> list_of_medications = new ArrayList<>();
 
         String patient_id = assessment.getPatient_id();
 
         Patients new_patient = new Patients(patient_id, assessment.getName(), assessment.getBirth_date(), list_of_assessments, "FEMALE"//need to update
-                , assessment.getVht_id());
+                , assessment.getVht_id(), list_of_medications);
         if (patientsController.get(patient_id) == null) {
             patientsController.add(new_patient);
         }
