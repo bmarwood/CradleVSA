@@ -71,7 +71,6 @@ class ModalAssessment extends Component {
         if (this.state.patient_dob != '' || this.state.patient_dob != null) {
             var dob = new Date(this.state.patient_dob) 
             var age = ~~((Date.now() - dob) / (31557600000))
-            console.log("age: ", age)
             return age
         }
         return null
@@ -107,6 +106,8 @@ class ModalAssessment extends Component {
                 <div className="modal-body p-30">
                     <div className='float-left'>
                         Asssessment Color: {this.props.ews_color}
+                        <br />
+                        Arrow: {this.props.arrow}
                         <br />
                         Heart Rate: {this.props.heart_rate}
                         <br />

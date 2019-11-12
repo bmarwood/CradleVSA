@@ -116,7 +116,7 @@ class AssessmentList extends Component {
 
         var assessmentList = []
         response.forEach(function (assessment) {
-            // console.log("assessment: ", assessment)
+            console.log("assessment: ", assessment)
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
                 cvsa_id={assessment.cvsa_id}
@@ -130,6 +130,7 @@ class AssessmentList extends Component {
                 gestational_age={assessment.gestational_age}
                 gestational_unit={assessment.gestational_unit}
                 ews_color={assessment.ews_color}
+                arrow={assessment.arrow}
             />
             var assessment_obj = {
                 id: assessment._id,
