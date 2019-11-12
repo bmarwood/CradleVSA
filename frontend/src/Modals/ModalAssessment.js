@@ -26,15 +26,15 @@ class ModalAssessment extends Component {
             date: '',
             heart_rate: '',
             patient_name: 'LOADING...',
-            vht_name: 'LOADING...',
-            patient_dob: ''
+            patient_dob: '',
+            CVSA_name: 'LOADING...',
 
         }
     }
 
     componentDidMount() {
         this.getPatient();
-        this.getVHT();
+        this.getCVSA();
     }
 
     async getPatient() {
@@ -53,14 +53,14 @@ class ModalAssessment extends Component {
         }
     }
 
-    async getVHT() {
-        var response = await requestServer.getVHT(this.props.vht_id)
+    async getCVSA() {
+        var response = await requestServer.getCVSA(this.props.cvsa_id)
 
         if (response !== null) {
             if (response.data === "") {
-                this.setState({ vht_name: 'ID doesn\'t match to a vht' })
+                this.setState({ CVSA_name: 'ID doesn\'t match to a CVSA' })
             } else {
-                this.setState({ vht_name: response.data.name })
+                this.setState({ CVSA_name: response.data.name })
             }
         }
     }
@@ -96,17 +96,13 @@ class ModalAssessment extends Component {
 
                         <div className='float-right'>
                             <h5>
-                                VHT ID: {this.props.vht_id}
+                                Cradle Professional ID: {this.props.cvsa_id}
                                 <br />
-                                VHT Name: {this.state.vht_name}
+                                Cradle Professional Name: {this.state.cvsa_name}
                             </h5>
                         </div>
                     </div>
-
-
-
                 </div>
-
 
                 <div className="modal-body p-30">
                     <div className='float-left'>
