@@ -44,6 +44,11 @@
   padding: 30px !important;
 }
 
+.pb-30 { 
+  padding-bottom: 30px !important;
+}
+
+
 .one-edge-shadow {
 	-webkit-box-shadow: 0 4px 6px -6px black;
   -moz-box-shadow: 0 4px 6px -6px black;
@@ -58,6 +63,14 @@
 .float-right {
   text-align: right;
   width: 50%;
+}
+
+.float-button-right {
+  float: right;
+}
+
+.float-button-left {
+  float: left;
 }
 
 .popup-content  {
@@ -77,9 +90,10 @@
 }
 .modal > .actions {
   width: 100%;
-  padding: 10px 5px;
+  padding: 30px !important;
   margin: auto;
   text-align: center;
+  clear: both;
 }
 .modal > .close {
   cursor: pointer;

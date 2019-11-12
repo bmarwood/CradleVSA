@@ -49,9 +49,9 @@ class ModalAssessment extends Component {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
             } else {
                 // console.log("Patient DATA:", response.data )
-                this.setState({ 
+                this.setState({
                     patient_name: response.data.name,
-                    patient_dob: response.data.birth_date 
+                    patient_dob: response.data.birth_date
                 })
             }
         }
@@ -71,14 +71,19 @@ class ModalAssessment extends Component {
 
 
     calculateAge() {
-
         if (this.state.patient_dob != '' || this.state.patient_dob != null) {
-            var dob = new Date(this.state.patient_dob) 
+            var dob = new Date(this.state.patient_dob)
             var age = ~~((Date.now() - dob) / (31557600000))
             return age
         }
         return null
+    }
 
+    async deleteAssessment(id) {
+        var response = await requestServer.deleteAssessment(id)
+        if (response !== null) {
+            window.location.reload()
+        }
     }
 
     render() {
@@ -109,7 +114,7 @@ class ModalAssessment extends Component {
 
                 <div className="one-edge-shadow modal-body p-30">
                     <div className='float-left'>
-                        Asssessment Color: {this.getColorVisual(this.props.ews_color)}
+                        Early Warning Color: {this.getColorVisual(this.props.ews_color)}
                         <br />
                         Arrow: {this.getArrowVisual(this.props.arrow)}
                         <br />
@@ -119,9 +124,9 @@ class ModalAssessment extends Component {
                         <br />
                         Systolic: {this.props.systolic}
                         <br />
-                        Gestational Age: {this.props.gestational_age}
+                        Gestational Age: {this.props.gestational_age != 0 ? this.props.gestational_age : <i aria-hidden="true" className="dont icon" />}
                         <br />
-                        Gestational Unit: {this.props.gestational_unit}
+                        Gestational Unit: {this.getGestationalUnit(this.props.gestational_unit)}
                         <br />
                         Current Symptoms: {this.props.symptoms}
                     </div>
@@ -129,8 +134,8 @@ class ModalAssessment extends Component {
                     <div className='float-right'>
                         Date of Birth: {this.state.patient_dob}
                         <br />
-                        Patient Age: {this.calculateAge() ? this.calculateAge() : 0 }
-                            <br />
+                        Patient Age: {this.calculateAge() ? this.calculateAge() : 0}
+                        <br />
                         Date of Assessment: {this.props.assessment_date}
                         <br />
                         Follow Up Date: {this.props.follow_up_date}
@@ -138,21 +143,31 @@ class ModalAssessment extends Component {
                 </div>
 
                 <div className="actions">
+                    <div className='float-button-left pb-30'>
                         <Popup
-                            trigger={<button className="ui black basic button"> See Patient </button>}
+                            trigger={<button className="ui black basic button "> See Patient </button>}
                             position="top center"
                             closeOnDocumentClick
                         >
                             <span>This will navigate to the individual Patient page</span>
                         </Popup>
                         <Popup
-                            trigger={<button className="ui black basic button"> See VHT </button>}
+                            trigger={<button className="ui black basic button "> See VHT </button>}
                             position="top center"
                             closeOnDocumentClick
                         >
                             <span>This will navigate to the individual VHT page</span>
                         </Popup>
                     </div>
+                    <div className='pb-30'>
+                        <Button onClick={
+                            () => { if (window.confirm('Are you sure you wish to delete this item?')) this.deleteAssessment(this.props.id) }
+                        } className="ui black basic button float-button-right">
+                            <i className="trash icon" />
+                        </Button>
+                    </div>
+
+                </div>
             </div>
         );
     }
@@ -171,29 +186,35 @@ class ModalAssessment extends Component {
     getArrowVisual(input) {
         switch (String(input).toUpperCase()) {
             case "UP":
-                console.log("Hitting case")
                 return <i className="arrow up icon" />
             case "DOWN":
-                    console.log("Hitting case")
                 return <i className="arrow down icon" />
             case "EMPTY":
-                    console.log("Hitting case")
                 return <i className="window minimize icon" />
             default:
-                    console.log(input)
-
                 return input
+        }
+    }
+    getGestationalUnit(input) {
+        switch (String(input).toUpperCase()) {
+            case "WEEK":
+                return ("Week(s)")
+            case "MONTH":
+                return ("Month(s)")
+            default:
+                return <i aria-hidden="true" className="dont icon" />
         }
     }
 }
 
 const styles = {
-    overflow: "hidden",
+    // overflow: "hidden",
     display: "auto",
     flexWrap: "flex",
     alignItems: "center",
     fontFamily: "sans-serif",
-    justifyContent: "left"
+    justifyContent: "left",
+    display: 'inline-block'
 };
 const GreenLight = () => (
     <div style={styles}>
