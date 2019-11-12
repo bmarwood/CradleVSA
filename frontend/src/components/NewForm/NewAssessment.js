@@ -66,6 +66,7 @@ class NewAssessment extends React.Component {
             submit: false,
             user_array: [],
             worker_id: '',
+            worker_role: [],
             location_array: [],
 
             //Symptoms
@@ -88,18 +89,36 @@ class NewAssessment extends React.Component {
 
 //componentWillUpdate
     componentDidMount() {
-        //get id of user
-        this.getVHTList()
-            .catch(() => {
-                return true;
-            });
+        //get cvsa_id
+        var user = localStorage.getItem("userData")
+        var parsedUser = JSON.parse(user)
+        var temp_role_array = Utility.getRoles()
+        this.setState({
+            worker_id: parsedUser.id,
+            worker_role: temp_role_array
+        })
+        console.log(this.state.worker_role)
 
-        this.getUserList()
-            .catch(() => {
-                this.setState({
-                    user_array: []
+        if (temp_role_array.includes("ADMIN")) {
+            this.getVHTList()
+                .catch(() => {
+                    this.setState({
+                        user_array: []
+                    })
                 })
-            })
+        } else if (temp_role_array.includes("COMMUNITY_HEALTH_OFFICER")) {
+            this.getVHTList()
+                .catch(() => {
+                    return true;
+                });
+        } else {//VHT, HW
+            // this.setState({
+            //     user_array: [{
+            //         id: this.state.worker_id,
+            //         name: "Use my ID"
+            //     }]
+            // })
+        }
 
         this.getLocation()
             .catch(() => {
@@ -107,14 +126,6 @@ class NewAssessment extends React.Component {
                     location_array: []
                 })
             })
-
-
-        //get cvsa_id
-        var user = localStorage.getItem("userData")
-        var parsedUser = JSON.parse(user)
-        this.setState({
-            worker_id: parsedUser.id
-        })
 
         //check if systolic > diastolic
         ValidatorForm.addValidationRule('isGreater', (value) => {
@@ -180,7 +191,7 @@ class NewAssessment extends React.Component {
         var passback = await RequestServer.getUserList()
         if (passback !== null) {
             this.setState({
-                vht_array: Utility.populateVHT(passback.data)
+                user_array: Utility.populateVHT(passback.data)
             })
         }
     }
@@ -321,13 +332,6 @@ class NewAssessment extends React.Component {
         }
         //add the checked symptoms
         this.addSymptoms();
-
-        ///ERRP *************
-        if (!this.state.vht_array.includes(this.state.cvsa_id)) {
-            this.setState({
-                vht_id: "EMPTY"
-            })
-        }
     }
 
 
@@ -452,9 +456,7 @@ class NewAssessment extends React.Component {
         let vht_select_option = this.state.vht_array.map(item => <option key={item.id}
                                                                          value={item.id}> {item.id} </option>)
         let user_select_option = this.state.user_array.map(user => <option key={user.id}
-                                                                           value={user.id}> {user.id} </option>)
-
-
+                                                                           value={user.id}> {user.name} </option>)
         let location_select_option = this.state.location_array.map(location => <option key={location.id}
                                                                                        value={location.id}> {location.name}</option>)
 
@@ -535,6 +537,7 @@ class NewAssessment extends React.Component {
                                 name="cvsa_id"
                             >
                                 <option value="EMPTY"> --SELECT ONE--</option>
+
                                 <option value={this.state.worker_id}> Use my ID</option>
                                 {user_select_option}
                             </select>

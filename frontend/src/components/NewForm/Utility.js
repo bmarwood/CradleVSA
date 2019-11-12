@@ -47,7 +47,7 @@ class Utility extends Component {
         });
         return user_array;
     }
-    
+
 
     //RETURN valid VHT ID
     static populateVHT(response) {
@@ -58,7 +58,8 @@ class Utility extends Component {
             roles.forEach(role => {
                 if (role.role === "VHT") {
                     var user_obj = {
-                        id: id
+                        id: id,
+                        name: id
                     }
                     user_array.push(user_obj)
                 }
@@ -77,6 +78,20 @@ class Utility extends Component {
             gender: response.gender
         }
         return patient;
+    }
+
+
+    static getRoles() {
+        var roleArray = []
+        var user = localStorage.getItem("userData")
+        var parsedUser = JSON.parse(user)
+        if (parsedUser && parsedUser.roles) {
+            parsedUser.roles.forEach(function (role) {
+                //console.log("User data is : " + role.role)
+                roleArray.push(role.role)
+            })
+        }
+        return roleArray;
     }
 }
 

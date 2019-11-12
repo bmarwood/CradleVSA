@@ -120,6 +120,7 @@ class NewUser extends React.Component {
         this.setState({
             temp_dob: date
         });
+        console.log(this.state.temp_dob.toLocaleString())
     };
 
 
