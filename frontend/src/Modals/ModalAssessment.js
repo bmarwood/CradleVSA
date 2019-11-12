@@ -27,6 +27,7 @@ class ModalAssessment extends Component {
             heart_rate: '',
             patient_name: 'LOADING...',
             vht_name: 'LOADING...',
+            patient_dob: ''
 
         }
     }
@@ -43,7 +44,11 @@ class ModalAssessment extends Component {
             if (response.data === "") {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
             } else {
-                this.setState({ patient_name: response.data.name })
+                // console.log("Patient DATA:", response.data )
+                this.setState({ 
+                    patient_name: response.data.name,
+                    patient_dob: response.data.birth_date 
+                })
             }
         }
     }
@@ -60,16 +65,25 @@ class ModalAssessment extends Component {
         }
     }
 
+
+    calculateAge() {
+
+        if (this.state.patient_dob != '' || this.state.patient_dob != null) {
+            var dob = new Date(this.state.patient_dob) 
+            var age = ~~((Date.now() - dob) / (31557600000))
+            console.log("age: ", age)
+            return age
+        }
+        return null
+
+    }
+
     render() {
-
-
-
-
         return (
             <div className="modal">
-                
+
                 <div className="one-edge-shadow modal-header p-30">
-                    <h3>Asssessment ID: {this.props.id}</h3><br/>
+                    <h3>Asssessment ID: {this.props.id}</h3><br />
                     <div className='modal-header-direction'>
                         <div className='float-left'>
                             <h5>
@@ -89,7 +103,7 @@ class ModalAssessment extends Component {
                         </div>
                     </div>
 
-                  
+
 
                 </div>
 
@@ -108,33 +122,32 @@ class ModalAssessment extends Component {
                     </div>
 
                     <div className='float-right'>
-                        Date of Birth: {this.props.date}
+                        Date of Birth: {this.state.patient_dob}
                         <br />
-                        Patient Age: TODO
+                        Patient Age: {this.calculateAge() ? this.calculateAge() : 0 }
                             <br />
                         Date of Assessment: {this.props.assessment_date}
                         <br />
                         Follow Up Date: {this.props.follow_up_date}
                     </div>
-
-
-                    {/* <div className="actions">
-                            <Popup
-                                trigger={<button className="ui black basic button"> See Patient </button>}
-                                position="top center"   
-                                closeOnDocumentClick
-                            >
-                                <span>This will navigate to the individual Patient page</span>
-                            </Popup>
-                            <Popup
-                                trigger={<button className="ui black basic button"> See VHT </button>}
-                                position="top center"
-                                closeOnDocumentClick
-                            >
-                                <span>This will navigate to the individual VHT page</span>
-                            </Popup>
-                        </div> */}
                 </div>
+
+                <div className="actions">
+                        <Popup
+                            trigger={<button className="ui black basic button"> See Patient </button>}
+                            position="top center"
+                            closeOnDocumentClick
+                        >
+                            <span>This will navigate to the individual Patient page</span>
+                        </Popup>
+                        <Popup
+                            trigger={<button className="ui black basic button"> See VHT </button>}
+                            position="top center"
+                            closeOnDocumentClick
+                        >
+                            <span>This will navigate to the individual VHT page</span>
+                        </Popup>
+                    </div>
             </div>
         );
     }

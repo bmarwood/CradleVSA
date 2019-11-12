@@ -19,11 +19,16 @@
 .modal-body {
   display: flex;
   flex-direction:row;
+  /* background-color: #355C7D; */
+
+
+
 }
 
 .modal-header {
-  background-color: #f5f5f5;
   display: block;
+  background: #C06C84;
+  color: white;
 }
 
 .modal-header-direction {
@@ -36,9 +41,9 @@
 }
 
 .one-edge-shadow {
-	-webkit-box-shadow: 0 8px 6px -6px black;
-	   -moz-box-shadow: 0 8px 6px -6px black;
-	        box-shadow: 0 8px 6px -6px black;
+	-webkit-box-shadow: 0 4px 6px -6px black;
+	   -moz-box-shadow: 0 4px 6px -6px black;
+	        box-shadow: 0 4px 6px -6px black;
 }
 
 .float-left {

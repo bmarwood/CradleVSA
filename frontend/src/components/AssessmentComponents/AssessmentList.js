@@ -123,7 +123,7 @@ class AssessmentList extends Component {
 
         var assessmentList = []
         response.forEach(function (assessment) {
-            console.log("assessment: ", assessment)
+            // console.log("assessment: ", assessment)
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
                 vht_id={assessment.vht_id}
