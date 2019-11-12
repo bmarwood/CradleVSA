@@ -99,7 +99,7 @@ class ModalAssessment extends Component {
                                 {" "}
                                 Patient Name: {this.state.patient_name}
                                 <br />
-                                CVSA Name: {this.state.CVSA_name}
+                                Cradle Professional Name: {this.state.CVSA_name}
                                 <br />
                                 Date of Birth: {this.props.date}
                                 <br />
@@ -122,12 +122,12 @@ class ModalAssessment extends Component {
                         </span>
                                 </Popup>
                                 <Popup
-                                    trigger={<button className="ui black basic button"> See VHT </button>}
+                                    trigger={<button className="ui black basic button"> See Cradle Professional </button>}
                                     position="top center"
                                     closeOnDocumentClick
                                 >
                                     <span>
-                                        This will navigate to the individual VHT page
+                                        This will navigate to the individual Cradle Professional page
                         </span>
                                 </Popup>
                             </div>

@@ -31,12 +31,6 @@ class AssessmentList extends Component {
                     cellStyle: { textAlign: 'center' }
                 },
                 {
-                    title: 'Reading Taken Date',
-                    field: 'date',
-                    headerStyle: { textAlign: 'center' },
-                    cellStyle: { textAlign: 'center' }
-                },
-                {
                     title: 'Cradle Professional Id',
                     field: 'cvsa_id',
                     headerStyle: { textAlign: 'center' },
@@ -88,7 +82,6 @@ class AssessmentList extends Component {
             data: [
                 {
                     assessment_id: 'LOADING...',
-                    date: 'LOADING...',
                     ews_color: 'LOADING...',
                     patient_id: 'LOADING...',
                     cvsa_id: 'LOADING...',
@@ -142,7 +135,6 @@ class AssessmentList extends Component {
                 follow_up: getBoolVisual(assessment.follow_up),
                 recheck: getBoolVisual(assessment.recheck),
                 birth_date: assessment.birth_date,
-                date: assessment.date,
                 heart_rate: assessment.heart_rate,
                 systolic: assessment.systolic,
                 diastolic: assessment.diastolic,
@@ -205,25 +197,25 @@ class AssessmentList extends Component {
                     title="Assessment List"
                     columns={this.state.columns}
                     data={this.state.data}
-                    editable={{
-                        onRowDelete: oldData =>
-                            new Promise(resolve => {
-                                setTimeout(() => {
-                                    resolve();
-                                    var didDelete = this.deleteAssessment(oldData)
-                                    console.log(oldData)
-                                    if (didDelete) {
-                                        const data = [...this.state.data];
-                                        data.splice(data.indexOf(oldData), 1);
-                                        this.setState({
-                                            locations: data
-                                        });
-                                    }
-                                }, 600);
-                            }),
+                    // editable={{
+                    //     onRowDelete: oldData =>
+                    //         new Promise(resolve => {
+                    //             setTimeout(() => {
+                    //                 resolve();
+                    //                 var didDelete = this.deleteAssessment(oldData)
+                    //                 console.log(oldData)
+                    //                 if (didDelete) {
+                    //                     const data = [...this.state.data];
+                    //                     data.splice(data.indexOf(oldData), 1);
+                    //                     this.setState({
+                    //                         locations: data
+                    //                     });
+                    //                 }
+                    //             }, 600);
+                    //         }),
 
 
-                    }}
+                    // }}
                 />
             </div>
 
