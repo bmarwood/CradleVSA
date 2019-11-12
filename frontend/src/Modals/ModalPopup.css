@@ -1,5 +1,5 @@
 .modal {
-  font-size: 12px;
+    font-size: 16px;
     position: inherit !important;
     top: auto !important;
     left: auto !important;
@@ -16,12 +16,51 @@
   z-index: 9999;
 }
 
+.modal-body {
+  display: flex;
+  flex-direction:row;
+}
+
+.modal-header {
+  background-color: #f5f5f5;
+  display: block;
+}
+
+.modal-header-direction {
+  display: flex;
+  flex-direction:row;
+}
+
+.p-30 {
+  padding: 30px !important;
+}
+
+.one-edge-shadow {
+	-webkit-box-shadow: 0 8px 6px -6px black;
+	   -moz-box-shadow: 0 8px 6px -6px black;
+	        box-shadow: 0 8px 6px -6px black;
+}
+
+.float-left {
+  text-align: left;
+  width: 50%;
+}
+
+.float-right {
+  text-align: right;
+  width: 50%;
+}
+
+.popup-content  {
+  padding: 0 !important;
+}
+
 .modal > .header {
   width: 100%;
   border-bottom: 1px solid gray;
   font-size: 18px;
   text-align: center;
-  padding: 5px;
+  padding: 0px;
 }
 .modal > .content {
   width: 100%;

@@ -63,80 +63,70 @@ class ModalAssessment extends Component {
     render() {
         return (
             <div className="modal">
-                <div style={{ margin: 'auto', textAlign: 'center' }}>
-                    <div style={{ margin: 'auto', backgroundColor: 'white', textAlign: 'center', width: '100%' }}>
-                        <h1>Asssessment ID: {this.props.id}</h1>
-                        <Grid className="demo-grid-ruler">
-                            <Cell col={12}>
-                                <TextField
-                                    id="PatientName"
-                                    label="PatientName"
-                                    name="patient_name"
-                                    className="demo-text"
-                                    type="password"
-                                    // value={this.state.old_password}
-                                    // onChange={this.handleChange.bind(this)}
-                                    autoComplete="current-password"
-                                    margin="normal"
-                                    variant="outlined"
-                                />
+
+                <div className="one-edge-shadow modal-header p-30">
+                    <h3>Asssessment ID: {this.props.id}</h3><br />
+                    <div className='modal-header-direction'>
+                        <div className='float-left'>
+                            <h5>
+                                Patient ID: {this.props.patient_id}
                                 <br />
-                                <TextField
-
-                                    label="Patient ID"
-                                    // onChange={this.handleChange}
-                                    name="patient_id"
-                                    // value={this.state.patient_id}
-                                    validators={['required']}
-                                    margin="normal"
-
-                                    errorMessages={['this field is required']}
-                                />
-
-                            </Cell>
-
-                            <div className="demo-grid-ruler">
-                                {" "}
                                 Patient Name: {this.state.patient_name}
-                                <br />
-                                Cradle Professional Name: {this.state.CVSA_name}
-                                <br />
-                                Date of Birth: {this.props.date}
-                                <br />
-                                Current Symptoms: {this.props.symptoms}
-                                <br />
-                                Heart Rate: {this.props.heart_rate}
-                                <br />
-                                Diastolic: {this.props.diastolic}
-                                <br />
-                                Systolic: {this.props.systolic}
-                            </div>
-                            <div className="actions">
-                                <Popup
-                                    trigger={<button className="ui black basic button"> See Patient </button>}
-                                    position="top center"
-                                    closeOnDocumentClick
-                                >
-                                    <span>
-                                        This will navigate to the individual Patient page
-                        </span>
-                                </Popup>
-                                <Popup
-                                    trigger={<button className="ui black basic button"> See Cradle Professional </button>}
-                                    position="top center"
-                                    closeOnDocumentClick
-                                >
-                                    <span>
-                                        This will navigate to the individual Cradle Professional page
-                        </span>
-                                </Popup>
-                            </div>
-                        </Grid>
+                            </h5>
 
+                        </div>
+
+                        <div className='float-right'>
+                            <h5>
+                                Cradle Professional ID: {this.props.cvsa_id}
+                                <br />
+                                Cradle Professional Name: {this.state.cvsa_name}
+                            </h5>
+                        </div>
                     </div>
                 </div>
 
+                <div className="modal-body p-30">
+                    <div className='float-left'>
+                        Asssessment Color: {this.props.ews_color}
+                        <br />
+                        Heart Rate: {this.props.heart_rate}
+                        <br />
+                        Diastolic: {this.props.diastolic}
+                        <br />
+                        Systolic: {this.props.systolic}
+                        <br />
+                        Current Symptoms: {this.props.symptoms}
+                    </div>
 
+                    <div className='float-right'>
+                        Date of Birth: {this.props.date}
+                        <br />
+                        Patient Age: TODO
+                            <br />
+                        Date of Assessment: {this.props.assessment_date}
+                        <br />
+                        Follow Up Date: {this.props.follow_up_date}
+                    </div>
+
+
+                    {/* <div className="actions">
+                            <Popup
+                                trigger={<button className="ui black basic button"> See Patient </button>}
+                                position="top center"   
+                                closeOnDocumentClick
+                            >
+                                <span>This will navigate to the individual Patient page</span>
+                            </Popup>
+                            <Popup
+                                trigger={<button className="ui black basic button"> See VHT </button>}
+                                position="top center"
+                                closeOnDocumentClick
+                            >
+                                <span>This will navigate to the individual VHT page</span>
+                            </Popup>
+                        </div> */}
+                </div>
             </div>
         );
     }
