@@ -38,7 +38,7 @@ class AssessmentList extends Component {
                 },
                 {
                     title: 'Cradle Professional Id',
-                    field: 'vht_id',
+                    field: 'cvsa_id',
                     headerStyle: { textAlign: 'center' },
                     cellStyle: { textAlign: 'center' }
                 },
@@ -91,7 +91,7 @@ class AssessmentList extends Component {
                     date: 'LOADING...',
                     ews_color: 'LOADING...',
                     patient_id: 'LOADING...',
-                    vht_id: 'LOADING...',
+                    cvsa_id: 'LOADING...',
                     gestational_age: 'LOADING...',
                     gestational_unit: 'LOADING...',
                     referred: 'LOADING...',
@@ -125,7 +125,7 @@ class AssessmentList extends Component {
         response.forEach(function (assessment) {
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
-                vht_id={assessment.vht_id}
+                cvsa_id={assessment.cvsa_id}
                 symptoms={assessment.symptoms}
                 systolic={assessment.systolic}
                 diastolic={assessment.diastolic}
@@ -136,7 +136,7 @@ class AssessmentList extends Component {
                 ews_color: getColorVisual(assessment.ews_color),
                 arrow: getArrowVisual(assessment.arrow),
                 patient_id: assessment.patient_id,
-                vht_id: assessment.vht_id,
+                cvsa_id: assessment.cvsa_id,
                 gestational_age: getGestationalAge(assessment),
                 referred: getBoolVisual(assessment.referred),
                 follow_up: getBoolVisual(assessment.follow_up),
