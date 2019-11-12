@@ -26,14 +26,14 @@ class ModalAssessment extends Component {
             date: '',
             heart_rate: '',
             patient_name: 'LOADING...',
-            vht_name: 'LOADING...',
+            CVSA_name: 'LOADING...',
 
         }
     }
 
     componentDidMount() {
         this.getPatient();
-        this.getVHT();
+        this.getCVSA();
     }
 
     async getPatient() {
@@ -48,14 +48,14 @@ class ModalAssessment extends Component {
         }
     }
 
-    async getVHT() {
-        var response = await requestServer.getVHT(this.props.vht_id)
+    async getCVSA() {
+        var response = await requestServer.getCVSA(this.props.cvsa_id)
 
         if (response !== null) {
             if (response.data === "") {
-                this.setState({ vht_name: 'ID doesn\'t match to a vht' })
+                this.setState({ CVSA_name: 'ID doesn\'t match to a CVSA' })
             } else {
-                this.setState({ vht_name: response.data.name })
+                this.setState({ CVSA_name: response.data.name })
             }
         }
     }
@@ -99,7 +99,7 @@ class ModalAssessment extends Component {
                                 {" "}
                                 Patient Name: {this.state.patient_name}
                                 <br />
-                                VHT Name: {this.state.vht_name}
+                                Cradle Professional Name: {this.state.CVSA_name}
                                 <br />
                                 Date of Birth: {this.props.date}
                                 <br />
@@ -122,12 +122,12 @@ class ModalAssessment extends Component {
                         </span>
                                 </Popup>
                                 <Popup
-                                    trigger={<button className="ui black basic button"> See VHT </button>}
+                                    trigger={<button className="ui black basic button"> See Cradle Professional </button>}
                                     position="top center"
                                     closeOnDocumentClick
                                 >
                                     <span>
-                                        This will navigate to the individual VHT page
+                                        This will navigate to the individual Cradle Professional page
                         </span>
                                 </Popup>
                             </div>
