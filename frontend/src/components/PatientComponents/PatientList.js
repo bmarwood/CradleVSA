@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import './PatientList.css';
 import GraphPopup from '../../Modals/GraphPopup';
@@ -13,6 +13,7 @@ class PatientList extends Component {
             columns: [],
             data: []
         }
+        this.deletePatient = this.deletePatient.bind(this)
     }
 
     componentDidMount() {
@@ -20,21 +21,39 @@ class PatientList extends Component {
         this.timer = setInterval(() => this.getPatientList(), 10000);
         this.setState({
             columns: [
-                { title: 'Name', field: 'name' },
-                { title: 'Surname', field: 'surname' },
-                { title: 'Sex', field: 'sex' },
-                { title: 'Birth Date', field: 'birthDate' },
-                { title: 'ID Number', field: 'id' },
-                { title: 'Patient History', field: 'graph', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
-                { title: 'Medications', field: 'medications', headerStyle: { textAlign: 'center' }, cellStyle: { textAlign: 'center' } },
+                {title: 'Name', field: 'name'},
+                {title: 'Surname', field: 'surname'},
+                {title: 'Sex', field: 'sex'},
+                {title: 'Birth Date', field: 'birthDate'},
+                {title: 'ID Number', field: 'id'},
+                {
+                    title: 'Patient History',
+                    field: 'graph',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
+                    title: 'Medications',
+                    field: 'medications',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
             ],
             data: [
                 {
-                graph: <GraphPopup />,
-                medications: <MedicationPopup />
+                    graph: <GraphPopup/>,
+                    medications: <MedicationPopup/>
                 },
             ],
         })
+    }
+
+    async deletePatient(patient) {
+        let response = await requestServer.deletePatient(patient.id)
+        if (response !== null) {
+            return true
+        }
+        return false
     }
 
     componentWillUnmount() {
@@ -52,8 +71,8 @@ class PatientList extends Component {
             var birthDate = patient.birth_date
             var sex = patient.gender[0]
             var id = patient.id
-            var graph = <GraphPopup />
-            var medications = <MedicationPopup />
+            var graph = <GraphPopup/>
+            var medications = <MedicationPopup/>
 
             var patient_obj = {
                 name: name,
@@ -120,6 +139,21 @@ class PatientList extends Component {
                         //     new Promise((resolve) => {
                         //       console.log("onrowadd", newData)
                         //     }),
+                        onRowDelete: oldData =>
+                            new Promise(resolve => {
+                                setTimeout(() => {
+                                    resolve();
+                                    var didDelete = this.deletePatient(oldData)
+                                    console.log(oldData)
+                                    if (didDelete) {
+                                        const data = [...this.state.data];
+                                        data.splice(data.indexOf(oldData), 1);
+                                        this.setState({
+                                            locations: data
+                                        });
+                                    }
+                                }, 600);
+                            }),
 
                     }}
                 />
