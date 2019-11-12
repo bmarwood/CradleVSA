@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Popup from "reactjs-popup";
 import './ModalPopup';
 import './ModalPopup.css';
+import MaterialTable from 'material-table';
 import requestServer from '../components/RequestServer';
+import TrafficIconsCircle from '../components/Visuals/TrafficIconsCircle';
+import TrafficIconsTriangle from "../components/Visuals/TrafficIconsTriangle";
+import TrafficIconsOctagon from "../components/Visuals/TrafficIconsOctagon";
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Link } from 'react-router-dom';
@@ -105,9 +109,9 @@ class ModalAssessment extends Component {
 
                 <div className="modal-body p-30">
                     <div className='float-left'>
-                        Asssessment Color: {this.props.ews_color}
+                        Asssessment Color: {this.getColorVisual(this.props.ews_color)}
                         <br />
-                        Arrow: {this.props.arrow}
+                        Arrow: {this.getArrowVisual(this.props.arrow)}
                         <br />
                         Heart Rate: {this.props.heart_rate}
                         <br />
@@ -148,5 +152,58 @@ class ModalAssessment extends Component {
             </div>
         );
     }
+    getColorVisual(input) {
+        switch (String(input).toUpperCase()) {
+            case "GREEN":
+                return <GreenLight />
+            case "YELLOW":
+                return <YellowLight />
+            case "RED":
+                return <RedLight />
+            default:
+                return input
+        }
+    }
+    getArrowVisual(input) {
+        switch (String(input).toUpperCase()) {
+            case "UP":
+                console.log("Hitting case")
+                return <i className="arrow up icon" />
+            case "DOWN":
+                    console.log("Hitting case")
+                return <i className="arrow down icon" />
+            case "EMPTY":
+                    console.log("Hitting case")
+                return <i className="window minimize icon" />
+            default:
+                    console.log(input)
+
+                return input
+        }
+    }
 }
+
+const styles = {
+    overflow: "hidden",
+    display: "auto",
+    flexWrap: "flex",
+    alignItems: "center",
+    fontFamily: "sans-serif",
+    justifyContent: "left"
+};
+const GreenLight = () => (
+    <div style={styles}>
+        <TrafficIconsCircle name="greencircle" width={50} fill={"#228B22"} />
+    </div>
+);
+const RedLight = () => (
+    <div style={styles}>
+        <TrafficIconsOctagon name="redcircle" width={50} fill={"#B22222"} />
+    </div>
+);
+const YellowLight = () => (
+    <div style={styles}>
+        <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"} />
+    </div>
+);
 export default ModalAssessment;                    
