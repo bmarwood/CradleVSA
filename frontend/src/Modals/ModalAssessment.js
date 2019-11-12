@@ -107,7 +107,7 @@ class ModalAssessment extends Component {
                     </div>
                 </div>
 
-                <div className="modal-body p-30">
+                <div className="one-edge-shadow modal-body p-30">
                     <div className='float-left'>
                         Asssessment Color: {this.getColorVisual(this.props.ews_color)}
                         <br />
@@ -118,6 +118,10 @@ class ModalAssessment extends Component {
                         Diastolic: {this.props.diastolic}
                         <br />
                         Systolic: {this.props.systolic}
+                        <br />
+                        Gestational Age: {this.props.gestational_age}
+                        <br />
+                        Gestational Unit: {this.props.gestational_unit}
                         <br />
                         Current Symptoms: {this.props.symptoms}
                     </div>
