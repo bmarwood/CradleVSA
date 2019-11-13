@@ -36,7 +36,7 @@ public class Assessments {
     private String patient_id;
     private String name;
     private String birth_date;
-    private String vht_id;
+    private String cvsa_id;
     private String date;
     private String gestational_age;
     private int heart_rate;
@@ -54,14 +54,14 @@ public class Assessments {
     private String gender;
 
 
-    public Assessments(String id, String patient_id, String birth_date, String vht_id, String date, String gestational_age, int heart_rate,
+    public Assessments(String id, String patient_id, String birth_date, String cvsa_id, String date, String gestational_age, int heart_rate,
                        int systolic, int diastolic, Color ews_color, String[] symptoms, boolean referred, boolean follow_up, String follow_up_date,
                        boolean recheck, Arrow arrow, Gestational_unit gestational_unit, String name, String location, String gender) {
         this.id = id; //assestment ID
         this.patient_id = patient_id;
         this.birth_date = birth_date;
         //this.time_scale = time_scale;
-        this.vht_id = vht_id;
+        this.cvsa_id = cvsa_id;
         this.date = date;
         this.gestational_age = gestational_age;
         this.heart_rate = heart_rate;
@@ -109,12 +109,12 @@ public class Assessments {
         this.birth_date = birth_date;
     }
 
-    public String getVht_id() {
-        return vht_id;
+    public String getCvsa_id() {
+        return cvsa_id;
     }
 
-    public void setVht_id(String vht_id) {
-        this.vht_id = vht_id;
+    public void setCvsa_id(String cvsa_id) {
+        this.cvsa_id = cvsa_id;
     }
 
     public String getLocation() {
