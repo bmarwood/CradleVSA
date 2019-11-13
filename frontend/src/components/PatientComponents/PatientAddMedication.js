@@ -3,45 +3,78 @@ import {Button, Textfield, Grid, Cell} from 'react-mdl';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import RequestServer from '../RequestServer';
+import Utility from '../NewForm/Utility';
+
 // import { Formik } from 'formik';
 
 class PatientAddMedication extends React.Component {
  
-    state = {
-        medication: '',
-        dose: '',
-        startDate: new Date(),
-        endDate: new Date(),
+    constructor(){
+        super();
+        this.state = {
+            id: '',
+            patient_id : '',
+            medication_name: '',
+            dose: '',
+            start_date: '',
+            end_date: '',
+            side_effects: '',
+            temp_start_date: new Date(),
+            temp_end_date: new Date(),
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.changeStartDate = this.changeStartDate.bind(this);
+        this.changeEndDate = this.changeEndDate.bind(this);
     }
 
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
     changeStartDate = date => {
         this.setState({
-          startDate: date
+          temp_start_date: date
         });
       };
 
     changeEndDate = date => {
         this.setState({
-          endDate: date
+          temp_end_date: date
         });
       };
 
-    changeMedication = (event) => {
-        const medication = event.target.value;
-        this.setState({ medication });
-    }
-    changeDose = (event) => {
-        const dose = event.target.value;
-        this.setState({ dose });
+    // changeMedication = (event) => {
+    //     const medication_name = event.target.value;
+    //     this.setState({ medication_name });
+    // }
+    // changeDose = (event) => {
+    //     const dose = event.target.value;
+    //     this.setState({ dose });
+    // }
+    changeState() {
+        this.setState({
+            start_date: Utility.convertDate(this.state.temp_start_date),
+            end_date: Utility.convertDate(this.state.temp_end_date)
+        })
     }
  
-    handleSubmit = () => {
-        //submit logic
+    handleSubmit = async () => {
+        this.changeState();
+        console.log(this.state);
+        var response = await RequestServer.addMedications(this.state)
+        if (response !== null) {
+            this.props.history.push(
+                '/',
+                {detail: response.data}
+            )
+        }
     }
  
     render() {
-        const { medication } = this.state;
-        const { dose } = this.state;
+        //const { medication } = this.state;
+        //const { dose } = this.state;
         return (
             <div style={{width: '100%', margin: 'auto'}}>
             <ValidatorForm
@@ -68,9 +101,9 @@ class PatientAddMedication extends React.Component {
                 <Cell col={4}>
                 <TextValidator
                     label="Medication"
-                    onChange={this.changeMedication}
-                    name="medication"
-                    value={medication}
+                    onChange={this.handleChange}
+                    name="medication_name"
+                    value={this.state.medication_name}
                     validators={['required']}
                     errorMessages={['this field is required']}
                 />
@@ -82,9 +115,9 @@ class PatientAddMedication extends React.Component {
                 <Cell col={4}>
                  <TextValidator
                     label="Dose"
-                    onChange={this.changeDose}
+                    onChange={this.handleChange}
                     name="dose"
-                    value={dose}
+                    value={this.state.dose}
                     validators={['required']}
                     errorMessages={['this field is required']}
                 />
@@ -97,7 +130,7 @@ class PatientAddMedication extends React.Component {
                 <Cell col={4}>
                 <p>Start Date:</p>
                 <DatePicker
-                selected={this.state.startDate}
+                selected={this.state.temp_start_date}
                 onChange={this.changeStartDate}
                 />
                 </Cell>
@@ -107,7 +140,7 @@ class PatientAddMedication extends React.Component {
                 <Cell col={4}>
                 <p>End Date:</p>
                 <DatePicker
-                selected={this.state.endDate}
+                selected={this.state.temp_end_date}
                 onChange={this.changeEndDate}
                 />
                 </Cell>
@@ -116,11 +149,19 @@ class PatientAddMedication extends React.Component {
                 <Grid>
                 <Cell col={4}></Cell>
                 <Cell col={4}>
-                <Textfield
-                onChange={() => {}}
+                {/* <Textfield
+                //onChange={() => {}}
                 label="Side Effects"
+                selected={this.state.side_effects}
+                onChange={this.handleChange}
                 rows={3}
                 style={{width: '400px'}}
+                /> */}
+                <TextValidator
+                label="Side Effects"
+                onChange={this.handleChange}
+                name="side_effects"
+                value={this.state.side_effects}
                 />
                 </Cell>
                 <Cell col={4}></Cell>

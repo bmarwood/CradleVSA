@@ -301,6 +301,17 @@ class RequestServer extends Component {
             return null
         }
     }
+        async addMedications(medications) {
+            try {
+                var response = await axios.post(this.getServerLocation() + '/medications/add', medications)
+                return response
+            } catch (error) {
+                console.log('error block')
+                console.log(error)
+                return null
+            }
+        }
+        
 
 }
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -46,6 +47,22 @@ public class MedicationsController {
     public List<Medications> getAll() {
         List<Medications> medications = this.medicationsRepository.findAll();
         return medications;
+    }
+    @PutMapping
+    public void insert(@RequestBody Medications medications) {
+        this.medicationsRepository.insert(medications);
+    }
+
+    @PostMapping("/add")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public Medications add(@RequestBody Medications candidate) {
+        try {
+            return medicationsRepository.save(candidate);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

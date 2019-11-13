@@ -124,7 +124,9 @@ render(){
           }}
         />
         <div>
-        <NewMedicationPopup/>
+        <NewMedicationPopup
+        patient_id={this.patient_id}
+        />
         </div>
       </div>
        );
