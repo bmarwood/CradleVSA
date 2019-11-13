@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import ShowSymp from "./SymptomsForm";
-import {Grid, Cell} from 'react-mdl';
+import {Grid, Cell, RadioGroup, Radio} from 'react-mdl';
 import RequestServer from '../RequestServer';
 import Utility from './Utility';
 import DatePicker from "react-datepicker";
@@ -68,6 +68,8 @@ class NewAssessment extends React.Component {
             worker_id: '',
             worker_role: [],
             location_array: [],
+            dob_type: 'date',
+            temp_dob: new Date(),
 
             //Symptoms
             symptoms_arr: [
@@ -87,7 +89,14 @@ class NewAssessment extends React.Component {
         this.setSubmit = this.setState.bind(this)
     }
 
-//componentWillUpdate
+    //handle date change
+    changeDOB = date => {
+        this.setState({
+            temp_dob: date
+        });
+    };
+
+    //componentWillUpdate
     componentDidMount() {
         //get cvsa_id
         var user = localStorage.getItem("userData")
@@ -133,6 +142,14 @@ class NewAssessment extends React.Component {
                 return true;
             }
             return false;
+        });
+
+        //check if systolic > diastolic
+        ValidatorForm.addValidationRule('check_dob_type', (value) => {
+            if (this.state.dob_type === 'age' && this.state.birth_date === '') {
+                return false;
+            }
+            return true;
         });
 
 
@@ -344,7 +361,6 @@ class NewAssessment extends React.Component {
             this.setState({
                 fname: patient_data.name.split(" ")[0],
                 lname: patient_data.name.split(" ")[1],
-                birth_date: patient_data.birth_date,
                 vht_id: patient_data.vht_id,
                 gender: patient_data.gender,
                 create_patient: false
@@ -353,7 +369,6 @@ class NewAssessment extends React.Component {
             this.setState({
                 fname: '',
                 lname: '',
-                birth_date: '',
                 vht_id: "EMPTY",
                 gender: "MALE",
                 create_patient: true
@@ -394,9 +409,23 @@ class NewAssessment extends React.Component {
             return;
         }
 
+        if (this.state.dob_type === "date") {
+            let input_dob = Utility.convertDate(this.state.temp_dob)
+            let today = Utility.convertDate(new Date())
+            // console.log(event.toDateString() === event2.toDateString())
+
+            if (today !== input_dob) {
+                alert("Incorrect date of birth")
+                return false;
+            }
+            this.setState({
+                birth_date: input_dob
+            })
+        }
+
         //setDate
         let today = new Date();
-        this.setState({date: Utility.convertDate(today)})
+        this.setState({date: today.toString()})
         this.setColor();
         this.changeType();
         this.changeState();
@@ -477,7 +506,6 @@ class NewAssessment extends React.Component {
 
                         {/*<label>Location: </label>*/}
                         <h4> Location </h4>
-                        <br/>
                         <select
                             value={this.state.location}
                             onChange={this.handleChange}
@@ -517,17 +545,41 @@ class NewAssessment extends React.Component {
                                 errorMessages={['this field is required', 'Invalid input (only letters)']}
                             />
                             <br/>
+                        </div>
+                        <br/>
 
+                        <RadioGroup name="dob_type"
+                                    onChange={this.handleChange}
+                                    value={this.state.dob_type}>
+                            <Radio value="date" ripple>
+                                <span className="mdl-radio__label">Date of Birth</span>
+                            </Radio>
+                            <Radio value="age">Age</Radio>
+                        </RadioGroup>
+                        
+
+                        <div style={{display: (this.state.dob_type == "age" ? 'block' : 'none')}}>
                             <TextValidator
-                                label="Date of birth"
+                                label="Age"
                                 onChange={this.handleChange}
                                 name="birth_date"
                                 value={this.state.birth_date}
-                                validators={['required']}
-                                errorMessages={['this field is required']}
+                                validators={['check_dob_type', 'minNumber:0', 'maxNumber:150', 'matchRegexp:^[0-9]*$']}
+                                errorMessages={['this field is required', 'between 0 - 150', 'between 0 - 150', "Number only"]}
                             />
                             <br/>
+                        </div>
+                        <div style={{display: (this.state.dob_type == "date" ? 'block' : 'none')}}>
+                            <label>Date of Birth:</label>
                             <br/>
+                            <DatePicker
+                                selected={this.state.temp_dob}
+                                onChange={this.changeDOB}
+                                maxDate={new Date()}
+                            />
+                            <br/>
+                        </div>
+                        <div style={{display: (this.state.create_patient ? 'block' : 'none')}}>
 
                             <label>CSVA ID: </label>
                             <br/>
