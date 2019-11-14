@@ -125,7 +125,7 @@ render(){
         />
         <div>
         <NewMedicationPopup
-        patient_id={this.patient_id}
+        patient_id={this.props.patient_id}
         />
         </div>
       </div>

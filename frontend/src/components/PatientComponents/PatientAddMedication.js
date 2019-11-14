@@ -10,11 +10,11 @@ import Utility from '../NewForm/Utility';
 
 class PatientAddMedication extends React.Component {
  
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             id: '',
-            patient_id : '',
+            patient_id : props.patient_id,
             medication_name: '',
             dose: '',
             start_date: '',
