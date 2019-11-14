@@ -9,7 +9,8 @@ class PatientNotes extends Component {
         super(props);
         this.state = {
             columns: [],
-            data: []
+            data: [],
+            patient_name: "Loading"
         }
     }
 
@@ -90,7 +91,7 @@ render(){
     return (
         <div className = "table-position" >
         <MaterialTable
-        title="Medications"
+        title={this.props.patient_name}
         columns={this.state.columns}
         data={this.state.data}
         editable={{
@@ -126,6 +127,9 @@ render(){
         <div>
         <NewMedicationPopup
         patient_id={this.props.patient_id}
+        name={this.props.name}
+        surname={this.props.surname}
+        patient_name={this.props.patient_name}
         />
         </div>
       </div>

@@ -22,6 +22,7 @@ class PatientAddMedication extends React.Component {
             side_effects: '',
             temp_start_date: new Date(),
             temp_end_date: new Date(),
+            patient_name: "Loading"
         };
         this.handleChange = this.handleChange.bind(this);
         this.changeStartDate = this.changeStartDate.bind(this);
@@ -44,22 +45,13 @@ class PatientAddMedication extends React.Component {
           temp_end_date: date
         });
       };
-
-    // changeMedication = (event) => {
-    //     const medication_name = event.target.value;
-    //     this.setState({ medication_name });
-    // }
-    // changeDose = (event) => {
-    //     const dose = event.target.value;
-    //     this.setState({ dose });
-    // }
     changeState() {
         this.setState({
             start_date: Utility.convertDate(this.state.temp_start_date),
             end_date: Utility.convertDate(this.state.temp_end_date)
         })
     }
- 
+
     handleSubmit = async () => {
         this.changeState();
         console.log(this.state);
@@ -71,7 +63,6 @@ class PatientAddMedication extends React.Component {
             )
         }
     }
- 
     render() {
         //const { medication } = this.state;
         //const { dose } = this.state;
@@ -92,7 +83,7 @@ class PatientAddMedication extends React.Component {
                 <Grid>
                     <Cell col={4}></Cell>
                     <Cell col={4}>
-                    <h3>Patient Name</h3>
+                    <h3>{this.props.patient_name}</h3>
                     </Cell>
                     <Cell col={4}></Cell>
                 </Grid>
