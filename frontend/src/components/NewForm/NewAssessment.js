@@ -146,7 +146,7 @@ class NewAssessment extends React.Component {
             return false;
         });
 
-        //check if systolic > diastolic
+        //check if age is filled
         ValidatorForm.addValidationRule('check_dob_type', (value) => {
             if (this.state.dob_type === 'age' && this.state.birth_date === '') {
                 return false;
@@ -665,14 +665,16 @@ class NewAssessment extends React.Component {
                         <br/>
                     </Cell>
                     <Cell col={4}>
+                        <h4>Vitals</h4>
                         <div
                             style={{display: (this.state.retestAdvice !== "RETEST_NOT_RECOMMENDED" ? 'block' : 'none')}}>
                             {/*<p>{this.state.retestAdvice}</p>*/}
                             <Alert key={3} variant={'danger'}>
                                 {this.state.retestAdvice}
                             </Alert>
+                            <br/>
                         </div>
-                        <h4>Vitals</h4>
+
                         <TextValidator
                             label="Systolic"
                             onChange={this.handleChange}

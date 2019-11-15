@@ -6,6 +6,8 @@ import Utility from './Utility';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './newForm.css';
+import {Cell, Radio, RadioGroup} from "react-mdl";
+import ShowSymp from "./SymptomsForm";
 
 //form for a new patient
 class NewPatient extends React.Component {
@@ -22,6 +24,7 @@ class NewPatient extends React.Component {
             //TEMP VARIABLES
             fname: '',
             lname: '',
+            dob_type: 'date',
             temp_dob: new Date(),
             vht_array: []
         };
@@ -47,6 +50,14 @@ class NewPatient extends React.Component {
 
         ValidatorForm.addValidationRule('check_vht_id', (value) => {
             //check for existing vht id
+            return true;
+        });
+
+        //check if age is filled
+        ValidatorForm.addValidationRule('check_dob_type', (value) => {
+            if (this.state.dob_type === 'age' && this.state.birth_date === '') {
+                return false;
+            }
             return true;
         });
     }
@@ -77,8 +88,7 @@ class NewPatient extends React.Component {
     //change the format of the string
     changeState() {
         this.setState({
-            name: this.state.fname + ' ' + this.state.lname,
-            birth_date: Utility.convertDate(this.state.temp_dob)
+            name: this.state.fname + ' ' + this.state.lname
         })
     }
 
@@ -103,12 +113,24 @@ class NewPatient extends React.Component {
 
 
     handleSubmit = async () => {
-        this.changeState();
-        //console.log(this.state);
         if (this.state.vht_id === "EMPTY") {
             alert("Please select at least one VHT")
             return false;
         }
+        if (this.state.dob_type === "date") {
+            let input_dob = Utility.convertDate(this.state.temp_dob)
+            let today = Utility.convertDate(new Date())
+
+            if (today === input_dob) {
+                alert("Incorrect date of birth")
+                return false;
+            }
+            this.setState({
+                birth_date: input_dob
+            })
+        }
+        this.changeState();
+
         var response = await RequestServer.addPatient(this.state)
         if (response !== null) {
             this.props.history.push(
@@ -120,7 +142,7 @@ class NewPatient extends React.Component {
 
 
     render() {
-        let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
+        let vht_select_option = this.state.vht_array.map(item => <option key={item.id}
                                                                          value={item.id}> {item.id} </option>)
 
         return (
@@ -181,14 +203,37 @@ class NewPatient extends React.Component {
                 <br/>
                 <br/>
 
+                <RadioGroup name="dob_type"
+                            onChange={this.handleChange}
+                            value={this.state.dob_type}>
+                    <Radio value="date" ripple>
+                        <span className="mdl-radio__label">Date of Birth</span>
+                    </Radio>
+                    <Radio value="age">Age</Radio>
+                </RadioGroup>
 
-                <p>Date of Birth:</p>
-                <DatePicker
-                    selected={this.state.temp_dob}
-                    onChange={this.changeDOB}
-                    maxDate={new Date()}
-                />
-                <br/>
+
+                <div style={{display: (this.state.dob_type == "age" ? 'block' : 'none')}}>
+                    <TextValidator
+                        label="Age"
+                        onChange={this.handleChange}
+                        name="birth_date"
+                        value={this.state.birth_date}
+                        validators={['check_dob_type', 'minNumber:0', 'maxNumber:150', 'matchRegexp:^[0-9]*$']}
+                        errorMessages={['this field is required', 'between 0 - 150', 'between 0 - 150', "Number only"]}
+                    />
+                    <br/>
+                </div>
+                <div style={{display: (this.state.dob_type == "date" ? 'block' : 'none')}}>
+                    <label>Date of Birth:</label>
+                    <br/>
+                    <DatePicker
+                        selected={this.state.temp_dob}
+                        onChange={this.changeDOB}
+                        maxDate={new Date()}
+                    />
+                    <br/>
+                </div>
                 <br/>
 
                 <label>Gender: </label>
