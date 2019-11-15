@@ -11,13 +11,14 @@ class PatientChart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataLine: []
+            dataLine: [],
+            patient_id : props.patient_id
         }
     }
 
     componentDidMount() {
-        this.getMatchingPatientID("81991")
-        this.timer = setInterval(() => this.getMatchingPatientID("81991"), 10000);
+        this.getMatchingPatientID(this.props.patient_id)
+        this.timer = setInterval(() => this.getMatchingPatientID(this.props.patient_id), 10000);
         //this.getPatientList()
         //this.timer = setInterval(() => this.getPatientList(), 10000);
 
@@ -145,7 +146,7 @@ class PatientChart extends React.Component {
     render() {
         return (
             <MDBContainer style={{backgroundColor: 'white'}}>
-                <h3 className="mt-5">Blood Pressure and Heart Rate</h3>
+                <h3 className="mt-5">{this.props.patient_name}</h3>
                 <Line data={this.state.dataLine} options={{responsive: true}}/>
             </MDBContainer>
         );
