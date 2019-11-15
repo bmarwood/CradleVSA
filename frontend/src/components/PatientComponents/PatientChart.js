@@ -31,7 +31,7 @@ class PatientChart extends React.Component {
                         fill: true,
                         backgroundColor: "rgba(255, 157, 148, .3)",
                         borderColor: "red",
-                        data: [2, 3, 4]
+                        data: []
                     },
                     {
                         label: "Diastolic",
@@ -81,12 +81,13 @@ class PatientChart extends React.Component {
         var systolicData = []
         var diastolicData = []
         var heartRateData = []
+
         response.forEach(list_of_assessments => {
             systolicData.push(list_of_assessments.systolic)
             diastolicData.push(list_of_assessments.diastolic)
             heartRateData.push(list_of_assessments.heart_rate)
+            
         })
-
         var datasets = [
             {
                 label: "Systolic",
@@ -120,9 +121,10 @@ class PatientChart extends React.Component {
             }
             dataLineArray.push(dataLine_obj)
         });
-
+        
+        if(typeof dataLineArray[0] !== "undefined"){
         this.setState({dataLine: dataLineArray[0]})
-
+        }
     }
 
     async getMatchingPatientID(patient_id) {
@@ -131,8 +133,8 @@ class PatientChart extends React.Component {
             this.populateData(passback.data.list_of_assessments
             )
             console.log(passback.data.list_of_assessments)
-            console.log("passback.data.list_of_assessments[0]")
-            console.log(passback.data.list_of_assessments[0].heart_rate)
+            //console.log("passback.data.list_of_assessments[0]")
+            //console.log(passback.data.list_of_assessments[0].heart_rate)
         }
     }
 
