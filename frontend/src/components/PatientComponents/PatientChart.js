@@ -4,7 +4,7 @@ import {MDBContainer} from "mdbreact";
 import './PatientChart.css';
 import '../../Modals/GraphPopup';
 import RequestServer from '../RequestServer';
-
+import Utility from '../NewForm/Utility';
 
 class PatientChart extends React.Component {
 
@@ -19,9 +19,6 @@ class PatientChart extends React.Component {
     componentDidMount() {
         this.getMatchingPatientID(this.props.patient_id)
         this.timer = setInterval(() => this.getMatchingPatientID(this.props.patient_id), 10000);
-        //this.getPatientList()
-        //this.timer = setInterval(() => this.getPatientList(), 10000);
-
         this.setState({
             dataLine: {
                 labels: ["Jan", "Feb", "March"],
@@ -82,12 +79,6 @@ class PatientChart extends React.Component {
         var diastolicData = []
         var heartRateData = []
 
-        response.forEach(list_of_assessments => {
-            systolicData.push(list_of_assessments.systolic)
-            diastolicData.push(list_of_assessments.diastolic)
-            heartRateData.push(list_of_assessments.heart_rate)
-            
-        })
         var datasets = [
             {
                 label: "Systolic",
@@ -112,16 +103,22 @@ class PatientChart extends React.Component {
             }
         ]
         response.forEach(list_of_assessments => {
-
+            //Array of dates
             labels.push(list_of_assessments.date)
+            //3 Arrays for readings
+            systolicData.push(list_of_assessments.systolic)
+            diastolicData.push(list_of_assessments.diastolic)
+            heartRateData.push(list_of_assessments.heart_rate)
 
             var dataLine_obj = {
                 labels: labels,
                 datasets: datasets
             }
+       
             dataLineArray.push(dataLine_obj)
         });
-        
+
+        //Shows a blank page on graph if no list of assessments exists
         if(typeof dataLineArray[0] !== "undefined"){
         this.setState({dataLine: dataLineArray[0]})
         }
@@ -130,11 +127,14 @@ class PatientChart extends React.Component {
     async getMatchingPatientID(patient_id) {
         var passback = await RequestServer.getPatientByID(patient_id)
         if (passback != null) {
-            this.populateData(passback.data.list_of_assessments
+            //Converts dates in list_of_assessments to Date format to sort by date
+            this.populateData(passback.data.list_of_assessments.sort(function(a,b){
+                a = Utility.convertStringToDate(a.date);
+                b = Utility.convertStringToDate(b.date);
+                return a > b ? 1 : a < b ? -1 : 0;
+            })
             )
             console.log(passback.data.list_of_assessments)
-            //console.log("passback.data.list_of_assessments[0]")
-            //console.log(passback.data.list_of_assessments[0].heart_rate)
         }
     }
 
