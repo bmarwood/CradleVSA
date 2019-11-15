@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './AssessmentList.css';
-import TrafficIcons from "../Visuals/TrafficIcons";
+import TrafficIconsCircle from "../Visuals/TrafficIconsCircle";
+import TrafficIconsTriangle from "../Visuals/TrafficIconsTriangle";
+import TrafficIconsOctagon from "../Visuals/TrafficIconsOctagon";
 import ModalPopup from "../../Modals/ModalPopup";
 import requestServer from '../RequestServer';
 
@@ -14,6 +16,7 @@ class AssessmentList extends Component {
             columns: [],
             data: [],
         }
+        this.deleteAssessment = this.deleteAssessment.bind(this)
     }
 
     componentDidMount() {
@@ -24,56 +27,56 @@ class AssessmentList extends Component {
                 {
                     title: 'Patient Id',
                     field: 'patient_id',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Cradle Professional Id',
-                    field: 'vht_id',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    field: 'cvsa_id',
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Early Warning Color',
                     field: 'ews_color',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Shock Arrow',
                     field: 'arrow',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Gestational Age',
                     field: 'gestational_age',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Referred?',
                     field: 'referred',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Follow Up?',
                     field: 'follow_up',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Recheck?',
                     field: 'recheck',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Assessment Information',
                     field: 'info',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
             ],
             data: [
@@ -81,14 +84,14 @@ class AssessmentList extends Component {
                     assessment_id: 'LOADING...',
                     ews_color: 'LOADING...',
                     patient_id: 'LOADING...',
-                    vht_id: 'LOADING...',
+                    cvsa_id: 'LOADING...',
                     gestational_age: 'LOADING...',
                     gestational_unit: 'LOADING...',
                     referred: 'LOADING...',
                     follow_up: 'LOADING...',
                     recheck: 'LOADING...',
                     arrow: 'LOADING...',
-                    info: <ModalPopup/>
+                    info: <ModalPopup />
                 },
             ],
 
@@ -100,6 +103,14 @@ class AssessmentList extends Component {
         this.timer = null;
     }
 
+    async deleteAssessment(assessment) {
+        var response = await requestServer.deleteAssessment(assessment.id)
+        if (response !== null) {
+            return true
+        }
+        return false
+    }
+
 
     populateData(response) {
 
@@ -107,25 +118,23 @@ class AssessmentList extends Component {
         response.forEach(function (assessment) {
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
-                vht_id={assessment.vht_id}
+                cvsa_id={assessment.cvsa_id}
                 symptoms={assessment.symptoms}
                 systolic={assessment.systolic}
                 diastolic={assessment.diastolic}
                 heart_rate={assessment.heart_rate}
-                date={assessment.date}
             />
             var assessment_obj = {
                 id: assessment._id,
                 ews_color: getColorVisual(assessment.ews_color),
                 arrow: getArrowVisual(assessment.arrow),
                 patient_id: assessment.patient_id,
-                vht_id: assessment.vht_id,
+                cvsa_id: assessment.cvsa_id,
                 gestational_age: getGestationalAge(assessment),
                 referred: getBoolVisual(assessment.referred),
                 follow_up: getBoolVisual(assessment.follow_up),
                 recheck: getBoolVisual(assessment.recheck),
                 birth_date: assessment.birth_date,
-                date: assessment.date,
                 heart_rate: assessment.heart_rate,
                 systolic: assessment.systolic,
                 diastolic: assessment.diastolic,
@@ -137,7 +146,7 @@ class AssessmentList extends Component {
             assessmentList.push(assessment_obj)
         });
 
-        this.setState({data: assessmentList})
+        this.setState({ data: assessmentList })
     }
 
     getRoles(parsedUser) {
@@ -188,6 +197,25 @@ class AssessmentList extends Component {
                     title="Assessment List"
                     columns={this.state.columns}
                     data={this.state.data}
+                    // editable={{
+                    //     onRowDelete: oldData =>
+                    //         new Promise(resolve => {
+                    //             setTimeout(() => {
+                    //                 resolve();
+                    //                 var didDelete = this.deleteAssessment(oldData)
+                    //                 console.log(oldData)
+                    //                 if (didDelete) {
+                    //                     const data = [...this.state.data];
+                    //                     data.splice(data.indexOf(oldData), 1);
+                    //                     this.setState({
+                    //                         locations: data
+                    //                     });
+                    //                 }
+                    //             }, 600);
+                    //         }),
+
+
+                    // }}
                 />
             </div>
 
@@ -206,17 +234,17 @@ const styles = {
 };
 const GreenLight = () => (
     <div style={styles}>
-        <TrafficIcons name="greencircle" width={50} fill={"#228B22"}/>
+        <TrafficIconsCircle name="greencircle" width={50} fill={"#228B22"} />
     </div>
 );
 const RedLight = () => (
     <div style={styles}>
-        <TrafficIcons name="redcircle" width={50} fill={"#B22222"}/>
+        <TrafficIconsOctagon name="redcircle" width={50} fill={"#B22222"} />
     </div>
 );
 const YellowLight = () => (
     <div style={styles}>
-        <TrafficIcons name="yellowcircle" width={50} fill={"#CCCC00"}/>
+        <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"} />
     </div>
 );
 
@@ -224,11 +252,11 @@ const YellowLight = () => (
 function getArrowVisual(input) {
     switch (String(input).toUpperCase()) {
         case "UP":
-            return <i className="arrow up icon"/>
+            return <i className="arrow up icon" />
         case "DOWN":
-            return <i className="arrow down icon"/>
+            return <i className="arrow down icon" />
         case "EMPTY":
-            return <i className="window minimize icon"/>
+            return <i className="window minimize icon" />
         default:
             return input
     }
@@ -237,11 +265,11 @@ function getArrowVisual(input) {
 function getColorVisual(input) {
     switch (String(input).toUpperCase()) {
         case "GREEN":
-            return <GreenLight/>
+            return <GreenLight />
         case "YELLOW":
-            return <YellowLight/>
+            return <YellowLight />
         case "RED":
-            return <RedLight/>
+            return <RedLight />
         default:
             return input
     }
@@ -250,9 +278,9 @@ function getColorVisual(input) {
 function getBoolVisual(input) {
     switch (String(input).toUpperCase()) {
         case "TRUE":
-            return <i aria-hidden="true" className="check icon"/>
+            return <i aria-hidden="true" className="check icon" />
         case "FALSE":
-            return <i aria-hidden="true" className="x icon"/>
+            return <i aria-hidden="true" className="x icon" />
         default:
             return input
     }
@@ -265,7 +293,7 @@ function getGestationalAge(assessment) {
         case "MONTH":
             return (assessment.gestational_age + " Month(s)")
         default:
-            return <i aria-hidden="true" className="dont icon"/>
+            return <i aria-hidden="true" className="dont icon" />
     }
 }
 
