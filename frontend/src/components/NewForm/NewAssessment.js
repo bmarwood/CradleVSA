@@ -6,6 +6,8 @@ import {Grid, Cell, RadioGroup, Radio} from 'react-mdl';
 import RequestServer from '../RequestServer';
 import Utility from './Utility';
 import DatePicker from "react-datepicker";
+import ReadingRequestAnalysis from "./ReadingRetestAnalysis";
+import Alert from "react-bootstrap/Alert";
 
 const Color = {
     GREEN: "GREEN",
@@ -63,13 +65,14 @@ class NewAssessment extends React.Component {
             msg: '',        //for the componenetDidMount error message
             vht_array: [],
             create_patient: false,
-            submit: false,
             user_array: [],
             worker_id: '',
             worker_role: [],
             location_array: [],
             dob_type: 'date',
             temp_dob: new Date(),
+            recheck_history: [],
+            retestAdvice: "RETEST_NOT_RECOMMENDED",
 
             //Symptoms
             symptoms_arr: [
@@ -86,7 +89,6 @@ class NewAssessment extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleCheckbox = this.handleCheckbox.bind(this)
         this.setGestational_age = this.setGestational_age.bind(this)
-        this.setSubmit = this.setState.bind(this)
     }
 
     //handle date change
@@ -295,6 +297,7 @@ class NewAssessment extends React.Component {
                 arrow: Arrow.EMPTY
             })
         }
+        this.state.recheck_history.push(this.state.ews_color)
     }
 
     // Check if one of the checkbox is selected or the selected checkboxes are valid
@@ -355,7 +358,7 @@ class NewAssessment extends React.Component {
     //get a single patient with matching patient_id
     async getMatchingPatientData(patient_id) {
         let passback = await RequestServer.getPatientByID(patient_id)
-        if (!this.state.submit && passback !== null && passback.data !== '') {
+        if (passback !== null && passback.data !== '') {
             let patient_data = passback.data
 
             this.setState({
@@ -365,7 +368,13 @@ class NewAssessment extends React.Component {
                 gender: patient_data.gender,
                 create_patient: false
             })
-        } else if (!this.state.submit) {
+            if (patient_data.birth_date.includes(", ")) {
+                this.setState({
+                    temp_dob: new Date(patient_data.birth_date)
+                })
+
+            }
+        } else {
             this.setState({
                 fname: '',
                 lname: '',
@@ -389,8 +398,7 @@ class NewAssessment extends React.Component {
     handleSubmit = async () => {
         this.setState({
             error: false,
-            errorMessage: '',
-            submit: true
+            errorMessage: ''
         })
         this.checkSymptoms();
         this.checkGestAge();
@@ -402,9 +410,7 @@ class NewAssessment extends React.Component {
 
         //the error controller
         if (this.state.error) {
-            this.setState({
-                submit: false
-            })
+
             alert(this.state.errorMsg)
             return;
         }
@@ -412,9 +418,8 @@ class NewAssessment extends React.Component {
         if (this.state.dob_type === "date") {
             let input_dob = Utility.convertDate(this.state.temp_dob)
             let today = Utility.convertDate(new Date())
-            // console.log(event.toDateString() === event2.toDateString())
 
-            if (today !== input_dob) {
+            if (today === input_dob) {
                 alert("Incorrect date of birth")
                 return false;
             }
@@ -422,14 +427,26 @@ class NewAssessment extends React.Component {
                 birth_date: input_dob
             })
         }
+        this.setColor();
+
+        //check if we need to recheck the reading
+        let retestAdvice = ReadingRequestAnalysis.computeAdvice(this.state.recheck_history)
+        if (retestAdvice !== "RETEST_NOT_RECOMMENDED") {
+            this.setState({
+                retestAdvice: retestAdvice,
+                heart_rate: '',
+                systolic: '',
+                diastolic: '',
+                birth_date: ''
+            })
+            return false;
+        }
 
         //setDate
         let today = new Date();
         this.setState({date: today.toString()})
-        this.setColor();
         this.changeType();
         this.changeState();
-        //console.log(this.state)
 
         //assessment
         this.addAssessment();
@@ -448,12 +465,6 @@ class NewAssessment extends React.Component {
         }
     }
 
-
-    setSubmit() {
-        this.setState({
-            submit: true
-        })
-    }
 
     async getLocation() {
         let response = await RequestServer.getLocations()
@@ -556,7 +567,7 @@ class NewAssessment extends React.Component {
                             </Radio>
                             <Radio value="age">Age</Radio>
                         </RadioGroup>
-                        
+
 
                         <div style={{display: (this.state.dob_type == "age" ? 'block' : 'none')}}>
                             <TextValidator
@@ -654,7 +665,13 @@ class NewAssessment extends React.Component {
                         <br/>
                     </Cell>
                     <Cell col={4}>
-
+                        <div
+                            style={{display: (this.state.retestAdvice !== "RETEST_NOT_RECOMMENDED" ? 'block' : 'none')}}>
+                            {/*<p>{this.state.retestAdvice}</p>*/}
+                            <Alert key={3} variant={'danger'}>
+                                {this.state.retestAdvice}
+                            </Alert>
+                        </div>
                         <h4>Vitals</h4>
                         <TextValidator
                             label="Systolic"

@@ -93,6 +93,7 @@ class Utility extends Component {
         }
         return roleArray;
     }
+
 }
 
 export default Utility; //if I use new keyword here, I can use all the methods without static keyword. but it's should be a static class
