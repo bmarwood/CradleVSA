@@ -149,10 +149,10 @@ class PatientList extends Component {
                                         const data = [...this.state.data];
                                         data.splice(data.indexOf(oldData), 1);
                                         this.setState({
-                                            locations: data
+                                            data: data
                                         });
                                     }
-                                }, 600);
+                                }, 1000);
                             }),
 
                     }}

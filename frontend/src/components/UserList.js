@@ -55,7 +55,7 @@ class UserList extends Component {
         }
         return false
     }
-    
+
     getUserRoles(user) {
         var roleString = ''
         if (user && user.roles) {
@@ -126,7 +126,7 @@ class UserList extends Component {
                                         const data = [...this.state.data];
                                         data.splice(data.indexOf(oldData), 1);
                                         this.setState({
-                                            locations: data
+                                            data: data
                                         });
                                     }
                                 }, 600);
