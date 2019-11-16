@@ -12,12 +12,16 @@
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/CradleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/CradleApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Patients.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Patients.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/config/MongoDBConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/config/MongoDBConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/AssessmentsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/AssessmentsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/PatientsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/PatientsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/test/java/ca/cmpt373/earth/cradle/CradleApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AdminLanding.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AdminLanding.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/backend/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,8 +39,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="171">
+              <caret line="9" column="39" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -44,7 +48,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
+            <state relative-caret-position="1444">
               <caret line="99" column="14" selection-start-line="99" selection-start-column="14" selection-end-line="99" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -101,8 +105,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+            <state relative-caret-position="228">
+              <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -155,9 +159,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="108" />
+    <option name="x" value="749" />
     <option name="y" value="2" />
-    <option name="width" value="1812" />
+    <option name="width" value="1171" />
     <option name="height" value="1128" />
   </component>
   <component name="ProjectId" id="1RXkNQMtMBGh5JJJCsacu0RKwSS" />
@@ -356,10 +360,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="108" y="2" width="1812" height="1128" extended-state="1" />
+    <frame x="749" y="2" width="1171" height="1128" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25454545" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28686327" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -373,7 +377,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32940018" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3284169" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3284169" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5017564" side_tool="true" weight="0.32940018" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32940018" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49824357" weight="0.32940018" />
@@ -549,8 +553,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="171">
+          <caret line="9" column="39" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1444">
+          <caret line="99" column="14" selection-start-line="99" selection-start-column="14" selection-end-line="99" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -603,20 +617,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="99" column="14" selection-start-line="99" selection-start-column="14" selection-end-line="99" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+        <state relative-caret-position="228">
+          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
         </state>
       </provider>
     </entry>

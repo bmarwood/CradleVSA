@@ -71,18 +71,12 @@ function SimpleTabs() {
 
   return (
       <div className={classes.root}>
-        <AppBar className={classes.appbar} position="static">
-          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-            <Tab label="Patients" {...a11yProps(0)} />
-            <Tab label="Users" {...a11yProps(1)} />
+        <AppBar className={classes.appbar} position="static" color = "white">
+          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" color = "white">
+            <Tab label="Patients" {...a11yProps(0)} color = "white"/>
+            <Tab label="Users" {...a11yProps(1)} color = "white"/>
           </Tabs>
         </AppBar>
-
-        <HeaderTabs ripple activeTab={1} onChange={(tabId) => {}}>
-                <Tab>Tab1</Tab>
-                <Tab>Tab2</Tab>
-                <Tab>Tab3</Tab>
-            </HeaderTabs>
 
         <TabPanel value={value} index={0}>
           <PatientList/>
