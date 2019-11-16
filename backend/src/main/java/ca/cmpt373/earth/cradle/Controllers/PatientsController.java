@@ -94,14 +94,6 @@ public class PatientsController {
         }
     }
 
-//    @GetMapping("/delete/{patient_id}")
-//    @ResponseStatus(code = HttpStatus.OK)
-//    @CrossOrigin(origins = "http://localhost:8040")
-//    public void delete(@PathVariable String patient_id) {
-//        patientsRepository.deleteById(patient_id);
-//    }
-
-
     //deleteWorks
     @DeleteMapping("/delete/{patient_id}")
     public String deleteById(@PathVariable String patient_id) {
@@ -112,6 +104,19 @@ public class PatientsController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @PostMapping("/update/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Patients> updatePatient(@RequestBody Patients patient) {
+        try {
+            this.patientsRepository.save(patient);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.status(200).body(patient);
     }
 
 }

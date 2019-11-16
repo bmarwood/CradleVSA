@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import './PatientComponents/PatientList.css';
 import requestServer from './RequestServer';
+import {IconButton, EditIcon} from "react-mdl";
 
 
 class UserList extends Component {
@@ -107,8 +108,20 @@ class UserList extends Component {
         }
     }
 
+    updateRow(oldData) {
+        this.props.history.push(
+            '/newWorker',
+        )
+    }
+
 
     render() {
+        const editIcon = (
+            <IconButton onClick={this.updateRow}>
+                <EditIcon color="primary"/>
+            </IconButton>
+        );
+
         return (
             <div className="table-position">
                 <MaterialTable
@@ -131,7 +144,14 @@ class UserList extends Component {
                                     }
                                 }, 600);
                             }),
-
+                        onRowUpdate: oldData =>
+                            new Promise(resolve => {
+                                this.updateRow(oldData);
+                            }),
+                        // onRowUpdate: (newData, oldData) =>
+                        //     new Promise(resolve => {
+                        //         this.updateRow(oldData);
+                        //     }),
 
                     }}
                 />

@@ -63,21 +63,8 @@ public class UsersController {
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Users> updateUser(@RequestBody Users user) {
-        //Update user's information
-
-        String workerId = user.getId();
-        String name = user.getName();
-        String username = user.getUsername();
-        String password = user.getPassword();
-        String dob = user.getDob();
-        String address = user.getAddress();
-//        Users.Gender gender = user.getGender();
-        String gender = user.getGender();
-        Set<Role> roles = user.getRoles();
-
         try {
-            this.usersRepository.save(new Users(workerId, username, password, name, dob,
-                    address, gender, roles));
+            this.usersRepository.save(user);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
