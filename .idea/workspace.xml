@@ -8,6 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6c5c52e7-f2b7-4154-8017-85c0c31bb73f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,6 +43,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -55,7 +57,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.NewAssessment.js">
+  <component name="RunManager" selected="Spring Boot.CradleApplication">
     <configuration name="CradleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ca.cmpt373.earth.cradle.CradleApplication" />
       <module name="cradle" />
@@ -102,7 +104,9 @@
       <workItem from="1570509748392" duration="856000" />
       <workItem from="1572497843434" duration="37498000" />
       <workItem from="1572762994428" duration="169000" />
-      <workItem from="1572826490737" duration="583000" />
+      <workItem from="1572826490737" duration="918000" />
+      <workItem from="1572890842138" duration="5653000" />
+      <workItem from="1573070919935" duration="1980000" />
     </task>
     <servers />
   </component>
@@ -135,6 +139,22 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>

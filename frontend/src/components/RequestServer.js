@@ -48,16 +48,16 @@ class RequestServer extends Component {
         }
     }
 
-    async getPatient(patient_ID) {
-        try {
-            var response = await axios.get(this.getServerLocation() + '/patients/all')
-            return response
-        } catch (error) {
-            console.log('error block')
-            console.log(error)
-            return null
-        }
-    }
+    // async getPatient(patient_ID) {
+    //     try {
+    //         var response = await axios.get(this.getServerLocation() + '/patients/all')
+    //         return response
+    //     } catch (error) {
+    //         console.log('error block')
+    //         console.log(error)
+    //         return null
+    //     }
+    // }
 
     async addAssessment(assessment) {
         try {
@@ -104,9 +104,9 @@ class RequestServer extends Component {
         }
     }
 
-    async getVHT(id) {
+    async getCVSA(id) {
         try {
-            var response = await axios.get(this.getServerLocation() + '/vhts/get' + id)
+            var response = await axios.get(this.getServerLocation() + '/users/get' + id)
             return response
         } catch (error) {
             console.log('error block')
@@ -149,9 +149,9 @@ class RequestServer extends Component {
     }
 
     //get list of assessments based on the worker id
-    async getAssessmentsByUserId(id) {
+    async getAssessmentsByCVSAId(id) {
         try {
-            var response = await axios.get(this.getServerLocation() + '/assessments/getByUserId' + id)
+            var response = await axios.get(this.getServerLocation() + '/assessments/getByCVSAId' + id)
             return response
         } catch (error) {
             console.log('error block')
@@ -255,6 +255,44 @@ class RequestServer extends Component {
             return null
         }
     }
+
+    //delete patient & delete assessments
+    async deletePatient(patient_id) {
+        try {
+            let response = await axios.delete(this.getServerLocation() + '/patients/delete/' + patient_id)
+            // delete corresponding assessments
+            // await axios.delete(this.getServerLocation() + '/assessments/deleteByPatientId/' + patient_id)
+            return response
+
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    async deleteUser(user_id) {
+        try {
+            var response = await axios.delete(this.getServerLocation() + '/users/delete/' + user_id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    async deleteAssessment(assessment_id) {
+        try {
+            var response = await axios.delete(this.getServerLocation() + '/assessments/delete/' + assessment_id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
 }
 
 export default new RequestServer();

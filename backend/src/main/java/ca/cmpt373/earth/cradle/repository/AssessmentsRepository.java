@@ -21,10 +21,11 @@ public interface AssessmentsRepository extends MongoRepository<Assessments, Stri
     @Query("{id: '?0'}")
     Assessments findCustomById(String id);
 
-    @Query("{vht_id: '?0'}")
-    List<Assessments> findByUserId(String vht_id);
+    @Query("{cvsa_id: '?0'}")
+    List<Assessments> findByCVSAId(String cvsa_id);
 
     @Query("{patient_id: '?0'}")
     List<Assessments> findByPatientId(String patient_id);
+
 }
 
