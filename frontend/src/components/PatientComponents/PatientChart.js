@@ -122,6 +122,9 @@ class PatientChart extends React.Component {
         if(typeof dataLineArray[0] !== "undefined"){
         this.setState({dataLine: dataLineArray[0]})
         }
+        else{
+            window.alert("No history found")
+        }
     }
 
     async getMatchingPatientID(patient_id) {
