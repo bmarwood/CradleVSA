@@ -4,6 +4,7 @@ import './PatientList.css';
 import GraphPopup from '../../Modals/GraphPopup';
 import MedicationPopup from '../../Modals/MedicationPopup';
 import requestServer from '../RequestServer';
+import UpdatePatientPopup from "../../Modals/UpdatePatientPopup";
 
 class PatientList extends Component {
 
@@ -38,11 +39,18 @@ class PatientList extends Component {
                     headerStyle: {textAlign: 'center'},
                     cellStyle: {textAlign: 'center'}
                 },
+                {
+                    title: 'Update information',
+                    field: 'update',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
             ],
             data: [
                 {
                     graph: <GraphPopup/>,
-                    medications: <MedicationPopup/>
+                    medications: <MedicationPopup/>,
+                    update: <UpdatePatientPopup/>
                 },
             ],
         })
@@ -73,6 +81,7 @@ class PatientList extends Component {
             var id = patient.id
             var graph = <GraphPopup/>
             var medications = <MedicationPopup/>
+            var update = <UpdatePatientPopup/>
 
             var patient_obj = {
                 name: name,
@@ -81,7 +90,8 @@ class PatientList extends Component {
                 sex: sex,
                 id: id,
                 graph: graph,
-                medications: medications
+                medications: medications,
+                update: update
             }
 
             patientList.push(patient_obj)
