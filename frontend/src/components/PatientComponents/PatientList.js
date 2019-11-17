@@ -5,6 +5,7 @@ import GraphPopup from '../../Modals/GraphPopup';
 import MedicationPopup from '../../Modals/MedicationPopup';
 import requestServer from '../RequestServer';
 import UpdatePatientPopup from "../../Modals/UpdatePatientPopup";
+import ModalPopup from "../../Modals/ModalPopup";
 
 class PatientList extends Component {
 
@@ -81,7 +82,8 @@ class PatientList extends Component {
             var id = patient.id
             var graph = <GraphPopup/>
             var medications = <MedicationPopup/>
-            var update = <UpdatePatientPopup/>
+            var update = <UpdatePatientPopup
+                id={patient.id}/>
 
             var patient_obj = {
                 name: name,

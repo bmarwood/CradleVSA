@@ -8,12 +8,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import './newForm.css';
 import {Cell, Radio, RadioGroup} from "react-mdl";
 import ShowSymp from "./SymptomsForm";
+import {toast} from "react-toastify";
 
 //form for a new patient
 class NewPatient extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        console.log(props.id)
+
         this.state = {
             id: '',
             name: '',
@@ -26,9 +29,11 @@ class NewPatient extends React.Component {
             lname: '',
             dob_type: 'date',
             temp_dob: new Date(),
-            vht_array: []
+            vht_array: [],
+            update: props.id,
         };
         this.handleChange = this.handleChange.bind(this);
+        this.getOldData();
     }
 
     componentDidMount() {
@@ -36,21 +41,27 @@ class NewPatient extends React.Component {
             .catch(() => {
                 return true;
             });
-
         //check for patient id - no duplicate value
         ValidatorForm.addValidationRule('checkID', (value) => {
             let validID = this.checkID(value)
                 .catch(() => {
                     console.log("validID", validID)
-
                     return true;
                 });
             return validID;
         });
 
-        ValidatorForm.addValidationRule('check_vht_id', (value) => {
-            //check for existing vht id
-            return true;
+        ValidatorForm.addValidationRule('check_format', (value) => {
+            if (value === this.state.update) {
+                return true;
+            }
+            var regex = /[[0-9]{11}/;
+            if (regex.test(value)) {
+                if (value.length === 11) {
+                    return true
+                }
+            }
+            return false;
         });
 
         //check if age is filled
@@ -60,6 +71,37 @@ class NewPatient extends React.Component {
             }
             return true;
         });
+    }
+
+    async getOldData() {
+        if (!this.state.update) {
+            return
+        }
+        let old_data = await RequestServer.getPatientByID(this.state.update)
+        if (old_data) {
+            old_data = old_data.data
+            if (old_data !== null) {
+                console.log(old_data)
+                this.setState({
+                    id: old_data.id,
+                    gender: old_data.gender,
+                    fname: old_data.name.split(" ")[0],
+                    lname: old_data.name.split(" ")[1],
+                    vht_id: old_data.vht_id
+                })
+                if (old_data.birth_date.includes(",")) {
+                    this.setState({
+                        temp_dob: new Date(old_data.birth_date),
+                        dob_type: 'date'
+                    })
+                } else {
+                    this.setState({
+                        birth_date: new Date(old_data.birth_date),
+                        dob_type: 'age'
+                    })
+                }
+            }
+        }
     }
 
     async getVHTList() {
@@ -105,7 +147,7 @@ class NewPatient extends React.Component {
     //compare with the matching id
     async checkID(patient_id) {
         var existing_id = await this.getMatchingPatientID(patient_id);
-        if (existing_id !== patient_id) {
+        if (patient_id === this.state.update || existing_id !== patient_id) {
             return true;
         }
         return false;
@@ -113,10 +155,11 @@ class NewPatient extends React.Component {
 
 
     handleSubmit = async () => {
-        if (this.state.vht_id === "EMPTY") {
-            alert("Please select at least one VHT")
-            return false;
-        }
+        console.log(this.state)
+        // if (this.state.vht_id === "EMPTY") {
+        //     alert("Please select at least one VHT")
+        //     return false;
+        // }
         if (this.state.dob_type === "date") {
             let input_dob = Utility.convertDate(this.state.temp_dob)
             let today = Utility.convertDate(new Date())
@@ -130,13 +173,24 @@ class NewPatient extends React.Component {
             })
         }
         this.changeState();
-
-        var response = await RequestServer.addPatient(this.state)
-        if (response !== null) {
-            this.props.history.push(
-                '/',
-                {detail: response.data}
-            )
+        var response = null
+        if (this.state.update) {
+            response = await RequestServer.updatePatient(this.state)
+            alert("UPDATED!!")
+        } else {
+            response = await RequestServer.addPatient(this.state)
+            if (response !== null) {
+                toast("Patient Added");
+                this.props.history.push(
+                    '/',
+                    {detail: response.data}
+                )
+            } else {
+                this.setState({
+                    error: true,
+                    errorMsg: 'Unable to register'
+                })
+            }
         }
     }
 
@@ -157,7 +211,9 @@ class NewPatient extends React.Component {
                 onSubmit={this.handleSubmit}
                 onError={errors => console.log(errors)}
             >
-                <h4>New Patient </h4>
+                <div style={{display: (this.state.update ? 'none' : 'block')}}>
+                    <h4>New Patient </h4>
+                </div>
                 <TextValidator
                     label="First Name"
                     onChange={this.handleChange}
@@ -185,7 +241,7 @@ class NewPatient extends React.Component {
                     onChange={this.handleChange}
                     name="id"
                     value={this.state.id}
-                    validators={['required', 'matchRegexp:^[0-9]{11}$', 'checkID']}
+                    validators={['required', 'check_format', 'checkID']}
                     errorMessages={['this field is required', 'Must be 11 digits', 'Existing ID: Re-enter the ID']}
                     variant="outlined"
                 />
@@ -252,7 +308,6 @@ class NewPatient extends React.Component {
                     backgroundColor: 'blue',
                     color: 'white'
                 }}>Submit</Button>
-                <br/>
                 <br/>
             </ValidatorForm>
         );

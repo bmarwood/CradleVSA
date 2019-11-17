@@ -90,7 +90,9 @@ class UserList extends Component {
             var sex = user.gender
             var birthYear = user.dob
             var id = user.id
-            var update = <UpdateUserPopup/>
+            var update = <UpdateUserPopup
+                id={user.id}
+            />
 
             var user_obj = {
                 username: username,
@@ -125,11 +127,6 @@ class UserList extends Component {
 
 
     render() {
-        const editIcon = (
-            <IconButton onClick={this.updateRow}>
-                <EditIcon color="primary"/>
-            </IconButton>
-        );
 
         return (
             <div className="table-position">
@@ -153,14 +150,6 @@ class UserList extends Component {
                                     }
                                 }, 600);
                             }),
-                        onRowUpdate: oldData =>
-                            new Promise(resolve => {
-                                this.updateRow(oldData);
-                            }),
-                        // onRowUpdate: (newData, oldData) =>
-                        //     new Promise(resolve => {
-                        //         this.updateRow(oldData);
-                        //     }),
 
                     }}
                 />
