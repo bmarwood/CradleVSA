@@ -4,23 +4,21 @@ import {MDBContainer} from "mdbreact";
 import './PatientChart.css';
 import '../../Modals/GraphPopup';
 import RequestServer from '../RequestServer';
-
+import Utility from '../NewForm/Utility';
 
 class PatientChart extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            dataLine: []
+            dataLine: [],
+            patient_id : props.patient_id
         }
     }
 
     componentDidMount() {
-        this.getMatchingPatientID("81991")
-        this.timer = setInterval(() => this.getMatchingPatientID("81991"), 10000);
-        //this.getPatientList()
-        //this.timer = setInterval(() => this.getPatientList(), 10000);
-
+        this.getMatchingPatientID(this.props.patient_id)
+        this.timer = setInterval(() => this.getMatchingPatientID(this.props.patient_id), 10000);
         this.setState({
             dataLine: {
                 labels: ["Jan", "Feb", "March"],
@@ -30,7 +28,7 @@ class PatientChart extends React.Component {
                         fill: true,
                         backgroundColor: "rgba(255, 157, 148, .3)",
                         borderColor: "red",
-                        data: [2, 3, 4]
+                        data: []
                     },
                     {
                         label: "Diastolic",
@@ -80,11 +78,6 @@ class PatientChart extends React.Component {
         var systolicData = []
         var diastolicData = []
         var heartRateData = []
-        response.forEach(list_of_assessments => {
-            systolicData.push(list_of_assessments.systolic)
-            diastolicData.push(list_of_assessments.diastolic)
-            heartRateData.push(list_of_assessments.heart_rate)
-        })
 
         var datasets = [
             {
@@ -110,28 +103,41 @@ class PatientChart extends React.Component {
             }
         ]
         response.forEach(list_of_assessments => {
-
+            //Array of dates
             labels.push(list_of_assessments.date)
+            //3 Arrays for readings
+            systolicData.push(list_of_assessments.systolic)
+            diastolicData.push(list_of_assessments.diastolic)
+            heartRateData.push(list_of_assessments.heart_rate)
 
             var dataLine_obj = {
                 labels: labels,
                 datasets: datasets
             }
+       
             dataLineArray.push(dataLine_obj)
         });
 
+        //Shows a blank page on graph if no list of assessments exists
+        if(typeof dataLineArray[0] !== "undefined"){
         this.setState({dataLine: dataLineArray[0]})
-
+        }
+        else{
+            window.alert("No history found")
+        }
     }
 
     async getMatchingPatientID(patient_id) {
         var passback = await RequestServer.getPatientByID(patient_id)
         if (passback != null) {
-            this.populateData(passback.data.list_of_assessments
+            //Converts dates in list_of_assessments to Date format to sort by date
+            this.populateData(passback.data.list_of_assessments.sort(function(a,b){
+                a = Utility.convertStringToDate(a.date);
+                b = Utility.convertStringToDate(b.date);
+                return a > b ? 1 : a < b ? -1 : 0;
+            })
             )
             console.log(passback.data.list_of_assessments)
-            console.log("passback.data.list_of_assessments[0]")
-            console.log(passback.data.list_of_assessments[0].heart_rate)
         }
     }
 
@@ -145,7 +151,7 @@ class PatientChart extends React.Component {
     render() {
         return (
             <MDBContainer style={{backgroundColor: 'white'}}>
-                <h3 className="mt-5">Blood Pressure and Heart Rate</h3>
+                <h3 className="mt-5">{this.props.patient_name}</h3>
                 <Line data={this.state.dataLine} options={{responsive: true}}/>
             </MDBContainer>
         );

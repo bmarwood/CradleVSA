@@ -71,7 +71,10 @@ class PatientList extends Component {
             var birthDate = patient.birth_date
             var sex = patient.gender[0]
             var id = patient.id
-            var graph = <GraphPopup/>
+            var graph = <GraphPopup
+            patient_id={patient.id}
+            patient_name={name+" "+surname}
+            />
             var medications = <MedicationPopup/>
 
             var patient_obj = {
