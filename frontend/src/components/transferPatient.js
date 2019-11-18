@@ -28,19 +28,19 @@ class TransferPatient extends Component {
 
     componentDidMount() {
         this.getVHTList()
-        this.getAssessmentList()
-        this.timer = setInterval(() => this.getAssessmentList(), 10000);
+        this.getPatientList()
+        this.timer = setInterval(() => this.getPatientList(), 10000);
         this.setState({
             columns: [
                 {
                     title: 'Patient Id',
-                    field: 'patient_id',
+                    field: 'id',
                     headerStyle: { textAlign: 'center' },
                     cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Cradle Professional Id',
-                    field: 'cvsa_id',
+                    field: 'vht_id',
                     headerStyle: { textAlign: 'center' },
                     cellStyle: { textAlign: 'center' }
                 },
@@ -48,8 +48,7 @@ class TransferPatient extends Component {
             data: [
                 {
                     patient_id: 'LOADING...',
-                    cvsa_id: 'LOADING...',
-                    assessment_id: 'LOADING...',
+                    vht_id: 'LOADING...',
                 }
             ]
         })
@@ -65,20 +64,25 @@ class TransferPatient extends Component {
         //this.getVHTList()
         //console.log(this.state.vht_array)
         var IdList = []
-        response.forEach(function (assessment) {
-            var patient_id = assessment.patient_id
-            var cvsa_id = assessment.cvsa_id
+        response.forEach(patient => {
+            var id = patient.id
+            if(patient.vht_id == null){
+                var vht_id = "EMPTY"
+            }
+            else{
+                var vht_id = patient.vht_id
+            }
             //var list_of_patients = (VHT.list_of_patients)
             //var list_of_assessments = (VHT.list_of_assessments)
             //var id = VHT.id
 
-            var assessment_obj = {
-                id: assessment._id,
-                patient_id: assessment.patient_id,
-                cvsa_id: assessment.cvsa_id,
+            var patient_obj = {
+                //id: patient.id,
+                id: id,
+                vht_id: vht_id,
             }
             //if (this.getRoles(assessment_obj.cvsa_id).contains("VHT")){
-            IdList.push(assessment_obj)
+            IdList.push(patient_obj)
             //}
 
             //this.state.vht_array.push({id: VHT.id})
@@ -106,6 +110,14 @@ class TransferPatient extends Component {
         }
         return false
     }
+
+    async getPatientList() {
+        var passback = await requestServer.getPatientList()
+        if (passback !== null && passback.data !== "") {
+            this.populateData(passback.data)
+        }
+    }
+
     async getAssessmentList() {
         var userData = JSON.parse(localStorage.getItem("userData"))
         var roles = this.getRoles(userData)
@@ -114,14 +126,6 @@ class TransferPatient extends Component {
             passback = await requestServer.getAssessmentsList()
 
             if (passback !== null && passback.data !== "") {
-                //console.log("in getAss", Object.keys(passback.data).length)
-                //for (let itr = 0; itr < Object.keys(passback.data).length; itr++) {
-                    //console.log("in getAss", this.state.vht_array[0].id)
-                    //if(this.state.vht_array[0].id==(passback.data[itr].cvsa_id)) {
-                       //console.log("in getAss WOO ", passback.data[itr].cvsa_id)
-                    //}
-                //}
-                //if(this.state.vht_array.contains(passback.data.cvsa_id))
                 await this.vhtSet()
                 await this.userSet(passback.data)
                 let found = await this.parseThings(passback.data)
