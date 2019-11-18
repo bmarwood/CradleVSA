@@ -112,8 +112,10 @@ class TransferPatient extends Component {
     }
 
     async getPatientList() {
-        var passback = await requestServer.getPatientList()
+        var passback = await requestServer.getPatientVHTList()
         if (passback !== null && passback.data !== "") {
+            console.log("GODMODE",passback.vhtlist)
+            this.setState({vht_w_assessment:passback.vhtlist})
             this.populateData(passback.data)
         }
     }
@@ -121,6 +123,7 @@ class TransferPatient extends Component {
     async getAssessmentList() {
         var userData = JSON.parse(localStorage.getItem("userData"))
         var roles = this.getRoles(userData)
+        console.log("USER", userData)
         var passback
         if (this.isAdmin(roles)) {
             passback = await requestServer.getAssessmentsList()
