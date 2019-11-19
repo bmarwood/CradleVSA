@@ -16,9 +16,10 @@ public class Medications {
     private String start_date;
     private String end_date;
     private String side_effects;
+    private String frequency;
 
     public Medications(String id, String patient_id, String medication_name, String dose, String start_date, String end_date,
-            String side_effects) {
+            String side_effects, String frequency) {
         this.id = id;
         this.patient_id = patient_id;
         this.medication_name = medication_name;
@@ -26,6 +27,7 @@ public class Medications {
         this.start_date = start_date;
         this.end_date = end_date;
         this.side_effects = side_effects;
+        this.frequency = frequency;
     }
 
     public String getId() {
@@ -82,5 +84,13 @@ public class Medications {
 
     public void setSide_effects(String side_effects) {
         this.side_effects = side_effects;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
     }
 }

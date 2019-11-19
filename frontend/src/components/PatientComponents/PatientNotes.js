@@ -26,6 +26,7 @@ class PatientNotes extends Component {
                 { title: 'Start Date', field: 'startDate'},
                 { title: 'End Date', field: 'endDate'},
                 { title: 'Side Effects', field: 'sideEffects'},
+                { title: 'Frequency', field: 'frequency'},
               ], 
               data: [
                 { 
@@ -33,13 +34,16 @@ class PatientNotes extends Component {
                   dose: '5mg',
                   startDate: 'Start', 
                   endDate: 'End', 
-                  sideEffects: 'dry mouth' },
+                  sideEffects: 'dry mouth',
+                  frequency: 'daily'
+                },
                 {
                   medication: 'Medication Name 2',
                   dose: '2mg',
                   startDate: 'Start',
                   endDate: 'End',
                   sideEffects: 'itchy skin',
+                  frequency: 'twice daily'
                 },
             ],
         })
@@ -57,13 +61,15 @@ class PatientNotes extends Component {
         var startDate = list_of_medications.start_date
         var endDate = list_of_medications.end_date
         var sideEffects = list_of_medications.side_effects
+        var frequency = list_of_medications.frequency
 
         var medications_obj = {
           medication: medication,
           dose: dose,
           startDate: startDate,
           endDate: endDate,
-          sideEffects: sideEffects
+          sideEffects: sideEffects,
+          frequency: frequency
       }
 
       medicationsList.push(medications_obj)

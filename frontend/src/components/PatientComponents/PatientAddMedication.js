@@ -18,11 +18,12 @@ class PatientAddMedication extends React.Component {
             medication_name: '',
             dose: '',
             start_date: '',
-            end_date: '',
+            end_date: 'Ongoing',
             side_effects: '',
             temp_start_date: new Date(),
             temp_end_date: new Date(),
-            patient_name: "Loading"
+            patient_name: "Loading",
+            frequency: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.changeStartDate = this.changeStartDate.bind(this);
@@ -119,20 +120,28 @@ class PatientAddMedication extends React.Component {
                 <Grid>
                 <Cell col={4}></Cell>
                 <Cell col={4}>
-                <p>Start Date:</p>
-                <DatePicker
-                selected={this.state.temp_start_date}
-                onChange={this.changeStartDate}
+                <TextValidator
+                label="Frequency"
+                onChange={this.handleChange}
+                name="frequency"
+                value={this.state.frequency}
+                validators={['required']}
+                errorMessages={['this field is required']}
                 />
                 </Cell>
                 </Grid>
                 <Grid>
                 <Cell col={4}></Cell>
                 <Cell col={4}>
-                <p>End Date:</p>
+                {/* <p>End Date:</p>
                 <DatePicker
                 selected={this.state.temp_end_date}
                 onChange={this.changeEndDate}
+                /> */}
+                <p>Start Date:</p>
+                <DatePicker
+                selected={this.state.temp_start_date}
+                onChange={this.changeStartDate}
                 />
                 </Cell>
                 </Grid>

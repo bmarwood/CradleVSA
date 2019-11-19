@@ -13,12 +13,11 @@ public class Patients {
     private String name;
     private String birth_date;
     private List<Assessments> list_of_assessments;
-    private List<Medications> list_of_medications;
     private String gender;
     private String vht_id;
 
 
-    public Patients(String id, String name, String birth_date, List<Assessments> list_of_assessments, String gender, String vht_id, List<Medications> list_of_medications) {
+    public Patients(String id, String name, String birth_date, List<Assessments> list_of_assessments, String gender, String vht_id) {
         this.id = id;
         this.name = name;
         this.birth_date = birth_date;
@@ -75,12 +74,6 @@ public class Patients {
         this.vht_id = vht_id;
     }
 
-    public List<Medications> getList_of_medications() {
-        return list_of_medications;
-    }
 
-    public void setList_of_medications(List<Medications> list_of_medications) {
-        this.list_of_medications = list_of_medications;
-    }
 }
 

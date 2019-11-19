@@ -48,9 +48,9 @@ public class PatientsController {
             for (Patients eachPatient : patients) {
                 String id = eachPatient.getId();
                 List<Assessments> assessments = this.assessmentsController.getAByPatientId(id);
-                List<Medications> medications = this.medicationsController.getMedicationByPatientId(id);
+                //List<Medications> medications = this.medicationsController.getMedicationByPatientId(id);
                 eachPatient.setList_of_assessments(assessments);
-                eachPatient.setList_of_medications(medications);
+                //eachPatient.setList_of_medications(medications);
             }
             return patients;
         } catch (Throwable e) {
