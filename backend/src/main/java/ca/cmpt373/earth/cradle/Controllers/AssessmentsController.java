@@ -63,8 +63,14 @@ public class AssessmentsController {
 
         String patient_id = assessment.getPatient_id();
 
+<<<<<<< HEAD
         Patients new_patient = new Patients(patient_id, assessment.getName(), assessment.getBirth_date(), list_of_assessments, "FEMALE"//need to update
                 , assessment.getVht_id(), list_of_medications);
+=======
+        //adding new patient
+        Patients new_patient = new Patients(patient_id, assessment.getName(), assessment.getBirth_date(), list_of_assessments, assessment.getGender()
+                , assessment.getCvsa_id());
+>>>>>>> 39e6383dec4606e25b14544bb07d48c458110fdd
         if (patientsController.get(patient_id) == null) {
             patientsController.add(new_patient);
         }
@@ -80,11 +86,11 @@ public class AssessmentsController {
     }
 
     //vht_id
-    @GetMapping("/getByUserId{user_id}")
+    @GetMapping("/getByCVSAId{user_id}")
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "http://localhost:8040")
-    public List<Assessments> getByUserId(@PathVariable String user_id) {
-        return assessmentsRepository.findByUserId(user_id);
+    public List<Assessments> getByCVSAId(@PathVariable String CVSA_id) {
+        return assessmentsRepository.findByCVSAId(CVSA_id);
     }
 
     //patient_id

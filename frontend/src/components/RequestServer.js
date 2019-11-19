@@ -48,16 +48,16 @@ class RequestServer extends Component {
         }
     }
 
-    async getPatient(patient_ID) {
-        try {
-            var response = await axios.get(this.getServerLocation() + '/patients/all')
-            return response
-        } catch (error) {
-            console.log('error block')
-            console.log(error)
-            return null
-        }
-    }
+    // async getPatient(patient_ID) {
+    //     try {
+    //         var response = await axios.get(this.getServerLocation() + '/patients/all')
+    //         return response
+    //     } catch (error) {
+    //         console.log('error block')
+    //         console.log(error)
+    //         return null
+    //     }
+    // }
 
     async addAssessment(assessment) {
         try {
@@ -104,9 +104,9 @@ class RequestServer extends Component {
         }
     }
 
-    async getVHT(id) {
+    async getCVSA(id) {
         try {
-            var response = await axios.get(this.getServerLocation() + '/vhts/get' + id)
+            var response = await axios.get(this.getServerLocation() + '/users/get' + id)
             return response
         } catch (error) {
             console.log('error block')
@@ -138,9 +138,9 @@ class RequestServer extends Component {
     }
 
     //get list of assessments based on the worker id
-    async getAssessmentsByUserId(id) {
+    async getAssessmentsByCVSAId(id) {
         try {
-            var response = await axios.get(this.getServerLocation() + '/assessments/getByUserId' + id)
+            var response = await axios.get(this.getServerLocation() + '/assessments/getByCVSAId' + id)
             return response
         } catch (error) {
             console.log('error block')
