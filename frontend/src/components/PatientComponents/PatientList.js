@@ -106,39 +106,6 @@ class PatientList extends Component {
                     columns={this.state.columns}
                     data={this.state.data}
                     editable={{
-                        // onRowUpdate: (newData, oldData) =>
-                        //     new Promise(resolve => {
-                        //         setTimeout(() => {
-                        //             resolve();
-                        //             const data = [...this.state.data];
-                        //             data[data.indexOf(oldData)] = newData;
-                        //             this.setState({ ...this.state, data });
-                        //         }, 600);
-                        //     }),
-                        // onRowDelete: oldData =>
-                        //     new Promise(resolve => {
-                        //         setTimeout(() => {
-                        //             resolve();
-                        //             const data = [...this.state.data];
-                        //             data.splice(data.indexOf(oldData), 1);
-                        //             this.setState({ ...this.state, data });
-                        //         }, 600);
-                        //     }),
-                        // onRowAdd: newData =>
-                        //     new Promise((resolve, reject) => {
-                        //         setTimeout(() => {
-                        //             {
-                        //                 const data = [...this.state.data];
-                        //                 data.push(newData);
-                        //                 this.setState({ ...this.state, data });
-                        //             }
-                        //             resolve();
-                        //         }, 1000);
-                        //     }),
-                        // onRowAdd: newData =>
-                        //     new Promise((resolve) => {
-                        //       console.log("onrowadd", newData)
-                        //     }),
                         onRowDelete: oldData =>
                             new Promise(resolve => {
                                 setTimeout(() => {

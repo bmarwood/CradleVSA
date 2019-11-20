@@ -205,25 +205,6 @@ class AssessmentList extends Component {
                     title="Assessment List"
                     columns={this.state.columns}
                     data={this.state.data}
-                    // editable={{
-                    //     onRowDelete: oldData =>
-                    //         new Promise(resolve => {
-                    //             setTimeout(() => {
-                    //                 resolve();
-                    //                 var didDelete = this.deleteAssessment(oldData)
-                    //                 console.log(oldData)
-                    //                 if (didDelete) {
-                    //                     const data = [...this.state.data];
-                    //                     data.splice(data.indexOf(oldData), 1);
-                    //                     this.setState({
-                    //                         locations: data
-                    //                     });
-                    //                 }
-                    //             }, 600);
-                    //         }),
-
-
-                    // }}
                 />
             </div>
 

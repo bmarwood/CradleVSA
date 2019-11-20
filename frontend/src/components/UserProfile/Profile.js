@@ -215,21 +215,6 @@ export default class Profile extends Component {
                                 />
                             </Cell>
 
-                            {/* <Cell col = {4}>
-                        <TextField
-                            id="outlined-status"
-                            label="Status"
-                            className={classes.textField}
-                            value={values.status}
-                            onChange={handleChange('status')}
-                            margin="normal"
-                            InputProps={{
-                                readOnly: true,
-                                }}
-                            variant="outlined"
-                        />
-                    </Cell> */}
-
                         </Grid>
                         <Button style={{padding: '10px'}} variant="outlined" color="secondary" className="demo-button"
                                 type="submit">
@@ -248,20 +233,7 @@ export default class Profile extends Component {
     }
 
     render() {
-        // return this.state.isInEditMode ? 
-        // this.renderEditView() : 
-        // this.renderDefaultView()
         return this.renderDefaultView()
 
     }
 }
-
-// <div className="landing-form" style = {{color : "white"}}>
-//     <h1> Your Profile</h1>
-//     <h2 style = {{color : "white"}}>Hello Ms.{this.state.name}</h2>
-//     <p>Username: {this.state.username}</p>
-//     <p>Full Name: {this.state.username}</p>
-//     <p>Date Of Birth: {this.state.dob}</p>
-//     <p>Address: {this.state.address}</p>
-//     <p>Gender: {this.state.gender}</p>
-// </div>

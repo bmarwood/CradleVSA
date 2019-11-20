@@ -94,14 +94,6 @@ public class PatientsController {
         }
     }
 
-//    @GetMapping("/delete/{patient_id}")
-//    @ResponseStatus(code = HttpStatus.OK)
-//    @CrossOrigin(origins = "http://localhost:8040")
-//    public void delete(@PathVariable String patient_id) {
-//        patientsRepository.deleteById(patient_id);
-//    }
-
-
     //deleteWorks
     @DeleteMapping("/delete/{patient_id}")
     public String deleteById(@PathVariable String patient_id) {
