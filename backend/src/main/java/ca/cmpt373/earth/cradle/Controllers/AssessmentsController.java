@@ -94,6 +94,14 @@ public class AssessmentsController {
         return assessmentsRepository.findByPatientId(patient_id);
     }
 
+    @GetMapping("/last/getByPatientId{patient_id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public Assessments getLastByPatientId(@PathVariable String patient_id) {
+        List<Assessments> patientAssessments = assessmentsRepository.findByPatientId(patient_id);
+        return patientAssessments.get(patientAssessments.size() - 1);
+    }
+
     @DeleteMapping("/delete/{assessment_id}")
     public String deleteById(@PathVariable String assessment_id) {
         try {
