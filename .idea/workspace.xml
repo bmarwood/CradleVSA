@@ -8,7 +8,10 @@
   <component name="ChangeListManager">
     <list default="true" id="6c5c52e7-f2b7-4154-8017-85c0c31bb73f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/UserList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/UserList.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +36,9 @@
     </option>
   </component>
   <component name="ProjectId" id="1RqNVEVk5Zpo0xb9wJrwUl4DIcF" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -89,6 +94,9 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="ServiceViewManager">
+    <option name="showServicesTree" value="false" />
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -107,6 +115,14 @@
       <workItem from="1572826490737" duration="918000" />
       <workItem from="1572890842138" duration="5653000" />
       <workItem from="1573070919935" duration="1980000" />
+      <workItem from="1573529843920" duration="4443000" />
+      <workItem from="1573786734659" duration="7640000" />
+      <workItem from="1573841798570" duration="5265000" />
+      <workItem from="1574023672279" duration="720000" />
+      <workItem from="1574095603816" duration="2692000" />
+      <workItem from="1574107625225" duration="630000" />
+      <workItem from="1574150304119" duration="190000" />
+      <workItem from="1574215266022" duration="2816000" />
     </task>
     <servers />
   </component>
@@ -145,12 +161,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java</url>
-          <line>59</line>
+          <line>58</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java</url>
-          <line>61</line>
+          <line>60</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

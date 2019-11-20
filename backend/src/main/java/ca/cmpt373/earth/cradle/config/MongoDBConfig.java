@@ -39,8 +39,7 @@ public class MongoDBConfig {
             Role newAdminRole = new Role("3920101", "ADMIN");
             roles.add(newAdminRole);
             Set<Role> roles2 = new HashSet<>();
-            Role newUserRole = new Role("382828", "USER");
-            roles2.add(newUserRole);
+            Role newUserRole = new Role("382828", "USER");            roles2.add(newUserRole);
 
             Role newHealthWorkerRole = new Role("3920101", "HEALTHWORKER");
             roles.add(newHealthWorkerRole);
