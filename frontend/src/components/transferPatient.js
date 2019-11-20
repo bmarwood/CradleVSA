@@ -21,8 +21,7 @@ class TransferPatient extends Component {
             columns: [],
             data: [],
             vht_array: [],
-            vht_set: [],
-            user_set: [],
+            vht_empty_flag: Boolean,
             vht_w_assessment: [],
             from_vht: '',
             to_vht: ''
@@ -72,6 +71,9 @@ class TransferPatient extends Component {
             var id = patient.id
             if(patient.vht_id == null){
                 var vht_id = "EMPTY"
+            }
+            if(patient.vht_id == null || patient.vht_id == "EMPTY"){
+                this.setState({vht_empty_flag: true})
             }
             else{
                 var vht_id = patient.vht_id
@@ -238,7 +240,22 @@ class TransferPatient extends Component {
     render() {
 
         //TO DO PUT THESE INTO FUNCTIONS AND CHANGE ON SELECT CHANGE
-        let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
+        let new_array_with_or_without = [] //this.state.vht_w_assessment
+        for(var x= 0; x<this.state.vht_array.length; x++){
+            if (this.state.vht_array[x].id != this.state.from_vht) {
+                new_array_with_or_without.push(this.state.vht_array[x])
+            }
+        }
+
+        if(this.state.vht_empty_flag) {
+            if (!this.state.vht_w_assessment.includes("No VHT")) {
+                this.state.vht_w_assessment.unshift("No VHT")
+            }
+        }
+
+
+        console.log(new_array_with_or_without)
+        let vht_select_option = new_array_with_or_without.map(item => <option id={item.id}
                                                                          value={item.id}> {item.id} </option>)
 
         let vht_select_option2 = this.state.vht_w_assessment.map(item => <option
@@ -247,7 +264,7 @@ class TransferPatient extends Component {
         console.log("WE ARE HERE",this.state.from_vht)
         return (
             <div>
-                <div className = "landing-form">
+                <div className = "landing-formT">
                     <h1 style={{color: "white"}}>Transfer Patients</h1>
                     <label style = {{color:"white"}} >Transfer From: </label>
                     <select
@@ -259,29 +276,45 @@ class TransferPatient extends Component {
                         <option value="EMPTY"> --SELECT ONE--</option>
                         {vht_select_option2}
                     </select>
-                    <span className = "select-style" > >>> </span>
-                    <label className = "select-style" >Transfer To: </label>
+                    <span className = "select-styleT" > >>> </span>
+                    <label className = "select-styleT" >Transfer To: </label>
                     <select
                         //value={this.state.vht_id}
                         onChange={this.handleChange}
                         name="vht_B_id"
                     >
                         <option value="EMPTY"> --SELECT ONE--</option>
-                        {/*{vht_select_option}*/}
+                        {vht_select_option}
 
                     </select>
                 </div>
-                <div className="table-position">
+                <div className="table-positionT">
                 <MaterialTable
                     title="table"
                     columns={this.state.columns}
-                    data={this.state.data}/>
+                    data={this.state.data}
+                    actions={[
+                        {
+                            icon: 'compareArrows',
+                            tooltip: 'Transfer Patient',
+                            onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
+                        }
+                    ]}/>
                 </div>
-                <div className="table-position">
+                <div className="table-positionT">
                     <MaterialTable
                         title="table"
                         columns={this.state.columns}
-                        data={this.state.data}/>
+                        data={this.state.data}
+                        actions={[
+                            {
+                                icon: 'compareArrows',
+                                tooltip: 'Transfer Patient',
+                                onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
+                            }
+                        ]}
+                    />
+
                 </div>
             </div>
 
