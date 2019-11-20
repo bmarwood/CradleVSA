@@ -12,11 +12,14 @@ class AssessmentList extends Component {
 
     constructor(props) {
         super(props);
+        console.log(props.id)
         this.state = {
             columns: [],
             data: [],
+            passed_value: props.id
         }
-        this.deleteAssessment = this.deleteAssessment.bind(this)
+
+        this.deleteAssessment = this.deleteAssessment.bind(this);
     }
 
     componentDidMount() {
@@ -113,7 +116,6 @@ class AssessmentList extends Component {
 
 
     populateData(response) {
-
         var assessmentList = []
         response.forEach(function (assessment) {
             var info = <ModalPopup
@@ -170,22 +172,26 @@ class AssessmentList extends Component {
 
     //gets assessments for admin if that role is given, otherwise dynamically populates based on current user
     async getAssessmentList() {
+        console.log(this.state.passed_value)
+        if (this.state.passed_value) {
+            passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
+            this.populateData(passback.data)
+            if (passback.data.length === 0) {
+                alert("No History Found")
+            }
+            console.log(passback.data)
+            return
+        }
         var userData = JSON.parse(localStorage.getItem("userData"))
         var roles = this.getRoles(userData)
         var passback
         if (this.isAdmin(roles)) {
             passback = await requestServer.getAssessmentsList()
-
-            if (passback !== null && passback.data !== "") {
-                this.populateData(passback.data)
-            }
-
         } else {
             passback = await requestServer.getAssessmentsByUserId(userData.id)
-
-            if (passback !== null && passback.data !== "") {
-                this.populateData(passback.data)
-            }
+        }
+        if (passback !== null && passback.data !== "") {
+            this.populateData(passback.data)
         }
     }
 

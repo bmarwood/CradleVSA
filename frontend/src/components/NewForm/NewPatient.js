@@ -173,7 +173,8 @@ class NewPatient extends React.Component {
             })
         }
         this.changeState();
-        var response = null
+        var response = null;
+        console.log(this.state.update)
         if (this.state.update) {
             response = await RequestServer.updatePatient(this.state)
             alert("UPDATED!!")

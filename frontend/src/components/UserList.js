@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import './PatientComponents/PatientList.css';
 import requestServer from './RequestServer';
-import {IconButton, EditIcon} from "react-mdl";
 import UpdateUserPopup from "../Modals/UpdateUserPopup";
 
 class UserList extends Component {
@@ -148,7 +147,7 @@ class UserList extends Component {
                                             data: data
                                         });
                                     }
-                                }, 600);
+                                }, 1000);
                             }),
 
                     }}

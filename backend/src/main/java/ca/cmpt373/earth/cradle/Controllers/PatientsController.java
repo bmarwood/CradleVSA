@@ -69,20 +69,6 @@ public class PatientsController {
         }
     }
 
-    @PostMapping("/update/{patient_id}")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:8040")
-    public Patients updateAssessment(@PathVariable String patient_id, @RequestBody Patients candidate) {
-        try {
-//            patientsRepository.deleteById(patient_id);
-            return patientsRepository.save(candidate);
-        } catch (Throwable e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
     @GetMapping("/get{patient_id}")
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "http://localhost:8040")

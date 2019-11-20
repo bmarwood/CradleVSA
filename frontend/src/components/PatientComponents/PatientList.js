@@ -5,7 +5,7 @@ import GraphPopup from '../../Modals/GraphPopup';
 import MedicationPopup from '../../Modals/MedicationPopup';
 import requestServer from '../RequestServer';
 import UpdatePatientPopup from "../../Modals/UpdatePatientPopup";
-import ModalPopup from "../../Modals/ModalPopup";
+import RecentAssessmentPopup from "../../Modals/RecentAssessmentPopup";
 
 class PatientList extends Component {
 
@@ -29,6 +29,12 @@ class PatientList extends Component {
                 {title: 'Birth Date', field: 'birthDate'},
                 {title: 'ID Number', field: 'id'},
                 {
+                    title: 'Assessment',
+                    field: 'assessment',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
                     title: 'Patient History',
                     field: 'graph',
                     headerStyle: {textAlign: 'center'},
@@ -49,6 +55,7 @@ class PatientList extends Component {
             ],
             data: [
                 {
+                    assessment: <RecentAssessmentPopup/>,
                     graph: <GraphPopup/>,
                     medications: <MedicationPopup/>,
                     update: <UpdatePatientPopup/>
@@ -80,9 +87,11 @@ class PatientList extends Component {
             var birthDate = patient.birth_date
             var sex = patient.gender[0]
             var id = patient.id
+            var assessment = <RecentAssessmentPopup
+                id={patient.id}/>
             var graph = <GraphPopup
-            patient_id={patient.id}
-            patient_name={name+" "+surname}
+                patient_id={patient.id}
+                patient_name={name + " " + surname}
             />
             var medications = <MedicationPopup/>
             var update = <UpdatePatientPopup
@@ -94,6 +103,7 @@ class PatientList extends Component {
                 birthDate: birthDate,
                 sex: sex,
                 id: id,
+                assessment: assessment,
                 graph: graph,
                 medications: medications,
                 update: update
