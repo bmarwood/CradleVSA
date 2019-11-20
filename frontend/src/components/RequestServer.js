@@ -162,6 +162,17 @@ class RequestServer extends Component {
             return null
         }
     }
+    
+    async getLastAssessmentByPatientByID(patient_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/assessments/last/getByPatientId' + patient_id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
 
     async login(username, password) {
         var userObj = {
