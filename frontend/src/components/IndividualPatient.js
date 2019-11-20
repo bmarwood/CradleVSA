@@ -90,81 +90,78 @@ class IndividualPatient extends Component {
 
     render() {
         return (
-            <Container>
-                <Row className="justify-content-md-center">
-                    <Col md="auto" lg={true}>
-                        <div className="description-body">
+            <div id='individual' className='description-body'>
+                <div className="overview bg m-100">
 
-                            <div className="one-edge-shadow modal-header p-30">
-                                <h3>Patient Name: {this.state.patient_name}</h3><br />
-                                <div className='modal-header-direction'>
-                                    <div className='float-left'>
-                                        <h5>
-                                            Patient ID: {this.props.patient_id}
-                                            <br />
-                                            Patient Name: {this.state.patient_name}
-                                        </h5>
+                    <div className="one-edge-shadow modal-header p-30">
+                        <h3>Patient Name: {this.state.patient_name}</h3><br />
+                        <div className='modal-header-direction'>
+                            <div className='float-left'>
+                                <h5>
+                                    Patient ID: {this.props.patient_id}
+                                    <br />
+                                    Patient Name: {this.state.patient_name}
+                                </h5>
 
-                                    </div>
-
-                                    <div className='float-right'>
-                                        <h5>
-                                            Cradle Professional ID: {this.props.cvsa_id}
-                                            <br />
-                                            Cradle Professional Name: {this.state.cvsa_name}
-                                        </h5>
-                                    </div>
-                                </div>
                             </div>
 
-                            <div className="one-edge-shadow modal-body p-30">
-                                <div className='float-left'>
-                                    Early Warning Color: {this.getColorVisual(this.props.ews_color)}
+                            <div className='float-right'>
+                                <h5>
+                                    Cradle Professional ID: {this.props.cvsa_id}
                                     <br />
-                                    Arrow: {this.getArrowVisual(this.props.arrow)}
-                                    <br />
-                                    Heart Rate: {this.props.heart_rate}
-                                    <br />
-                                    Diastolic: {this.props.diastolic}
-                                    <br />
-                                    Systolic: {this.props.systolic}
-                                    <br />
-                                    Gestational Age: {this.props.gestational_age != 0 ? this.props.gestational_age : <i aria-hidden="true" className="dont icon" />}
-                                    <br />
-                                    Gestational Unit: {this.getGestationalUnit(this.props.gestational_unit)}
-                                    <br />
-                                    Current Symptoms: {this.props.symptoms}
-                                </div>
-
-                                <div className='float-right'>
-                                    Date of Birth: {this.state.patient_dob}
-                                    <br />
-                                    Patient Age: {this.calculateAge() ? this.calculateAge() : 0}
-                                    <br />
-                                    Date of Assessment: {this.props.assessment_date}
-                                    <br />
-                                    Follow Up Date: {this.props.follow_up_date}
-                                </div>
-                            </div>
-
-                            <div className="actions">
-                                <div className='pb-30'>
-                                    <Button onClick={
-                                        () => { if (window.confirm('Are you sure you wish to delete this item?')) this.deleteAssessment(this.props.id) }
-                                    } className="ui black basic button float-button-right">
-                                        <i className="trash icon" />
-                                    </Button>
-                                </div>
-
+                                    Cradle Professional Name: {this.state.cvsa_name}
+                                </h5>
                             </div>
                         </div>
-                    </Col>
-                    <Col xs lg="5" lg={true}>
-                     <AssessmentList id={this.state.id} />
+                    </div>
 
-                    </Col>
-                </Row>
-            </Container>
+                    <div className="one-edge-shadow modal-body p-30">
+                        <div className='float-left'>
+                            Early Warning Color: {this.getColorVisual(this.props.ews_color)}
+                            <br />
+                            Arrow: {this.getArrowVisual(this.props.arrow)}
+                            <br />
+                            Heart Rate: {this.props.heart_rate}
+                            <br />
+                            Diastolic: {this.props.diastolic}
+                            <br />
+                            Systolic: {this.props.systolic}
+                            <br />
+                            Gestational Age: {this.props.gestational_age != 0 ? this.props.gestational_age : <i aria-hidden="true" className="dont icon" />}
+                            <br />
+                            Gestational Unit: {this.getGestationalUnit(this.props.gestational_unit)}
+                            <br />
+                            Current Symptoms: {this.props.symptoms}
+                        </div>
+
+                        <div className='float-right'>
+                            Date of Birth: {this.state.patient_dob}
+                            <br />
+                            Patient Age: {this.calculateAge() ? this.calculateAge() : 0}
+                            <br />
+                            Date of Assessment: {this.props.assessment_date}
+                            <br />
+                            Follow Up Date: {this.props.follow_up_date}
+                        </div>
+                    </div>
+
+                    <div className="actions">
+                        <div className='pb-30'>
+                            <Button onClick={
+                                () => { if (window.confirm('Are you sure you wish to delete this item?')) this.deleteAssessment(this.props.id) }
+                            } className="ui black basic button float-button-right">
+                                <i className="trash icon" />
+                            </Button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div className='list'>
+                    <AssessmentList id={this.state.id} />
+                </div>
+
+            </div>
         );
     }
     getColorVisual(input) {
