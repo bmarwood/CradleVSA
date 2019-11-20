@@ -234,6 +234,18 @@ class RequestServer extends Component {
         }
     }
 
+
+    async updatePatient(patient) {
+        try {
+            let response = await axios.post(this.getServerLocation() + '/patients/update/' + patient.id, patient)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
     //delete patient & delete assessments
     async deletePatient(patient_id) {
         try {
