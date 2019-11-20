@@ -8,10 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6c5c52e7-f2b7-4154-8017-85c0c31bb73f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/UserList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/UserList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -123,6 +120,8 @@
       <workItem from="1574107625225" duration="630000" />
       <workItem from="1574150304119" duration="190000" />
       <workItem from="1574215266022" duration="2816000" />
+      <workItem from="1574274494327" duration="2673000" />
+      <workItem from="1574288584096" duration="233000" />
     </task>
     <servers />
   </component>
