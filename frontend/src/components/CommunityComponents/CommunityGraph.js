@@ -1,10 +1,7 @@
 import React from "react";
 import {Line} from "react-chartjs-2";
 import {MDBContainer} from "mdbreact";
-import './PatientChart.css';
-import '../../Modals/GraphPopup';
 import RequestServer from '../RequestServer';
-import Utility from '../NewForm/Utility';
 
 class CommunityGraph extends React.Component {
 
