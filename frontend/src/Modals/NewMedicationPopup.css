@@ -1,0 +1,11 @@
+.modal {
+    max-height: 100vh;
+    overflow-y: scroll;
+    overflow: scroll;
+  }
+  .modal > .content {
+    max-height: 100vh;
+    overflow-y: auto;
+    width: 100%;
+    padding: 10px 5px;
+  }

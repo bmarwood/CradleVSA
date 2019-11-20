@@ -3,6 +3,7 @@ import MaterialTable from 'material-table';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RequestServer from '../RequestServer';
 import NewMedicationPopup from '../../Modals/NewMedicationPopup';
+import './PatientNotes.css';
 
 class PatientNotes extends Component {
     constructor(props) {
@@ -15,8 +16,6 @@ class PatientNotes extends Component {
     }
 
     componentDidMount() {
-      //this.getMatchingPatientID("81991")
-      //this.timer = setInterval(() => this.getMatchingPatientID("81991"), 10000);
       this.getMedicationList()
       this.timer = setInterval(() => this.getMedicationList(), 10000);
       this.setState({
@@ -94,7 +93,9 @@ class PatientNotes extends Component {
 }
 
 render(){
+  
     return (
+      
         <div className = "table-position" >
         <MaterialTable
         title={this.props.patient_name}
@@ -130,14 +131,12 @@ render(){
           //       }),
           }}
         />
-        <div>
         <NewMedicationPopup
         patient_id={this.props.patient_id}
         name={this.props.name}
         surname={this.props.surname}
         patient_name={this.props.patient_name}
         />
-        </div>
       </div>
        );
 }
