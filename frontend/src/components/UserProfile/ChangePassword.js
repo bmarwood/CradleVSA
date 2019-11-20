@@ -173,20 +173,6 @@ export default class ChangePassword extends Component {
     }
 
     render() {
-        // return this.state.isInEditMode ? 
-        // this.renderEditView() : 
-        // this.renderDefaultView()
         return this.renderDefaultView()
-
     }
 }
-
-// <div className="landing-form" style = {{color : "white"}}>
-//     <h1> Your Profile</h1>
-//     <h2 style = {{color : "white"}}>Hello Ms.{this.state.name}</h2>
-//     <p>Username: {this.state.username}</p>
-//     <p>Full Name: {this.state.username}</p>
-//     <p>Date Of Birth: {this.state.dob}</p>
-//     <p>Address: {this.state.address}</p>
-//     <p>Gender: {this.state.gender}</p>
-// </div>

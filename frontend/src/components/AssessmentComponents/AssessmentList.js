@@ -118,6 +118,7 @@ class AssessmentList extends Component {
     populateData(response) {
         var assessmentList = []
         response.forEach(function (assessment) {
+            console.log("assessment: ", assessment)
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
                 cvsa_id={assessment.cvsa_id}
@@ -125,6 +126,13 @@ class AssessmentList extends Component {
                 systolic={assessment.systolic}
                 diastolic={assessment.diastolic}
                 heart_rate={assessment.heart_rate}
+                id={assessment._id}
+                assessment_date={assessment.date}
+                follow_up_date={assessment.follow_up_date}
+                gestational_age={assessment.gestational_age}
+                gestational_unit={assessment.gestational_unit}
+                ews_color={assessment.ews_color}
+                arrow={assessment.arrow}
             />
             var assessment_obj = {
                 id: assessment._id,
