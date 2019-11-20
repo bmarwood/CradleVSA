@@ -96,7 +96,7 @@ class NewPatient extends React.Component {
                     })
                 } else {
                     this.setState({
-                        birth_date: new Date(old_data.birth_date),
+                        birth_date: old_data.birth_date,
                         dob_type: 'age'
                     })
                 }
