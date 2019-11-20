@@ -233,6 +233,9 @@ class TransferPatient extends Component {
             this.setState({from_vht:event.target.value})
             //(this.setState({[event.target.name]: event.target.value}))
         }
+        else{
+            this.setState({to_vht:event.target.value})
+        }
     }
 
 
@@ -248,8 +251,8 @@ class TransferPatient extends Component {
         }
 
         if(this.state.vht_empty_flag) {
-            if (!this.state.vht_w_assessment.includes("No VHT")) {
-                this.state.vht_w_assessment.unshift("No VHT")
+            if (!this.state.vht_w_assessment.includes("EMPTY")) {
+                this.state.vht_w_assessment.unshift("EMPTY")
             }
         }
 
@@ -260,6 +263,21 @@ class TransferPatient extends Component {
 
         let vht_select_option2 = this.state.vht_w_assessment.map(item => <option
                                                                                  value={item}> {item} </option>)
+        let populate_only_selected_from = []
+        for (var itr = 0; itr<this.state.data.length; itr++){
+            if(this.state.data[itr].vht_id == this.state.from_vht){
+                populate_only_selected_from.push(this.state.data[itr])
+            }
+        }
+
+        let populate_only_selected_to = []
+        for (var itr = 0; itr<this.state.data.length; itr++){
+            if(this.state.data[itr].vht_id == this.state.to_vht){
+                populate_only_selected_to.push(this.state.data[itr])
+            }
+        }
+
+        //console.log("POPULATE",populate_only_selected)
 
         console.log("WE ARE HERE",this.state.from_vht)
         return (
@@ -290,9 +308,9 @@ class TransferPatient extends Component {
                 </div>
                 <div className="table-positionT">
                 <MaterialTable
-                    title="table"
+                    title= "Patients From Selected"
                     columns={this.state.columns}
-                    data={this.state.data}
+                    data={populate_only_selected_from}
                     actions={[
                         {
                             icon: 'compareArrows',
@@ -303,9 +321,9 @@ class TransferPatient extends Component {
                 </div>
                 <div className="table-positionT">
                     <MaterialTable
-                        title="table"
+                        title="Patients From Selected"
                         columns={this.state.columns}
-                        data={this.state.data}
+                        data={populate_only_selected_to}
                         actions={[
                             {
                                 icon: 'compareArrows',
