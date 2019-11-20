@@ -18,6 +18,7 @@ import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
 import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
+import IndividualPatient from '../IndividualPatient';
 
 const Navigation = () => (
     <Switch>
@@ -41,6 +42,7 @@ const Navigation = () => (
         <PrivateRoute path="/profile" component={Profile}/>
         <PrivateRoute path="/changePassword" component={ChangePassword}/>
         <Route path="/resources" component={Resources}/>
+        <Route path="/patient:id" component={IndividualPatient} />
     </Switch>
 )
 

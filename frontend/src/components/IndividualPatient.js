@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Popup from "reactjs-popup";
-import './ModalPopup';
-import './ModalPopup.css';
 import MaterialTable from 'material-table';
 import requestServer from '../components/RequestServer';
 import TrafficIconsCircle from '../components/Visuals/TrafficIconsCircle';
@@ -16,13 +14,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { Tabs, Tab, Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, IconButton } from 'react-mdl';
 
-class ModalAssessment extends Component {
+class IndividualPatient extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            id: this.props.match.params.id,
             data: [],
-            id: props.id,
             patient_id: '',
             systolic: '',
             diastolic: '',
@@ -32,23 +30,24 @@ class ModalAssessment extends Component {
             patient_name: 'LOADING...',
             patient_dob: '',
             CVSA_name: 'LOADING...',
-
         }
     }
 
     componentDidMount() {
+        console.log(this.props.match.params.id)
         this.getPatient();
         this.getCVSA();
     }
 
     async getPatient() {
 
-        var response = await requestServer.getPatient(this.props.patient_id)
+        var response = await requestServer.getPatient(this.state.id)
         if (response !== null) {
             if (response.data === "") {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
             } else {
-                // console.log("Patient DATA:", response.data )
+                console.log("Patient DATA:", response.data )
+                console.log("got data")
                 this.setState({
                     patient_name: response.data.name,
                     patient_dob: response.data.birth_date
@@ -58,7 +57,7 @@ class ModalAssessment extends Component {
     }
 
     async getCVSA() {
-        var response = await requestServer.getCVSA(this.props.cvsa_id)
+        var response = await requestServer.getCVSA(782827)
 
         if (response !== null) {
             if (response.data === "") {
@@ -68,7 +67,6 @@ class ModalAssessment extends Component {
             }
         }
     }
-
 
     calculateAge() {
         if (this.state.patient_dob != '' || this.state.patient_dob != null) {
@@ -91,7 +89,7 @@ class ModalAssessment extends Component {
             <div className="modal">
 
                 <div className="one-edge-shadow modal-header p-30">
-                    <h3>Asssessment ID: {this.props.id}</h3><br />
+                    <h3>Patient Name: {this.state.patient_name}</h3><br />
                     <div className='modal-header-direction'>
                         <div className='float-left'>
                             <h5>
@@ -143,22 +141,6 @@ class ModalAssessment extends Component {
                 </div>
 
                 <div className="actions">
-                    <div className='float-button-left pb-30'>
-                        <Popup
-                            trigger={<button  className="ui black basic button "> <Link to={`/patient${this.props.patient_id}`}>See Patient</Link></button>}
-                            position="top center"
-                            closeOnDocumentClick
-                        >
-                            <span>This will navigate to the individual Patient page</span>
-                        </Popup>
-                        <Popup
-                            trigger={<button className="ui black basic button "> See VHT </button>}
-                            position="top center"
-                            closeOnDocumentClick
-                        >
-                            <span>This will navigate to the individual VHT page</span>
-                        </Popup>
-                    </div>
                     <div className='pb-30'>
                         <Button onClick={
                             () => { if (window.confirm('Are you sure you wish to delete this item?')) this.deleteAssessment(this.props.id) }
@@ -231,4 +213,6 @@ const YellowLight = () => (
         <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"} />
     </div>
 );
-export default ModalAssessment;                    
+
+
+export default IndividualPatient;
