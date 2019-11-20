@@ -6,14 +6,6 @@ import TrafficIconsCircle from '../components/Visuals/TrafficIconsCircle';
 import TrafficIconsTriangle from "../components/Visuals/TrafficIconsTriangle";
 import TrafficIconsOctagon from "../components/Visuals/TrafficIconsOctagon";
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { Link } from 'react-router-dom';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import { Tabs, Tab, Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, IconButton } from 'react-mdl';
-import { Container, Col, Row } from 'react-bootstrap';
 import './IndividualPatient.css';
 import AssessmentList from "../components/AssessmentComponents/AssessmentList";
 
@@ -39,8 +31,25 @@ class IndividualPatient extends Component {
 
     componentDidMount() {
         console.log(this.props.match.params.id)
+        this.getLastAssessmentByPatient();
         this.getPatient();
-        this.getCVSA();
+        // this.getCVSA();
+    }
+
+    async getLastAssessmentByPatient() {
+        var response = await requestServer.getLastAssessmentByPatientByID(this.state.id)
+        if (response !== null) {
+            if (response.data === "") {
+                this.setState({ patient_name: 'ID doesn\'t match to a patient' })
+            } else {
+                console.log("Last Assess:", response.data)
+                console.log("got data")
+                // this.setState({
+                //     patient_name: response.data.name,
+                //     patient_dob: response.data.birth_date
+                // })
+            }
+        }
     }
 
     async getPatient() {
@@ -114,43 +123,47 @@ class IndividualPatient extends Component {
                             </div>
                         </div>
                     </div>
-
-                    <div className="one-edge-shadow modal-body p-30">
+                    
+                        <div className="one-edge-shadow modal-body p-30">
                         <div className='float-left'>
-                            Early Warning Color: {this.getColorVisual(this.props.ews_color)}
-                            <br />
-                            Arrow: {this.getArrowVisual(this.props.arrow)}
-                            <br />
-                            Heart Rate: {this.props.heart_rate}
-                            <br />
-                            Diastolic: {this.props.diastolic}
-                            <br />
-                            Systolic: {this.props.systolic}
-                            <br />
-                            Gestational Age: {this.props.gestational_age != 0 ? this.props.gestational_age : <i aria-hidden="true" className="dont icon" />}
-                            <br />
-                            Gestational Unit: {this.getGestationalUnit(this.props.gestational_unit)}
-                            <br />
-                            Current Symptoms: {this.props.symptoms}
+                            
+                            <h3> See </h3>
+                            </div>
+                            <div className='float-left'>
+                                Early Warning Color: {this.getColorVisual(this.props.ews_color)}
+                                <br />
+                                Arrow: {this.getArrowVisual(this.props.arrow)}
+                                <br />
+                                Heart Rate: {this.props.heart_rate}
+                                <br />
+                                Diastolic: {this.props.diastolic}
+                                <br />
+                                Systolic: {this.props.systolic}
+                                <br />
+                                Gestational Age: {this.props.gestational_age != 0 ? this.props.gestational_age : <i aria-hidden="true" className="dont icon" />}
+                                <br />
+                                Gestational Unit: {this.getGestationalUnit(this.props.gestational_unit)}
+                                <br />
+                                Current Symptoms: {this.props.symptoms}
+                            </div>
+
+                            <div className='float-right'>
+                                Date of Birth: {this.state.patient_dob}
+                                <br />
+                                Patient Age: {this.calculateAge() ? this.calculateAge() : 0}
+                                <br />
+                                Date of Assessment: {this.props.assessment_date}
+                                <br />
+                                Follow Up Date: {this.props.follow_up_date}
+                            </div>
                         </div>
 
-                        <div className='float-right'>
-                            Date of Birth: {this.state.patient_dob}
-                            <br />
-                            Patient Age: {this.calculateAge() ? this.calculateAge() : 0}
-                            <br />
-                            Date of Assessment: {this.props.assessment_date}
-                            <br />
-                            Follow Up Date: {this.props.follow_up_date}
-                        </div>
-                    </div>
-
-                    <div className="actions">
+                    <div className="delete">
                         <div className='pb-30'>
                             <Button onClick={
                                 () => { if (window.confirm('Are you sure you wish to delete this item?')) this.deleteAssessment(this.props.id) }
                             } className="ui black basic button float-button-right">
-                                <i className="trash icon" />
+                                Delete Last Assessment <i className="trash icon" />
                             </Button>
                         </div>
 

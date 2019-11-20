@@ -144,20 +144,10 @@ class ModalAssessment extends Component {
 
                 <div className="actions">
                     <div className='float-button-left pb-30'>
-                        <Popup
-                            trigger={<button  className="ui black basic button "> <Link to={`/patient${this.props.patient_id}`}>See Patient</Link></button>}
-                            position="top center"
-                            closeOnDocumentClick
-                        >
-                            <span>This will navigate to the individual Patient page</span>
-                        </Popup>
-                        <Popup
-                            trigger={<button className="ui black basic button "> See VHT </button>}
-                            position="top center"
-                            closeOnDocumentClick
-                        >
-                            <span>This will navigate to the individual VHT page</span>
-                        </Popup>
+
+                        <button className="ui black basic button "> <Link to={`/patient${this.props.patient_id}`}>See Patient</Link></button>
+                        <button className="ui black basic button "> See Cradle Professional </button>
+
                     </div>
                     <div className='pb-30'>
                         <Button onClick={

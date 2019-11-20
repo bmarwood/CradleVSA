@@ -9,10 +9,6 @@
   margin-left: 20px;;
 }
 
-.m-100 {
-  /* margin-left: 40px;
-  margin-right: 40px; */
-}
 
 .mdl-layout__header {
   z-index: 1 !important;
@@ -27,6 +23,10 @@
   margin: 0 auto !important;
   width: 100%;
   
+}
+
+.delete {
+  padding: 20px;
 }
 
 .description-body {
@@ -85,36 +85,4 @@
 
 .popup-content  {
   padding: 0 !important;
-}
-
-.modal > .header {
-  width: 100%;
-  border-bottom: 1px solid gray;
-  font-size: 18px;
-  text-align: center;
-  padding: 0px;
-}
-.modal > .content {
-  width: 100%;
-  padding: 10px 5px;
-}
-.modal > .actions {
-  width: 100%;
-  padding: 30px !important;
-  margin: auto;
-  text-align: center;
-  clear: both;
-}
-.modal > .close {
-  cursor: pointer;
-  position: absolute;
-  display: block;
-  padding: 2px 5px;
-  line-height: 20px;
-  right: -10px;
-  top: -10px;
-  font-size: 24px;
-  background: #ffffff;
-  border-radius: 18px;
-  border: 1px solid #cfcece;
 }
