@@ -123,12 +123,8 @@ class IndividualPatient extends Component {
                             </div>
                         </div>
                     </div>
-                    
+                    <h3 className='padding-left'> Last Assessment: </h3>
                         <div className="one-edge-shadow modal-body p-30">
-                        <div className='float-left'>
-                            
-                            <h3> See </h3>
-                            </div>
                             <div className='float-left'>
                                 Early Warning Color: {this.getColorVisual(this.props.ews_color)}
                                 <br />

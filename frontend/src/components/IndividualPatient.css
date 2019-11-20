@@ -9,6 +9,10 @@
   margin-left: 20px;;
 }
 
+.padding-left {
+  padding-left: 20px;
+}
+
 
 .mdl-layout__header {
   z-index: 1 !important;
