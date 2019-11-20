@@ -433,13 +433,9 @@ class NewAssessment extends React.Component {
         let retestAdvice = ReadingRequestAnalysis.computeAdvice(this.state.recheck_history)
         if (retestAdvice !== "RETEST_NOT_RECOMMENDED") {
             this.setState({
-                retestAdvice: retestAdvice,
-                heart_rate: '',
-                systolic: '',
-                diastolic: '',
-                birth_date: ''
+                recheck: true
             })
-            return false;
+            alert(retestAdvice)
         }
 
         //setDate
