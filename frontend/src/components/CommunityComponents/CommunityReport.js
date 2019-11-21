@@ -4,6 +4,7 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {Grid, Cell, RadioGroup, Radio} from 'react-mdl';
 import RequestServer from '../RequestServer';
 import DatePicker from "react-datepicker";
+import Utility from "../NewForm/Utility";
 
 
 class CommunityReport extends React.Component {
@@ -18,10 +19,17 @@ class CommunityReport extends React.Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+
     //handle date change
     changeDOB = date => {
         this.setState({
-            temp_dob: date
+            selected: date
         });
     };
 
@@ -43,7 +51,10 @@ class CommunityReport extends React.Component {
             return false
         }
         let response = await RequestServer.getAssessmentsByLocation(this.state.location)
-        console.log(response)
+        if (response !== null) {
+            let result = Utility.filterByDate(response.data, this.state.from, this.state.to)
+            console.log(result)
+        }
         // this.props.history.push(
         //     '/'
         // )
@@ -57,12 +68,6 @@ class CommunityReport extends React.Component {
             })
         }
         return [];
-    }
-
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
     }
 
 
@@ -96,6 +101,7 @@ class CommunityReport extends React.Component {
                 <br/>
                 <h4>From:</h4>
                 <DatePicker
+                    name="from"
                     selected={this.state.from}
                     onChange={this.changeDOB}
                     maxDate={new Date()}
@@ -105,6 +111,7 @@ class CommunityReport extends React.Component {
 
                 <h4>To:</h4>
                 <DatePicker
+                    name="to"
                     selected={this.state.to}
                     onChange={this.changeDOB}
                     minDate={this.state.from}
