@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Popup from "reactjs-popup";
 import './ModalPopup';
 import './ModalPopup.css';
+import MaterialTable from 'material-table';
 import requestServer from '../components/RequestServer';
+import TrafficIconsCircle from '../components/Visuals/TrafficIconsCircle';
+import TrafficIconsTriangle from "../components/Visuals/TrafficIconsTriangle";
+import TrafficIconsOctagon from "../components/Visuals/TrafficIconsOctagon";
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Link } from 'react-router-dom';
@@ -26,6 +30,7 @@ class ModalAssessment extends Component {
             date: '',
             heart_rate: '',
             patient_name: 'LOADING...',
+            patient_dob: '',
             CVSA_name: 'LOADING...',
 
         }
@@ -43,7 +48,11 @@ class ModalAssessment extends Component {
             if (response.data === "") {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
             } else {
-                this.setState({ patient_name: response.data.name })
+                // console.log("Patient DATA:", response.data )
+                this.setState({
+                    patient_name: response.data.name,
+                    patient_dob: response.data.birth_date
+                })
             }
         }
     }
@@ -60,85 +69,166 @@ class ModalAssessment extends Component {
         }
     }
 
+
+    calculateAge() {
+        if (this.state.patient_dob != '' || this.state.patient_dob != null) {
+            var dob = new Date(this.state.patient_dob)
+            var age = ~~((Date.now() - dob) / (31557600000))
+            return age
+        }
+        return null
+    }
+
+    async deleteAssessment(id) {
+        var response = await requestServer.deleteAssessment(id)
+        if (response !== null) {
+            window.location.reload()
+        }
+    }
+
     render() {
         return (
             <div className="modal">
-                <div style={{ margin: 'auto', textAlign: 'center' }}>
-                    <div style={{ margin: 'auto', backgroundColor: 'white', textAlign: 'center', width: '100%' }}>
-                        <h1>Asssessment ID: {this.props.id}</h1>
-                        <Grid className="demo-grid-ruler">
-                            <Cell col={12}>
-                                <TextField
-                                    id="PatientName"
-                                    label="PatientName"
-                                    name="patient_name"
-                                    className="demo-text"
-                                    type="password"
-                                    // value={this.state.old_password}
-                                    // onChange={this.handleChange.bind(this)}
-                                    autoComplete="current-password"
-                                    margin="normal"
-                                    variant="outlined"
-                                />
+
+                <div className="one-edge-shadow modal-header p-30">
+                    <h3>Asssessment ID: {this.props.id}</h3><br />
+                    <div className='modal-header-direction'>
+                        <div className='float-left'>
+                            <h5>
+                                Patient ID: {this.props.patient_id}
                                 <br />
-                                <TextField
-
-                                    label="Patient ID"
-                                    // onChange={this.handleChange}
-                                    name="patient_id"
-                                    // value={this.state.patient_id}
-                                    validators={['required']}
-                                    margin="normal"
-
-                                    errorMessages={['this field is required']}
-                                />
-
-                            </Cell>
-
-                            <div className="demo-grid-ruler">
-                                {" "}
                                 Patient Name: {this.state.patient_name}
-                                <br />
-                                Cradle Professional Name: {this.state.CVSA_name}
-                                <br />
-                                Date of Birth: {this.props.date}
-                                <br />
-                                Current Symptoms: {this.props.symptoms}
-                                <br />
-                                Heart Rate: {this.props.heart_rate}
-                                <br />
-                                Diastolic: {this.props.diastolic}
-                                <br />
-                                Systolic: {this.props.systolic}
-                            </div>
-                            <div className="actions">
-                                <Popup
-                                    trigger={<button className="ui black basic button"> See Patient </button>}
-                                    position="top center"
-                                    closeOnDocumentClick
-                                >
-                                    <span>
-                                        This will navigate to the individual Patient page
-                        </span>
-                                </Popup>
-                                <Popup
-                                    trigger={<button className="ui black basic button"> See Cradle Professional </button>}
-                                    position="top center"
-                                    closeOnDocumentClick
-                                >
-                                    <span>
-                                        This will navigate to the individual Cradle Professional page
-                        </span>
-                                </Popup>
-                            </div>
-                        </Grid>
+                            </h5>
 
+                        </div>
+
+                        <div className='float-right'>
+                            <h5>
+                                Cradle Professional ID: {this.props.cvsa_id}
+                                <br />
+                                Cradle Professional Name: {this.state.cvsa_name}
+                            </h5>
+                        </div>
                     </div>
                 </div>
 
+                <div className="one-edge-shadow modal-body p-30">
+                    <div className='float-left'>
+                        Early Warning Color: {this.getColorVisual(this.props.ews_color)}
+                        <br />
+                        Arrow: {this.getArrowVisual(this.props.arrow)}
+                        <br />
+                        Heart Rate: {this.props.heart_rate}
+                        <br />
+                        Diastolic: {this.props.diastolic}
+                        <br />
+                        Systolic: {this.props.systolic}
+                        <br />
+                        Gestational Age: {this.props.gestational_age != 0 ? this.props.gestational_age : <i aria-hidden="true" className="dont icon" />}
+                        <br />
+                        Gestational Unit: {this.getGestationalUnit(this.props.gestational_unit)}
+                        <br />
+                        Current Symptoms: {this.props.symptoms}
+                    </div>
 
+                    <div className='float-right'>
+                        Date of Birth: {this.state.patient_dob}
+                        <br />
+                        Patient Age: {this.calculateAge() ? this.calculateAge() : 0}
+                        <br />
+                        Date of Assessment: {this.props.assessment_date}
+                        <br />
+                        Follow Up Date: {this.props.follow_up_date}
+                    </div>
+                </div>
+
+                <div className="actions">
+                    <div className='float-button-left pb-30'>
+                        <Popup
+                            trigger={<button className="ui black basic button "> See Patient </button>}
+                            position="top center"
+                            closeOnDocumentClick
+                        >
+                            <span>This will navigate to the individual Patient page</span>
+                        </Popup>
+                        <Popup
+                            trigger={<button className="ui black basic button "> See VHT </button>}
+                            position="top center"
+                            closeOnDocumentClick
+                        >
+                            <span>This will navigate to the individual VHT page</span>
+                        </Popup>
+                    </div>
+                    <div className='pb-30'>
+                        <Button onClick={
+                            () => { if (window.confirm('Are you sure you wish to delete this item?')) this.deleteAssessment(this.props.id) }
+                        } className="ui black basic button float-button-right">
+                            <i className="trash icon" />
+                        </Button>
+                    </div>
+
+                </div>
             </div>
         );
     }
+    getColorVisual(input) {
+        switch (String(input).toUpperCase()) {
+            case "GREEN":
+                return <GreenLight />
+            case "YELLOW":
+                return <YellowLight />
+            case "RED":
+                return <RedLight />
+            default:
+                return input
+        }
+    }
+    getArrowVisual(input) {
+        switch (String(input).toUpperCase()) {
+            case "UP":
+                return <i className="arrow up icon" />
+            case "DOWN":
+                return <i className="arrow down icon" />
+            case "EMPTY":
+                return <i className="window minimize icon" />
+            default:
+                return input
+        }
+    }
+    getGestationalUnit(input) {
+        switch (String(input).toUpperCase()) {
+            case "WEEK":
+                return ("Week(s)")
+            case "MONTH":
+                return ("Month(s)")
+            default:
+                return <i aria-hidden="true" className="dont icon" />
+        }
+    }
 }
+
+const styles = {
+    // overflow: "hidden",
+    display: "auto",
+    flexWrap: "flex",
+    alignItems: "center",
+    fontFamily: "sans-serif",
+    justifyContent: "left",
+    display: 'inline-block'
+};
+const GreenLight = () => (
+    <div style={styles}>
+        <TrafficIconsCircle name="greencircle" width={50} fill={"#228B22"} />
+    </div>
+);
+const RedLight = () => (
+    <div style={styles}>
+        <TrafficIconsOctagon name="redcircle" width={50} fill={"#B22222"} />
+    </div>
+);
+const YellowLight = () => (
+    <div style={styles}>
+        <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"} />
+    </div>
+);
 export default ModalAssessment;                    

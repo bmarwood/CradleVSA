@@ -48,17 +48,6 @@ class RequestServer extends Component {
         }
     }
 
-    // async getPatient(patient_ID) {
-    //     try {
-    //         var response = await axios.get(this.getServerLocation() + '/patients/all')
-    //         return response
-    //     } catch (error) {
-    //         console.log('error block')
-    //         console.log(error)
-    //         return null
-    //     }
-    // }
-
     async addAssessment(assessment) {
         try {
             var response = await axios.post(this.getServerLocation() + '/assessments/add', assessment)
@@ -298,6 +287,18 @@ class RequestServer extends Component {
     async updateUser(user) {
         try {
             let response = await axios.post(this.getServerLocation() + '/users/update/' + user.id, user)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+
+    async updatePatient(patient) {
+        try {
+            let response = await axios.post(this.getServerLocation() + '/patients/update/' + patient.id, patient)
             return response
         } catch (error) {
             console.log('error block')
