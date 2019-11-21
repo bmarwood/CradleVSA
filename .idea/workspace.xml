@@ -7,8 +7,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e43636d1-f531-462e-8058-c454d19d5c26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/CradleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/CradleApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Patients.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Patients.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/config/MongoDBConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/config/MongoDBConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/AssessmentsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/AssessmentsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/PatientsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/PatientsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/UsersRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/UsersRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/ca/cmpt373/earth/cradle/CradleApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AdminComponents/adminDrawer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AdminComponents/adminDrawer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navigation/navigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navigation/navigation.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/backend/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1463">
-              <caret line="100" column="14" selection-start-line="100" selection-start-column="14" selection-end-line="100" selection-end-column="14" />
+            <state relative-caret-position="1197">
+              <caret line="86" column="14" selection-start-line="86" selection-start-column="14" selection-end-line="86" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -65,8 +79,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/config/MongoDBConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2033">
-              <caret line="128" column="6" selection-start-line="128" selection-start-column="6" selection-end-line="128" selection-end-column="6" />
+            <state relative-caret-position="152">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
             </state>
           </provider>
         </entry>
@@ -111,7 +125,7 @@
         <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/UsersRepository.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="361">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
             </state>
           </provider>
         </entry>
@@ -146,8 +160,109 @@
     </option>
   </component>
   <component name="ProjectId" id="1RqNVEVk5Zpo0xb9wJrwUl4DIcF" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="1" id="Add" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cradleplatform" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cradleplatform" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cradleplatform" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cradleplatform" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cradleplatform" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cradleplatform" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="cradle" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cradleplatform" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="cradle" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cradleplatform" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="cradle" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cradleplatform" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="cradle" type="462c0819:PsiDirectoryNode" />
+              <item name="Models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cradleplatform" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="cradle" type="462c0819:PsiDirectoryNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cradleplatform" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cradleplatform" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
@@ -267,12 +382,12 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3284169" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3284169" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39921337" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32940018" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32743362" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32743362" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5017564" side_tool="true" weight="0.32940018" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32940018" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49824357" weight="0.32940018" />
@@ -341,11 +456,13 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java</url>
           <line>58</line>
+          <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java</url>
           <line>60</line>
+          <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

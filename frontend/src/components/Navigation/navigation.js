@@ -18,6 +18,7 @@ import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
 import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
+import VHTReport from '../VHTReport';
 
 const Navigation = () => (
     <Switch>
@@ -34,7 +35,6 @@ const Navigation = () => (
         <PrivateRoute path="/changePassword" component={ChangePassword}/>
 
         {/* Admin Route */}
-        
         <AdminRoute path="/location" component={Location}/>
         <AdminRoute path="/newlocation" component={NewLocation}/>
         <AdminRoute exact path="/admin-dashboard" component={Landing_List}/>
@@ -50,6 +50,7 @@ const Navigation = () => (
 
         {/* Manager Route */}
         <ManagerRoute path="/newWorker" component={NewUser}/>
+        <ManagerRoute path="/vht-report" component={VHTReport}/>
     </Switch>
 )
 
