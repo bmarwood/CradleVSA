@@ -27,5 +27,9 @@ public interface AssessmentsRepository extends MongoRepository<Assessments, Stri
     @Query("{patient_id: '?0'}")
     List<Assessments> findByPatientId(String patient_id);
 
+    @Query("{location: '?0'}")
+    List<Assessments> findByLocation(String location);
+
+
 }
 
