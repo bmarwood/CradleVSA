@@ -17,6 +17,7 @@ class PatientChart extends React.Component {
     }
 
     componentDidMount() {
+        console.log("patientId for Chart: ", this.props.patient_id )
         this.getMatchingPatientID(this.props.patient_id)
         this.timer = setInterval(() => this.getMatchingPatientID(this.props.patient_id), 10000);
         this.setState({
@@ -129,7 +130,8 @@ class PatientChart extends React.Component {
 
     async getMatchingPatientID(patient_id) {
         var passback = await RequestServer.getPatientByID(patient_id)
-        if (passback != null) {
+        if (passback.data != null && passback.data.list_of_assessments != undefined) {
+            console.log("chart data: ",passback.data)
             //Converts dates in list_of_assessments to Date format to sort by date
             this.populateData(passback.data.list_of_assessments.sort(function(a,b){
                 a = Utility.convertStringToDate(a.date);

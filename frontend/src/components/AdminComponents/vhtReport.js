@@ -11,7 +11,7 @@ import PatientList from '../PatientComponents/PatientList'
 import UserList from '../UserList'
 import ChartsPage from '../Chart/PieChart'
 import requestServer from '../RequestServer'
-import PatientChart from '../PatientComponents/PatientChart'
+import VHTChart from '../VHTChart'
 
 class vhtReport extends Component {
 
@@ -27,6 +27,8 @@ class vhtReport extends Component {
             patientCount: 0,
             assesmentCount: 0,
             referredAssessments: 0,
+            assessmentList: [],
+            loading: true
         }
 
         this.getAssessmentData = this.getAssessmentData.bind(this)
@@ -69,9 +71,9 @@ class vhtReport extends Component {
 
 
     async getAssessmentData() {
-        console.log(this.state.id)
         var passback = await requestServer.getAssessmentsByCVSAId(this.state.id)
         if (passback !== null && passback.data !== "") {
+            console.log("passback Data thats being passed", passback.data)
             var reds = 0
             var yellows = 0
             var greens = 0
@@ -80,8 +82,6 @@ class vhtReport extends Component {
 
             passback.data.forEach((item) => {
                 assesmentCount += 1
-
-                console.log("item: ", item)
 
                 if (item.referred) {
                     referredAssessments += 1
@@ -105,11 +105,13 @@ class vhtReport extends Component {
 
 
             this.setState({
+                assessmentList: passback.data,
                 greenCount: greens,
                 redCount: reds,
                 yellowCount: yellows,
                 assesmentCount: assesmentCount,
-                referredAssessments: referredAssessments
+                referredAssessments: referredAssessments,
+                loading: false,
             })
         }
     }
@@ -123,56 +125,53 @@ class vhtReport extends Component {
             id: parsedUser.id,
             roles: array
         }, () => { this.getAssessmentData() })
-        // console.log("response from server: ", response, this.state)
-        // console.log("decomposing response: ", response.data.id, " ", response.data.name, response.status)
     }
 
-    getPieChart() {
-        if (!(this.state.redCount == 0 && this.state.yellowCount == 0 && this.state.greenCount == 0)) {
-            return <ChartsPage data={this.state.redCount, this.state.greenCount, this.state.yellowCount} red={this.state.redCount} yellow={this.state.yellowCount} green={this.state.greenCount} />
-        } else {
-            console.log("no passed")
-        }
-    }
 
 
     render() {
-        return (
-            <div className='container'>
-                <div className='top-card float-cards'>
-                    <div className="card">
-                        <h3>Number of <br />Patients:</h3>
-                        <h1>{this.state.patientCount}</h1>
-                    </div>
-                    <div className="card">
-                        <h3>Number of <br />Assesments:</h3>
-                        <h1>{this.state.assesmentCount}</h1>
-                    </div>
-                    <div className="card">
-                        <h3>Number of <br />Referred Assesments:</h3>
-                        <h1>{this.state.referredAssessments}</h1>
-                    </div>
+        if (!this.state.loading) {
+            return (
+                <div className='container'>
+                    <div className='top-card float-cards'>
+                        <div className="card">
+                            <h3>Number of <br />Patients:</h3>
+                            <h1>{this.state.patientCount}</h1>
+                        </div>
+                        <div className="card">
+                            <h3>Number of <br />Assesments:</h3>
+                            <h1>{this.state.assesmentCount}</h1>
+                        </div>
+                        <div className="card">
+                            <h3>Number of <br />Referred Assesments:</h3>
+                            <h1>{this.state.referredAssessments}</h1>
+                        </div>
 
-                </div>
-                <div className='float-cards'>
-                    <div className='left-card'>
-                        <div className="one-edge-shadow modal-header p-30">
-                            <h3>Username: {this.state.username} </h3><br />
-                            <div className='modal-header-direction'>
-                                <div className='float-left'>
-                                    <h5>
-                                        Roles: {this.state.roles}
-                                    </h5>
+                    </div>
+                    <div className='float-cards'>
+                        <div className='left-card'>
+                            <div className="one-edge-shadow modal-header p-30">
+                                <h3>Username: {this.state.username} </h3><br />
+                                <div className='modal-header-direction'>
+                                    <div className='float-left'>
+                                        <h5>
+                                            Roles: {this.state.roles}
+                                        </h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='right-card'>
-                        {/* <PatientChart/> */}
+                        <div className='right-card'>
+                            <VHTChart assessmentList={this.state.assessmentList} />
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return(
+                <div></div>
+            )
+        }
     }
 
 }
