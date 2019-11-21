@@ -18,12 +18,14 @@ import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
 import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
+import vhtReport from '../AdminComponents/vhtReport'
 
 const Navigation = () => (
     <Switch>
         <Route exact path="/" component={LandingPage}/>
         <AdminRoute path="/location" component={Location}/>
         <AdminRoute path="/newlocation" component={NewLocation}/>
+        <AdminRoute path="/vhtReport" component={vhtReport}/>
         <PrivateRoute exact path="/user-dashboard" component={PatientList}/>
         <AdminRoute exact path="/admin-dashboard" component={Landing_List}/>
         <Route exact path="/login" component={Login}/>

@@ -13,6 +13,7 @@ export default function AdminDrawer() {
             <Link to="/newPatient">New Patient</Link>
             <Link to="/newWorker">New Worker</Link>
             <Link to="/profile">Profile</Link>
+            <Link to="/vhtReport">Vht Report</Link>
         </Navigation>
     )
 }

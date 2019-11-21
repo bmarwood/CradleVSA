@@ -126,6 +126,17 @@ class RequestServer extends Component {
         }
     }
 
+    async getPatientListByVhtId(id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/patients/belongTo' + id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
     //get list of assessments based on the worker id
     async getAssessmentsByCVSAId(id) {
         try {

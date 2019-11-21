@@ -11,6 +11,69 @@ html, body {
 
 }
 
+.card {
+  background: white;
+  height: 80%;
+  width: 200px;
+  -webkit-box-shadow: 0 4px 6px -6px black;
+  -moz-box-shadow: 0 4px 6px -6px black;
+  box-shadow: 0 4px 6px -6px black;
+  margin: 10px;
+  float: left;
+  border-left: rgb(43, 43, 43) 5px Solid;
+  padding-left: 10px;
+}
+
+.container {
+  width: 90%;
+}
+
+.float-cards {
+  clear: both;
+}
+
+.left-card {
+  background: white;
+  height: 500px;
+  width: 25%;
+  -webkit-box-shadow: 0 4px 6px -6px black;
+  -moz-box-shadow: 0 4px 6px -6px black;
+  box-shadow: 0 4px 6px -6px black;
+  float: left;
+  margin-right: 2%;
+}
+
+.right-card {
+  float: right;
+  background: white;
+  height: 500px;
+  width: 73%;
+  -webkit-box-shadow: 0 4px 6px -6px black;
+  -moz-box-shadow: 0 4px 6px -6px black;
+  box-shadow: 0 4px 6px -6px black;
+}
+
+
+.top-card {
+  background: white;
+  height: 150px;
+  width: 100%;
+  -webkit-box-shadow: 0 4px 6px -6px black;
+  -moz-box-shadow: 0 4px 6px -6px black;
+  box-shadow: 0 4px 6px -6px black;
+  margin-bottom: 10px;
+}
+
+
+
+.cardContainer {
+  padding: 100px;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  direction: row;
+}
+
 .AssessList {
   border: thin solid blue;
   padding: 2rem;
