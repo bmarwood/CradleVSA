@@ -172,7 +172,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.CradleApplication">
+  <component name="RunManager" selected="Application.CradleApplication">
     <configuration name="CradleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="/Library/Java/JavaVirtualMachines/jdk-11.0.2.jdk/Contents/Home" />
       <option name="MAIN_CLASS_NAME" value="ca.cmpt373.earth.cradle.CradleApplication" />

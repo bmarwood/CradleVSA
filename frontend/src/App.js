@@ -99,7 +99,19 @@ class App extends Component {
     }
 
     getTitle() {
-        return "Dashboard"
+        var roles = this.getRoles()
+        if (this.isAdmin(roles)){
+            return "Admin Dashboard"
+        }
+        else if (this.isCHO(roles)){
+            return "CHO Dashboard"
+        }
+        else if (this.isHealthWorker(roles)){
+            return "Health Worker Dashboard"
+        }
+        else {
+            return "Dashboard"
+        }
     }
 
     render() {
