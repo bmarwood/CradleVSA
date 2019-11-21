@@ -21,26 +21,35 @@ import NewLocation from '../NewForm/NewLocation';
 
 const Navigation = () => (
     <Switch>
+        {/* General Route */}
         <Route exact path="/" component={LandingPage}/>
+        <Route exact path="/login" component={Login}/>
+        <Route path="/resources" component={Resources}/>
+        {/* Private Route */}
+        <PrivateRoute exact path="/user-dashboard" component={PatientList}/>
+        <PrivateRoute exact path="/AssessmentList" component={AssessmentList}/>
+        <PrivateRoute path="/logout" component={Logout}/>
+        <PrivateRoute path="/profile" component={Profile}/>
+        <PrivateRoute path="/patient-list" component = {PatientList}/>
+        <PrivateRoute path="/changePassword" component={ChangePassword}/>
+
+        {/* Admin Route */}
+        
         <AdminRoute path="/location" component={Location}/>
         <AdminRoute path="/newlocation" component={NewLocation}/>
-        <PrivateRoute exact path="/user-dashboard" component={PatientList}/>
         <AdminRoute exact path="/admin-dashboard" component={Landing_List}/>
-        <Route exact path="/login" component={Login}/>
         <AdminRoute exact path="/register" component={Register}/>
-        <PrivateRoute exact path="/AssessmentList" component={AssessmentList}/>
-        <Route path="/login" component={Login}/>
-        <PrivateRoute path="/logout" component={Logout}/>
-        <AdminRoute path="/admin/landing" component={Landing_List}/>
+        <AdminRoute path="/PatientList" component={PatientList}/>
+        
+        {/* Worker Route */}
         <WorkerRoute path="/PatientList" component={PatientList}/>
         <WorkerRoute path="/PatientNotes" component={PatientNotes}/>
         <WorkerRoute path="/PatientAddMedication" component={PatientAddMedication}/>
         <WorkerRoute path="/newAssessment" component={NewAssessment}/>
         <WorkerRoute path="/newPatient" component={NewPatient}/>
+
+        {/* Manager Route */}
         <ManagerRoute path="/newWorker" component={NewUser}/>
-        <PrivateRoute path="/profile" component={Profile}/>
-        <PrivateRoute path="/changePassword" component={ChangePassword}/>
-        <Route path="/resources" component={Resources}/>
     </Switch>
 )
 

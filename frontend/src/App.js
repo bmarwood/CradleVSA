@@ -99,7 +99,7 @@ class App extends Component {
     }
 
     getTitle() {
-        return "Headers"
+        return "Dashboard"
     }
 
     render() {

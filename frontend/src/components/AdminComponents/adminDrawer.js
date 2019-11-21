@@ -8,11 +8,14 @@ export default function AdminDrawer() {
     return (
         <Navigation>
             <Link to="/logout">Logout</Link>
-            <Link to="/location">View Locations</Link>
+            <Link to="/view-patients">View Patients</Link>
+            <Link to="/view-patients">View Workers</Link>
             <Link to="/newAssessment">New Assessment</Link>
             <Link to="/newPatient">New Patient</Link>
             <Link to="/newWorker">New Worker</Link>
             <Link to="/profile">Profile</Link>
+            <Link to="/location">View Locations</Link>
         </Navigation>
+        
     )
 }

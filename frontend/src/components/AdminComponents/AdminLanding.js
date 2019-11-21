@@ -8,7 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import PatientList from '../PatientComponents/PatientList'
-import UserList from  '../UserList'
+import UserList from  '../UserList';
 
 class Landing_List extends Component {
     render() {
@@ -35,7 +35,7 @@ function SimpleTabs() {
         <AppBar className={classes.appbar} position="static">
           <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
             <Tab label="Patients" {...a11yProps(0)} />
-            <Tab label="Users" {...a11yProps(1)} />
+            <Tab label="Workers" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
@@ -47,169 +47,6 @@ function SimpleTabs() {
       </div>
   );
 }
-
-// function PatientList() {
-
-    
-//     const [state, setState] = React.useState({
-//       columns: [
-//         { title: 'Name', field: 'name' },
-//         { title: 'Surname', field: 'surname' },
-//         { title: 'Sex', field: 'sex'},
-//         { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-//         { title: 'ID Number', field: 'id', type: 'numberic'},
-//       ],
-//       data: [
-//         { name: 'Loading',
-//           surname: 'Loading',
-//           sex: 'Loading',
-//           birthYear: 'Loading',
-//           id: 'Loading' 
-//         }
-//       ],
-//     });
-
-//     getPatientList()
-
-//     return (
-//       <div className = "table-position" >
-//       <MaterialTable
-//         title="Patients"
-//         columns={state.columns}
-//         data={state.data}
-//         editable={{
-//           onRowUpdate: (newData, oldData) =>
-//             new Promise(resolve => {
-//               setTimeout(() => {
-//                 resolve();
-//                 const data = [...state.data];
-//                 data[data.indexOf(oldData)] = newData;
-//                 setState({ ...state, data });
-//               }, 600);
-//             }),
-//           onRowDelete: oldData =>
-//             new Promise(resolve => {
-//               setTimeout(() => {
-//                 resolve();
-//                 const data = [...state.data];
-//                 data.splice(data.indexOf(oldData), 1);
-//                 setState({ ...state, data });
-//               }, 600);
-//             }),
-
-//           onRowAdd: newData =>
-//               new Promise((resolve, reject) => {
-//                 setTimeout(() => {
-//                   {
-//                     const data = [...state.data];
-//                     data.push(newData);
-//                     setState({ ...state, data });
-//                   }
-//                   resolve();
-//                 }, 600);
-//               }),
-//         }}
-
-//       //Other Actions
-//       actions={[
-//         {
-//           //Graph button for patient chart
-//           icon: 'assessment',
-//           tooltip: 'Graph',
-//           onClick: () => {
-//             //Popup for Patient chart
-//             window.open("/users/PatientChart",'popUpWindow',
-//             'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-//           }
-//         }
-//       ]}
-//         />
-//       </div>
-//     );
-// }
-
-// function UserList() {
-//   const [state, setState] = React.useState({
-//     columns: [
-//       { title: 'Username', field: 'username' },
-//       { title: 'Password', field: 'password' },
-//       { title: 'Role', field: 'role', type: 'array' },
-//       { title: 'Name', field: 'name' },
-//       { title: 'Surname', field: 'surname' },
-//       { title: 'Sex', field: 'sex'},
-//       { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-//       { title: 'ID Number', field: 'id', type: 'numberic'},
-//     ],
-//     data: [
-//       {
-//         username: 'Loading',
-//         password: 'Loading',
-//         role: ["Loading "],
-//         name: 'Loading',
-//         surname: 'Loading',
-//         sex: 'Loading',
-//         birthYear: 'Loading',
-//         id: 'Loading' 
-//       }
-//     ],
-//   });
-
-//   return (
-//       <div className = "table-position" >
-//         <MaterialTable
-//             title="Admins"
-//             columns={state.columns}
-//             data={state.data}
-//             editable={{
-//               onRowUpdate: (newData, oldData) =>
-//                   new Promise(resolve => {
-//                     setTimeout(() => {
-//                       resolve();
-//                       const data = [...state.data];
-//                       data[data.indexOf(oldData)] = newData;
-//                       setState({ ...state, data });
-//                     }, 600);
-//                   }),
-//               onRowDelete: oldData =>
-//                   new Promise(resolve => {
-//                     setTimeout(() => {
-//                       resolve();
-//                       const data = [...state.data];
-//                       data.splice(data.indexOf(oldData), 1);
-//                       setState({ ...state, data });
-//                     }, 600);
-//                   }),
-//               onRowAdd: newData =>
-//                   new Promise((resolve, reject) => {
-//                     setTimeout(() => {
-//                       {
-//                         const data = [...state.data];
-//                         data.push(newData);
-//                         setState({ ...state, data });
-//                       }
-//                       resolve();
-//                     }, 600);
-//                   }),
-//             }}
-
-//             //Other Actions
-//             actions={[
-//               {
-//                 //Graph button for patient chart
-//                 icon: 'assessment',
-//                 tooltip: 'Graph',
-//                 onClick: () => {
-//                   //Popup for Patient chart
-//                   window.open("/users/PatientChart",'popUpWindow',
-//                       'height=500,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-//                 }
-//               }
-//             ]}
-//         />
-//       </div>
-//   );
-// }
-
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

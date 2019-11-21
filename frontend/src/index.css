@@ -5,12 +5,21 @@ html, body {
   background: linear-gradient(to right, #7BC6CC, #a1a9c8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
 }
 
+.mdl-layout--fixed-drawer > .mdl-layout__inner-container > .mdl-layout__header .mdl-layout__header-row {
+  padding-left: 80px;
+}
+
 .AssessList {
   border: thin solid #C06C84;
   padding: 2rem;
   margin: 2rem;
   display: flex;
   flex-direction: column;
+}
+
+.MuiAppBar-colorPrimary {
+  color: #fff;
+  background-color: #4694ab;
 }
  
 .AssessList {
