@@ -95,6 +95,7 @@ class Utility extends Component {
     }
 
     static filterByDate(assessments, from, to) {
+        to = to.setDate(to.getDate() + 1);
         let filtered_assessments = []
         if (assessments.length === 0) {
             return filtered_assessments

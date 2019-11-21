@@ -26,12 +26,11 @@ class CommunityReport extends React.Component {
     }
 
 
-    //handle date change
-    changeDOB = date => {
+    handleDateChange = (dateName, dateValue) => {
         this.setState({
-            selected: date
-        });
-    };
+            [dateName]: dateValue
+        })
+    }
 
     //componentWillUpdate
     componentDidMount() {
@@ -101,19 +100,19 @@ class CommunityReport extends React.Component {
                 <br/>
                 <h4>From:</h4>
                 <DatePicker
-                    name="from"
+                    value={this.state.from}
                     selected={this.state.from}
-                    onChange={this.changeDOB}
-                    maxDate={new Date()}
+                    onChange={date => this.handleDateChange('from', date)}
+                    maxDate={this.state.to}
                 />
                 <br/>
                 <br/>
 
                 <h4>To:</h4>
                 <DatePicker
-                    name="to"
+                    value={this.state.to}
                     selected={this.state.to}
-                    onChange={this.changeDOB}
+                    onChange={date => this.handleDateChange('to', date)}
                     minDate={this.state.from}
                     maxDate={new Date()}
                 />
