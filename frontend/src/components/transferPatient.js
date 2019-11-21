@@ -22,7 +22,7 @@ class TransferPatient extends Component {
             columns: [],
             data: [],
             vht_array: [],
-            vht_empty_flag: Boolean,
+            vht_empty_flag: false,
             vht_w_assessment: [],
             from_vht: '',
             to_vht: '',
@@ -76,7 +76,6 @@ class TransferPatient extends Component {
             }
             if(!this.state.vht_empty_flag && (patient.vht_id == null || patient.vht_id == "EMPTY" )){
                 this.setState({vht_empty_flag: true})
-                console.log("PLEASE")
             }
             else{
                 var vht_id = patient.vht_id
@@ -160,39 +159,17 @@ class TransferPatient extends Component {
 
 
     handleSubmit = async () => {
-        alert("TRANSFER!!")
-        //input validation
-        // this.setState({
-        //     error: false
-        // })
-        // this.checkRole();
-        // if (this.state.error) {
-        //     alert("Must select one role")
-        //     return
-        // }
-        //
-        // //remove and change the inputs
-        // this.changeState();
-        // //console.log(this.state);
-        //
-        // //  '/users/register/this.state'
-        // var response = null
-        // if (this.state.update) {
-        //     response = await requestServer.updateUser(this.state)
-        //     alert("UPDATED!!")
         //set the patient object to be sent to update
         for (var itr = 0; itr<this.state.data.length; itr++){
             if(this.state.data[itr].vht_id === this.state.from_vht){
                 var temp_patient = await this.getSinglePatient(this.state.data[itr].id)
-                console.log("TO BE UPDATED",temp_patient.vht_id)
                 temp_patient.vht_id = this.state.to_vht
-                console.log("UPDATED TO THIS VHT", temp_patient.vht_id)
                 var update_response = await this.updateSinglePatient(temp_patient)
             }
         }
 
         window.location.reload()
-        alert("All Patients from ID : "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
+        alert("All Patients from ID: "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
         //this.getPatientList()
     }
 
@@ -227,7 +204,6 @@ class TransferPatient extends Component {
             }
         }
 
-        console.log("THESE ARE THE two",temp_from_vht,temp_to_vht)
 
         //TO DO PUT THESE INTO FUNCTIONS AND CHANGE ON SELECT CHANGE
         let new_array_with_or_without = [] //this.state.vht_w_assessment
@@ -305,7 +281,8 @@ class TransferPatient extends Component {
                         backgroundColor: 'blue',
                         color: 'white',
                         marginLeft:20
-                    }} onClick={this.handleSubmit}>Submit</Button>
+                    }} //onClick={this.handleSubmit}>Submit</Button>
+                    onClick={(e) => {if (window.confirm("Are you sure you wish to transfer all patients from ID: "+this.state.from_vht+" to ID: "+this.state.to_vht)) this.handleSubmit()}}>Submit</Button>
                 </div>
 
                 <div className="table-positionT">
