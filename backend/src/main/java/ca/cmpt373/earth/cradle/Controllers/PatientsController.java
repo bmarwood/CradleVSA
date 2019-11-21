@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+
 
 import java.util.List;
 
@@ -67,20 +69,6 @@ public class PatientsController {
         }
     }
 
-    @PostMapping("/update/{patient_id}")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://localhost:8040")
-    public Patients updateAssessment(@PathVariable String patient_id, @RequestBody Patients candidate) {
-        try {
-//            patientsRepository.deleteById(patient_id);
-            return patientsRepository.save(candidate);
-        } catch (Throwable e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
     @GetMapping("/get{patient_id}")
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "http://localhost:8040")
@@ -94,24 +82,29 @@ public class PatientsController {
         }
     }
 
-//    @GetMapping("/delete/{patient_id}")
-//    @ResponseStatus(code = HttpStatus.OK)
-//    @CrossOrigin(origins = "http://localhost:8040")
-//    public void delete(@PathVariable String patient_id) {
-//        patientsRepository.deleteById(patient_id);
-//    }
-
-
     //deleteWorks
     @DeleteMapping("/delete/{patient_id}")
-    public String deleteById(@PathVariable String id) {
+    public String deleteById(@PathVariable String patient_id) {
         try {
-            patientsRepository.deleteById(id);
-            return id;
+            patientsRepository.deleteById(patient_id);
+            return patient_id;
         } catch (Throwable e) {
             e.printStackTrace();
             return null;
         }
-
     }
+
+    @PostMapping("/update/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Patients> updatePatient(@RequestBody Patients patient) {
+        try {
+            this.patientsRepository.save(patient);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.status(200).body(patient);
+    }
+
 }

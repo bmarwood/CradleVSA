@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import './PatientComponents/PatientList.css';
 import requestServer from './RequestServer';
-
+import UpdateUserPopup from "../Modals/UpdateUserPopup";
 
 class UserList extends Component {
 
@@ -12,6 +12,7 @@ class UserList extends Component {
             columns: [],
             data: []
         }
+        this.deleteUser = this.deleteUser.bind(this)
     }
 
     componentDidMount() {
@@ -25,7 +26,13 @@ class UserList extends Component {
                 {title: 'Surname', field: 'surname'},
                 {title: 'Sex', field: 'sex'},
                 {title: 'Birth Year', field: 'birthYear', type: 'numeric'},
-                {title: 'ID Number', field: 'id', type: 'numberic'}
+                {title: 'ID Number', field: 'id', type: 'numberic'},
+                {
+                    title: 'Update information',
+                    field: 'update',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
             ],
             Data: [
                 {
@@ -35,7 +42,8 @@ class UserList extends Component {
                     surname: 'Loading',
                     sex: 'Loading',
                     birthYear: 'Loading',
-                    id: 'Loading'
+                    id: 'Loading',
+                    update: <UpdateUserPopup/>
                 }
             ]
 
@@ -45,6 +53,14 @@ class UserList extends Component {
     componentWillUnmount() {
         clearInterval(this.timer);
         this.timer = null;
+    }
+
+    async deleteUser(user) {
+        let response = await requestServer.deleteUser(user.id)
+        if (response !== null) {
+            return true
+        }
+        return false
     }
 
     getUserRoles(user) {
@@ -73,6 +89,9 @@ class UserList extends Component {
             var sex = user.gender
             var birthYear = user.dob
             var id = user.id
+            var update = <UpdateUserPopup
+                id={user.id}
+            />
 
             var user_obj = {
                 username: username,
@@ -81,7 +100,8 @@ class UserList extends Component {
                 surname: surname,
                 sex: sex,
                 birthYear: birthYear,
-                id: id
+                id: id,
+                update: update
             }
 
             UserList.push(user_obj)
@@ -98,14 +118,39 @@ class UserList extends Component {
         }
     }
 
+    updateRow(oldData) {
+        this.props.history.push(
+            '/newWorker',
+        )
+    }
+
 
     render() {
+
         return (
             <div className="table-position">
                 <MaterialTable
                     title="User"
                     columns={this.state.columns}
                     data={this.state.data}
+                    editable={{
+                        onRowDelete: oldData =>
+                            new Promise(resolve => {
+                                setTimeout(() => {
+                                    resolve();
+                                    var didDelete = this.deleteUser(oldData)
+                                    console.log(oldData)
+                                    if (didDelete) {
+                                        const data = [...this.state.data];
+                                        data.splice(data.indexOf(oldData), 1);
+                                        this.setState({
+                                            data: data
+                                        });
+                                    }
+                                }, 1000);
+                            }),
+
+                    }}
                 />
             </div>
 

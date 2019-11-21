@@ -63,21 +63,8 @@ public class UsersController {
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Users> updateUser(@RequestBody Users user) {
-        //Update user's information
-
-        String workerId = user.getId();
-        String name = user.getName();
-        String username = user.getUsername();
-        String password = user.getPassword();
-        String dob = user.getDob();
-        String address = user.getAddress();
-//        Users.Gender gender = user.getGender();
-        String gender = user.getGender();
-        Set<Role> roles = user.getRoles();
-
         try {
-            this.usersRepository.save(new Users(workerId, username, password, name, dob,
-                    address, gender, roles));
+            this.usersRepository.save(user);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -96,8 +83,7 @@ public class UsersController {
         Users user = this.usersRepository.findByUsername(username);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        else {
+        } else {
             if (bCrypt.matches(old_password, user.getPassword())) {
                 String hashedPassword = bCrypt.encode(new_password);
                 user.setPassword(hashedPassword);
@@ -108,8 +94,7 @@ public class UsersController {
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
                 }
                 return ResponseEntity.status(200).body(user);
-            }
-            else {
+            } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
         }
@@ -130,13 +115,6 @@ public class UsersController {
 //        }
 //    }
 
-//    SAME AS "/register" - we should use register - it contains password encryption
-//    @PostMapping("/add")
-//    @ResponseStatus(code = HttpStatus.CREATED)
-//    @CrossOrigin(origins = "http://localhost:8040")
-//    public Users add(@RequestBody Users candidate) {
-//        return usersRepository.save(candidate);
-//    }
 
     @PostMapping("/login")
     @ResponseStatus(code = HttpStatus.OK)
@@ -191,6 +169,12 @@ public class UsersController {
         return ResponseEntity.status(200).body(user);
 
 
+    }
+
+    @DeleteMapping("/delete/{userId}")
+    public String deleteById(@PathVariable String userId) {
+        usersRepository.deleteById(userId);
+        return userId;
     }
 
 

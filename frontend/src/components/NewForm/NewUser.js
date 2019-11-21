@@ -30,8 +30,8 @@ const Role_Termination_Integer = -1
 
 //form for a new user
 class NewUser extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             id: '',
             username: '',
@@ -50,12 +50,51 @@ class NewUser extends React.Component {
             lname: '',
             temp_dob: new Date(),
             roles_array: [],
-            user_array: []
+            user_array: [],
+            update: props.id,
+            old_username: '',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
         this.getUserList();
         this.getRoleArray();
+        this.getOldData();
+
+    }
+
+    async getOldData() {
+        if (!this.state.update) {
+            return
+        }
+        let old_user_data = await RequestServer.getCVSA(this.state.update)
+        if (old_user_data) {
+            old_user_data = old_user_data.data
+            if (old_user_data !== null) {
+                console.log(old_user_data)
+                this.setState({
+                    id: old_user_data.id,
+                    gender: old_user_data.gender,
+                    username: old_user_data.username,
+                    address: old_user_data.address,
+                    password: old_user_data.password,
+                    area: old_user_data.area,
+                    fname: old_user_data.name.split(" ")[0],
+                    lname: old_user_data.name.split(" ")[1],
+                    temp_dob: new Date(old_user_data.dob),
+                    old_username: old_user_data.username
+                })
+                for (let role of this.state.roles_array) {
+                    console.log(old_user_data.roles)
+                    for (let selected_role of old_user_data.roles) {
+                        if (selected_role.role.includes(role.name)) {
+                            role.checked = true
+                            console.log(role)
+                        }
+                        console.log(role)
+                    }
+                }
+            }
+        }
     }
 
     getRoles() {
@@ -84,7 +123,7 @@ class NewUser extends React.Component {
         //check for user id - no duplicate value
         ValidatorForm.addValidationRule('checkID', (value) => {
             for (let user of this.state.user_array) {
-                if (user.id === value) {
+                if (user.id === value && value !== this.state.update) {
                     return false;
                 }
             }
@@ -93,12 +132,13 @@ class NewUser extends React.Component {
 
         ValidatorForm.addValidationRule('checkUsername', (value) => {
             for (let user of this.state.user_array) {
-                if (user.username === value) {
+                if (user.username === value && value !== this.state.old_username) {
                     return false;
                 }
             }
             return true;
         });
+
     }
 
     getRoleArray() {
@@ -120,6 +160,7 @@ class NewUser extends React.Component {
         this.setState({
             temp_dob: date
         });
+        console.log(this.state.temp_dob.toLocaleString())
     };
 
 
@@ -205,18 +246,24 @@ class NewUser extends React.Component {
         //console.log(this.state);
 
         //  '/users/register/this.state'
-        var response = await RequestServer.addUser(this.state)
-        if (response !== null) {
-            toast("User Added");
-            this.props.history.push(
-                '/',
-                {detail: response.data}
-            )
+        var response = null
+        if (this.state.update) {
+            response = await RequestServer.updateUser(this.state)
+            alert("UPDATED!!")
         } else {
-            this.setState({
-                error: true,
-                errorMsg: 'Unable to register'
-            })
+            response = await RequestServer.addUser(this.state)
+            if (response !== null) {
+                toast("User Added");
+                this.props.history.push(
+                    '/',
+                    {detail: response.data}
+                )
+            } else {
+                this.setState({
+                    error: true,
+                    errorMsg: 'Unable to register'
+                })
+            }
         }
 
     }
@@ -244,7 +291,9 @@ class NewUser extends React.Component {
                 onSubmit={this.handleSubmit}
                 onError={errors => console.log(errors)}
             >
-                <h4>New Worker </h4>
+                <div style={{display: (this.state.update ? 'none' : 'block')}}>
+                    <h4>New Worker </h4>
+                </div>
 
                 <Grid>
                     <Cell col={4}>
@@ -304,18 +353,20 @@ class NewUser extends React.Component {
                         />
                         <br/>
                         <br/>
-                        <TextValidator
-                            label="Password"
-                            onChange={this.handleChange}
-                            name="password"
-                            value={this.state.password}
-                            type="password"
-                            validators={['required']}
-                            errorMessages={['this field is required']}
-                            variant="outlined"
-                        />
-                        <br/>
-                        <br/>
+                        <div style={{display: (this.state.update ? 'none' : 'block')}}>
+                            <TextValidator
+                                label="Password"
+                                onChange={this.handleChange}
+                                name="password"
+                                value={this.state.password}
+                                type="password"
+                                validators={['required']}
+                                errorMessages={['this field is required']}
+                                variant="outlined"
+                            />
+                            <br/>
+                            <br/>
+                        </div>
                         <TextValidator
                             label="Assigned Area"
                             onChange={this.handleChange}
@@ -359,7 +410,6 @@ class NewUser extends React.Component {
                     backgroundColor: 'blue',
                     color: 'white'
                 }}>Submit</Button>
-                <br/>
                 <br/>
             </ValidatorForm>
         );

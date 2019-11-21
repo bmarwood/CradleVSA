@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import './AssessmentList.css';
-import TrafficIcons from "../Visuals/TrafficIcons";
+import TrafficIconsCircle from "../Visuals/TrafficIconsCircle";
+import TrafficIconsTriangle from "../Visuals/TrafficIconsTriangle";
+import TrafficIconsOctagon from "../Visuals/TrafficIconsOctagon";
 import ModalPopup from "../../Modals/ModalPopup";
 import requestServer from '../RequestServer';
 
@@ -10,10 +12,14 @@ class AssessmentList extends Component {
 
     constructor(props) {
         super(props);
+        console.log(props.id)
         this.state = {
             columns: [],
             data: [],
+            passed_value: props.id
         }
+
+        this.deleteAssessment = this.deleteAssessment.bind(this);
     }
 
     componentDidMount() {
@@ -29,7 +35,7 @@ class AssessmentList extends Component {
                 },
                 {
                     title: 'Cradle Professional Id',
-                    field: 'vht_id',
+                    field: 'cvsa_id',
                     headerStyle: {textAlign: 'center'},
                     cellStyle: {textAlign: 'center'}
                 },
@@ -81,7 +87,7 @@ class AssessmentList extends Component {
                     assessment_id: 'LOADING...',
                     ews_color: 'LOADING...',
                     patient_id: 'LOADING...',
-                    vht_id: 'LOADING...',
+                    cvsa_id: 'LOADING...',
                     gestational_age: 'LOADING...',
                     gestational_unit: 'LOADING...',
                     referred: 'LOADING...',
@@ -100,32 +106,45 @@ class AssessmentList extends Component {
         this.timer = null;
     }
 
+    async deleteAssessment(assessment) {
+        var response = await requestServer.deleteAssessment(assessment.id)
+        if (response !== null) {
+            return true
+        }
+        return false
+    }
+
 
     populateData(response) {
-
         var assessmentList = []
         response.forEach(function (assessment) {
+            console.log("assessment: ", assessment)
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
-                vht_id={assessment.vht_id}
+                cvsa_id={assessment.cvsa_id}
                 symptoms={assessment.symptoms}
                 systolic={assessment.systolic}
                 diastolic={assessment.diastolic}
                 heart_rate={assessment.heart_rate}
-                date={assessment.date}
+                id={assessment._id}
+                assessment_date={assessment.date}
+                follow_up_date={assessment.follow_up_date}
+                gestational_age={assessment.gestational_age}
+                gestational_unit={assessment.gestational_unit}
+                ews_color={assessment.ews_color}
+                arrow={assessment.arrow}
             />
             var assessment_obj = {
                 id: assessment._id,
                 ews_color: getColorVisual(assessment.ews_color),
                 arrow: getArrowVisual(assessment.arrow),
                 patient_id: assessment.patient_id,
-                vht_id: assessment.vht_id,
+                cvsa_id: assessment.cvsa_id,
                 gestational_age: getGestationalAge(assessment),
                 referred: getBoolVisual(assessment.referred),
                 follow_up: getBoolVisual(assessment.follow_up),
                 recheck: getBoolVisual(assessment.recheck),
                 birth_date: assessment.birth_date,
-                date: assessment.date,
                 heart_rate: assessment.heart_rate,
                 systolic: assessment.systolic,
                 diastolic: assessment.diastolic,
@@ -161,22 +180,26 @@ class AssessmentList extends Component {
 
     //gets assessments for admin if that role is given, otherwise dynamically populates based on current user
     async getAssessmentList() {
+        console.log(this.state.passed_value)
+        if (this.state.passed_value) {
+            passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
+            this.populateData(passback.data)
+            if (passback.data.length === 0) {
+                alert("No History Found")
+            }
+            console.log(passback.data)
+            return
+        }
         var userData = JSON.parse(localStorage.getItem("userData"))
         var roles = this.getRoles(userData)
         var passback
         if (this.isAdmin(roles)) {
             passback = await requestServer.getAssessmentsList()
-
-            if (passback !== null && passback.data !== "") {
-                this.populateData(passback.data)
-            }
-
         } else {
             passback = await requestServer.getAssessmentsByUserId(userData.id)
-
-            if (passback !== null && passback.data !== "") {
-                this.populateData(passback.data)
-            }
+        }
+        if (passback !== null && passback.data !== "") {
+            this.populateData(passback.data)
         }
     }
 
@@ -206,17 +229,17 @@ const styles = {
 };
 const GreenLight = () => (
     <div style={styles}>
-        <TrafficIcons name="greencircle" width={50} fill={"#228B22"}/>
+        <TrafficIconsCircle name="greencircle" width={50} fill={"#228B22"}/>
     </div>
 );
 const RedLight = () => (
     <div style={styles}>
-        <TrafficIcons name="redcircle" width={50} fill={"#B22222"}/>
+        <TrafficIconsOctagon name="redcircle" width={50} fill={"#B22222"}/>
     </div>
 );
 const YellowLight = () => (
     <div style={styles}>
-        <TrafficIcons name="yellowcircle" width={50} fill={"#CCCC00"}/>
+        <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"}/>
     </div>
 );
 
