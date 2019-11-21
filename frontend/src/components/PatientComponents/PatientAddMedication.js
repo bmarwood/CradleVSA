@@ -49,7 +49,7 @@ class PatientAddMedication extends React.Component {
     changeState() {
         this.setState({
             start_date: Utility.convertDate(this.state.temp_start_date),
-            end_date: Utility.convertDate(this.state.temp_end_date)
+            //end_date: Utility.convertDate(this.state.temp_end_date)
         })
     }
 
@@ -65,8 +65,6 @@ class PatientAddMedication extends React.Component {
         // }
     }
     render() {
-        //const { medication } = this.state;
-        //const { dose } = this.state;
         return (
             <div style={{width: '100%', margin: 'auto'}}>
             <ValidatorForm

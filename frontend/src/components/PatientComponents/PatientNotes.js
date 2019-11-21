@@ -4,6 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import RequestServer from '../RequestServer';
 import NewMedicationPopup from '../../Modals/NewMedicationPopup';
 import './PatientNotes.css';
+import ModalPopup from '../../Modals/ModalPopup';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Utility from '../NewForm/Utility';
 
 class PatientNotes extends Component {
     constructor(props) {
@@ -11,8 +14,9 @@ class PatientNotes extends Component {
         this.state = {
             columns: [],
             data: [],
-            patient_name: "Loading"
-        }
+            patient_name: "Loading"     
+          }
+          this.deleteMedications = this.deleteMedications.bind(this)
     }
 
     componentDidMount() {
@@ -34,15 +38,7 @@ class PatientNotes extends Component {
                   startDate: 'Start', 
                   endDate: 'End', 
                   sideEffects: 'dry mouth',
-                  frequency: 'daily'
-                },
-                {
-                  medication: 'Medication Name 2',
-                  dose: '2mg',
-                  startDate: 'Start',
-                  endDate: 'End',
-                  sideEffects: 'itchy skin',
-                  frequency: 'twice daily'
+                  frequency: 'daily',
                 },
             ],
         })
@@ -52,6 +48,7 @@ class PatientNotes extends Component {
         clearInterval(this.timer);
         this.timer = null;
     }
+
     populateData(response) {
       var medicationsList = []
       response.forEach(list_of_medications => {
@@ -68,7 +65,7 @@ class PatientNotes extends Component {
           startDate: startDate,
           endDate: endDate,
           sideEffects: sideEffects,
-          frequency: frequency
+          frequency: frequency,
       }
 
       medicationsList.push(medications_obj)
@@ -91,16 +88,33 @@ class PatientNotes extends Component {
         console.log(passback.data.list_of_medications[0])
     }
 }
-
+  async deleteMedications(patient_id, medication_name) {
+    let response = await RequestServer.deleteMedications(patient_id, medication_name)
+    if (response !== null) {
+      return true
+  }
+  return false
+}
 render(){
-  
     return (
-      
         <div className = "table-position" >
         <MaterialTable
         title={this.props.patient_name}
         columns={this.state.columns}
         data={this.state.data}
+        // actions={[
+        //   {
+        //     icon: () =>
+        //     <NewMedicationPopup
+        //     patient_id={this.props.patient_id}
+        //     name={this.props.name}
+        //     surname={this.props.surname}
+        //     patient_name={this.props.patient_name}
+        //     />,
+        //     tooltip: 'Add Medication',
+        //     isFreeAction: true,
+        //   }
+        // ]}
         editable={{
           // onRowAdd: newData =>
           //   new Promise(resolve => {
@@ -129,6 +143,21 @@ render(){
           //       setState({ ...state, data });
           //     }, 600);
           //       }),
+          onRowDelete: oldData =>
+          new Promise(resolve => {
+              setTimeout(() => {
+                  resolve();
+                  var didDelete = this.deleteMedications(oldData)
+                  console.log(oldData)
+                  if (didDelete) {
+                      const data = [...this.state.data];
+                      data.splice(data.indexOf(oldData), 1);
+                      this.setState({
+                          locations: data
+                      });
+                  }
+              }, 600);
+          }),
           }}
         />
         <NewMedicationPopup
@@ -136,7 +165,7 @@ render(){
         name={this.props.name}
         surname={this.props.surname}
         patient_name={this.props.patient_name}
-        />
+        /> 
       </div>
        );
 }
