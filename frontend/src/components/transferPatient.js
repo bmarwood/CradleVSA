@@ -25,7 +25,7 @@ class TransferPatient extends Component {
             vht_empty_flag: Boolean,
             vht_w_assessment: [],
             from_vht: '',
-            to_vht: ''
+            to_vht: '',
         }
         this.handleChange = this.handleChange.bind(this);
         this.getVHTList()
@@ -101,24 +101,24 @@ class TransferPatient extends Component {
         //console.log("hi", this.state.data)
     }
 
-    getRoles(parsedUser) {
-        var roleArray = []
-        if (parsedUser && parsedUser.roles) {
-            parsedUser.roles.forEach(function (role) {
-                //console.log("User data is : " + role.role)
-                roleArray.push(role.role)
-            })
-        }
-
-        return roleArray
-    }
-
-    isAdmin(roles) {
-        if (roles.indexOf("ADMIN") > -1) {
-            return true
-        }
-        return false
-    }
+    // getRoles(parsedUser) {
+    //     var roleArray = []
+    //     if (parsedUser && parsedUser.roles) {
+    //         parsedUser.roles.forEach(function (role) {
+    //             //console.log("User data is : " + role.role)
+    //             roleArray.push(role.role)
+    //         })
+    //     }
+    //
+    //     return roleArray
+    // }
+    //
+    // isAdmin(roles) {
+    //     if (roles.indexOf("ADMIN") > -1) {
+    //         return true
+    //     }
+    //     return false
+    // }
 
     async getPatientList() {
         var passback = await requestServer.getPatientVHTList()
@@ -129,6 +129,23 @@ class TransferPatient extends Component {
         }
     }
 
+    async getSinglePatient(ID) {
+        var passback = await requestServer.getPatientByID(ID)
+        if (passback !== null && passback.data !== "") {
+            //console.log("GODMODE",passback.vhtlist)
+            //this.setState({})
+            return(passback.data)
+        }
+    }
+
+    async updateSinglePatient(patient){
+        var passback = await requestServer.updatePatient(patient)
+        if (passback !== null && passback.data !== "") {
+            //console.log("GODMODE",passback.vhtlist)
+            //this.setState({})
+            return(passback.data)
+        }
+    }
 
 
     async getVHTList() {
@@ -163,23 +180,20 @@ class TransferPatient extends Component {
         // if (this.state.update) {
         //     response = await requestServer.updateUser(this.state)
         //     alert("UPDATED!!")
-            // } else {
-            //     response = await RequestServer.addUser(this.state)
-            //     if (response !== null) {
-            //         toast("User Added");
-            //         this.props.history.push(
-            //             '/',
-            //             {detail: response.data}
-            //         )
-            //     } else {
-            //         this.setState({
-            //             error: true,
-            //             errorMsg: 'Unable to register'
-            //         })
-            //     }
-            // }
+        //set the patient object to be sent to update
+        for (var itr = 0; itr<this.state.data.length; itr++){
+            if(this.state.data[itr].vht_id === this.state.from_vht){
+                var temp_patient = await this.getSinglePatient(this.state.data[itr].id)
+                console.log("TO BE UPDATED",temp_patient.vht_id)
+                temp_patient.vht_id = this.state.to_vht
+                console.log("UPDATED TO THIS VHT", temp_patient.vht_id)
+                var update_response = await this.updateSinglePatient(temp_patient)
+            }
+        }
 
-        //}
+        window.location.reload()
+        alert("All Patients from ID : "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
+        //this.getPatientList()
     }
 
 
@@ -203,7 +217,6 @@ class TransferPatient extends Component {
         let temp_to_vht = this.state.to_vht
         let temp_from_vht = this.state.from_vht
         if(this.state.vht_array[0] != undefined){
-            console.log("vht_ARRAY 123",this.state.vht_array[0].id)
             if(temp_to_vht === temp_from_vht && (temp_to_vht != '') && (temp_to_vht !='null')){
                 if(this.state.from_vht === this.state.vht_array[0].id){
                     temp_to_vht = this.state.vht_array[1].id
