@@ -1,12 +1,13 @@
-.table-position{
+.table-positionT{
     margin: 0 auto;
     width: 40%;
     margin-top: 50px;
-    margin-left: 135px;
+    margin-left: 110px;
+    margin-bottom: 50px;
     float:left;
 }
 
-.landing-form {
+.landing-formT {
     width: 100%;
     height: 100%;
     padding-top: 150px;
@@ -19,7 +20,7 @@
     margin: auto;
 }
 
-.select-style{
+.select-styleT{
     color:white;
-    paddingLeft:50;
+    margin-left: 10px;
 }

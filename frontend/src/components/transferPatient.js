@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import {ValidatorForm} from "react-material-ui-form-validator";
 import Utility from "./NewForm/Utility";
 import ModalPopup from "../Modals/ModalPopup";
+import {toast} from "react-toastify";
 
 
 class TransferPatient extends Component {
@@ -21,17 +22,17 @@ class TransferPatient extends Component {
             columns: [],
             data: [],
             vht_array: [],
-            vht_set: [],
-            user_set: [],
+            vht_empty_flag: false,
             vht_w_assessment: [],
             from_vht: '',
-            to_vht: ''
+            to_vht: '',
         }
         this.handleChange = this.handleChange.bind(this);
+        this.getVHTList()
     }
 
     componentDidMount() {
-        this.getVHTList()
+        //this.getVHTList()
         this.getPatientList()
         this.timer = setInterval(() => this.getPatientList(), 10000);
         this.setState({
@@ -73,6 +74,9 @@ class TransferPatient extends Component {
             if(patient.vht_id == null){
                 var vht_id = "EMPTY"
             }
+            if(!this.state.vht_empty_flag && (patient.vht_id == null || patient.vht_id == "EMPTY" )){
+                this.setState({vht_empty_flag: true})
+            }
             else{
                 var vht_id = patient.vht_id
             }
@@ -93,107 +97,54 @@ class TransferPatient extends Component {
         });
 
         this.setState({data: IdList})
-        console.log("hi", this.state.data)
+        //console.log("hi", this.state.data)
     }
 
-    getRoles(parsedUser) {
-        var roleArray = []
-        if (parsedUser && parsedUser.roles) {
-            parsedUser.roles.forEach(function (role) {
-                console.log("User data is : " + role.role)
-                roleArray.push(role.role)
-            })
-        }
-
-        return roleArray
-    }
-
-    isAdmin(roles) {
-        if (roles.indexOf("ADMIN") > -1) {
-            return true
-        }
-        return false
-    }
+    // getRoles(parsedUser) {
+    //     var roleArray = []
+    //     if (parsedUser && parsedUser.roles) {
+    //         parsedUser.roles.forEach(function (role) {
+    //             //console.log("User data is : " + role.role)
+    //             roleArray.push(role.role)
+    //         })
+    //     }
+    //
+    //     return roleArray
+    // }
+    //
+    // isAdmin(roles) {
+    //     if (roles.indexOf("ADMIN") > -1) {
+    //         return true
+    //     }
+    //     return false
+    // }
 
     async getPatientList() {
         var passback = await requestServer.getPatientVHTList()
         if (passback !== null && passback.data !== "") {
-            console.log("GODMODE",passback.vhtlist)
+            //console.log("GODMODE",passback.vhtlist)
             this.setState({vht_w_assessment:passback.vhtlist})
             this.populateData(passback.data)
         }
     }
 
-    // async getAssessmentList() {
-    //     var userData = JSON.parse(localStorage.getItem("userData"))
-    //     var roles = this.getRoles(userData)
-    //     console.log("USER", userData)
-    //     var passback
-    //     if (this.isAdmin(roles)) {
-    //         passback = await requestServer.getAssessmentsList()
-    //
-    //         if (passback !== null && passback.data !== "") {
-    //             await this.vhtSet()
-    //             await this.userSet(passback.data)
-    //             let found = await this.parseThings(passback.data)
-    //             console.log("foound",found)
-    //
-    //
-    //
-    //             var tempdata = passback.data
-    //             console.log("PRE CHECK", passback.data)
-    //             for (let i in found)
-    //             {
-    //
-    //                 console.log("DELETING", passback.data[found[i]], "AT POSITION", found[i])
-    //                 delete passback.data[found[i]]
-    //             }
-    //
-    //             //delete passback.data[0]
-    //             console.log("FINAL CHECK", passback.data)
-    //             this.populateData(passback.data)
-    //             //this.setState( vht_select_option: interse)
-    //         }
-    //
-    //     } else {
-    //         passback = await requestServer.getAssessmentsByUserId(userData.id)
-    //
-    //         if (passback !== null && passback.data !== "") {
-    //             this.populateData(passback.data)
-    //         }
-    //     }
-    // }
-/*
-    async getVHTListAll(){
-        var passback = await requestServer.getVHTList()
+    async getSinglePatient(ID) {
+        var passback = await requestServer.getPatientByID(ID)
         if (passback !== null && passback.data !== "") {
-            this.populateData(passback.data)
+            //console.log("GODMODE",passback.vhtlist)
+            //this.setState({})
+            return(passback.data)
         }
     }
-*/
-    // async vhtSet(){
-    //     let vht_set1 = [];
-    //     console.log("IN VHT CHECK",this.state.vht_array)
-    //     for(let itr = 0; itr < Object.keys(this.state.vht_array).length; itr++){
-    //          vht_set1.push(this.state.vht_array[itr].id)
-    //      }
-    //     this.setState({
-    //         vht_set: vht_set1
-    //     })
-    //     console.log("IN VHT CHECK 1",this.state.vht_set)
-    // }
-    //
-    // async userSet(data){
-    //     let user_set1 = [];
-    //     //console.log("IN VHT CHECK",this.state.vht_array)
-    //     for(let itr = 0; itr < Object.keys(data).length; itr++){
-    //         user_set1.push(data[itr].cvsa_id)
-    //     }
-    //     this.setState({
-    //         user_set: user_set1
-    //     })
-    //     console.log("IN USER CHECK",this.state.user_set)
-    // }
+
+    async updateSinglePatient(patient){
+        var passback = await requestServer.updatePatient(patient)
+        if (passback !== null && passback.data !== "") {
+            //console.log("GODMODE",passback.vhtlist)
+            //this.setState({})
+            return(passback.data)
+        }
+    }
 
 
     async getVHTList() {
@@ -206,48 +157,104 @@ class TransferPatient extends Component {
         }
     }
 
-    // async parseThings(data){
-    //     let intersect = this.state.vht_set.filter(value => this.state.user_set.includes(value));
-    //     console.log("intersect", intersect)
-    //     let found = []
-    //     for (let itr = 0; itr < Object.keys(data).length; itr++) {
-    //
-    //         if (!intersect.includes(data[itr].cvsa_id)) {
-    //             found.push(itr)
-    //         }
-    //     }
-    //     console.log("in getAss", intersect)
-    //     this.setState({vht_w_assessment: intersect})
-    //     console.log("in getAss with assessment", this.state.vht_w_assessment)
-    //     console.log("in getAss without assessment", this.state.vht_array)
-    //     console.log("in getAss", found)
-    //     return found
-    // }
+
+    handleSubmit = async () => {
+        //set the patient object to be sent to update
+        for (var itr = 0; itr<this.state.data.length; itr++){
+            if(this.state.data[itr].vht_id === this.state.from_vht){
+                var temp_patient = await this.getSinglePatient(this.state.data[itr].id)
+                temp_patient.vht_id = this.state.to_vht
+                var update_response = await this.updateSinglePatient(temp_patient)
+            }
+        }
+
+        window.location.reload()
+        alert("All Patients from ID: "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
+        //this.getPatientList()
+    }
+
+
 
 
     handleChange(event){
         if(event.target.name == "vht_A_id")
         {
             this.setState({from_vht:event.target.value})
+            //console.log("HMMM",event.target.value)
             //(this.setState({[event.target.name]: event.target.value}))
+        }
+        else{
+            this.setState({to_vht:event.target.value})
         }
     }
 
 
 
     render() {
+        let temp_to_vht = this.state.to_vht
+        let temp_from_vht = this.state.from_vht
+        if(this.state.vht_array[0] != undefined){
+            if(temp_to_vht === temp_from_vht && (temp_to_vht != '') && (temp_to_vht !='null')){
+                if(this.state.from_vht === this.state.vht_array[0].id){
+                    temp_to_vht = this.state.vht_array[1].id
+                }
+                else{
+                    temp_to_vht = this.state.vht_array[0].id
+                }
+            }
+        }
+
 
         //TO DO PUT THESE INTO FUNCTIONS AND CHANGE ON SELECT CHANGE
-        let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
+        let new_array_with_or_without = [] //this.state.vht_w_assessment
+        //let temp_new_with_or_without = []
+        for(var x= 0; x<this.state.vht_array.length; x++){
+            if (this.state.vht_array[x].id != temp_from_vht) {
+                new_array_with_or_without.push(this.state.vht_array[x])
+            }
+        }
+        //new_array_with_or_without = temp_new_with_or_without
+
+        if(this.state.vht_empty_flag) {
+            if (!this.state.vht_w_assessment.includes("EMPTY")) {
+                this.state.vht_w_assessment.unshift("EMPTY")
+            }
+        }
+
+
+        //console.log(new_array_with_or_without)
+        let vht_select_option = new_array_with_or_without.map(item => <option id={item.id}
                                                                          value={item.id}> {item.id} </option>)
 
         let vht_select_option2 = this.state.vht_w_assessment.map(item => <option
                                                                                  value={item}> {item} </option>)
+        let populate_only_selected_from = []
+        //let temp_from = []
 
-        console.log("WE ARE HERE",this.state.from_vht)
+        for (var itr = 0; itr<this.state.data.length; itr++){
+            if(this.state.data[itr].vht_id === this.state.from_vht){
+                populate_only_selected_from.push(this.state.data[itr])
+            }
+        }
+        //populate_only_selected_from = temp_from
+
+        let populate_only_selected_to = []
+        //let temp_to = []
+        for (var itr = 0; itr<this.state.data.length; itr++){
+            if(this.state.data[itr].vht_id === temp_to_vht){
+                populate_only_selected_to.push(this.state.data[itr])
+            }
+        }
+        //populate_only_selected_to = temp_to
+
+
+
+        //console.log("POPULATE",populate_only_selected)
+
+        //console.log("WE ARE HERE",this.state.from_vht,this.state.to_vht)
         return (
             <div>
-                <div className = "landing-form">
+                <div className = "landing-formT">
                     <h1 style={{color: "white"}}>Transfer Patients</h1>
                     <label style = {{color:"white"}} >Transfer From: </label>
                     <select
@@ -256,32 +263,55 @@ class TransferPatient extends Component {
                         name="vht_A_id"
                         value={this.state.vht_id}
                     >
-                        <option value="EMPTY"> --SELECT ONE--</option>
+                        <option value="null"> --SELECT ONE--</option>
                         {vht_select_option2}
                     </select>
-                    <span className = "select-style" > >>> </span>
-                    <label className = "select-style" >Transfer To: </label>
+                    <span className = "select-styleT" > >>> </span>
+                    <label className = "select-styleT" >Transfer To: </label>
                     <select
                         //value={this.state.vht_id}
                         onChange={this.handleChange}
+
                         name="vht_B_id"
                     >
-                        <option value="EMPTY"> --SELECT ONE--</option>
-                        {/*{vht_select_option}*/}
-
+                        <option value="null"> --SELECT ONE--</option>
+                        {vht_select_option}
                     </select>
+                    <Button type="submit" style={{
+                        backgroundColor: 'blue',
+                        color: 'white',
+                        marginLeft:20
+                    }} //onClick={this.handleSubmit}>Submit</Button>
+                    onClick={(e) => {if (window.confirm("Are you sure you wish to transfer all patients from ID: "+this.state.from_vht+" to ID: "+this.state.to_vht)) this.handleSubmit()}}>Submit</Button>
                 </div>
-                <div className="table-position">
+
+                <div className="table-positionT">
                 <MaterialTable
-                    title="table"
+                    title= "Patients assigned to VHT (From)"
                     columns={this.state.columns}
-                    data={this.state.data}/>
+                    data={populate_only_selected_from}
+                    actions={[
+                        {
+                            icon: 'compareArrows',
+                            tooltip: 'Transfer Patient',
+                            onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
+                        }
+                    ]}/>
                 </div>
-                <div className="table-position">
+                <div className="table-positionT">
                     <MaterialTable
-                        title="table"
+                        title="Patients assigned to VHT (To)"
                         columns={this.state.columns}
-                        data={this.state.data}/>
+                        data={populate_only_selected_to}
+                        actions={[
+                            {
+                                icon: 'compareArrows',
+                                tooltip: 'Transfer Patient',
+                                onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
+                            }
+                        ]}
+                    />
+
                 </div>
             </div>
 

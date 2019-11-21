@@ -132,10 +132,10 @@ class RequestServer extends Component {
             var userMap = await this.getUserList()
             var vhtList = []
             var vhtWithPatients = []
-            console.log("USERMAP",userMap)
+            //console.log("USERMAP",userMap)
             for (let x = 0; x < userMap.data.length; x++)
             {
-                console.log("USER - - ",userMap.data[x].roles)
+                //console.log("USER - - ",userMap.data[x].roles)
                 for (let y = 0; y < userMap.data[x].roles.length ; y++)
                 {
                     if(userMap.data[x].roles[y].role == "VHT"){
@@ -154,7 +154,7 @@ class RequestServer extends Component {
             // console.log("THIS IS THE VHT LIST",vhtList,vhtMap)
             var new_response = []
             for(let a = 0; a<response.data.length; a++){
-                console.log("a",response.data[a].vht_id)
+                //console.log("a",response.data[a].vht_id)
                 if(response.data[a].vht_id == null || response.data[a].vht_id == "EMPTY") //|| (vhtList.includes(response.data[a].vht_id)))
                 {
                     new_response.push(response.data[a])
