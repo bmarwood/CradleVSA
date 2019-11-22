@@ -117,4 +117,11 @@ public class AssessmentsController {
         }
     }
 
+    @GetMapping("/getAByDate{date}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public List<Assessments> getAByDate(@PathVariable String date) {
+        return assessmentsRepository.findByDate(date.substring(0, date.indexOf(' ')));
+    }
+
 }
