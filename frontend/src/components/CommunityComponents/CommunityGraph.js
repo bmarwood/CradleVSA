@@ -18,7 +18,7 @@ class CommunityGraph extends React.Component {
         this.getPatientList()
         this.setState({
             dataLine: {
-                labels: ["Jan", "Feb", "March"],
+                labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
                 datasets: [
                     {
                         label: "Systolic",
@@ -101,7 +101,13 @@ class CommunityGraph extends React.Component {
         ]
         response.forEach(list_of_assessments => {
             //Array of dates
-            labels.push(list_of_assessments.date)
+            if (list_of_assessments.date.split(" ",4).length > 3) {
+                var tempdate = (list_of_assessments.date.split(" ",4))
+                tempdate.shift()
+                labels.push(tempdate.join(' '))
+              } else {
+                  labels.push(list_of_assessments.date)
+            }
             //3 Arrays for readings
             systolicData.push(list_of_assessments.systolic)
             diastolicData.push(list_of_assessments.diastolic)
@@ -125,12 +131,18 @@ class CommunityGraph extends React.Component {
     }
 
     async getPatientList() {
-        var passback = await RequestServer.getPatientList()
-        if (passback !== null) {
-            this.populateData(passback.data)
+        var passback = await RequestServer.getAssessmentsList()
+        if (passback != null) {
+            console.log(passback.data)
+            //Converts dates in list_of_assessments to Date format to sort by date
+            this.populateData(passback.data.sort(function(a,b){
+                a = Utility.convertStringToDate(a.date);
+                b = Utility.convertStringToDate(b.date);
+                return a > b ? 1 : a < b ? -1 : 0;
+            })
+            )
         }
     }
-
     render() {
         return (
             <MDBContainer style={{backgroundColor: 'white'}}>
