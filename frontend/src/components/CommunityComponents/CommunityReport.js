@@ -44,7 +44,9 @@ class CommunityReport extends React.Component {
 
     //USING ALERT RIGHT NOW, SHOULD DISPLAY INSTEAD
     handleSubmit = async () => {
+
         console.log(this.state.location)
+        console.log(this.state)
         if (this.state.location === 'EMPTY') {
             alert("Please select location")
             return false
@@ -121,7 +123,7 @@ class CommunityReport extends React.Component {
                 < Button type="submit" style={{
                     backgroundColor: 'blue',
                     color: 'white'
-                }}>Submit
+                }}>Generate
                 </Button>
             </ValidatorForm>
         )

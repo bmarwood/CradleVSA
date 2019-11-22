@@ -95,19 +95,62 @@ class Utility extends Component {
     }
 
     static filterByDate(assessments, from, to) {
-        to = to.setDate(to.getDate() + 1);
-        let filtered_assessments = []
+        let to_date = new Date(to)
+
+        let filtered_data = {
+            assessments: [],
+            diastolic: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            systolic: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            heart_rate: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            num_yellow_up: 0,
+            num_yellow_down: 0,
+            num_red_up: 0,
+            num_red_down: 0,
+            num_green: 0,
+        }
+        //change date to include the current date
+        to_date.setHours(0, 0, 0, 0);
+        to_date.setDate(to.getDate() + 1);
+
         if (assessments.length === 0) {
-            return filtered_assessments
+            return filtered_data
         }
         //+startDate2 == +startDate3
         assessments.forEach(assessment => {
+            this.filterBlood(assessment, filtered_data)
             let assessment_Date = new Date(assessment.date)
-            if (+assessment_Date >= +from && +assessment_Date <= +to) {
-                filtered_assessments.push(assessment)
+            if (+assessment_Date >= +from && +assessment_Date <= +to_date) {
+                filtered_data.assessments.push(assessment)
+                this.filterColor(assessment, filtered_data)
             }
         })
-        return filtered_assessments
+        return filtered_data
+    }
+
+    static filterBlood(assessment, data) {
+        let date = new Date(assessment.date)
+        let month = this.MONTH_ARR[date.getMonth()];
+        if (month === this.MONTH_ARR[0]) {
+
+        }
+    }
+
+    static filterColor(assessment, filtered_data) {
+        if (assessment.ews_color === "YELLOW") {
+            if (assessment.arrow === "UP") {
+                filtered_data.num_yellow_up++
+            } else {
+                filtered_data.num_yellow_down++
+            }
+        } else if (assessment.ews_color === "RED") {
+            if (assessment.arrow === "UP") {
+                filtered_data.num_red_up++
+            } else {
+                filtered_data.num_red_down++
+            }
+        } else {
+            filtered_data.num_green++
+        }
     }
 
 }
