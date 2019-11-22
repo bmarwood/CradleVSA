@@ -94,6 +94,22 @@ class Utility extends Component {
         return roleArray;
     }
 
+    static filterByDate(assessments, from, to) {
+        to = to.setDate(to.getDate() + 1);
+        let filtered_assessments = []
+        if (assessments.length === 0) {
+            return filtered_assessments
+        }
+        //+startDate2 == +startDate3
+        assessments.forEach(assessment => {
+            let assessment_Date = new Date(assessment.date)
+            if (+assessment_Date >= +from && +assessment_Date <= +to) {
+                filtered_assessments.push(assessment)
+            }
+        })
+        return filtered_assessments
+    }
+
 }
 
 export default Utility; //if I use new keyword here, I can use all the methods without static keyword. but it's should be a static class
