@@ -18,7 +18,7 @@ class PatientAddMedication extends React.Component {
             medication_name: '',
             dose: '',
             start_date: '',
-            end_date: 'Ongoing',
+            end_date: '',
             side_effects: '',
             temp_start_date: new Date(),
             temp_end_date: new Date(),
@@ -49,7 +49,7 @@ class PatientAddMedication extends React.Component {
     changeState() {
         this.setState({
             start_date: Utility.convertDate(this.state.temp_start_date),
-            //end_date: Utility.convertDate(this.state.temp_end_date)
+            end_date: Utility.convertDate(this.state.temp_end_date)
         })
     }
 
@@ -131,15 +131,15 @@ class PatientAddMedication extends React.Component {
                 <Grid>
                 <Cell col={4}></Cell>
                 <Cell col={4}>
-                {/* <p>End Date:</p>
-                <DatePicker
-                selected={this.state.temp_end_date}
-                onChange={this.changeEndDate}
-                /> */}
                 <p>Start Date:</p>
                 <DatePicker
                 selected={this.state.temp_start_date}
                 onChange={this.changeStartDate}
+                />
+                <p>End Date:</p>
+                <DatePicker
+                selected={this.state.temp_end_date}
+                onChange={this.changeEndDate}
                 />
                 </Cell>
                 </Grid>
