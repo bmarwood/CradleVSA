@@ -10,8 +10,9 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm} from "react-material-ui-form-validator";
 import Utility from "./NewForm/Utility";
-import ModalPopup from "../Modals/ModalPopup";
-import {toast} from "react-toastify";
+import {ClipLoader} from 'react-spinners';
+//import ClipLoader from 'react-spinners/ClipLoader';
+import { css } from '@emotion/core';
 
 
 class TransferPatient extends Component {
@@ -25,7 +26,8 @@ class TransferPatient extends Component {
             vht_empty_flag: false,
             vht_w_assessment: [],
             from_vht: '',
-            to_vht: ''
+            to_vht: '',
+            loading: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.getVHTList()
@@ -64,6 +66,7 @@ class TransferPatient extends Component {
     }
 
     populateData(response) {
+        console.log("this is where it populates")
         console.log(response)
         var IdList = []
         response.forEach(patient => {
@@ -133,18 +136,22 @@ class TransferPatient extends Component {
         }
 
         window.location.reload()
-        alert("All Patients from ID: "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
+        //alert("All Patients from ID: "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
     }
 
 
-    handleSubmitSingle = async (id) => {
+    handleSubmitSingle = async (id,fromList,toList) => {
         //set the patient object to be sent to update
+        this.setState({loading: true})
         var temp_patient = await this.getSinglePatient(id)
         temp_patient.vht_id = this.state.to_vht
         var update_response = await this.updateSinglePatient(temp_patient)
 
-        window.location.reload()
-        alert("Patient ID: "+ id +" from ID: "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
+        this.getPatientList()
+        if(fromList.length === 1 || toList.length === 0){
+            window.location.reload()
+        }
+        //alert("Patient ID: "+ id +" from ID: "+ this.state.from_vht +" has been tranferred to ID: "+ this.state.to_vht)
     }
 
 
@@ -187,9 +194,9 @@ class TransferPatient extends Component {
     render() {
 
         this.checkEmptyFlag()
-
         let temp_to_vht = this.state.to_vht
         let temp_from_vht = this.state.from_vht
+        console.log("to, from ", temp_to_vht,temp_from_vht)
 
 
 
@@ -203,7 +210,6 @@ class TransferPatient extends Component {
 
 
         let populate_only_selected_to = this.populatePatientLists(temp_to_vht)
-
 
         return (
             <div>
@@ -241,13 +247,11 @@ class TransferPatient extends Component {
                     title= "Patients assigned to VHT (From)"
                     columns={this.state.columns}
                     data={populate_only_selected_from}
-                    TO DO IMPLEMENT single patient transfer
                     actions={[
                         {
                             icon: 'compareArrows',
                             tooltip: 'Transfer Patient',
-                            //onClick: (event, rowData) => alert("You Transferred " + rowData.id)
-                            onClick: (event, rowData) => {if (window.confirm("Are you sure you wish to transfer patient ID: "+rowData.id +" from ID: "+this.state.from_vht+" to ID: "+this.state.to_vht)) this.handleSubmitSingle(rowData.id)}
+                            onClick: (event, rowData) => {if (window.confirm("Are you sure you wish to transfer patient ID: "+rowData.id +" from ID: "+this.state.from_vht+" to ID: "+this.state.to_vht)) this.handleSubmitSingle(rowData.id,populate_only_selected_from,populate_only_selected_to)}
                         }
                     ]}
                 />
