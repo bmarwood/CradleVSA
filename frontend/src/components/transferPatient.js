@@ -25,14 +25,13 @@ class TransferPatient extends Component {
             vht_empty_flag: false,
             vht_w_assessment: [],
             from_vht: '',
-            to_vht: '',
+            to_vht: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.getVHTList()
     }
 
     componentDidMount() {
-        //this.getVHTList()
         this.getPatientList()
         this.timer = setInterval(() => this.getPatientList(), 10000);
         this.setState({
@@ -66,63 +65,33 @@ class TransferPatient extends Component {
 
     populateData(response) {
         console.log(response)
-        //this.getVHTList()
-        //console.log(this.state.vht_array)
         var IdList = []
         response.forEach(patient => {
             var id = patient.id
             if(patient.vht_id == null){
                 var vht_id = "EMPTY"
             }
-            if(!this.state.vht_empty_flag && (patient.vht_id == null || patient.vht_id == "EMPTY" )){
-                this.setState({vht_empty_flag: true})
-            }
             else{
                 var vht_id = patient.vht_id
             }
-            //var list_of_patients = (VHT.list_of_patients)
-            //var list_of_assessments = (VHT.list_of_assessments)
-            //var id = VHT.id
+
 
             var patient_obj = {
-                //id: patient.id,
                 id: id,
                 vht_id: vht_id,
             }
-            //if (this.getRoles(assessment_obj.cvsa_id).contains("VHT")){
             IdList.push(patient_obj)
-            //}
 
-            //this.state.vht_array.push({id: VHT.id})
         });
 
         this.setState({data: IdList})
-        //console.log("hi", this.state.data)
     }
 
-    // getRoles(parsedUser) {
-    //     var roleArray = []
-    //     if (parsedUser && parsedUser.roles) {
-    //         parsedUser.roles.forEach(function (role) {
-    //             //console.log("User data is : " + role.role)
-    //             roleArray.push(role.role)
-    //         })
-    //     }
-    //
-    //     return roleArray
-    // }
-    //
-    // isAdmin(roles) {
-    //     if (roles.indexOf("ADMIN") > -1) {
-    //         return true
-    //     }
-    //     return false
-    // }
 
     async getPatientList() {
         var passback = await requestServer.getPatientVHTList()
         if (passback !== null && passback.data !== "") {
-            //console.log("GODMODE",passback.vhtlist)
+            this.setState({vht_empty_flag:passback.flag})
             this.setState({vht_w_assessment:passback.vhtlist})
             this.populateData(passback.data)
         }
@@ -131,8 +100,6 @@ class TransferPatient extends Component {
     async getSinglePatient(ID) {
         var passback = await requestServer.getPatientByID(ID)
         if (passback !== null && passback.data !== "") {
-            //console.log("GODMODE",passback.vhtlist)
-            //this.setState({})
             return(passback.data)
         }
     }
@@ -140,8 +107,6 @@ class TransferPatient extends Component {
     async updateSinglePatient(patient){
         var passback = await requestServer.updatePatient(patient)
         if (passback !== null && passback.data !== "") {
-            //console.log("GODMODE",passback.vhtlist)
-            //this.setState({})
             return(passback.data)
         }
     }
@@ -152,7 +117,6 @@ class TransferPatient extends Component {
         if (passback !== null) {
             this.setState({
                 vht_array: Utility.populateVHT(passback.data),
-                //vht_set: this.vhtSet(passback.data)
             })
         }
     }
@@ -170,95 +134,74 @@ class TransferPatient extends Component {
 
         window.location.reload()
         alert("All Patients from ID: "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
-        //this.getPatientList()
     }
 
 
 
 
     handleChange(event){
-        if(event.target.name == "vht_A_id")
+        if(event.target.name === "vht_A_id")
         {
+            if(event.target.value == this.state.to_vht && this.state.to_vht !== "null"){
+                alert("Transfer to same VHT ID: "+ event.target.value + " is not allowed\nPlease try again")
+                event.target.value = null
+            }
             this.setState({from_vht:event.target.value})
-            //console.log("HMMM",event.target.value)
-            //(this.setState({[event.target.name]: event.target.value}))
         }
         else{
+            if(event.target.value == this.state.from_vht && this.state.from_vht !== "null"){
+                alert("Transfer to same VHT ID: "+ event.target.value + " is not allowed\nPlease try again")
+                event.target.value = null
+            }
             this.setState({to_vht:event.target.value})
         }
     }
 
-
-
-    render() {
-        let temp_to_vht = this.state.to_vht
-        let temp_from_vht = this.state.from_vht
-        if(this.state.vht_array[0] != undefined){
-            if(temp_to_vht === temp_from_vht && (temp_to_vht != '') && (temp_to_vht !='null')){
-                if(this.state.from_vht === this.state.vht_array[0].id){
-                    temp_to_vht = this.state.vht_array[1].id
-                }
-                else{
-                    temp_to_vht = this.state.vht_array[0].id
-                }
+    populatePatientLists(vht_id){
+        var tempPatientList = []
+        for (var itr = 0; itr<this.state.data.length; itr++){
+            if(this.state.data[itr].vht_id === vht_id){
+                tempPatientList.push(this.state.data[itr])
             }
         }
+        return tempPatientList
+    }
 
-
-        //TO DO PUT THESE INTO FUNCTIONS AND CHANGE ON SELECT CHANGE
-        let new_array_with_or_without = [] //this.state.vht_w_assessment
-        //let temp_new_with_or_without = []
-        for(var x= 0; x<this.state.vht_array.length; x++){
-            if (this.state.vht_array[x].id != temp_from_vht) {
-                new_array_with_or_without.push(this.state.vht_array[x])
-            }
-        }
-        //new_array_with_or_without = temp_new_with_or_without
-
+    checkEmptyFlag(){
         if(this.state.vht_empty_flag) {
             if (!this.state.vht_w_assessment.includes("EMPTY")) {
                 this.state.vht_w_assessment.unshift("EMPTY")
             }
         }
+    }
+
+    render() {
+
+        this.checkEmptyFlag()
+
+        let temp_to_vht = this.state.to_vht
+        let temp_from_vht = this.state.from_vht
 
 
-        //console.log(new_array_with_or_without)
-        let vht_select_option = new_array_with_or_without.map(item => <option id={item.id}
+
+        let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
                                                                          value={item.id}> {item.id} </option>)
 
         let vht_select_option2 = this.state.vht_w_assessment.map(item => <option
                                                                                  value={item}> {item} </option>)
-        let populate_only_selected_from = []
-        //let temp_from = []
 
-        for (var itr = 0; itr<this.state.data.length; itr++){
-            if(this.state.data[itr].vht_id === this.state.from_vht){
-                populate_only_selected_from.push(this.state.data[itr])
-            }
-        }
-        //populate_only_selected_from = temp_from
-
-        let populate_only_selected_to = []
-        //let temp_to = []
-        for (var itr = 0; itr<this.state.data.length; itr++){
-            if(this.state.data[itr].vht_id === temp_to_vht){
-                populate_only_selected_to.push(this.state.data[itr])
-            }
-        }
-        //populate_only_selected_to = temp_to
+        let populate_only_selected_from = this.populatePatientLists(temp_from_vht)
 
 
+        let populate_only_selected_to = this.populatePatientLists(temp_to_vht)
 
-        //console.log("POPULATE",populate_only_selected)
 
-        //console.log("WE ARE HERE",this.state.from_vht,this.state.to_vht)
         return (
             <div>
                 <div className = "landing-formT">
                     <h1 style={{color: "white"}}>Transfer Patients</h1>
                     <label style = {{color:"white"}} >Transfer From: </label>
                     <select
-                        //value={this.state.vht_id}
                         onChange={this.handleChange}
                         name="vht_A_id"
                         value={this.state.vht_id}
@@ -269,10 +212,9 @@ class TransferPatient extends Component {
                     <span className = "select-styleT" > >>> </span>
                     <label className = "select-styleT" >Transfer To: </label>
                     <select
-                        //value={this.state.vht_id}
                         onChange={this.handleChange}
-
                         name="vht_B_id"
+                        value={this.state.vht_id}
                     >
                         <option value="null"> --SELECT ONE--</option>
                         {vht_select_option}
@@ -281,7 +223,7 @@ class TransferPatient extends Component {
                         backgroundColor: 'blue',
                         color: 'white',
                         marginLeft:20
-                    }} //onClick={this.handleSubmit}>Submit</Button>
+                    }}
                     onClick={(e) => {if (window.confirm("Are you sure you wish to transfer all patients from ID: "+this.state.from_vht+" to ID: "+this.state.to_vht)) this.handleSubmit()}}>Submit</Button>
                 </div>
 
@@ -290,26 +232,21 @@ class TransferPatient extends Component {
                     title= "Patients assigned to VHT (From)"
                     columns={this.state.columns}
                     data={populate_only_selected_from}
-                    actions={[
-                        {
-                            icon: 'compareArrows',
-                            tooltip: 'Transfer Patient',
-                            onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
-                        }
-                    ]}/>
+                    // TO DO IMPLEMENT single patient transfer
+                    // actions={[
+                    //     {
+                    //         icon: 'compareArrows',
+                    //         tooltip: 'Transfer Patient',
+                    //         onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
+                    //     }
+                    // ]}
+                />
                 </div>
                 <div className="table-positionT">
                     <MaterialTable
                         title="Patients assigned to VHT (To)"
                         columns={this.state.columns}
                         data={populate_only_selected_to}
-                        actions={[
-                            {
-                                icon: 'compareArrows',
-                                tooltip: 'Transfer Patient',
-                                onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
-                            }
-                        ]}
                     />
 
                 </div>

@@ -132,41 +132,35 @@ class RequestServer extends Component {
             var userMap = await this.getUserList()
             var vhtList = []
             var vhtWithPatients = []
-            //console.log("USERMAP",userMap)
+            //all vhts from userlist
             for (let x = 0; x < userMap.data.length; x++)
             {
-                //console.log("USER - - ",userMap.data[x].roles)
                 for (let y = 0; y < userMap.data[x].roles.length ; y++)
                 {
                     if(userMap.data[x].roles[y].role == "VHT"){
                         vhtList.push(userMap.data[x].id)
                     }
                 }
-                // if(userMap.data[x].roles.includes("VHT")){
-                //     vhtList.push(userMap.data[x])
-                // }
             }
-            // for (let x = 0; x < vhtMap.data.length;x++)
-            // {
-            //     vhtList.push(vhtMap.data[x].id)
-            // }
-            //
-            // console.log("THIS IS THE VHT LIST",vhtList,vhtMap)
-            var new_response = []
+
+            var newResponse = []
+            var flag = false
+            //all patients that have a vht_id or "EMPTY"
             for(let a = 0; a<response.data.length; a++){
-                //console.log("a",response.data[a].vht_id)
-                if(response.data[a].vht_id == null || response.data[a].vht_id == "EMPTY") //|| (vhtList.includes(response.data[a].vht_id)))
+                if(response.data[a].vht_id == null || response.data[a].vht_id === "EMPTY")
                 {
-                    new_response.push(response.data[a])
+                    newResponse.push(response.data[a])
+                    flag = true
                 }
                 if(vhtList.includes(response.data[a].vht_id)){
                     if(!vhtWithPatients.includes(response.data[a].vht_id)){
                         vhtWithPatients.push(response.data[a].vht_id)
                     }
-                    new_response.push(response.data[a])
+                    newResponse.push(response.data[a])
                 }
             }
-            response.data = new_response
+            response.flag = flag
+            response.data = newResponse
             response.vhtlist = vhtWithPatients
             return response
         } catch (error) {
