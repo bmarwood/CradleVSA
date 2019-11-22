@@ -15,56 +15,46 @@ class VHTChart extends React.Component {
                 labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
                 datasets: [
                     {
-                        label: "Assessment",
+                        label: "Assessments Per Month",
+                        fill: true,
+                        backgroundColor: "rgba(255, 157, 148, .3)",
+                        borderColor: "red",
                         data: [
                             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                         ]
                     }
                 ]
             },
-            dataLine: [],
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white"
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 15
+                        }
+                    }]
+                }
+            },
             assessmentList: props.assessmentList,
         }
     }
 
     componentDidMount() {
-        this.doSomething()
-        // this.setState({
-        //     dataLine: {
-        //         labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
-        //         datasets: [
-        //             {
-        //                 label: "Assessments",
-        //                 fill: true,
-        //                 backgroundColor: "rgba(255, 157, 148, .3)",
-        //                 borderColor: "red",
-        //                 data: []
-        //             }
-        //         ]
-        //     },
-        //     options: {
-        //         legend: {
-        //             labels: {
-        //                 fontColor: "white"
-        //             }
-        //         },
-        //         scales: {
-        //             yAxes: [{
-        //                 ticks: {
-        //                     fontColor: "white",
-        //                     fontSize: 15
-        //                 }
-        //             }]
-        //         }
-        //     }
-        // })
+        if (this.propsNotEmpty) {
+            this.getData()
+        }
     }
 
     getData() {
-        var array = this.props.assessmentList
+        var assessmentArray = this.props.assessmentList
         var data = this.state.chartData.datasets[0].data
 
-        array.forEach(assessment => {
+        assessmentArray.forEach(assessment => {
             var dateString = assessment.date
             let date = new Date(dateString)
             var month = date.getMonth()
@@ -134,74 +124,18 @@ class VHTChart extends React.Component {
 
         })
 
-        var state = {...this.state}
+        var state = { ...this.state }
         state.chartData.datasets[0].data = data
         this.setState({
             state
-        }, () => {console.log("state: ", this.state)})
+        }, () => { console.log("state: ", this.state) })
     }
 
-
-    populateData(assessmentList) {
-        console.log("populateData: ", assessmentList)
-
-        var dataLineArray = []
-        var labels = []
-        var assessmentData = []
-
-        var datasets = [
-            {
-                label: "Assessment",
-                // fill: true,
-                // backgroundColor: "rgba(255, 157, 148, .3)",
-                // borderColor: "red",
-                data: assessmentData
-            },
-        ]
-
-
-
-        assessmentList.forEach(assessment => {
-            //Array of dates
-            labels.push(assessment.date)
-            //3 Arrays for readings
-            // assessmentData.push(0.5)
-            assessmentData.push(assessment)
-
-            var dataLine_obj = {
-                labels: labels,
-                datasets: datasets
-            }
-
-            console.log("dataset push", dataLine_obj)
-
-            dataLineArray.push(dataLine_obj)
-        });
-
-
-        console.log("dataLineArray", dataLineArray[0])
-
-        //Shows a blank page on graph if no list of assessments exists
-        if (typeof dataLineArray[0] !== "undefined") {
-            this.setState({ chartData: dataLineArray[0] })
-        }
-        else {
-            window.alert("No history found")
-        }
-    }
-
-    async doSomething() {
+    propsNotEmpty() {
         if (this.props.assessmentList != undefined || this.props.assessmentList != []) {
-            //Converts dates in list_of_assessments to Date format to sort by date
-            // this.populateData(this.state.assessmentList.sort(function (a, b) {
-            //     a = Utility.convertStringToDate(a.date);
-            //     b = Utility.convertStringToDate(b.date);
-            //     return a > b ? 1 : a < b ? -1 : 0;
-            // })
-            // )
-            this.getData()
-            // this.populateData(this.props.assessmentList)
+            return true
         }
+        return false
     }
 
     render() {
