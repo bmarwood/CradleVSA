@@ -25,7 +25,7 @@ class TransferPatient extends Component {
             vht_empty_flag: false,
             vht_w_assessment: [],
             from_vht: '',
-            to_vht: '',
+            to_vht: null,
         }
         this.handleChange = this.handleChange.bind(this);
         this.getVHTList()
@@ -136,7 +136,6 @@ class TransferPatient extends Component {
 
         window.location.reload()
         alert("All Patients from ID: "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
-        //this.getPatientList()
     }
 
 
@@ -145,9 +144,17 @@ class TransferPatient extends Component {
     handleChange(event){
         if(event.target.name === "vht_A_id")
         {
+            if(event.target.value == this.state.to_vht && this.state.to_vht !== "null"){
+                alert("Transfer to same VHT ID: "+ event.target.value + " is not allowed\nPlease try again")
+                event.target.value = null
+            }
             this.setState({from_vht:event.target.value})
         }
         else{
+            if(event.target.value == this.state.from_vht && this.state.from_vht !== "null"){
+                alert("Transfer to same VHT ID: "+ event.target.value + " is not allowed\nPlease try again")
+                event.target.value = null
+            }
             this.setState({to_vht:event.target.value})
         }
     }
@@ -162,38 +169,20 @@ class TransferPatient extends Component {
         return tempPatientList
     }
 
-    render() {
-        let temp_to_vht = this.state.to_vht
-        let temp_from_vht = this.state.from_vht
-        if(this.state.vht_array[0] != undefined){
-            if(temp_to_vht === temp_from_vht && (temp_to_vht !== '') && (temp_to_vht !=='null')){
-                if(this.state.from_vht === this.state.vht_array[0].id){
-                    temp_to_vht = this.state.vht_array[1].id
-                }
-                else{
-                    temp_to_vht = this.state.vht_array[0].id
-                }
-            }
-        }
-
-
-        //TO DO PUT THESE INTO FUNCTIONS AND CHANGE ON SELECT CHANGE
-        let new_array_with_or_without = [] //this.state.vht_w_assessment
-        for(var x= 0; x<this.state.vht_array.length; x++){
-            if (this.state.vht_array[x].id !== temp_from_vht) {
-                new_array_with_or_without.push(this.state.vht_array[x])
-            }
-        }
-
-
+    checkEmptyFlag(){
         if(this.state.vht_empty_flag) {
             if (!this.state.vht_w_assessment.includes("EMPTY")) {
                 this.state.vht_w_assessment.unshift("EMPTY")
             }
         }
+    }
 
+    render() {
+        let temp_to_vht = this.state.to_vht
+        let temp_from_vht = this.state.from_vht
+        this.checkEmptyFlag()
 
-        let vht_select_option = new_array_with_or_without.map(item => <option id={item.id}
+        let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
                                                                          value={item.id}> {item.id} </option>)
 
         let vht_select_option2 = this.state.vht_w_assessment.map(item => <option
@@ -232,7 +221,7 @@ class TransferPatient extends Component {
                         backgroundColor: 'blue',
                         color: 'white',
                         marginLeft:20
-                    }} //onClick={this.handleSubmit}>Submit</Button>
+                    }}
                     onClick={(e) => {if (window.confirm("Are you sure you wish to transfer all patients from ID: "+this.state.from_vht+" to ID: "+this.state.to_vht)) this.handleSubmit()}}>Submit</Button>
                 </div>
 
