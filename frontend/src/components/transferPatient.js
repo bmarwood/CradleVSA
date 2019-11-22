@@ -137,6 +137,15 @@ class TransferPatient extends Component {
     }
 
 
+    handleSubmitSingle = async (id) => {
+        //set the patient object to be sent to update
+        var temp_patient = await this.getSinglePatient(id)
+        temp_patient.vht_id = this.state.to_vht
+        var update_response = await this.updateSinglePatient(temp_patient)
+
+        window.location.reload()
+        alert("Patient ID: "+ id +" from ID: "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
+    }
 
 
     handleChange(event){
@@ -237,7 +246,8 @@ class TransferPatient extends Component {
                         {
                             icon: 'compareArrows',
                             tooltip: 'Transfer Patient',
-                            onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
+                            //onClick: (event, rowData) => alert("You Transferred " + rowData.id)
+                            onClick: (event, rowData) => {if (window.confirm("Are you sure you wish to transfer patient ID: "+rowData.id +" from ID: "+this.state.from_vht+" to ID: "+this.state.to_vht)) this.handleSubmitSingle(rowData.id)}
                         }
                     ]}
                 />
