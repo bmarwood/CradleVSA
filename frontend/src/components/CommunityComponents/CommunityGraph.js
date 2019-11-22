@@ -2,6 +2,7 @@ import React from "react";
 import {Line} from "react-chartjs-2";
 import {MDBContainer} from "mdbreact";
 import RequestServer from '../RequestServer';
+import Utility from '../NewForm/Utility';
 
 class CommunityGraph extends React.Component {
 
@@ -15,7 +16,7 @@ class CommunityGraph extends React.Component {
     componentDidMount() {
         //this.getMatchingPatientID(this.props.patient_id)
         //this.timer = setInterval(() => this.getMatchingPatientID(this.props.patient_id), 10000);
-        this.getPatientList()
+        //this.getPatientList()
         this.setState({
             dataLine: {
                 labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
@@ -25,21 +26,21 @@ class CommunityGraph extends React.Component {
                         fill: true,
                         backgroundColor: "rgba(255, 157, 148, .3)",
                         borderColor: "red",
-                        data: []
+                        data: [10, 20, 45, 72]
                     },
                     {
                         label: "Diastolic",
                         fill: true,
                         backgroundColor: "rgba(97, 105, 255, .3)",
                         borderColor: "blue",
-                        data: []
+                        data: [8, 9, 34, 23]
                     },
                     {
                         label: "Heart Rate",
                         fill: true,
                         backgroundColor: "rgba(159, 255, 133, .3)",
                         borderColor: "Green",
-                        data: []
+                        data: [34, 23, 12, 8]
                     }
                 ]
             },
@@ -70,11 +71,11 @@ class CommunityGraph extends React.Component {
         console.log(response)
 
         var dataLineArray = []
-        var labels = []
+        var labels = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
 
-        var systolicData = []
-        var diastolicData = []
-        var heartRateData = []
+        var systolicData = [5, 6, 2, 6, 2]
+        var diastolicData = [10, 3, 12, 4]
+        var heartRateData = [39, 2, 12, 4]
 
         var datasets = [
             {

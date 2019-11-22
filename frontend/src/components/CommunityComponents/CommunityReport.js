@@ -5,7 +5,8 @@ import {Grid, Cell, RadioGroup, Radio} from 'react-mdl';
 import RequestServer from '../RequestServer';
 import DatePicker from "react-datepicker";
 import Utility from "../NewForm/Utility";
-
+import CommunityGraph from './CommunityGraph';
+import CommunityPieChart from './CommunityPieChart';
 
 class CommunityReport extends React.Component {
     constructor(props) {
@@ -76,6 +77,7 @@ class CommunityReport extends React.Component {
                                                                                        value={location.id}> {location.name}</option>)
 
         return (
+            <div>
             <ValidatorForm
                 style={{
                     backgroundColor: 'white',
@@ -124,6 +126,9 @@ class CommunityReport extends React.Component {
                 }}>Submit
                 </Button>
             </ValidatorForm>
+            <CommunityGraph/>
+            <CommunityPieChart/>
+                </div>
         )
     }
 }
