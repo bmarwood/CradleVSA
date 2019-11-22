@@ -52,17 +52,13 @@ class PatientAddMedication extends React.Component {
             end_date: Utility.convertDate(this.state.temp_end_date)
         })
     }
-
     handleSubmit = async () => {
         this.changeState();
         console.log(this.state)
         var response = await RequestServer.addMedications(this.state)
-        // if (response !== null) {
-        //     this.props.history.push(
-        //         '/',
-        //         {detail: response.data}
-        //     )
-        // }
+        if (response !== null) {
+            alert("Medication Added")
+        }
     }
     render() {
         return (
@@ -169,8 +165,8 @@ class PatientAddMedication extends React.Component {
                 <Cell col={4}>
                 <Button type="submit" style={{
                     backgroundColor: 'blue', 
-                    color: 'white'}}
-                >Submit</Button>
+                    color: 'white'
+                }}>Submit </Button>
                 </Cell>
                 <Cell col={4}></Cell>
                 </Grid>

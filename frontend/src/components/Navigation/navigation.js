@@ -32,6 +32,8 @@ const Navigation = () => (
         <Route path="/login" component={Login}/>
         <PrivateRoute path="/logout" component={Logout}/>
         <AdminRoute path="/admin/landing" component={Landing_List}/>
+        <AdminRoute path="/PatientAddMedication" component={PatientAddMedication}/>
+        <AdminRoute path="/PatientNotes" component={PatientNotes}/>
         <WorkerRoute path="/PatientList" component={PatientList}/>
         <WorkerRoute path="/PatientNotes" component={PatientNotes}/>
         <WorkerRoute path="/PatientAddMedication" component={PatientAddMedication}/>

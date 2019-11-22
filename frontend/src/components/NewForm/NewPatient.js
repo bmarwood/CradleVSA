@@ -101,7 +101,6 @@ class NewPatient extends React.Component {
         return false;
     }
 
-
     handleSubmit = async () => {
         this.changeState();
         //console.log(this.state);

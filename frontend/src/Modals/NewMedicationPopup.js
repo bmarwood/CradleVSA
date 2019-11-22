@@ -11,8 +11,10 @@ class NewMedicationPopup extends Component {
         return (
             <Popup trigger={<Button>New Medication</Button>}//{<Icon>add</Icon>}
                 modal>
-                {close => (<PatientAddMedication {...this.props} />)}
-            </Popup >
+                {close => (<PatientAddMedication {...this.props} />
+                
+                )}
+            </Popup >   
         );
     }
 }
