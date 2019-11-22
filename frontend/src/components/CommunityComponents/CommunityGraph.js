@@ -70,7 +70,7 @@ class CommunityGraph extends React.Component {
         console.log(response)
 
         var dataLineArray = []
-        var labels = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+        var labels = []
 
         var systolicData = []
         var diastolicData = []
@@ -101,7 +101,13 @@ class CommunityGraph extends React.Component {
         ]
         response.forEach(list_of_assessments => {
             //Array of dates
-            //labels.push(list_of_assessments.date)
+            if (list_of_assessments.date.split(" ",4).length > 3) {
+                var tempdate = (list_of_assessments.date.split(" ",4))
+                tempdate.shift()
+                labels.push(tempdate.join(' '))
+              } else {
+                  labels.push(list_of_assessments.date)
+            }
             //3 Arrays for readings
             systolicData.push(list_of_assessments.systolic)
             diastolicData.push(list_of_assessments.diastolic)
