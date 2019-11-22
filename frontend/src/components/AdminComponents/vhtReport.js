@@ -163,6 +163,7 @@ class vhtReport extends Component {
                         </div>
                         <div className='right-card'>
                             <VHTChart assessmentList={this.state.assessmentList} />
+
                         </div>
                     </div>
                 </div>
