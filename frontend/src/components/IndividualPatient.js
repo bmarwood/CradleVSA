@@ -23,9 +23,9 @@ class IndividualPatient extends Component {
             symptoms: '',
             date: '',
             heart_rate: '',
-            patient_name: 'LOADING...',
+            patient_name: '',
             patient_dob: '',
-            CVSA_name: 'LOADING...',
+            CVSA_name: '',
             
         }
     }
@@ -42,6 +42,7 @@ class IndividualPatient extends Component {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
             } else {
                 this.setState({
+                    assessment_id: response.data._id,
                     ews_color: response.data.ews_color,
                     patient_dob: response.data.birth_date,
                     gestational_age: response.data.gestational_age,
@@ -53,7 +54,13 @@ class IndividualPatient extends Component {
                     gestational_unit: response.data.gestational_unit
                 })
             }
+        }else{
+            this.setState({
+                assessment_id: 'No Assessments yet for this patient',
+
+            })
         }
+
     }
 
     async getPatient() {
@@ -115,7 +122,7 @@ class IndividualPatient extends Component {
                             </div> */}
                         </div>
                     </div>
-                    <h3 className='padding-left'> Last Assessment: </h3>
+                    <h3 className='padding-left'> Last Assessment: {this.state.assessment_id} </h3>
                         <div className="one-edge-shadow modal-body p-30">
                             <div className='float-left'>
                                 Early Warning Color: {this.getColorVisual(this.state.ews_color)}

@@ -6,8 +6,7 @@ import Utility from './Utility';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './newForm.css';
-import {Cell, Radio, RadioGroup} from "react-mdl";
-import ShowSymp from "./SymptomsForm";
+import {Radio, RadioGroup} from "react-mdl";
 import {toast} from "react-toastify";
 
 //form for a new patient
@@ -270,7 +269,7 @@ class NewPatient extends React.Component {
                 </RadioGroup>
 
 
-                <div style={{display: (this.state.dob_type == "age" ? 'block' : 'none')}}>
+                <div style={{display: (this.state.dob_type === "age" ? 'block' : 'none')}}>
                     <TextValidator
                         label="Age"
                         onChange={this.handleChange}
@@ -281,7 +280,7 @@ class NewPatient extends React.Component {
                     />
                     <br/>
                 </div>
-                <div style={{display: (this.state.dob_type == "date" ? 'block' : 'none')}}>
+                <div style={{display: (this.state.dob_type === "date" ? 'block' : 'none')}}>
                     <label>Date of Birth:</label>
                     <br/>
                     <DatePicker
