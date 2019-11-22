@@ -232,14 +232,14 @@ class TransferPatient extends Component {
                     title= "Patients assigned to VHT (From)"
                     columns={this.state.columns}
                     data={populate_only_selected_from}
-                    // TO DO IMPLEMENT single patient transfer
-                    // actions={[
-                    //     {
-                    //         icon: 'compareArrows',
-                    //         tooltip: 'Transfer Patient',
-                    //         onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
-                    //     }
-                    // ]}
+                    TO DO IMPLEMENT single patient transfer
+                    actions={[
+                        {
+                            icon: 'compareArrows',
+                            tooltip: 'Transfer Patient',
+                            onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
+                        }
+                    ]}
                 />
                 </div>
                 <div className="table-positionT">
