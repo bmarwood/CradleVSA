@@ -151,14 +151,14 @@ class TransferPatient extends Component {
     handleChange(event){
         if(event.target.name === "vht_A_id")
         {
-            if(event.target.value == this.state.to_vht && this.state.to_vht !== "null"){
+            if(event.target.value === this.state.to_vht && this.state.to_vht !== "null"){
                 alert("Transfer to same VHT ID: "+ event.target.value + " is not allowed\nPlease try again")
                 event.target.value = null
             }
             this.setState({from_vht:event.target.value})
         }
         else{
-            if(event.target.value == this.state.from_vht && this.state.from_vht !== "null"){
+            if(event.target.value === this.state.from_vht && this.state.from_vht !== "null"){
                 alert("Transfer to same VHT ID: "+ event.target.value + " is not allowed\nPlease try again")
                 event.target.value = null
             }
