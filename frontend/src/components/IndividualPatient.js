@@ -26,14 +26,13 @@ class IndividualPatient extends Component {
             patient_name: 'LOADING...',
             patient_dob: '',
             CVSA_name: 'LOADING...',
+            
         }
     }
 
     componentDidMount() {
-        console.log(this.props.match.params.id)
         this.getLastAssessmentByPatient();
         this.getPatient();
-        // this.getCVSA();
     }
 
     async getLastAssessmentByPatient() {
@@ -42,18 +41,22 @@ class IndividualPatient extends Component {
             if (response.data === "") {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
             } else {
-                console.log("Last Assess:", response.data)
-                console.log("got data")
-                // this.setState({
-                //     patient_name: response.data.name,
-                //     patient_dob: response.data.birth_date
-                // })
+                this.setState({
+                    ews_color: response.data.ews_color,
+                    patient_dob: response.data.birth_date,
+                    gestational_age: response.data.gestational_age,
+                    heart_rate: response.data.heart_rate,
+                    diastolic: response.data.diastolic,
+                    systolic: response.data.systolic,
+                    arrow: response.data.arrow,
+                    symptoms: (response.data.symptoms).join(", "),
+                    gestational_unit: response.data.gestational_unit
+                })
             }
         }
     }
 
     async getPatient() {
-
         var response = await requestServer.getPatient(this.state.id)
         if (response !== null) {
             if (response.data === "") {
@@ -62,21 +65,10 @@ class IndividualPatient extends Component {
                 console.log("Patient DATA:", response.data)
                 console.log("got data")
                 this.setState({
+                    patient_id: response.data.id,
                     patient_name: response.data.name,
                     patient_dob: response.data.birth_date
                 })
-            }
-        }
-    }
-
-    async getCVSA() {
-        var response = await requestServer.getCVSA(782827)
-
-        if (response !== null) {
-            if (response.data === "") {
-                this.setState({ CVSA_name: 'ID doesn\'t match to a CVSA' })
-            } else {
-                this.setState({ CVSA_name: response.data.name })
             }
         }
     }
@@ -102,45 +94,45 @@ class IndividualPatient extends Component {
             <div id='individual' className='description-body'>
                 <div className="overview bg m-100">
 
-                    <div className="one-edge-shadow modal-header p-30">
+                    <div className="one-edge-shadow modal-header ">
                         <h3>Patient Name: {this.state.patient_name}</h3><br />
                         <div className='modal-header-direction'>
                             <div className='float-left'>
                                 <h5>
-                                    Patient ID: {this.props.patient_id}
+                                    Patient ID: {this.state.patient_id}
                                     <br />
-                                    Patient Name: {this.state.patient_name}
+                                    Date of Birth: {this.state.patient_dob}
                                 </h5>
 
                             </div>
 
-                            <div className='float-right'>
+                            {/* <div className='float-right'>
                                 <h5>
                                     Cradle Professional ID: {this.props.cvsa_id}
                                     <br />
                                     Cradle Professional Name: {this.state.cvsa_name}
                                 </h5>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <h3 className='padding-left'> Last Assessment: </h3>
                         <div className="one-edge-shadow modal-body p-30">
                             <div className='float-left'>
-                                Early Warning Color: {this.getColorVisual(this.props.ews_color)}
+                                Early Warning Color: {this.getColorVisual(this.state.ews_color)}
                                 <br />
-                                Arrow: {this.getArrowVisual(this.props.arrow)}
+                                Arrow: {this.getArrowVisual(this.state.arrow)}
                                 <br />
-                                Heart Rate: {this.props.heart_rate}
+                                Heart Rate: {this.state.heart_rate}
                                 <br />
-                                Diastolic: {this.props.diastolic}
+                                Diastolic: {this.state.diastolic}
                                 <br />
-                                Systolic: {this.props.systolic}
+                                Systolic: {this.state.systolic}
                                 <br />
-                                Gestational Age: {this.props.gestational_age != 0 ? this.props.gestational_age : <i aria-hidden="true" className="dont icon" />}
+                                Gestational Age: {this.state.gestational_age != 0 ? this.props.gestational_age : <i aria-hidden="true" className="dont icon" />}
                                 <br />
-                                Gestational Unit: {this.getGestationalUnit(this.props.gestational_unit)}
+                                Gestational Unit: {this.getGestationalUnit(this.state.gestational_unit)}
                                 <br />
-                                Current Symptoms: {this.props.symptoms}
+                                Current Symptoms: {this.state.symptoms}
                             </div>
 
                             <div className='float-right'>
@@ -148,9 +140,9 @@ class IndividualPatient extends Component {
                                 <br />
                                 Patient Age: {this.calculateAge() ? this.calculateAge() : 0}
                                 <br />
-                                Date of Assessment: {this.props.assessment_date}
+                                Date of Assessment: {this.state.assessment_date}
                                 <br />
-                                Follow Up Date: {this.props.follow_up_date}
+                                Follow Up Date: {this.state.follow_up_date}
                             </div>
                         </div>
 
