@@ -25,7 +25,7 @@ class TransferPatient extends Component {
             vht_empty_flag: false,
             vht_w_assessment: [],
             from_vht: '',
-            to_vht: null,
+            to_vht: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.getVHTList()
@@ -71,9 +71,6 @@ class TransferPatient extends Component {
             if(patient.vht_id == null){
                 var vht_id = "EMPTY"
             }
-            if(!this.state.vht_empty_flag && (patient.vht_id == null || patient.vht_id === "EMPTY" )){
-                this.setState({vht_empty_flag: true})
-            }
             else{
                 var vht_id = patient.vht_id
             }
@@ -94,6 +91,7 @@ class TransferPatient extends Component {
     async getPatientList() {
         var passback = await requestServer.getPatientVHTList()
         if (passback !== null && passback.data !== "") {
+            this.setState({vht_empty_flag:passback.flag})
             this.setState({vht_w_assessment:passback.vhtlist})
             this.populateData(passback.data)
         }
@@ -178,9 +176,13 @@ class TransferPatient extends Component {
     }
 
     render() {
+
+        this.checkEmptyFlag()
+
         let temp_to_vht = this.state.to_vht
         let temp_from_vht = this.state.from_vht
-        this.checkEmptyFlag()
+
+
 
         let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
                                                                          value={item.id}> {item.id} </option>)
@@ -230,26 +232,21 @@ class TransferPatient extends Component {
                     title= "Patients assigned to VHT (From)"
                     columns={this.state.columns}
                     data={populate_only_selected_from}
-                    actions={[
-                        {
-                            icon: 'compareArrows',
-                            tooltip: 'Transfer Patient',
-                            onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
-                        }
-                    ]}/>
+                    // TO DO IMPLEMENT single patient transfer
+                    // actions={[
+                    //     {
+                    //         icon: 'compareArrows',
+                    //         tooltip: 'Transfer Patient',
+                    //         onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
+                    //     }
+                    // ]}
+                />
                 </div>
                 <div className="table-positionT">
                     <MaterialTable
                         title="Patients assigned to VHT (To)"
                         columns={this.state.columns}
                         data={populate_only_selected_to}
-                        actions={[
-                            {
-                                icon: 'compareArrows',
-                                tooltip: 'Transfer Patient',
-                                onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
-                            }
-                        ]}
                     />
 
                 </div>
