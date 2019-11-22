@@ -9,14 +9,7 @@ class ModalPopup extends Component {
             <Popup trigger={<button className="ui icon button"><i aria-hidden="true" className="info circle icon"></i></button>}
                 modal>
                 {close => (
-                    // <a className="close" onClick={close}>
-                    //     &times;
-                    // </a>
-                    // console.log("before calling table", this.props)
-
                     <ModalAssessment {...this.props} />
-
-
                 )}
             </Popup >
         );

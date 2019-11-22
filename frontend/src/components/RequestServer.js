@@ -48,17 +48,6 @@ class RequestServer extends Component {
         }
     }
 
-    // async getPatient(patient_ID) {
-    //     try {
-    //         var response = await axios.get(this.getServerLocation() + '/patients/all')
-    //         return response
-    //     } catch (error) {
-    //         console.log('error block')
-    //         console.log(error)
-    //         return null
-    //     }
-    // }
-
     async addAssessment(assessment) {
         try {
             var response = await axios.post(this.getServerLocation() + '/assessments/add', assessment)
