@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import RequestServer from '../RequestServer';
 import Utility from '../NewForm/Utility';
 import '../../Modals/NewMedicationPopup';
-import '../../Modals/NewMedicationPopup.css';
+// import '../../Modals/NewMedicationPopup.css';
 
 class PatientAddMedication extends React.Component {
  
@@ -62,12 +62,14 @@ class PatientAddMedication extends React.Component {
     }
     render() {
         return (
-            <div style={{width: '100%', margin: 'auto'}}>
-            <ValidatorForm
+            <div className = "modal" >
+                <div style={{ textAlign: 'center' }}>
+                    <div style={{ backgroundColor: 'white', textAlign: 'center'}}>           
+                     <ValidatorForm
             style={{
             backgroundColor: 'white',
             margin : 'auto',
-            padding : '10px',
+            padding : '5px',
             textAlign: 'center'
             }}
                 ref="form"
@@ -82,8 +84,15 @@ class PatientAddMedication extends React.Component {
                     </Cell>
                     <Cell col={4}></Cell>
                 </Grid>
+
                 <Grid>
-                <Cell col={4}></Cell>
+                <Cell col={4}>
+                <p>Start Date:</p>
+                <DatePicker
+                selected={this.state.temp_start_date}
+                onChange={this.changeStartDate}
+                />
+                </Cell>
                 <Cell col={4}>
                 <TextValidator
                     label="Medication"
@@ -97,7 +106,13 @@ class PatientAddMedication extends React.Component {
                 <Cell col={4}></Cell>
                 </Grid>
                 <Grid>
-                <Cell col={4}></Cell>
+                <Cell col={4}>
+                <p>End Date:</p>
+                <DatePicker
+                selected={this.state.temp_end_date}
+                onChange={this.changeEndDate}
+                />
+                </Cell>
                 <Cell col={4}>
                  <TextValidator
                     label="Dose"
@@ -127,30 +142,12 @@ class PatientAddMedication extends React.Component {
                 <Grid>
                 <Cell col={4}></Cell>
                 <Cell col={4}>
-                <p>Start Date:</p>
-                <DatePicker
-                selected={this.state.temp_start_date}
-                onChange={this.changeStartDate}
-                />
-                <p>End Date:</p>
-                <DatePicker
-                selected={this.state.temp_end_date}
-                onChange={this.changeEndDate}
-                />
                 </Cell>
                 </Grid>
 
                 <Grid>
                 <Cell col={4}></Cell>
                 <Cell col={4}>
-                {/* <Textfield
-                //onChange={() => {}}
-                label="Side Effects"
-                selected={this.state.side_effects}
-                onChange={this.handleChange}
-                rows={3}
-                style={{width: '400px'}}
-                /> */}
                 <TextValidator
                 label="Side Effects"
                 onChange={this.handleChange}
@@ -171,6 +168,8 @@ class PatientAddMedication extends React.Component {
                 <Cell col={4}></Cell>
                 </Grid>
             </ValidatorForm>
+            </div>
+            </div>
             </div>
         );
     }

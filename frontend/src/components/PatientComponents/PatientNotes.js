@@ -7,7 +7,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Utility from '../NewForm/Utility';
 import '../../Modals/MedicationPopup';
 import '../../Modals/MedicationPopup.css';
-//import './PatientNotes.css';
 
 class PatientNotes extends Component {
     constructor(props) {
@@ -135,21 +134,6 @@ render(){
           //       setState({ ...state, data });
           //     }, 600);
           //       }),
-          // onRowDelete: oldData =>
-          // new Promise(resolve => {
-          //     setTimeout(() => {
-          //         resolve();
-          //         var didDelete = this.deleteMedications(oldData)
-          //         console.log(oldData)
-          //         if (didDelete) {
-          //             const data = [...this.state.data];
-          //             data.splice(data.indexOf(oldData), 1);
-          //             this.setState({
-          //                 locations: data
-          //             });
-          //         }
-          //     }, 600);
-          // }),
           }}
         />
         <NewMedicationPopup
