@@ -72,7 +72,6 @@ class CommunityReport extends React.Component {
             console.log(temp_array)
             this.setState({
                 pie_array: temp_array,
-                //[sys, dias, heart]
                 vital_check: result.vital_check,
                 display: true,
                 graph_array: {
@@ -82,12 +81,7 @@ class CommunityReport extends React.Component {
                 }
             })
         }
-        // CommunityPieChart.changeData(temp_array)
-
         return false;
-        // this.props.history.push(
-        //     '/'
-        // )
     }
 
     async getLocation() {

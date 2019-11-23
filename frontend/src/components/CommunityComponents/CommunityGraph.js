@@ -16,7 +16,6 @@ class CommunityGraph extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
         return {
-            // data: props.graph_array
             dataLine: {
                 labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
                 datasets: [
