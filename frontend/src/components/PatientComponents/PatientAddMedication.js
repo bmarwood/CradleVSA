@@ -53,7 +53,6 @@ class PatientAddMedication extends React.Component {
     }
     handleSubmit = async () => {
         this.changeState();
-        console.log(this.state)
         var response = await RequestServer.addMedications(this.state)
         if (response !== null) {
             alert("Medication Added")

@@ -83,9 +83,6 @@ class PatientNotes extends Component {
     if (passback != null) {
         this.populateData(passback.data.list_of_medications
         )
-        console.log(passback.data.list_of_medications)
-        console.log("passback.data.list_of_assessments[0]")
-        console.log(passback.data.list_of_medications[0])
     }
 }
   async deleteMedications(id) {
