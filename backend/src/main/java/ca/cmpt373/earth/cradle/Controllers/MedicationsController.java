@@ -65,4 +65,16 @@ public class MedicationsController {
         }
     }
 
+    @DeleteMapping("/delete{id}")
+    public String deleteById(@PathVariable String id) {
+        try {
+            medicationsRepository.deleteById(id);
+            return id;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
 }

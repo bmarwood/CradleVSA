@@ -312,6 +312,17 @@ class RequestServer extends Component {
             }
         }
 
+        async deleteMedication(id) {
+            try {
+                let response = await axios.delete(this.getServerLocation() + '/medications/delete' + id)
+                return response
+            } catch (error) {
+                console.log('error block')
+                console.log(error)
+                return null
+            }
+        }
+
 }
 
 export default new RequestServer();

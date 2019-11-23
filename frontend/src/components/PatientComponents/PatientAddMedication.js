@@ -5,8 +5,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import RequestServer from '../RequestServer';
 import Utility from '../NewForm/Utility';
-
-// import { Formik } from 'formik';
+import '../../Modals/NewMedicationPopup';
+import '../../Modals/NewMedicationPopup.css';
 
 class PatientAddMedication extends React.Component {
  

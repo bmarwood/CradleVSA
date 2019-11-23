@@ -3,10 +3,11 @@ import MaterialTable from 'material-table';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RequestServer from '../RequestServer';
 import NewMedicationPopup from '../../Modals/NewMedicationPopup';
-import './PatientNotes.css';
-import ModalPopup from '../../Modals/ModalPopup';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Utility from '../NewForm/Utility';
+import '../../Modals/MedicationPopup';
+import '../../Modals/MedicationPopup.css';
+//import './PatientNotes.css';
 
 class PatientNotes extends Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class PatientNotes extends Component {
         this.state = {
             columns: [],
             data: [],
-            patient_name: "Loading"     
+            patient_name: "Loading",
           }
           this.deleteMedications = this.deleteMedications.bind(this)
     }
@@ -58,6 +59,7 @@ class PatientNotes extends Component {
         var endDate = list_of_medications.end_date
         var sideEffects = list_of_medications.side_effects
         var frequency = list_of_medications.frequency
+        var id = list_of_medications.id
 
         var medications_obj = {
           medication: medication,
@@ -66,6 +68,7 @@ class PatientNotes extends Component {
           endDate: endDate,
           sideEffects: sideEffects,
           frequency: frequency,
+          id: id
       }
 
       medicationsList.push(medications_obj)
@@ -88,8 +91,8 @@ class PatientNotes extends Component {
         console.log(passback.data.list_of_medications[0])
     }
 }
-  async deleteMedications(patient_id, medication_name) {
-    let response = await RequestServer.deleteMedications(patient_id, medication_name)
+  async deleteMedications(id) {
+    let response = await RequestServer.deleteMedications(this.state.id)
     if (response !== null) {
       return true
   }
@@ -97,24 +100,13 @@ class PatientNotes extends Component {
 }
 render(){
     return (
-        <div className = "table-position" >
+        <div className = "modal" >
+            <div style={{ margin: 'auto', textAlign: 'center' }}>
+                <div style={{ margin: 'auto', backgroundColor: 'white', textAlign: 'center', width: '100%' }}>
         <MaterialTable
         title={this.props.patient_name}
         columns={this.state.columns}
         data={this.state.data}
-        // actions={[
-        //   {
-        //     icon: () =>
-        //     <NewMedicationPopup
-        //     patient_id={this.props.patient_id}
-        //     name={this.props.name}
-        //     surname={this.props.surname}
-        //     patient_name={this.props.patient_name}
-        //     />,
-        //     tooltip: 'Add Medication',
-        //     isFreeAction: true,
-        //   }
-        // ]}
         editable={{
           // onRowAdd: newData =>
           //   new Promise(resolve => {
@@ -143,21 +135,21 @@ render(){
           //       setState({ ...state, data });
           //     }, 600);
           //       }),
-          onRowDelete: oldData =>
-          new Promise(resolve => {
-              setTimeout(() => {
-                  resolve();
-                  var didDelete = this.deleteMedications(oldData)
-                  console.log(oldData)
-                  if (didDelete) {
-                      const data = [...this.state.data];
-                      data.splice(data.indexOf(oldData), 1);
-                      this.setState({
-                          locations: data
-                      });
-                  }
-              }, 600);
-          }),
+          // onRowDelete: oldData =>
+          // new Promise(resolve => {
+          //     setTimeout(() => {
+          //         resolve();
+          //         var didDelete = this.deleteMedications(oldData)
+          //         console.log(oldData)
+          //         if (didDelete) {
+          //             const data = [...this.state.data];
+          //             data.splice(data.indexOf(oldData), 1);
+          //             this.setState({
+          //                 locations: data
+          //             });
+          //         }
+          //     }, 600);
+          // }),
           }}
         />
         <NewMedicationPopup
@@ -166,6 +158,8 @@ render(){
         surname={this.props.surname}
         patient_name={this.props.patient_name}
         /> 
+      </div>
+      </div>
       </div>
        );
 }
