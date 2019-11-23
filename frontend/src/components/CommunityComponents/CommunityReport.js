@@ -58,7 +58,7 @@ class CommunityReport extends React.Component {
             return false
         }
         let response = await RequestServer.getAssessmentsByLocation(this.state.location)
-
+        console.log(response)
         let temp_array = []
         if (response !== null) {
             let result = Utility.filterByDate(response.data, this.state.from, this.state.to)
