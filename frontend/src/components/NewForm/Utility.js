@@ -113,7 +113,7 @@ class Utility extends Component {
         to_date.setHours(0, 0, 0, 0);
         to_date.setDate(to.getDate() + 1);
 
-        if (assessments.length === 0) {
+        if (filtered_data.assessments.length === 0) {
             return filtered_data
         }
         //+startDate2 == +startDate3

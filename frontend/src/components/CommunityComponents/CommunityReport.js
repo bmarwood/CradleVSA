@@ -7,6 +7,8 @@ import DatePicker from "react-datepicker";
 import Utility from "../NewForm/Utility";
 import CommunityGraph from './CommunityGraph';
 import CommunityPieChart from './CommunityPieChart';
+import Alert from "react-bootstrap/Alert";
+import {MDBCard, MDBCardTitle, MDBCardText, MDBContainer} from "mdbreact";
 
 class CommunityReport extends React.Component {
     constructor(props) {
@@ -16,9 +18,9 @@ class CommunityReport extends React.Component {
             location_array: [],
             from: new Date(),
             to: new Date(),
-            pie_array: [1, 2, 3, 4, 5],
-            red_down: 0,
-            display: false
+            pie_array: [1, 1, 1, 1, 1],
+            display: false,
+            vital_check: [0, 0, 0]
         }
         this.handleChange = this.handleChange.bind(this)
     }
@@ -65,7 +67,7 @@ class CommunityReport extends React.Component {
             console.log(temp_array)
             this.setState({
                 pie_array: temp_array,
-                red_down: result.num_red_down,
+                vital_check: result.vital_check,
                 display: true
             })
         }
@@ -92,6 +94,7 @@ class CommunityReport extends React.Component {
     render() {
         let location_select_option = this.state.location_array.map(location => <option key={location.id}
                                                                                        value={location.id}> {location.name}</option>)
+        const count_assessment = this.state.pie_array.reduce((a, b) => a + b, 0)
 
         return (
             <div style={{
@@ -105,12 +108,7 @@ class CommunityReport extends React.Component {
                     onSubmit={this.handleSubmit}
                     onError={errors => console.log(errors)}
                 >
-                    <Grid
-                        container
-                        direction="row"
-                        justify="center"
-                        alignItems="center"
-                    >
+                    <Grid>
                         <Cell col={4}>
                             <h4> Location </h4>
                             <select
@@ -121,8 +119,6 @@ class CommunityReport extends React.Component {
                                 <option value="EMPTY"> --SELECT ONE--</option>
                                 {location_select_option}
                             </select>
-                            <br/>
-                            <br/>
                         </Cell>
                         <Cell col={4}>
                             <h4>From:</h4>
@@ -132,9 +128,6 @@ class CommunityReport extends React.Component {
                                 onChange={date => this.handleDateChange('from', date)}
                                 maxDate={this.state.to}
                             />
-                            <br/>
-                            <br/>
-
                         </Cell>
                         <Cell col={4}>
                             <h4>To:</h4>
@@ -156,13 +149,41 @@ class CommunityReport extends React.Component {
                     </Button>
                 </ValidatorForm>
 
+                <br/>
                 <div style={{display: (this.state.display ? 'block' : 'none')}}>
-                    <CommunityGraph/>
-                    <br/>
-                    <CommunityPieChart
-                        array={this.state.pie_array}
-                        redDown={this.state.red_down}
-                    />
+                    <MDBContainer>
+                        <MDBCard className="card-body"
+                                 style={{backgroundColor: " #efeff5\n", width: "auto", marginTop: "auto"}}>
+                            <MDBCardTitle>The average of vital check during the period</MDBCardTitle>
+                            <Grid>
+                                <Cell col={4}>
+                                    <br/><br/>
+                                    <Alert key={5} variant={'info'} style={{fontSize: "auto"}}>
+                                        Total Number of Assessments: {count_assessment}
+                                        <br/>
+                                        Average Systolic : {this.state.vital_check[0]}
+                                        <br/>
+                                        Average Diastolic : {this.state.vital_check[1]}
+                                        <br/>
+                                        Average Heart-rate : {this.state.vital_check[2]}
+                                    </Alert>
+                                </Cell>
+                                <Cell col={8}>
+                                    <CommunityPieChart
+                                        array={this.state.pie_array}
+                                    />
+                                </Cell>
+                            </Grid>
+                        </MDBCard>
+
+                        <br/>
+
+                        <MDBCard className="card-body"
+                                 style={{backgroundColor: " #efeff5\n", width: "auto", marginTop: "auto"}}>
+                            <MDBCardTitle>Monthly average vital check Report</MDBCardTitle>
+                            <CommunityGraph/>
+                        </MDBCard>
+                    </MDBContainer>
                 </div>
             </div>
         )
