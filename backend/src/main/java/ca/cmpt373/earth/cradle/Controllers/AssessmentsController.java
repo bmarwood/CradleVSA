@@ -94,6 +94,14 @@ public class AssessmentsController {
         return assessmentsRepository.findByPatientId(patient_id);
     }
 
+    //location_id
+    @GetMapping("/getByLocation{location}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public List<Assessments> getByPatientId(@PathVariable String location) {
+        return assessmentsRepository.findByLocation(location);
+    }
+
     @DeleteMapping("/delete/{assessment_id}")
     public String deleteById(@PathVariable String assessment_id) {
         try {
@@ -115,6 +123,13 @@ public class AssessmentsController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @GetMapping("/getAByDate{date}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public List<Assessments> getAByDate(@PathVariable String date) {
+        return assessmentsRepository.findByDate(date.substring(0, date.indexOf(' ')));
     }
 
 }
