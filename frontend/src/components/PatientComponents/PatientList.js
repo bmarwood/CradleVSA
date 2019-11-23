@@ -4,6 +4,8 @@ import './PatientList.css';
 import GraphPopup from '../../Modals/GraphPopup';
 import MedicationPopup from '../../Modals/MedicationPopup';
 import requestServer from '../RequestServer';
+import UpdatePatientPopup from "../../Modals/UpdatePatientPopup";
+import RecentAssessmentPopup from "../../Modals/RecentAssessmentPopup";
 
 class PatientList extends Component {
 
@@ -27,6 +29,12 @@ class PatientList extends Component {
                 {title: 'Birth Date', field: 'birthDate'},
                 {title: 'ID Number', field: 'id'},
                 {
+                    title: 'Assessment',
+                    field: 'assessment',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
                     title: 'Patient History',
                     field: 'graph',
                     headerStyle: {textAlign: 'center'},
@@ -38,11 +46,19 @@ class PatientList extends Component {
                     headerStyle: {textAlign: 'center'},
                     cellStyle: {textAlign: 'center'}
                 },
+                {
+                    title: 'Update information',
+                    field: 'update',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
             ],
             data: [
                 {
+                    assessment: <RecentAssessmentPopup/>,
                     graph: <GraphPopup/>,
-                    medications: <MedicationPopup/>
+                    medications: <MedicationPopup/>,
+                    update: <UpdatePatientPopup/>
                 },
             ],
         })
@@ -71,14 +87,18 @@ class PatientList extends Component {
             var birthDate = patient.birth_date
             var sex = patient.gender[0]
             var id = patient.id
-            var medications = <MedicationPopup
-            patient_id={patient.id}
-            patient_name={name+" "+surname}     
-            />
+            var assessment = <RecentAssessmentPopup
+                id={patient.id}/>
             var graph = <GraphPopup
+                patient_id={patient.id}
+                patient_name={name + " " + surname}
+            />
+            var medications = <MedicationPopup
             patient_id={patient.id}
             patient_name={name+" "+surname}
             />
+            var update = <UpdatePatientPopup
+                id={patient.id}/>
 
             var patient_obj = {
                 name: name,
@@ -86,8 +106,10 @@ class PatientList extends Component {
                 birthDate: birthDate,
                 sex: sex,
                 id: id,
+                assessment: assessment,
                 graph: graph,
-                medications: medications
+                medications: medications,
+                update: update
             }
 
             patientList.push(patient_obj)
@@ -112,39 +134,6 @@ class PatientList extends Component {
                     columns={this.state.columns}
                     data={this.state.data}
                     editable={{
-                        // onRowUpdate: (newData, oldData) =>
-                        //     new Promise(resolve => {
-                        //         setTimeout(() => {
-                        //             resolve();
-                        //             const data = [...this.state.data];
-                        //             data[data.indexOf(oldData)] = newData;
-                        //             this.setState({ ...this.state, data });
-                        //         }, 600);
-                        //     }),
-                        // onRowDelete: oldData =>
-                        //     new Promise(resolve => {
-                        //         setTimeout(() => {
-                        //             resolve();
-                        //             const data = [...this.state.data];
-                        //             data.splice(data.indexOf(oldData), 1);
-                        //             this.setState({ ...this.state, data });
-                        //         }, 600);
-                        //     }),
-                        // onRowAdd: newData =>
-                        //     new Promise((resolve, reject) => {
-                        //         setTimeout(() => {
-                        //             {
-                        //                 const data = [...this.state.data];
-                        //                 data.push(newData);
-                        //                 this.setState({ ...this.state, data });
-                        //             }
-                        //             resolve();
-                        //         }, 1000);
-                        //     }),
-                        // onRowAdd: newData =>
-                        //     new Promise((resolve) => {
-                        //       console.log("onrowadd", newData)
-                        //     }),
                         onRowDelete: oldData =>
                             new Promise(resolve => {
                                 setTimeout(() => {
@@ -155,10 +144,10 @@ class PatientList extends Component {
                                         const data = [...this.state.data];
                                         data.splice(data.indexOf(oldData), 1);
                                         this.setState({
-                                            locations: data
+                                            data: data
                                         });
                                     }
-                                }, 600);
+                                }, 1000);
                             }),
 
                     }}

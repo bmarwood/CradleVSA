@@ -6,6 +6,7 @@ import NewPatient from '../NewForm/NewPatient';
 import NewUser from '../NewForm/NewUser';
 import Landing_List from '../AdminComponents/AdminLanding';
 import Login from './login';
+import NoMatchPage from '../NoMatchPage';
 import Logout from './logout';
 import Register from '../register';
 import PatientList from '../PatientComponents/PatientList';
@@ -18,6 +19,7 @@ import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
 import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
+import TransferPatient from '../transferPatient';
 
 const Navigation = () => (
     <Switch>
@@ -40,11 +42,14 @@ const Navigation = () => (
         <WorkerRoute path="/newAssessment" component={NewAssessment}/>
         <WorkerRoute path="/newPatient" component={NewPatient}/>
         <ManagerRoute path="/newWorker" component={NewUser}/>
+        <ManagerRoute path="/transfer" component={TransferPatient}/>
         <PrivateRoute path="/profile" component={Profile}/>
         <PrivateRoute path="/changePassword" component={ChangePassword}/>
         <Route path="/resources" component={Resources}/>
+        <Route component={NoMatchPage} />
     </Switch>
 )
+
 
 const Role_Termination_Integer = -1
 
