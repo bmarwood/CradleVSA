@@ -150,26 +150,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-<<<<<<< HEAD
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/MedicationsController.java" />
-        <option value="$PROJECT_DIR$/frontend/src/components/RequestServer.js" />
-        <option value="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" />
-        <option value="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java" />
-        <option value="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Patients.java" />
-        <option value="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" />
-        <option value="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/SmsWebhookController.java" />
-        <option value="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Medications.java" />
-      </list>
-    </option>
-=======
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="712" />
->>>>>>> 8b45c1059ba722532b59aca100e2b5267438860f
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -203,11 +187,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-<<<<<<< HEAD
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574128796449" />
-=======
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574524185962" />
->>>>>>> 8b45c1059ba722532b59aca100e2b5267438860f
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -221,225 +201,19 @@
       </list>
     </option>
   </component>
-<<<<<<< HEAD
-  <component name="RunManager" selected="Application.CradleApplication">
-    <configuration name="CradleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ca.cmpt373.earth.cradle.CradleApplication" />
-      <module name="cradle" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ca.cmpt373.earth.cradle.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.CradleApplication" />
-        <item itemvalue="Application.CradleApplication" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="showServicesTree" value="false" />
-  </component>
-=======
->>>>>>> 8b45c1059ba722532b59aca100e2b5267438860f
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-<<<<<<< HEAD
-      <changelist id="b23c5c49-af07-4e73-b4ec-30d345ac7f66" name="Default Changelist" comment="" />
-      <created>1573239202172</created>
-=======
       <changelist id="35d7cfe1-93c4-4e01-808e-a63b09a8d9d9" name="Default Changelist" comment="" />
       <created>1574524152443</created>
->>>>>>> 8b45c1059ba722532b59aca100e2b5267438860f
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574524152443</updated>
     </task>
     <servers />
   </component>
-<<<<<<< HEAD
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list />
-          </value>
-        </entry>
-        <entry key="User">
-          <value>
-            <list />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java</url>
-          <line>58</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/RequestServer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="311" column="13" selection-start-line="311" selection-start-column="13" selection-end-line="311" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/PatientsRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/MedicationsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="60" column="57" selection-start-line="60" selection-start-column="57" selection-end-line="60" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/CradleApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="240" lean-forward="true" selection-start-line="240" selection-end-line="240" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1626#1627#0" expanded="true" />
-            <element signature="e#1687#1688#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-723">
-          <caret line="50" column="18" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/SmsWebhookController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="113" column="26" lean-forward="true" selection-start-line="113" selection-start-column="26" selection-end-line="113" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Patients.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="809">
-          <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
-          <folding>
-            <element signature="e#813#814#0" expanded="true" />
-            <element signature="e#838#839#0" expanded="true" />
-            <element signature="e#874#875#0" expanded="true" />
-            <element signature="e#902#903#0" expanded="true" />
-            <element signature="e#933#934#0" expanded="true" />
-            <element signature="e#960#961#0" expanded="true" />
-            <element signature="e#1000#1001#0" expanded="true" />
-            <element signature="e#1032#1033#0" expanded="true" />
-            <element signature="e#1069#1070#0" expanded="true" />
-            <element signature="e#1102#1103#0" expanded="true" />
-            <element signature="e#1154#1155#0" expanded="true" />
-            <element signature="e#1198#1199#0" expanded="true" />
-            <element signature="e#1255#1256#0" expanded="true" />
-            <element signature="e#1297#1298#0" expanded="true" />
-            <element signature="e#1473#1474#0" expanded="true" />
-            <element signature="e#1502#1503#0" expanded="true" />
-            <element signature="e#1546#1547#0" expanded="true" />
-            <element signature="e#1582#1583#0" expanded="true" />
-            <element signature="e#1615#1616#0" expanded="true" />
-            <element signature="e#1644#1645#0" expanded="true" />
-            <element signature="e#1688#1689#0" expanded="true" />
-            <element signature="e#1724#1725#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Medications.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="92" column="48" lean-forward="true" selection-start-line="92" selection-start-column="48" selection-end-line="92" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2112#2113#0" expanded="true" />
-            <element signature="e#2144#2145#0" expanded="true" />
-            <element signature="e#2236#2237#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-=======
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="712" extended-state="0" />
     <layout>
@@ -470,6 +244,5 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
->>>>>>> 8b45c1059ba722532b59aca100e2b5267438860f
   </component>
 </project>

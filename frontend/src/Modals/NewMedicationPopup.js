@@ -9,7 +9,7 @@ class NewMedicationPopup extends Component {
     render() {
         
         return (
-            <Popup trigger={<Button>New Medication</Button>}//{<Icon>add</Icon>}
+            <Popup trigger={<Button>New Medication</Button>}
                 modal>
                 {close => (<PatientAddMedication {...this.props} />
                 

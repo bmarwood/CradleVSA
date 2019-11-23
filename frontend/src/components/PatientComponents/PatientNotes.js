@@ -3,8 +3,6 @@ import MaterialTable from 'material-table';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RequestServer from '../RequestServer';
 import NewMedicationPopup from '../../Modals/NewMedicationPopup';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Utility from '../NewForm/Utility';
 import '../../Modals/MedicationPopup';
 import '../../Modals/MedicationPopup.css';
 
@@ -107,33 +105,6 @@ render(){
         columns={this.state.columns}
         data={this.state.data}
         editable={{
-          // onRowAdd: newData =>
-          //   new Promise(resolve => {
-          //     setTimeout(() => {
-          //       resolve();
-          //       const data = [...state.data];
-          //       data.push(newData);
-          //       setState({ ...state, data });
-          //     }, 600);
-          //   }),
-          // onRowUpdate: (newData, oldData) =>
-          //   new Promise(resolve => {
-          //     setTimeout(() => {
-          //       resolve();
-          //       const data = [...state.data];
-          //       data[data.indexOf(oldData)] = newData;
-          //       setState({ ...state, data });
-          //     }, 600);
-          //   }),
-          // onRowDelete: oldData =>
-          //   new Promise(resolve => {
-          //     setTimeout(() => {
-          //       resolve();
-          //       const data = [...state.data];
-          //       data.splice(data.indexOf(oldData), 1);
-          //       setState({ ...state, data });
-          //     }, 600);
-          //       }),
           }}
         />
         <NewMedicationPopup
@@ -147,7 +118,5 @@ render(){
       </div>
        );
 }
-
-
 }
 export default PatientNotes;

@@ -18,31 +18,11 @@ public class MedicationsController {
     @Autowired
     private MedicationsRepository medicationsRepository;
 
-
-    //     @GetMapping("/getMedicationByPatientId{patient_id}")
-//     @ResponseStatus(code = HttpStatus.OK)
-//     @CrossOrigin(origins = "http://localhost:8040")
-//     public List<Medications> getMedicationByPatientId(@PathVariable String patient_id) {
-//         return medicationsRepository.findByPatientId(patient_id);
-//     }
-
     @GetMapping("/get{patient_id}")
     public List<Medications> getMedicationByPatientId(@PathVariable String patient_id) {
         return medicationsRepository.findByPatientId(patient_id);
     }
 
-    //     @GetMapping("/all")
-//     @ResponseStatus(code = HttpStatus.OK)
-//     @CrossOrigin(origins = "*", allowedHeaders = "*")
-//     public List<Medications> getAll() {
-//         List<Medications> medications = null;
-//         try {
-//             medications = this.medicationsRepository.findAll();
-//         } catch (Exception e) {
-//             e.printStackTrace(); //for debugging
-//         }
-//         return medications;
-//     }
     @GetMapping("/all")
     public List<Medications> getAll() {
         List<Medications> medications = this.medicationsRepository.findAll();
