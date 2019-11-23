@@ -38,11 +38,11 @@ public class Medications {
         this.id = id;
     }
 
-    public String getPatientId() {
+    public String getPatient_Id() {
         return patient_id;
     }
 
-    public void setPatientId(String patient_id) {
+    public void setPatient_Id(String patient_id) {
         this.patient_id = patient_id;
     }
 
