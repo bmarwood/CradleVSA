@@ -87,7 +87,6 @@ class Utility extends Component {
         var parsedUser = JSON.parse(user)
         if (parsedUser && parsedUser.roles) {
             parsedUser.roles.forEach(function (role) {
-                //console.log("User data is : " + role.role)
                 roleArray.push(role.role)
             })
         }
@@ -102,6 +101,8 @@ class Utility extends Component {
             diastolic: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             systolic: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             heart_rate: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            num_assessment: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            vital_check: [0, 0, 0],
             num_yellow_up: 0,
             num_yellow_down: 0,
             num_red_up: 0,
@@ -120,19 +121,39 @@ class Utility extends Component {
             this.filterBlood(assessment, filtered_data)
             let assessment_Date = new Date(assessment.date)
             if (+assessment_Date >= +from && +assessment_Date <= +to_date) {
+                filtered_data.vital_check[0] += assessment.systolic
+                filtered_data.vital_check[1] += assessment.diastolic
+                filtered_data.vital_check[2] += assessment.heart_rate
                 filtered_data.assessments.push(assessment)
                 this.filterColor(assessment, filtered_data)
             }
         })
+        this.getAvg(filtered_data)
+        let num_filtered_data = filtered_data.assessments.length
+        filtered_data.vital_check = filtered_data.vital_check.map(function (x) {
+            return Math.round(x / num_filtered_data);
+        })
         return filtered_data
+    }
+
+    static getAvg(data) {
+        for (let index in data.diastolic) {
+            if (data.num_assessment[index] !== 0) {
+                data.diastolic[index] = Math.round(data.diastolic[index] / data.num_assessment[index])
+                data.systolic[index] = Math.round(data.systolic[index] / data.num_assessment[index])
+                data.heart_rate[index] = Math.round(data.heart_rate[index] / data.num_assessment[index])
+            }
+        }
     }
 
     static filterBlood(assessment, data) {
         let date = new Date(assessment.date)
-        let month = this.MONTH_ARR[date.getMonth()];
-        if (month === this.MONTH_ARR[0]) {
+        let index = date.getMonth()
+        data.diastolic[index] += assessment.diastolic
+        data.systolic[index] += assessment.systolic
+        data.heart_rate[index] += assessment.heart_rate
+        data.num_assessment[index] += 1
 
-        }
     }
 
     static filterColor(assessment, filtered_data) {
