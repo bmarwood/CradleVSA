@@ -76,9 +76,7 @@ class TransferPatient extends Component {
                 vht_id: vht_id,
             }
             IdList.push(patient_obj)
-
         });
-
         this.setState({data: IdList})
     }
 
@@ -187,16 +185,13 @@ class TransferPatient extends Component {
 
 
     render() {
-
         this.checkEmptyFlag()
         let temp_to_vht = this.state.to_vht
         let temp_from_vht = this.state.from_vht
         let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
                                                                          value={item.id}> {item.id} </option>)
-
         let vht_select_option2 = this.state.vht_w_assessment.map(item => <option
                                                                                  value={item}> {item} </option>)
-
         let populate_only_selected_from = this.populatePatientLists(temp_from_vht)
         let populate_only_selected_to = this.populatePatientLists(temp_to_vht)
 
@@ -250,7 +245,6 @@ class TransferPatient extends Component {
                         columns={this.state.columns}
                         data={populate_only_selected_to}
                     />
-
                 </div>
             </div>
                 );
