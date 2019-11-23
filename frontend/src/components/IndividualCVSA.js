@@ -3,11 +3,11 @@ import requestServer from './RequestServer';
 import TrafficIconsCircle from './Visuals/TrafficIconsCircle';
 import TrafficIconsTriangle from "./Visuals/TrafficIconsTriangle";
 import TrafficIconsOctagon from "./Visuals/TrafficIconsOctagon";
-import './IndividualPatient.css';
+import './IndividualCVSA.css';
 import AssessmentList from "./AssessmentComponents/AssessmentList";
 
 
-class IndividualPatient extends Component {
+class IndividualCVSA extends Component {
     constructor(props) {
         super(props)
 
@@ -23,15 +23,16 @@ class IndividualPatient extends Component {
             patient_name: '',
             patient_dob: '',
             CVSA_name: '',
+            
         }
     }
 
     componentDidMount() {
-        this.getLastAssessmentByPatient();
-        this.getPatient();
+        this.getLastAssessmentByCVSA();
+        this.getCVSA();
     }
 
-    async getLastAssessmentByPatient() {
+    async getLastAssessmentByCVSA() {
         var response = await requestServer.getLastAssessmentByPatientByID(this.state.id)
         if (response !== null) {
             if (response.data === "") {
@@ -57,7 +58,7 @@ class IndividualPatient extends Component {
         }
     }
 
-    async getPatient() {
+    async getCVSA() {
         var response = await requestServer.getPatient(this.state.id)
         if (response !== null) {
             if (response.data === "") {
@@ -96,11 +97,11 @@ class IndividualPatient extends Component {
                 <div className="overview bg m-100">
 
                     <div className="one-edge-shadow modal-header ">
-                        <h3>Patient Name: {this.state.patient_name}</h3><br />
+                        <h3>Cradle Professional Name: {this.state.CVSA_name}</h3><br />
                         <div className='modal-header-direction'>
                             <div className='float-left'>
                                 <h5>
-                                    Patient ID: {this.state.patient_id}
+                                    CVSA ID: {this.state.patient_id}
                                     <br />
                                     Date of Birth: {this.state.patient_dob}
                                 </h5>
@@ -209,4 +210,4 @@ const YellowLight = () => (
 );
 
 
-export default IndividualPatient;
+export default IndividualCVSA;

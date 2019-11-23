@@ -10,7 +10,6 @@ import NoMatchPage from '../NoMatchPage';
 import Logout from './logout';
 import Register from '../register';
 import PatientList from '../PatientComponents/PatientList';
-import PatientChart from '../PatientComponents/PatientChart';
 import AssessmentList from '../AssessmentComponents/AssessmentList';
 import PatientNotes from '../PatientComponents/PatientNotes';
 import PatientAddMedication from '../PatientComponents/PatientAddMedication';
@@ -19,7 +18,8 @@ import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
 import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
-import IndividualPatient from '../IndividualPatient';
+import IndividualPatient from '../IndividualCVSA';
+import IndividualCVSA from '../IndividualCVSA';
 
 const Navigation = () => (
     <Switch>
@@ -44,6 +44,7 @@ const Navigation = () => (
         <PrivateRoute path="/changePassword" component={ChangePassword}/>
         <Route path="/resources" component={Resources}/>
         <Route path="/patient:id" component={IndividualPatient} />
+        <Route path="/cvsa:id" component={IndividualCVSA} />
         <Route component={NoMatchPage} />
     </Switch>
 )
