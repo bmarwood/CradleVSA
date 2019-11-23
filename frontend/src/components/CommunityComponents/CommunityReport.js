@@ -16,6 +16,8 @@ class CommunityReport extends React.Component {
             location_array: [],
             from: new Date(),
             to: new Date(),
+            pie_array:[1,2,3,4],
+            red_down: 0
         }
         this.handleChange = this.handleChange.bind(this)
     }
@@ -56,6 +58,14 @@ class CommunityReport extends React.Component {
         if (response !== null) {
             let result = Utility.filterByDate(response.data, this.state.from, this.state.to)
             console.log(result)
+            let temp_array = []
+            temp_array.push(result.num_red_up, result.num_red_down, result.num_yellow_down, result.num_yellow_up, result.num_green)
+            console.log(temp_array)
+            this.setState({
+                pie_array:temp_array,
+                red_down:result.num_red_down
+            })
+            this.render()
         }
         // this.props.history.push(
         //     '/'
@@ -76,7 +86,7 @@ class CommunityReport extends React.Component {
     // use variant="outlined" to wrap up the box
     render() {
         let location_select_option = this.state.location_array.map(location => <option key={location.id}
-                                                                                       value={location.id}> {location.name}</option>)
+        value={location.id}> {location.name}</option>)
 
         return (
             <div>
@@ -129,8 +139,11 @@ class CommunityReport extends React.Component {
                 </Button>
             </ValidatorForm>
             <CommunityGraph/>
-            <CommunityPieChart/>
-                </div>
+            <CommunityPieChart
+            array={this.state.pie_array}
+            redDown={this.state.red_down}
+            />
+            </div>
         )
     }
 }
