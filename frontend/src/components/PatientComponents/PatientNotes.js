@@ -101,8 +101,6 @@ render(){
         title={this.props.patient_name}
         columns={this.state.columns}
         data={this.state.data}
-        editable={{
-          }}
         />
         <NewMedicationPopup
         patient_id={this.props.patient_id}
