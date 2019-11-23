@@ -31,12 +31,12 @@ class PatientNotes extends Component {
               ], 
               data: [
                 { 
-                  medication: 'Medication Name',
-                  dose: '5mg',
-                  startDate: 'Start', 
-                  endDate: 'End', 
-                  sideEffects: 'dry mouth',
-                  frequency: 'daily',
+                  medication: 'LOADING...',
+                  dose: 'LOADING...',
+                  startDate: 'LOADING...',
+                  endDate: 'LOADING...',
+                  sideEffects: 'LOADING...',
+                  frequency: 'LOADING...',
                 },
             ],
         })
