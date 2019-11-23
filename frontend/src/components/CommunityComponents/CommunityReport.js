@@ -20,7 +20,12 @@ class CommunityReport extends React.Component {
             to: new Date(),
             pie_array: [1, 1, 1, 1, 1],
             display: false,
-            vital_check: [0, 0, 0]
+            vital_check: [0, 0, 0],
+            graph_array: {
+                systolic: [],
+                diastolic: [],
+                heart_rate: []
+            }
         }
         this.handleChange = this.handleChange.bind(this)
     }
@@ -58,17 +63,23 @@ class CommunityReport extends React.Component {
             return false
         }
         let response = await RequestServer.getAssessmentsByLocation(this.state.location)
-        console.log(response)
         let temp_array = []
         if (response !== null) {
             let result = Utility.filterByDate(response.data, this.state.from, this.state.to)
             console.log(result)
             temp_array.push(result.num_red_up, result.num_red_down, result.num_yellow_down, result.num_yellow_up, result.num_green)
+
             console.log(temp_array)
             this.setState({
                 pie_array: temp_array,
+                //[sys, dias, heart]
                 vital_check: result.vital_check,
-                display: true
+                display: true,
+                graph_array: {
+                    systolic: result.systolic,
+                    diastolic: result.diastolic,
+                    heart_rate: result.heart_rate
+                }
             })
         }
         // CommunityPieChart.changeData(temp_array)
@@ -181,7 +192,9 @@ class CommunityReport extends React.Component {
                         <MDBCard className="card-body"
                                  style={{backgroundColor: " #efeff5\n", width: "auto", marginTop: "auto"}}>
                             <MDBCardTitle>Monthly average vital check Report</MDBCardTitle>
-                            <CommunityGraph/>
+                            <CommunityGraph
+                                array={this.state.graph_array}
+                            />
                         </MDBCard>
                     </MDBContainer>
                 </div>
