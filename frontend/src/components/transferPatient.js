@@ -31,6 +31,7 @@ class TransferPatient extends Component {
         this.getVHTList()
     }
 
+
     componentDidMount() {
         this.getPatientList()
         this.timer = setInterval(() => this.getPatientList(), 10000);
@@ -58,10 +59,12 @@ class TransferPatient extends Component {
         })
     }
 
+
     componentWillUnmount() {
         clearInterval(this.timer);
         this.time = null;
     }
+
 
     populateData(response) {
         console.log(response)
@@ -74,16 +77,12 @@ class TransferPatient extends Component {
             else{
                 var vht_id = patient.vht_id
             }
-
-
             var patient_obj = {
                 id: id,
                 vht_id: vht_id,
             }
             IdList.push(patient_obj)
-
         });
-
         this.setState({data: IdList})
     }
 
@@ -97,12 +96,14 @@ class TransferPatient extends Component {
         }
     }
 
+
     async getSinglePatient(ID) {
         var passback = await requestServer.getPatientByID(ID)
         if (passback !== null && passback.data !== "") {
             return(passback.data)
         }
     }
+
 
     async updateSinglePatient(patient){
         var passback = await requestServer.updatePatient(patient)
@@ -131,12 +132,9 @@ class TransferPatient extends Component {
                 var update_response = await this.updateSinglePatient(temp_patient)
             }
         }
-
         window.location.reload()
         alert("All Patients from ID: "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
     }
-
-
 
 
     handleChange(event){
@@ -157,6 +155,7 @@ class TransferPatient extends Component {
         }
     }
 
+
     populatePatientLists(vht_id){
         var tempPatientList = []
         for (var itr = 0; itr<this.state.data.length; itr++){
@@ -167,6 +166,7 @@ class TransferPatient extends Component {
         return tempPatientList
     }
 
+
     checkEmptyFlag(){
         if(this.state.vht_empty_flag) {
             if (!this.state.vht_w_assessment.includes("EMPTY")) {
@@ -175,26 +175,17 @@ class TransferPatient extends Component {
         }
     }
 
+
     render() {
-
         this.checkEmptyFlag()
-
         let temp_to_vht = this.state.to_vht
         let temp_from_vht = this.state.from_vht
-
-
-
         let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
                                                                          value={item.id}> {item.id} </option>)
-
         let vht_select_option2 = this.state.vht_w_assessment.map(item => <option
                                                                                  value={item}> {item} </option>)
-
         let populate_only_selected_from = this.populatePatientLists(temp_from_vht)
-
-
         let populate_only_selected_to = this.populatePatientLists(temp_to_vht)
-
 
         return (
             <div>
@@ -226,20 +217,11 @@ class TransferPatient extends Component {
                     }}
                     onClick={(e) => {if (window.confirm("Are you sure you wish to transfer all patients from ID: "+this.state.from_vht+" to ID: "+this.state.to_vht)) this.handleSubmit()}}>Submit</Button>
                 </div>
-
                 <div className="table-positionT">
                 <MaterialTable
                     title= "Patients assigned to VHT (From)"
                     columns={this.state.columns}
                     data={populate_only_selected_from}
-                    // TO DO IMPLEMENT single patient transfer
-                    // actions={[
-                    //     {
-                    //         icon: 'compareArrows',
-                    //         tooltip: 'Transfer Patient',
-                    //         onClick: (event, rowData) => alert("You Transferred " + rowData.vht_id)
-                    //     }
-                    // ]}
                 />
                 </div>
                 <div className="table-positionT">
@@ -248,11 +230,8 @@ class TransferPatient extends Component {
                         columns={this.state.columns}
                         data={populate_only_selected_to}
                     />
-
                 </div>
             </div>
-
-
                 );
         }
 }
