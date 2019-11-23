@@ -12,6 +12,7 @@ export default function AdminNav() {
             <Link to="/PatientList">Patient List</Link>
             <Link to="/AssessmentList">Assessments List</Link>
             <Link to="/CommunityReport">CommunityReport</Link>
+            <Link to="/Transfer">Transfer Patients</Link>
             <Link to="/Resources">Resources</Link>
         </Navigation>
     )

@@ -126,6 +126,61 @@ class RequestServer extends Component {
         }
     }
 
+    async getPatientVHTList() {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/patients/all')
+            var userMap = await this.getUserList()
+            var vhtList = []
+            var vhtWithPatients = []
+            //all vhts from userlist
+            for (let x = 0; x < userMap.data.length; x++)
+            {
+                for (let y = 0; y < userMap.data[x].roles.length ; y++)
+                {
+                    if(userMap.data[x].roles[y].role == "VHT"){
+                        vhtList.push(userMap.data[x].id)
+                    }
+                }
+            }
+
+            var newResponse = []
+            var flag = false
+            //all patients that have a vht_id or "EMPTY"
+            for(let a = 0; a<response.data.length; a++){
+                if(response.data[a].vht_id == null || response.data[a].vht_id === "EMPTY")
+                {
+                    newResponse.push(response.data[a])
+                    flag = true
+                }
+                if(vhtList.includes(response.data[a].vht_id)){
+                    if(!vhtWithPatients.includes(response.data[a].vht_id)){
+                        vhtWithPatients.push(response.data[a].vht_id)
+                    }
+                    newResponse.push(response.data[a])
+                }
+            }
+            response.flag = flag
+            response.data = newResponse
+            response.vhtlist = vhtWithPatients
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    async getVHTList() {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/vhts/all')
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
     //get list of assessments based on the worker id
     async getAssessmentsByCVSAId(id) {
         try {
