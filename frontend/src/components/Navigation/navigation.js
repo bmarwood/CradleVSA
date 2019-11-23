@@ -19,6 +19,7 @@ import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
 import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
+import CommunityReport from "../CommunityComponents/CommunityReport";
 import TransferPatient from '../transferPatient';
 
 const Navigation = () => (
@@ -40,11 +41,12 @@ const Navigation = () => (
         <WorkerRoute path="/newAssessment" component={NewAssessment}/>
         <WorkerRoute path="/newPatient" component={NewPatient}/>
         <ManagerRoute path="/newWorker" component={NewUser}/>
+        <WorkerRoute path="/CommunityReport" component={CommunityReport}/>
         <ManagerRoute path="/transfer" component={TransferPatient}/>
         <PrivateRoute path="/profile" component={Profile}/>
         <PrivateRoute path="/changePassword" component={ChangePassword}/>
         <Route path="/resources" component={Resources}/>
-        <Route component={NoMatchPage} />
+        <Route component={NoMatchPage}/>
     </Switch>
 )
 
