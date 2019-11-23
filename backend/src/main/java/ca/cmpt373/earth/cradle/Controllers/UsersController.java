@@ -180,14 +180,11 @@ public class UsersController {
 
     }
 
-<<<<<<< HEAD
-=======
     @DeleteMapping("/delete/{userId}")
     public String deleteById(@PathVariable String userId) {
         usersRepository.deleteById(userId);
         return userId;
     }
 
->>>>>>> ce2108f39f8e182cc67b5f50edca143944b3d5ec
 
 }

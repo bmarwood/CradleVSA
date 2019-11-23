@@ -103,9 +103,6 @@ public class PatientsController {
             return null;
         }
 
-<<<<<<< HEAD
-    }
-=======
     @PostMapping("/update/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -119,5 +116,4 @@ public class PatientsController {
         return ResponseEntity.status(200).body(patient);
     }
 
->>>>>>> ce2108f39f8e182cc67b5f50edca143944b3d5ec
 }
