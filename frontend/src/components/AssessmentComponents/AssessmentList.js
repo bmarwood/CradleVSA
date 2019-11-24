@@ -180,11 +180,16 @@ class AssessmentList extends Component {
     async getAssessmentList() {
         if (this.state.passed_value) {
             //check for id by patient
-            passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
             //if not patient check by cvsa
-            if (passback.data.length === 0) {
+            var passback = await requestServer.getPatient(this.state.passed_value)
+            if (passback.data.length !== 0){
+                passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
+                console.log("1 " + passback)
+            }else{
                 passback = await requestServer.getAssessmentsByCVSAId(this.state.passed_value)
+                console.log("2" + passback)
             }
+            
             //if still none, then bad call
             if (passback.data.length === 0) {
                 alert("No History Found")
@@ -204,7 +209,6 @@ class AssessmentList extends Component {
             this.populateData(passback.data)
         }
     }
-
 
     render() {
         return (

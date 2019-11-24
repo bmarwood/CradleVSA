@@ -9,13 +9,10 @@ class NoMatchPage extends Component {
         return (
             <div className="No-Map" >
                 <h1> 404: Page Not Found</h1>
-                <img  src={pika}/>
+                <img  src={pika} alt="Img Page not Found"/>
             </div>
-
         );
-
     }
-
 }
 
 

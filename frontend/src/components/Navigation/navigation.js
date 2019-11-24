@@ -18,7 +18,7 @@ import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
 import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
-import IndividualPatient from '../IndividualCVSA';
+import IndividualPatient from '../IndividualPatient';
 import IndividualCVSA from '../IndividualCVSA';
 
 const Navigation = () => (

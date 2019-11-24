@@ -489,8 +489,6 @@ class NewAssessment extends React.Component {
     render() {
         let symptom = this.state.symptoms_arr.map(item => <ShowSymp key={item.id} item={item}
                                                                     handleChange={this.handleCheckbox}/>)
-        let vht_select_option = this.state.vht_array.map(item => <option key={item.id}
-                                                                         value={item.id}> {item.id} </option>)
         let user_select_option = this.state.user_array.map(user => <option key={user.id}
                                                                            value={user.id}> {user.name} </option>)
         let location_select_option = this.state.location_array.map(location => <option key={location.id}
@@ -565,7 +563,7 @@ class NewAssessment extends React.Component {
                         </RadioGroup>
 
 
-                        <div style={{display: (this.state.dob_type == "age" ? 'block' : 'none')}}>
+                        <div style={{display: (this.state.dob_type === "age" ? 'block' : 'none')}}>
                             <TextValidator
                                 label="Age"
                                 onChange={this.handleChange}
@@ -576,7 +574,7 @@ class NewAssessment extends React.Component {
                             />
                             <br/>
                         </div>
-                        <div style={{display: (this.state.dob_type == "date" ? 'block' : 'none')}}>
+                        <div style={{display: (this.state.dob_type === "date" ? 'block' : 'none')}}>
                             <label>Date of Birth:</label>
                             <br/>
                             <DatePicker
