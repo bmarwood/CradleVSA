@@ -79,7 +79,7 @@ public class AssessmentsController {
     }
 
     //vht_id
-    @GetMapping("/getByCVSAId{user_id}")
+    @GetMapping("/getByCVSAId{CVSA_id}")
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "http://localhost:8040")
     public List<Assessments> getByCVSAId(@PathVariable String CVSA_id) {
@@ -92,6 +92,29 @@ public class AssessmentsController {
     @CrossOrigin(origins = "http://localhost:8040")
     public List<Assessments> getAByPatientId(@PathVariable String patient_id) {
         return assessmentsRepository.findByPatientId(patient_id);
+    }
+
+    @GetMapping("/last/getByPatientId{patient_id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public Assessments getLastByPatientId(@PathVariable String patient_id) {
+        List<Assessments> patientAssessments = assessmentsRepository.findByPatientId(patient_id);
+        return patientAssessments.get(patientAssessments.size() - 1);
+    }
+
+    @GetMapping("/last/getByCVSAId{CVSA_id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public Assessments getLastByCVSAId(@PathVariable String CVSA_id) {
+        List<Assessments> cvsaAssessments = assessmentsRepository.findByCVSAId(CVSA_id);
+        return cvsaAssessments.get(cvsaAssessments.size() - 1);
+    }
+    //location_id
+    @GetMapping("/getByLocation{location}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public List<Assessments> getByPatientId(@PathVariable String location) {
+        return assessmentsRepository.findByLocation(location);
     }
 
     @DeleteMapping("/delete/{assessment_id}")
@@ -115,6 +138,36 @@ public class AssessmentsController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @GetMapping("/getAByDate{date}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public List<Assessments> getAByDate(@PathVariable String date) {
+        return assessmentsRepository.findByDate(date.substring(0, date.indexOf(' ')));
+    }
+
+
+    @GetMapping("/getReferred")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public List<Assessments> getReferred() {
+        return assessmentsRepository.findByReferred();
+    }
+
+    @PostMapping("/updateReferral/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Assessments> updatePatient(@PathVariable String id, @RequestBody Assessments assessments) {
+        try {
+            assessments.set_id(id);
+            assessments.setReferred(false);
+            this.assessmentsRepository.save(assessments);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.status(200).body(assessments);
     }
 
 }

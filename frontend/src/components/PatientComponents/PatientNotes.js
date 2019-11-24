@@ -1,114 +1,117 @@
-import React from 'react';
+import React, {Component} from 'react';
 import MaterialTable from 'material-table';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
-import AddMedication from './PatientAddMedication'
+import RequestServer from '../RequestServer';
+import NewMedicationPopup from '../../Modals/NewMedicationPopup';
+import '../../Modals/MedicationPopup';
+import '../../Modals/MedicationPopup.css';
 
-//Function for Modals (popups)
-function ModalPopup(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Add Medication
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>
-        <AddMedication/>
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
+class PatientNotes extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            columns: [],
+            data: [],
+            patient_name: "Loading",
+          }
+          this.deleteMedications = this.deleteMedications.bind(this)
+    }
+
+    componentDidMount() {
+      this.getMedicationList()
+      this.timer = setInterval(() => this.getMedicationList(), 10000);
+      this.setState({
+            columns: [
+                { title: 'Medication', field: 'medication' },
+                { title: 'Dose', field: 'dose' },
+                { title: 'Start Date', field: 'startDate'},
+                { title: 'End Date', field: 'endDate'},
+                { title: 'Side Effects', field: 'sideEffects'},
+                { title: 'Frequency', field: 'frequency'},
+              ], 
+              data: [
+                { 
+                  medication: 'LOADING...',
+                  dose: 'LOADING...',
+                  startDate: 'LOADING...',
+                  endDate: 'LOADING...',
+                  sideEffects: 'LOADING...',
+                  frequency: 'LOADING...',
+                },
+            ],
+        })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
+    }
+
+    populateData(response) {
+      var medicationsList = []
+      response.forEach(list_of_medications => {
+        var medication = list_of_medications.medication_name
+        var dose = list_of_medications.dose
+        var startDate = list_of_medications.start_date
+        var endDate = list_of_medications.end_date
+        var sideEffects = list_of_medications.side_effects
+        var frequency = list_of_medications.frequency
+        var id = list_of_medications.id
+
+        var medications_obj = {
+          medication: medication,
+          dose: dose,
+          startDate: startDate,
+          endDate: endDate,
+          sideEffects: sideEffects,
+          frequency: frequency,
+          id: id
+      }
+
+      medicationsList.push(medications_obj)
+    });
+    this.setState({data: medicationsList})
 }
-
-export default function PatientNotes() {
-  const [modalShow, setModalShow] = React.useState(false);
-
-    //Set columns and fake/demo data for table
-    const [state, setState] = React.useState({
-      columns: [
-          { title: 'Medication', field: 'medication' },
-          { title: 'Dose', field: 'dose' },
-          { title: 'Start Date', field: 'startDate'},
-          { title: 'End Date', field: 'endDate'},
-          { title: 'Side Effects', field: 'sideEffects'},
-        ], 
-        data: [
-          { 
-            medication: 'Medication Name',
-            dose: '5mg',
-            startDate: 'Start', 
-            endDate: 'End', 
-            sideEffects: 'dry mouth' },
-          {
-            medication: 'Medication Name 2',
-            dose: '2mg',
-            startDate: 'Start',
-            endDate: 'End',
-            sideEffects: 'itchy skin',
-          },
-        ],
-      });
-
+  async getMedicationList() {
+      var passback = await RequestServer.getMedicationListByID(this.props.patient_id)
+      if (passback !== null && passback.data !== "") {
+          this.populateData(passback.data)
+      }
+  }
+  async getMatchingPatientID(patient_id) {
+    var passback = await RequestServer.getPatientByID(patient_id)
+    if (passback != null) {
+        this.populateData(passback.data.list_of_medications
+        )
+    }
+}
+  async deleteMedications(id) {
+    let response = await RequestServer.deleteMedications(this.state.id)
+    if (response !== null) {
+      return true
+  }
+  return false
+}
+render(){
     return (
-      <div className = "table-position" >
-      <MaterialTable
-      title="Patient Name"
-      columns={state.columns}
-      data={state.data}
-      editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              const data = [...state.data];
-              data.push(newData);
-              setState({ ...state, data });
-            }, 600);
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              const data = [...state.data];
-              data[data.indexOf(oldData)] = newData;
-              setState({ ...state, data });
-            }, 600);
-          }),
-        onRowDelete: oldData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              const data = [...state.data];
-              data.splice(data.indexOf(oldData), 1);
-              setState({ ...state, data });
-            }, 600);
-              }),
-        }}
-      />
-      <div>
-      <ButtonToolbar>
-      <Button variant="primary" onClick={() => setModalShow(true)}>
-       New Medication
-      </Button>
-
-      <ModalPopup
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
-    </ButtonToolbar>
+        <div className = "modal" >
+            <div style={{ margin: 'auto', textAlign: 'center' }}>
+                <div style={{ margin: 'auto', backgroundColor: 'white', textAlign: 'center', width: '100%' }}>
+        <MaterialTable
+        title={this.props.patient_name}
+        columns={this.state.columns}
+        data={this.state.data}
+        />
+        <NewMedicationPopup
+        patient_id={this.props.patient_id}
+        name={this.props.name}
+        surname={this.props.surname}
+        patient_name={this.props.patient_name}
+        /> 
       </div>
-    </div>
-     );
-   }
-
-
+      </div>
+      </div>
+       );
+}
+}
+export default PatientNotes;

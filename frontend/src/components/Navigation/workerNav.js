@@ -10,6 +10,8 @@ export default function WorkerNav() {
             <Link to ="/">Home</Link>
             <Link to ="/PatientList">Patient List</Link>
             <Link to ="/AssessmentList">Assessments List</Link>
+            <Link to="/CommunityReport">Community Report</Link>
+            <Link to="/ReferredList">Referred List</Link>
             <Link to ="/Resources">Resources</Link>
             <Link to="/profile">Profile</Link>
             <Link to="/logout">Logout</Link>

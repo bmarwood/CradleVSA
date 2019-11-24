@@ -6,10 +6,10 @@ import NewPatient from '../NewForm/NewPatient';
 import NewUser from '../NewForm/NewUser';
 import Landing_List from '../AdminComponents/AdminLanding';
 import Login from './login';
+import NoMatchPage from '../NoMatchPage';
 import Logout from './logout';
 import Register from '../register';
 import PatientList from '../PatientComponents/PatientList';
-import PatientChart from '../PatientComponents/PatientChart';
 import AssessmentList from '../AssessmentComponents/AssessmentList';
 import PatientNotes from '../PatientComponents/PatientNotes';
 import PatientAddMedication from '../PatientComponents/PatientAddMedication';
@@ -18,7 +18,13 @@ import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
 import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
-import VHTReport from '../VHTReport';
+import IndividualPatient from '../IndividualPatient';
+import IndividualCVSA from '../IndividualCVSA';
+import CommunityReport from "../CommunityComponents/CommunityReport";
+import TransferPatient from '../transferPatient';
+import ReferredList from "../Referral/ReferredList";
+//import RequestReport from "../AdminComponents/RequestReport";
+//import VhtReport from "../AdminComponents/vhtReport";
 
 const Navigation = () => (
     <Switch>
@@ -31,7 +37,6 @@ const Navigation = () => (
         <PrivateRoute exact path="/AssessmentList" component={AssessmentList}/>
         <PrivateRoute path="/logout" component={Logout}/>
         <PrivateRoute path="/profile" component={Profile}/>
-        <PrivateRoute path="/patient-list" component = {PatientList}/>
         <PrivateRoute path="/changePassword" component={ChangePassword}/>
 
         {/* Admin Route */}
@@ -39,20 +44,31 @@ const Navigation = () => (
         <AdminRoute path="/newlocation" component={NewLocation}/>
         <AdminRoute exact path="/admin-dashboard" component={Landing_List}/>
         <AdminRoute exact path="/register" component={Register}/>
-        <AdminRoute path="/PatientList" component={PatientList}/>
-        
-        {/* Worker Route */}
+        <AdminRoute path="/admin/landing" component={Landing_List}/>
+        <AdminRoute path="/PatientAddMedication" component={PatientAddMedication}/>
+        <AdminRoute path="/PatientNotes" component={PatientNotes}/>
+
+
         <WorkerRoute path="/PatientList" component={PatientList}/>
         <WorkerRoute path="/PatientNotes" component={PatientNotes}/>
-        <WorkerRoute path="/PatientAddMedication" component={PatientAddMedication}/>
         <WorkerRoute path="/newAssessment" component={NewAssessment}/>
         <WorkerRoute path="/newPatient" component={NewPatient}/>
-
-        {/* Manager Route */}
+        <WorkerRoute path="/ReferredList" component={ReferredList}/>
         <ManagerRoute path="/newWorker" component={NewUser}/>
-        <ManagerRoute path="/vht-report" component={VHTReport}/>
+        <WorkerRoute path="/CommunityReport" component={CommunityReport}/>
+
+        <ManagerRoute path="/transfer" component={TransferPatient}/>
+        {/* <ManagerRoute path = "/request-VHT-report" component = {RequestReport}/>
+        <ManagerRoute path = "/vht-report" component = {VhtReport}/> */}
+
+
+        <Route path="/patient:id" component={IndividualPatient} />
+        <Route path="/cvsa:id" component={IndividualCVSA} />
+        <Route component={NoMatchPage} />
+
     </Switch>
 )
+
 
 const Role_Termination_Integer = -1
 
@@ -62,7 +78,6 @@ function getRoles() {
     var parsedUser = JSON.parse(user)
     if (parsedUser && parsedUser.roles) {
         parsedUser.roles.forEach(function (role) {
-            console.log("User data is : " + role.role)
             roleArray.push(role.role)
         })
     }

@@ -17,10 +17,6 @@ html, body {
   flex-direction: column;
 }
 
-.MuiAppBar-colorPrimary {
-  color: #fff;
-  background-color: #4694ab;
-}
  
 .AssessList {
   position: relative;

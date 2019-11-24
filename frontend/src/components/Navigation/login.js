@@ -31,18 +31,13 @@ class Login extends Component {
     setRole(response) {
         response.data.roles.forEach(role => {
 
-            console.log("role given to user: ", role)
-            console.log("role given to user: ", role.role)
-
             if (role.role === 'ADMIN') {
-                console.log('is admin')
                 this.setState({
                     isAdmin: true
                 })
             }
 
             if (role.role === 'USER') {
-                console.log('is user')
                 this.setState({
                     isUser: true
                 })
@@ -67,17 +62,9 @@ class Login extends Component {
         }
     }
 
-    testConsoleLog(response) {
-        var user = localStorage.getItem("userData")
-        console.log("User data is : " + user)
-        console.log("response from server: ", response, this.state)
-        console.log("decomposing response: ", response.data.id, " ", response.data.name, response.status)
-    }
-
     loginHandler = async (e) => {
         e.preventDefault()
         var passback = await requestServer.login(this.state.username, this.state.password)
-        // console.log(passback)
         if (passback === null) {
             this.setState({
                 error: true,
@@ -103,7 +90,6 @@ class Login extends Component {
 
     keyPressed(event) {
         if (event.key === "Enter") {
-            console.log(event)
             this.loginHandler(event)
         }
     }
