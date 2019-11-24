@@ -204,17 +204,31 @@ class TransferPatient extends Component {
         }
     }
 
+    filter_lists(user_id){
+        console.log("vht_array",this.state.vht_array)
+        console.log("with assessment",this.state.vht_w_assessment)
+    }
 
     render() {
         this.checkEmptyFlag()
         var userRoles = this.getRoles()
         const Role_Termination_Integer = -1
-        console.log("this is the logged in user role", userRoles)
         let temp_to_vht = this.state.to_vht
         let temp_from_vht = this.state.from_vht
-        let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
+        let temp_vht_array = this.state.vht_array
+        let temp_vht_w_assessment = this.state.vht_w_assessment
+        console.log("this is the logged in user role", userRoles)
+        if(userRoles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer){
+            //filter_lists
+            var user = localStorage.getItem("userData")
+            var parsedUser = JSON.parse(user)
+            console.log(parsedUser.id)
+            this.filter_lists(parsedUser.id)
+        }
+
+        let vht_select_option = temp_vht_array.map(item => <option id={item.id}
                                                                          value={item.id}> {item.id} </option>)
-        let vht_select_option2 = this.state.vht_w_assessment.map(item => <option
+        let vht_select_option2 = temp_vht_w_assessment.map(item => <option
                                                                                  value={item}> {item} </option>)
         let populate_only_selected_from = this.populatePatientLists(temp_from_vht)
         let populate_only_selected_to = this.populatePatientLists(temp_to_vht)
