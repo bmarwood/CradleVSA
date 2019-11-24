@@ -2,17 +2,9 @@ import React, {Component} from 'react';
 import requestServer from "./RequestServer";
 import MaterialTable from "material-table";
 import './Transfer.css';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-import {ValidatorForm} from "react-material-ui-form-validator";
 import Utility from "./NewForm/Utility";
-import {ClipLoader} from 'react-spinners';
-//import ClipLoader from 'react-spinners/ClipLoader';
-import { css } from '@emotion/core';
+
 
 
 class TransferPatient extends Component {
@@ -32,6 +24,7 @@ class TransferPatient extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.getVHTList()
     }
+
 
     componentDidMount() {
         this.getPatientList()
@@ -60,13 +53,14 @@ class TransferPatient extends Component {
         })
     }
 
+
     componentWillUnmount() {
         clearInterval(this.timer);
         this.time = null;
     }
 
+
     populateData(response) {
-        console.log("this is where it populates")
         console.log(response)
         var IdList = []
         response.forEach(patient => {
@@ -77,16 +71,12 @@ class TransferPatient extends Component {
             else{
                 var vht_id = patient.vht_id
             }
-
-
             var patient_obj = {
                 id: id,
                 vht_id: vht_id,
             }
             IdList.push(patient_obj)
-
         });
-
         this.setState({data: IdList})
     }
 
@@ -100,12 +90,14 @@ class TransferPatient extends Component {
         }
     }
 
+
     async getSinglePatient(ID) {
         var passback = await requestServer.getPatientByID(ID)
         if (passback !== null && passback.data !== "") {
             return(passback.data)
         }
     }
+
 
     async updateSinglePatient(patient){
         var passback = await requestServer.updatePatient(patient)
@@ -134,9 +126,8 @@ class TransferPatient extends Component {
                 var update_response = await this.updateSinglePatient(temp_patient)
             }
         }
-
         window.location.reload()
-        //alert("All Patients from ID: "+ this.state.from_vht +" have been tranferred to ID: "+ this.state.to_vht)
+        alert("All Patients from ID: "+ this.state.from_vht +" have been transferred to ID: "+ this.state.to_vht)
     }
 
 
@@ -146,12 +137,11 @@ class TransferPatient extends Component {
         var temp_patient = await this.getSinglePatient(id)
         temp_patient.vht_id = this.state.to_vht
         var update_response = await this.updateSinglePatient(temp_patient)
-
         this.getPatientList()
         if(fromList.length === 1 || toList.length === 0){
             window.location.reload()
         }
-        //alert("Patient ID: "+ id +" from ID: "+ this.state.from_vht +" has been tranferred to ID: "+ this.state.to_vht)
+        alert("Patient ID: "+ id +" from ID: "+ this.state.from_vht +" has been transferred to ID: "+ this.state.to_vht)
     }
 
 
@@ -173,6 +163,7 @@ class TransferPatient extends Component {
         }
     }
 
+
     populatePatientLists(vht_id){
         var tempPatientList = []
         for (var itr = 0; itr<this.state.data.length; itr++){
@@ -183,6 +174,7 @@ class TransferPatient extends Component {
         return tempPatientList
     }
 
+
     checkEmptyFlag(){
         if(this.state.vht_empty_flag) {
             if (!this.state.vht_w_assessment.includes("EMPTY")) {
@@ -191,24 +183,16 @@ class TransferPatient extends Component {
         }
     }
 
-    render() {
 
+    render() {
         this.checkEmptyFlag()
         let temp_to_vht = this.state.to_vht
         let temp_from_vht = this.state.from_vht
-        console.log("to, from ", temp_to_vht,temp_from_vht)
-
-
-
         let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
                                                                          value={item.id}> {item.id} </option>)
-
         let vht_select_option2 = this.state.vht_w_assessment.map(item => <option
                                                                                  value={item}> {item} </option>)
-
         let populate_only_selected_from = this.populatePatientLists(temp_from_vht)
-
-
         let populate_only_selected_to = this.populatePatientLists(temp_to_vht)
 
         return (
@@ -241,7 +225,6 @@ class TransferPatient extends Component {
                     }}
                     onClick={(e) => {if (window.confirm("Are you sure you wish to transfer all patients from ID: "+this.state.from_vht+" to ID: "+this.state.to_vht)) this.handleSubmit()}}>Submit</Button>
                 </div>
-
                 <div className="table-positionT">
                 <MaterialTable
                     title= "Patients assigned to VHT (From)"
@@ -262,11 +245,8 @@ class TransferPatient extends Component {
                         columns={this.state.columns}
                         data={populate_only_selected_to}
                     />
-
                 </div>
             </div>
-
-
                 );
         }
 }

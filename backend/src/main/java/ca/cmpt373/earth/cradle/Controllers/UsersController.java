@@ -100,22 +100,6 @@ public class UsersController {
         }
     }
 
-//    @PutMapping("/updateProfile")
-//    public ResponseEntity<Users> updateProfile(@RequestBody Users user) {
-//        System.out.println("Retrieving existing users...");
-//        Users foundUser = usersRepository.findUserById(user.getId());
-//        if (user.getId() == foundUser.getId()){
-//            System.out.println("Found a user");
-//            usersRepository.save(user);
-//            return ResponseEntity.status(200).body(user);
-//        }
-//        else {
-//            //Return a not found status
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-//    }
-
-
     @PostMapping("/login")
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "*", allowedHeaders = "*")

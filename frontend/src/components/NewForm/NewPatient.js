@@ -15,7 +15,6 @@ class NewPatient extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props.id)
 
         this.state = {
             id: '',
@@ -45,7 +44,6 @@ class NewPatient extends React.Component {
         ValidatorForm.addValidationRule('checkID', (value) => {
             let validID = this.checkID(value)
                 .catch(() => {
-                    console.log("validID", validID)
                     return true;
                 });
             return validID;
@@ -81,7 +79,6 @@ class NewPatient extends React.Component {
         if (old_data) {
             old_data = old_data.data
             if (old_data !== null) {
-                console.log(old_data)
                 this.setState({
                     id: old_data.id,
                     gender: old_data.gender,
@@ -153,9 +150,7 @@ class NewPatient extends React.Component {
         return false;
     }
 
-
     handleSubmit = async () => {
-        console.log(this.state)
         // if (this.state.vht_id === "EMPTY") {
         //     alert("Please select at least one VHT")
         //     return false;
@@ -174,7 +169,6 @@ class NewPatient extends React.Component {
         }
         this.changeState();
         var response = null;
-        console.log(this.state.update)
         if (this.state.update) {
             response = await RequestServer.updatePatient(this.state)
             alert("UPDATED!!")
