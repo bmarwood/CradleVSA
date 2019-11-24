@@ -24,9 +24,11 @@ html, body {
   padding-left: 10px;
 }
 
-.container {
+.cardContainer {
+  margin: 50px auto;
   width: 90%;
-
+  height: 500px;
+  display: table;
 }
 
 .float-cards {
@@ -35,7 +37,7 @@ html, body {
 
 .left-card {
   background: white;
-  height: 400px;
+  /* height: 100%; */
   width: 25%;
   -webkit-box-shadow: 0 4px 6px -6px black;
   -moz-box-shadow: 0 4px 6px -6px black;
@@ -48,15 +50,23 @@ html, body {
 .right-card {
   float: right;
   background: white;
-  height: 400px;
+  /* height: 100%; */
   width: 74%;
   -webkit-box-shadow: 0 4px 6px -6px black;
   -moz-box-shadow: 0 4px 6px -6px black;
   box-shadow: 0 4px 6px -6px black;
   border-radius: 5px;
-
+  /* overflow: auto; */
 }
 
+
+.right-card {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.right-card::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
 
 .top-card {
   background: white;
@@ -70,15 +80,6 @@ html, body {
 }
 
 
-
-.cardContainer {
-  padding: 100px;
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  direction: row;
-
-}
 
 .AssessList {
   border: thin solid blue;

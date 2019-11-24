@@ -1,8 +1,5 @@
 // All the rest of the content of the landing page is coming from 
-import React, {Component} from 'react';
-import {Grid} from 'react-mdl';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import React, { Component } from 'react';
 import Utility from '../NewForm/Utility';
 import Button from '@material-ui/core/Button';
 import '../../App.css';
@@ -15,8 +12,8 @@ class RequestReport extends Component {
         super(props);
         this.state = {
             vht_list: [],
-            vht_id : '',
-            temp_from_date : new Date(),
+            vht_id: '',
+            temp_from_date: new Date(),
             temp_to_date: new Date(),
             from_date: 'date',
             to_date: 'date',
@@ -35,7 +32,7 @@ class RequestReport extends Component {
 
         response.forEach(user => {
             var id = user.id
-            if (id == null){
+            if (id == null) {
                 var id = "N/A";
             }
             console.log(id)
@@ -46,7 +43,7 @@ class RequestReport extends Component {
             VHTList.push(vht_obj)
         });
 
-        this.setState({vht_list: VHTList})
+        this.setState({ vht_list: VHTList })
         console.log("set data", VHTList)
 
     }
@@ -62,7 +59,7 @@ class RequestReport extends Component {
     }
 
 
-    handleChange(event){
+    handleChange(event) {
         console.log("EVENT", event.target.name)
         //event.target.selected = event.target.id
         this.setState({
@@ -73,7 +70,7 @@ class RequestReport extends Component {
     }
 
     handleSubmit = async () => {
-        if (this.state.vht_id = ''){
+        if (this.state.vht_id = '') {
             window.alert("You need to select valid VHT")
         }
         else {
@@ -83,38 +80,17 @@ class RequestReport extends Component {
                 let input_date_to = Utility.convertDate(this.state.temp_to_date)
                 let today = Utility.convertDate(new Date())
 
-                // if (today === input_dob) {
-                //     alert("Incorrect date of birth")
-                //     return false;
-                // }
                 this.setState({
                     from_date: input_date_from,
                     to_date: input_date_to
-                })
+                }, () => {this.requestReport()})
             }
-            this.changeState();
-            var response = null;
-            console.log(this.state.update)
-            if (this.state.update) {
-                //response = await RequestServer.updatePatient(this.state)
-                window.alert("Requesting report of VHT id : " + this.state.vht_id + "From : " + this.state.from_date + "To : " + this.state.to_date)
-            } else {
-                window.alert("I'm here")
-                // response = await RequestServer.addPatient(this.state)
-                // if (response !== null) {
-                //     toast("Patient Added");
-                //     this.props.history.push(
-                //         '/',
-                //         {detail: response.data}
-                //     )
-                // } else {
-                //     this.setState({
-                //         error: true,
-                //         errorMsg: 'Unable to register'
-                //     })
-                // }
-            }
+           
         }
+    }
+
+    requestReport() {
+
     }
 
     changeFromDate = date => {
@@ -124,7 +100,7 @@ class RequestReport extends Component {
     };
 
     changeToDate = date => {
-        if (date - this.state.temp_from_date < 0){
+        if (date - this.state.temp_from_date < 0) {
             window.alert("Invalid Range of Date. Please try again")
         }
         else {
@@ -134,9 +110,13 @@ class RequestReport extends Component {
         }
     };
 
+    getOptions() {
+        return (this.state.vht_list.map(item => {
+            return <option key={item.id} value={item.id}> {item.id} </option>
+        }))
+    }
+
     render() {
-        let vht_select_option = this.state.vht_list.map(item => <option key={item.id}
-            value={item.id}> {item.id} </option>)
         return (
             <div style={{
                 backgroundColor: 'white',
@@ -144,45 +124,44 @@ class RequestReport extends Component {
                 padding: '50px',
                 textAlign: 'center'
             }}>
-                <h1 style={{color: "black"}}> VHT Activity Report</h1>
-                {/* <h4 style={{color: "white"}}> Health Facility Location</h4> */}
-                <label style = {{color:"black"}} >Select VHT: </label>
+                <h1 style={{ color: "black" }}> VHT Activity Report</h1>
+                <label style={{ color: "black" }} >Select VHT: </label>
                 <form onSubmit={this.handleSubmit}>
                     <select
-                            onChange={this.handleChange}
-                            value={this.state.vht_list}
-                            name="vht_list"
+                        onChange={this.handleChange}
+                        value={this.state.vht_list}
+                        name="vht_list"
                     >
-                            <option value="null"> --SELECT ONE--</option>
-                            {vht_select_option}
+                        <option value="null"> --SELECT ONE--</option>
+                        {this.getOptions()}
                     </select>
 
-                    <h4 style={{color: "black"}}> Select Duration for the Report</h4>
-                    <h4 style={{color: "black"}}> From</h4>
-                    <br/>
-                        <DatePicker 
-                            name = "from_date"
-                            selected={this.state.temp_from_date}
-                            onChange={this.changeFromDate}
-                            maxDate={new Date()}
-                        />
-                    <h4 style={{color: "black"}}> To</h4>
-                    <br/>
-                        <DatePicker
-                            name = "to_date"
-                            selected={this.state.temp_to_date}
-                            onChange={this.changeToDate}
-                            maxDate={new Date()}
-                        />
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
+                    <h4 style={{ color: "black" }}> Select Duration for the Report</h4>
+                    <h4 style={{ color: "black" }}> From</h4>
+                    <br />
+                    <DatePicker
+                        name="from_date"
+                        selected={this.state.temp_from_date}
+                        onChange={this.changeFromDate}
+                        maxDate={new Date()}
+                    />
+                    <h4 style={{ color: "black" }}> To</h4>
+                    <br />
+                    <DatePicker
+                        name="to_date"
+                        selected={this.state.temp_to_date}
+                        onChange={this.changeToDate}
+                        maxDate={new Date()}
+                    />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
                     <Button type="submit" style={{
                         backgroundColor: 'blue',
                         color: 'white'
                     }}>Submit</Button>
-                    <br/>
+                    <br />
                 </form>
             </div>
 

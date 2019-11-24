@@ -132,8 +132,8 @@ class vhtReport extends Component {
     render() {
         if (!this.state.loading) {
             return (
-                <div className='container'>
-                    <div className='top-card float-cards'>
+                <div className='cardContainer'>
+                    <div className='top-card'>
                         <div className="card">
                             <h3>Number of <br />Patients:</h3>
                             <h1>{this.state.patientCount}</h1>
@@ -146,30 +146,26 @@ class vhtReport extends Component {
                             <h3>Number of <br />Referred Assesments:</h3>
                             <h1>{this.state.referredAssessments}</h1>
                         </div>
-
                     </div>
-                    <div className='float-cards'>
-                        <div className='left-card'>
-                            <div className="one-edge-shadow modal-header p-30">
-                                <h3>Username: {this.state.username} </h3><br />
-                                <div className='modal-header-direction'>
-                                    <div className='float-left'>
-                                        <h5>
-                                            Roles: {this.state.roles}
-                                        </h5>
-                                    </div>
+                    <div className='left-card'>
+                        <div className="one-edge-shadow modal-header p-30">
+                            <h3>Username: {this.state.username} </h3><br />
+                            <div className='modal-header-direction'>
+                                <div className='float-left'>
+                                    <h5>
+                                        Roles: {this.state.roles}
+                                    </h5>
                                 </div>
                             </div>
                         </div>
-                        <div className='right-card'>
-                            <VHTChart assessmentList={this.state.assessmentList} />
-
-                        </div>
+                    </div>
+                    <div className='right-card'>
+                        <VHTChart assessmentList={this.state.assessmentList} />
                     </div>
                 </div>
             );
         } else {
-            return(
+            return (
                 <div></div>
             )
         }
