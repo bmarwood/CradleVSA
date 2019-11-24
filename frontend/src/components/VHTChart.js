@@ -53,7 +53,6 @@ class VHTChart extends React.Component {
     getData() {
         var assessmentArray = this.props.assessmentList
         var data = this.state.chartData.datasets[0].data
-
         assessmentArray.forEach(assessment => {
             var dateString = assessment.date
             let date = new Date(dateString)
@@ -61,61 +60,62 @@ class VHTChart extends React.Component {
             var index = 0
 
             switch (month) {
-                case 1:
+                case 0:
+                    var index = 0
                     var count = data[index] + 1
                     data[index] = count
                     break;
-                case 2:
+                case 1:
                     index = 1
                     var count = data[index] + 1
                     data[index] = count
                     break;
-                case 3:
+                case 2:
                     index = 2
                     var count = data[index] + 1
                     data[index] = count
                     break;
-                case 4:
+                case 3:
                     index = 3
                     var count = data[index] + 1
                     data[index] = count
                     break;
-                case 5:
+                case 4:
                     index = 4
                     var count = data[index] + 1
                     data[index] = count
                     break;
-                case 6:
+                case 5:
                     index = 5
                     var count = data[index] + 1
                     data[index] = count
                     break;
-                case 7:
+                case 6:
                     index = 6
                     var count = data[index] + 1
                     data[index] = count
                     break;
-                case 8:
+                case 7:
                     index = 7
                     var count = data[index] + 1
                     data[index] = count
                     break;
-                case 9:
+                case 8:
                     index = 8
                     var count = data[index] + 1
                     data[index] = count
                     break;
-                case 10:
+                case 9:
                     index = 9
                     var count = data[index] + 1
                     data[index] = count
                     break;
-                case 11:
+                case 10:
                     index = 10
                     var count = data[index] + 1
                     data[index] = count
                     break;
-                case 12:
+                case 11:
                     index = 11
                     var count = data[index] + 1
                     data[index] = count

@@ -28,16 +28,28 @@ class vhtReport extends Component {
             assesmentCount: 0,
             referredAssessments: 0,
             assessmentList: [],
+            selectedFrom: 0,
+            selectedTo: 0,
             loading: true
         }
 
         this.getAssessmentData = this.getAssessmentData.bind(this)
-
     }
 
     async componentDidMount() {
-        this.getVhtDetails()
+        this.setStateForSelectedDates()
         this.getPatientList()
+    }
+
+
+    getRoles(parsedUser) {
+        var roleArray = []
+        if (parsedUser && parsedUser.roles) {
+            parsedUser.roles.forEach(function (role) {
+                roleArray.push(role.role + " ")
+            })
+        }
+        return roleArray
     }
 
     async getPatientList() {
@@ -57,67 +69,20 @@ class vhtReport extends Component {
         }
     }
 
-    getRoles(parsedUser) {
-        var roleArray = []
-        if (parsedUser && parsedUser.roles) {
-            parsedUser.roles.forEach(function (role) {
-                roleArray.push(role.role + " ")
-            })
-        }
-        return roleArray
-    }
-
-
-    async getAssessmentData() {
+    setStateForSelectedDates() {
         var from = this.props.location.state.from
         var to = this.props.location.state.to
 
-        var dateFromIso = new Date(from).toISOString()
-        var dateToIso = new Date(to).toISOString()
-        console.log(dateFromIso)
-        var passback = await requestServer.getAssessmentsByCVSAIdByDate(this.state.vht_id, dateFromIso, dateToIso)
-        if (passback !== null && passback.data !== "") {
-            console.log("passback Data thats being passed", passback.data)
-            var reds = 0
-            var yellows = 0
-            var greens = 0
-            var assesmentCount = 0
-            var referredAssessments = 0
+        var monthFrom = new Date(from)
+        var monthTo = new Date(to)
 
-            passback.data.forEach((item) => {
-                assesmentCount += 1
+        monthTo.setDate(new Date(to).getDate() + 1)
+        console.log("Months: ", monthFrom, monthTo)
 
-                if (item.referred) {
-                    referredAssessments += 1
-                }
-
-                switch (item.ews_color) {
-                    case 'GREEN':
-                        greens = greens + 1
-                        break;
-                    case 'RED':
-                        reds = reds + 1
-                        break;
-                    case 'YELLOW':
-                        yellows = yellows + 1
-                        break;
-                    default:
-                        break;
-                }
-            })
-
-
-
-            this.setState({
-                assessmentList: passback.data,
-                greenCount: greens,
-                redCount: reds,
-                yellowCount: yellows,
-                assesmentCount: assesmentCount,
-                referredAssessments: referredAssessments,
-                loading: false,
-            })
-        }
+        this.setState({
+            selectedFrom: monthFrom,
+            selectedTo: monthTo
+        }, () => { this.getVhtDetails() })
     }
 
     async getVhtDetails() {
@@ -142,11 +107,74 @@ class vhtReport extends Component {
         } else {
             console.log("Not coming from proper route, vht_Id has not been passed by Request Report")
         }
-
-
-
-
     }
+
+
+    assessmentIsInRange(assessment) {
+        var date = new Date(assessment.date)
+        console.log("name of person and month of assessment: ", assessment.name, date)
+        console.log("month from: ", this.state.selectedFrom)
+        console.log("month to: ", this.state.selectedTo)
+        if (date >= +this.state.selectedFrom && date <= +this.state.selectedTo) {
+            console.log('true')
+            return true
+        }
+        console.log('false')
+        return false
+    }
+
+    async getAssessmentData() {
+
+        var passback = await requestServer.getAssessmentsByCVSAId(this.state.vht_id)
+        if (passback !== null && passback.data !== "") {
+            console.log("assessments received from the server: ", passback.data)
+            var reds = 0
+            var yellows = 0
+            var greens = 0
+            var assesmentCount = 0
+            var referredAssessments = 0
+
+            passback.data.forEach((assessment) => {
+
+                if (this.assessmentIsInRange(assessment)) {
+                    assesmentCount += 1
+
+                    if (assessment.referred) {
+                        referredAssessments += 1
+                    }
+
+                    switch (assessment.ews_color) {
+                        case 'GREEN':
+                            greens = greens + 1
+                            break;
+                        case 'RED':
+                            reds = reds + 1
+                            break;
+                        case 'YELLOW':
+                            yellows = yellows + 1
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+            })
+
+
+
+            this.setState({
+                assessmentList: passback.data,
+                greenCount: greens,
+                redCount: reds,
+                yellowCount: yellows,
+                assesmentCount: assesmentCount,
+                referredAssessments: referredAssessments,
+                loading: false,
+            })
+        }
+    }
+
+
 
 
 
@@ -154,6 +182,7 @@ class vhtReport extends Component {
         if (!this.state.loading) {
             return (
                 <div className='cardContainer'>
+
                     <div className='top-card'>
                         <div className="card">
                             <h3>Number of <br />Patients:</h3>
