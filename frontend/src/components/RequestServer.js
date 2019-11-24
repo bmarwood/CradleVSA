@@ -104,6 +104,17 @@ class RequestServer extends Component {
         }
     }
 
+    async getVhtById(id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/vhts/get' + id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
     async getCVSA(id) {
         try {
             var response = await axios.get(this.getServerLocation() + '/users/get' + id)

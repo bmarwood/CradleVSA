@@ -12,17 +12,23 @@ class RequestReport extends Component {
         super(props);
         this.state = {
             vht_list: [],
+            location_list: [],
+            location: '',
             vht_id: '',
             temp_from_date: new Date(),
             temp_to_date: new Date(),
             from_date: 'date',
             to_date: 'date',
         }
+
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChangeLocation = this.handleChangeLocation.bind(this);
     }
 
     componentDidMount() {
         this.getVHTsList()
+        this.getAllLocations()
     }
 
 
@@ -48,6 +54,25 @@ class RequestReport extends Component {
 
     }
 
+    populateLocationData(response) {
+        var LocationList = []
+
+        response.forEach(location => {
+            var name = location.name
+            var address = location.address
+            console.log(name)
+            var location_obj = {
+                name: name,
+                address: address
+            }
+            LocationList.push(location_obj)
+        });
+
+        this.setState({ location_list: LocationList })
+        console.log("set location data", LocationList)
+
+    }
+
     async getVHTsList() {
         var passback = await requestServer.getAllVHTs()
         if (passback !== null) {
@@ -58,39 +83,58 @@ class RequestReport extends Component {
         }
     }
 
+    async getAllLocations() {
+        var passback = await requestServer.getLocations()
+        if (passback !== null) {
+            this.populateLocationData(passback.data)
+        }
+        else {
+            console.log("Did not receive anything")
+        }
+    }
+
 
     handleChange(event) {
-        console.log("EVENT", event.target.name)
-        //event.target.selected = event.target.id
         this.setState({
-            //[event.target.name] : event.target.value,
             vht_id: event.target.value
         })
         console.log("value is", event.target.value)
     }
 
-    handleSubmit = async () => {
-        if (this.state.vht_id = '') {
+    handleChangeLocation(event) {
+        this.setState({
+            location: event.target.value
+        })
+        console.log("location is", event.target.value)
+    }
+
+    handleSubmit() {
+        if (this.state.vht_id == '') {
             window.alert("You need to select valid VHT")
         }
         else {
-            console.log(this.state)
-            if (this.state.from_date === "date" && this.state.to_date === "date") {
-                let input_date_from = Utility.convertDate(this.state.temp_from_date)
-                let input_date_to = Utility.convertDate(this.state.temp_to_date)
-                let today = Utility.convertDate(new Date())
+            console.log("submitting: ", this.state)
+            var vht_id = this.state.vht_id
+            this.requestReport(vht_id)
+            // if (this.state.from_date === "date" && this.state.to_date === "date") {
+            //     let input_date_from = Utility.convertDate(this.state.temp_from_date)
+            //     let input_date_to = Utility.convertDate(this.state.temp_to_date)
+            //     let today = Utility.convertDate(new Date())
 
-                this.setState({
-                    from_date: input_date_from,
-                    to_date: input_date_to
-                }, () => {this.requestReport()})
-            }
-           
+            //     this.setState({
+            //         from_date: input_date_from,
+            //         to_date: input_date_to
+            //     }, () => { this.requestReport() })
+            // }
+
         }
     }
 
-    requestReport() {
-
+    requestReport(vht_id) {
+        this.props.history.push({
+            pathname: '/vht-report',
+            state: { vht_id: vht_id }
+        })
     }
 
     changeFromDate = date => {
@@ -110,9 +154,15 @@ class RequestReport extends Component {
         }
     };
 
-    getOptions() {
+    getVHTOptions() {
         return (this.state.vht_list.map(item => {
             return <option key={item.id} value={item.id}> {item.id} </option>
+        }))
+    }
+
+    getLocationOptions() {
+        return (this.state.location_list.map(location => {
+            return <option key={location.id} value={location.name}> {location.name} </option>
         }))
     }
 
@@ -125,44 +175,54 @@ class RequestReport extends Component {
                 textAlign: 'center'
             }}>
                 <h1 style={{ color: "black" }}> VHT Activity Report</h1>
-                <label style={{ color: "black" }} >Select VHT: </label>
-                <form onSubmit={this.handleSubmit}>
-                    <select
-                        onChange={this.handleChange}
-                        value={this.state.vht_list}
-                        name="vht_list"
-                    >
-                        <option value="null"> --SELECT ONE--</option>
-                        {this.getOptions()}
-                    </select>
+                {/* <h4 style={{color: "white"}}> Health Facility Location</h4> */}
+                <h4 style={{ color: "black" }} >Select Health Facility Location </h4>
+                <select
+                    onChange={this.handleChangeLocation}
+                    value={this.state.location}
+                    name="location_list"
+                >
+                    <option value="null"> --SELECT ONE--</option>
+                    {this.getLocationOptions()}
+                </select>
+                <br />
 
-                    <h4 style={{ color: "black" }}> Select Duration for the Report</h4>
-                    <h4 style={{ color: "black" }}> From</h4>
-                    <br />
-                    <DatePicker
-                        name="from_date"
-                        selected={this.state.temp_from_date}
-                        onChange={this.changeFromDate}
-                        maxDate={new Date()}
-                    />
-                    <h4 style={{ color: "black" }}> To</h4>
-                    <br />
-                    <DatePicker
-                        name="to_date"
-                        selected={this.state.temp_to_date}
-                        onChange={this.changeToDate}
-                        maxDate={new Date()}
-                    />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <Button type="submit" style={{
-                        backgroundColor: 'blue',
-                        color: 'white'
-                    }}>Submit</Button>
-                    <br />
-                </form>
+                <h4 style={{ color: "black" }}>Select VHT: </h4>
+                <select
+                    onChange={this.handleChange}
+                    value={this.state.vht_id}
+                    name="vht_list"
+                >
+                    <option value="null"> --SELECT ONE--</option>
+                    {this.getVHTOptions()}
+                </select>
+
+                <h4 style={{ color: "black" }}> Select Duration for the Report</h4>
+                <h4 style={{ color: "black" }}> From</h4>
+                <br />
+                <DatePicker
+                    name="from_date"
+                    selected={this.state.temp_from_date}
+                    onChange={this.changeFromDate}
+                    maxDate={new Date()}
+                />
+                <h4 style={{ color: "black" }}> To</h4>
+                <br />
+                <DatePicker
+                    name="to_date"
+                    selected={this.state.temp_to_date}
+                    onChange={this.changeToDate}
+                    maxDate={new Date()}
+                />
+                <br />
+                <br />
+                <br />
+                <br />
+                <Button onClick={this.handleSubmit} type="submit" style={{
+                    backgroundColor: 'blue',
+                    color: 'white'
+                }}>Submit</Button>
+                <br />
             </div>
 
         );

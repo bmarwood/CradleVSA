@@ -18,8 +18,8 @@ class vhtReport extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            id: 0,
+            username: 'Undefined',
+            vht_id: 0,
             roles: [],
             greenCount: 0,
             redCount: 0,
@@ -36,12 +36,12 @@ class vhtReport extends Component {
     }
 
     async componentDidMount() {
-        this.getUserDetails()
+        this.getVhtDetails()
         this.getPatientList()
     }
 
     async getPatientList() {
-        var passback = await requestServer.getPatientListByVhtId('090909')
+        var passback = await requestServer.getPatientListByVhtId(this.state.vht_id)
         if (passback !== null && passback.data !== "") {
             console.log("Patient List: ", passback.data)
             var counter = 0;
@@ -57,10 +57,8 @@ class vhtReport extends Component {
         }
     }
 
-    getRoles() {
+    getRoles(parsedUser) {
         var roleArray = []
-        var user = localStorage.getItem("userData")
-        var parsedUser = JSON.parse(user)
         if (parsedUser && parsedUser.roles) {
             parsedUser.roles.forEach(function (role) {
                 roleArray.push(role.role + " ")
@@ -71,7 +69,7 @@ class vhtReport extends Component {
 
 
     async getAssessmentData() {
-        var passback = await requestServer.getAssessmentsByCVSAId(this.state.id)
+        var passback = await requestServer.getAssessmentsByCVSAId(this.state.vht_id)
         if (passback !== null && passback.data !== "") {
             console.log("passback Data thats being passed", passback.data)
             var reds = 0
@@ -116,15 +114,32 @@ class vhtReport extends Component {
         }
     }
 
-    getUserDetails() {
-        var user = localStorage.getItem("userData")
-        var parsedUser = JSON.parse(user)
-        var array = this.getRoles()
-        this.setState({
-            username: parsedUser.username,
-            id: parsedUser.id,
-            roles: array
-        }, () => { this.getAssessmentData() })
+    async getVhtDetails() {
+        if (this.props.location.state && this.props.location.state.vht_id) {
+            var id = this.props.location.state.vht_id
+            this.setState({
+                vht_id: id
+            })
+
+            var passback = await requestServer.getCVSA(id)
+            if (!(passback === null || passback === '')) {
+                console.log("passback: ", passback.data)
+                var user = passback.data
+                // var parsedUser = JSON.parse(user)
+                var array = this.getRoles(user)
+                this.setState({
+                    username: user.name,
+                    roles: array
+                }, () => { this.getAssessmentData() })
+            }
+
+        } else {
+            console.log("Not coming from proper route, vht_Id has not been passed by Request Report")
+        }
+
+
+
+
     }
 
 
