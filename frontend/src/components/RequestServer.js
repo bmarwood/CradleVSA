@@ -241,6 +241,17 @@ class RequestServer extends Component {
         }
     }
 
+    async getLastAssessmentByCVSAByID(CVSA_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/assessments/last/getByCVSAId' + CVSA_id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
     async login(username, password) {
         var userObj = {
             username: username,

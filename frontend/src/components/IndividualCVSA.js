@@ -33,7 +33,7 @@ class IndividualCVSA extends Component {
     }
 
     async getLastAssessmentByCVSA() {
-        var response = await requestServer.getLastAssessmentByPatientByID(this.state.id)
+        var response = await requestServer.getLastAssessmentByCVSAByID(this.state.id)
         if (response !== null) {
             if (response.data === "") {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
@@ -59,24 +59,31 @@ class IndividualCVSA extends Component {
     }
 
     async getCVSA() {
-        var response = await requestServer.getPatient(this.state.id)
+        var response = await requestServer.getCVSA(this.state.id)
         if (response !== null) {
             if (response.data === "") {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
             } else {
-                console.log("Patient DATA:", response.data)
+                console.log("User DATA:", response.data)
                 console.log("got data")
+                var roles = []
+                response.data.roles.forEach(element => {
+                    let role = this.capitalizeFirstLetter(element.role.toLowerCase())
+                    roles.push(role)
+                });
                 this.setState({
-                    patient_id: response.data.id,
-                    patient_name: response.data.name,
-                    patient_dob: response.data.birth_date
+                    cvsa_id: response.data.id,
+                    cvsa_name: response.data.name,
+                    cvsa_dob: response.data.dob,
+                    cvsa_address: response.data.address,
+                    cvsa_roles: roles.join(", "),
                 })
             }
         }
     }
 
     calculateAge() {
-        if (this.state.patient_dob != '' || this.state.patient_dob != null) {
+        if (this.state.patient_dob !== '' || this.state.patient_dob !== null) {
             var dob = new Date(this.state.patient_dob)
             var age = ~~((Date.now() - dob) / (31557600000))
             return age
@@ -84,11 +91,8 @@ class IndividualCVSA extends Component {
         return null
     }
 
-    async deleteAssessment(id) {
-        var response = await requestServer.deleteAssessment(id)
-        if (response !== null) {
-            window.location.reload()
-        }
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     render() {
@@ -97,18 +101,25 @@ class IndividualCVSA extends Component {
                 <div className="overview bg m-100">
 
                     <div className="one-edge-shadow modal-header ">
-                        <h3>Cradle Professional Name: {this.state.CVSA_name}</h3><br />
+                        <h3>Cradle Professional Name: {this.state.cvsa_name}</h3><br />
                         <div className='modal-header-direction'>
                             <div className='float-left'>
                                 <h5>
-                                    CVSA ID: {this.state.patient_id}
+                                    CVSA ID: {this.state.cvsa_id}
                                     <br />
-                                    Date of Birth: {this.state.patient_dob}
+                                    Date of Birth: {this.state.cvsa_dob}
+                                </h5>
+                            </div>
+                            <div className='float-right'>
+                                <h5>
+                                    Roles: {this.state.cvsa_roles}
+                                    <br />
+                                    Address: {this.state.cvsa_address}
                                 </h5>
                             </div>
                         </div>
                     </div>
-                    <h3 className='padding-left'> Last Assessment: {this.state.assessment_id} </h3>
+                    <h3 className='padding-left'> Last Assessment Taken: {this.state.assessment_id} </h3>
                         <div className="one-edge-shadow modal-body p-30">
                             <div className='float-left'>
                                 Early Warning Color: {this.getColorVisual(this.state.ews_color)}
@@ -125,11 +136,11 @@ class IndividualCVSA extends Component {
                                 <br />
                                 Gestational Unit: {this.getGestationalUnit(this.state.gestational_unit)}
                                 <br />
-                                Current Symptoms: {this.state.symptoms}
+                                Patient Symptoms: {this.state.symptoms}
                             </div>
 
                             <div className='float-right'>
-                                Date of Birth: {this.state.patient_dob}
+                                Patient Date of Birth: {this.state.patient_dob}
                                 <br />
                                 Patient Age: {this.calculateAge() ? this.calculateAge() : 0}
                                 <br />

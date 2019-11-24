@@ -79,7 +79,7 @@ public class AssessmentsController {
     }
 
     //vht_id
-    @GetMapping("/getByCVSAId{user_id}")
+    @GetMapping("/getByCVSAId{CVSA_id}")
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "http://localhost:8040")
     public List<Assessments> getByCVSAId(@PathVariable String CVSA_id) {
@@ -100,6 +100,14 @@ public class AssessmentsController {
     public Assessments getLastByPatientId(@PathVariable String patient_id) {
         List<Assessments> patientAssessments = assessmentsRepository.findByPatientId(patient_id);
         return patientAssessments.get(patientAssessments.size() - 1);
+    }
+
+    @GetMapping("/last/getByCVSAId{CVSA_id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public Assessments getLastByCVSAId(@PathVariable String CVSA_id) {
+        List<Assessments> cvsaAssessments = assessmentsRepository.findByCVSAId(CVSA_id);
+        return cvsaAssessments.get(cvsaAssessments.size() - 1);
     }
     //location_id
     @GetMapping("/getByLocation{location}")
