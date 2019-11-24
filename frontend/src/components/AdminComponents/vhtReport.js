@@ -30,6 +30,7 @@ class vhtReport extends Component {
             assessmentList: [],
             selectedFrom: 0,
             selectedTo: 0,
+            selectedLocation: '',
             loading: true
         }
 
@@ -55,7 +56,7 @@ class vhtReport extends Component {
     async getPatientList() {
         var passback = await requestServer.getPatientListByVhtId(this.state.vht_id)
         if (passback !== null && passback.data !== "") {
-            console.log("Patient List: ", passback.data)
+            // console.log("Patient List: ", passback.data)
             var counter = 0;
             passback.data.forEach((item) => {
                 counter += 1;
@@ -72,16 +73,18 @@ class vhtReport extends Component {
     setStateForSelectedDates() {
         var from = this.props.location.state.from
         var to = this.props.location.state.to
+        var location = this.props.location.state.location
 
         var monthFrom = new Date(from)
         var monthTo = new Date(to)
 
         monthTo.setDate(new Date(to).getDate() + 1)
-        console.log("Months: ", monthFrom, monthTo)
+        // console.log("Months: ", monthFrom, monthTo)
 
         this.setState({
             selectedFrom: monthFrom,
-            selectedTo: monthTo
+            selectedTo: monthTo,
+            selectedLocation: location
         }, () => { this.getVhtDetails() })
     }
 
@@ -94,7 +97,7 @@ class vhtReport extends Component {
 
             var passback = await requestServer.getCVSA(id)
             if (!(passback === null || passback === '')) {
-                console.log("passback: ", passback.data)
+                // console.log("passback: ", passback.data)
                 var user = passback.data
                 // var parsedUser = JSON.parse(user)
                 var array = this.getRoles(user)
@@ -112,10 +115,11 @@ class vhtReport extends Component {
 
     assessmentIsInRange(assessment) {
         var date = new Date(assessment.date)
-        console.log("name of person and month of assessment: ", assessment.name, date)
-        console.log("month from: ", this.state.selectedFrom)
-        console.log("month to: ", this.state.selectedTo)
-        if (date >= +this.state.selectedFrom && date <= +this.state.selectedTo) {
+        var location = this.state.selectedLocation
+        // console.log("name of person and month of assessment: ", assessment.name, date)
+        // console.log("month from: ", this.state.selectedFrom)
+        console.log("these should match: ", location, ":", assessment.location)
+        if (date >= +this.state.selectedFrom && date <= +this.state.selectedTo && assessment.location == location) {
             console.log('true')
             return true
         }
