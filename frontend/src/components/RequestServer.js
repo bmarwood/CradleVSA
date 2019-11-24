@@ -90,7 +90,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/vhts/all')
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -101,7 +100,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/vhts/get' + id)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -132,7 +130,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/assessments/getReferred')
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -203,7 +200,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/patients/belongTo' + id)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -226,7 +222,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/assessments/filter/getByCVSAId' + id + "/" + from + "/" + to)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -394,7 +389,6 @@ class RequestServer extends Component {
             var response = await axios.post(this.getServerLocation() + '/assessments/updateReferral/' + assessment._id, assessment)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }

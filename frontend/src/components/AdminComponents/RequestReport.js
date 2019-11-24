@@ -57,6 +57,14 @@ class RequestReport extends Component {
     populateLocationData(response) {
         var LocationList = []
 
+        var initObj = {
+            id: 'all',
+            name: "All",
+            Address: "All"
+        }
+        
+        LocationList.push(initObj)
+
         response.forEach(location => {
             var id = location.id
             var name = location.name

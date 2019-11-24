@@ -116,10 +116,9 @@ class vhtReport extends Component {
     assessmentIsInRange(assessment) {
         var date = new Date(assessment.date)
         var location = this.state.selectedLocation
-        // console.log("name of person and month of assessment: ", assessment.name, date)
-        // console.log("month from: ", this.state.selectedFrom)
-        console.log("these should match: ", location, ":", assessment.location)
-        if (date >= +this.state.selectedFrom && date <= +this.state.selectedTo && assessment.location == location) {
+        console.log(location, assessment.location)
+        if (date >= +this.state.selectedFrom && date <= +this.state.selectedTo 
+            && (assessment.location == location || location == "all")) {
             console.log('true')
             return true
         }
