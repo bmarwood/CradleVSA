@@ -132,4 +132,27 @@ public class AssessmentsController {
         return assessmentsRepository.findByDate(date.substring(0, date.indexOf(' ')));
     }
 
+
+    @GetMapping("/getReferred")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public List<Assessments> getReferred() {
+        return assessmentsRepository.findByReferred();
+    }
+
+    @PostMapping("/updateReferral/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<Assessments> updatePatient(@PathVariable String id, @RequestBody Assessments assessments) {
+        try {
+            assessments.set_id(id);
+            assessments.setReferred(false);
+            this.assessmentsRepository.save(assessments);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.status(200).body(assessments);
+    }
+
 }
