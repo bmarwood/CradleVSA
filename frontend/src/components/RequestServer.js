@@ -73,7 +73,6 @@ class RequestServer extends Component {
     async addUser(user) {
         try {
             var response = await axios.post(this.getServerLocation() + '/users/register', user)
-            console.log("RESPONSE IN ADD USER : ", response)
             return response
         } catch (error) {
             console.log('error block')
@@ -269,14 +268,8 @@ class RequestServer extends Component {
     async updatePatientAssessmentList(patient_id, assessment) {
         try {
             let patient = await this.getPatientByID(patient_id)
-            console.log(patient.data.list_of_assessments)
             let new_patient = Utility.populatePatient(patient.data)
             new_patient.list_of_assessments.push(assessment)
-            // new_patient.list_of_assessments.push([assessment.name, assessment.id])
-            console.log("\n\n patient.data")
-            console.log(new_patient)
-            console.log(new_patient)
-
             var response = await axios.post(this.getServerLocation() + '/patients/update/' + patient_id, new_patient)
             return response
         } catch (error) {
