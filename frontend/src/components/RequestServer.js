@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 import Utility from './NewForm/Utility'
 import '../App.css';
@@ -163,6 +163,18 @@ class RequestServer extends Component {
     async getAssessmentsByCVSAId(id) {
         try {
             var response = await axios.get(this.getServerLocation() + '/assessments/getByCVSAId' + id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    //get list of assessments based on the worker id and filters by date
+    async getAssessmentsByCVSAIdByDate(id, from, to) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/assessments/filter/getByCVSAId' + id + "/" + from + "/" + to)
             return response
         } catch (error) {
             console.log('error block')

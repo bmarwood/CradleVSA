@@ -115,25 +115,32 @@ class RequestReport extends Component {
         else {
             console.log("submitting: ", this.state)
             var vht_id = this.state.vht_id
-            this.requestReport(vht_id)
-            // if (this.state.from_date === "date" && this.state.to_date === "date") {
-            //     let input_date_from = Utility.convertDate(this.state.temp_from_date)
-            //     let input_date_to = Utility.convertDate(this.state.temp_to_date)
-            //     let today = Utility.convertDate(new Date())
+            var from = this.state.from_date
+            var to = this.state.to_date
+            // this.requestReport(vht_id, from, to)
+            if (this.state.from_date === "date" && this.state.to_date === "date") {
+                let input_date_from = Utility.convertDate(this.state.temp_from_date)
+                let input_date_to = Utility.convertDate(this.state.temp_to_date)
+                let today = Utility.convertDate(new Date())
 
-            //     this.setState({
-            //         from_date: input_date_from,
-            //         to_date: input_date_to
-            //     }, () => { this.requestReport() })
-            // }
+                this.setState({
+                    from_date: input_date_from,
+                    to_date: input_date_to
+                }, () => { this.requestReport(vht_id) })
+            }
 
         }
     }
 
     requestReport(vht_id) {
+
         this.props.history.push({
             pathname: '/vht-report',
-            state: { vht_id: vht_id }
+            state: {
+                vht_id: vht_id,
+                from: this.state.from_date,
+                to: this.state.to_date
+            }
         })
     }
 

@@ -69,7 +69,13 @@ class vhtReport extends Component {
 
 
     async getAssessmentData() {
-        var passback = await requestServer.getAssessmentsByCVSAId(this.state.vht_id)
+        var from = this.props.location.state.from
+        var to = this.props.location.state.to
+
+        var dateFromIso = new Date(from).toISOString()
+        var dateToIso = new Date(to).toISOString()
+        console.log(dateFromIso)
+        var passback = await requestServer.getAssessmentsByCVSAIdByDate(this.state.vht_id, dateFromIso, dateToIso)
         if (passback !== null && passback.data !== "") {
             console.log("passback Data thats being passed", passback.data)
             var reds = 0
