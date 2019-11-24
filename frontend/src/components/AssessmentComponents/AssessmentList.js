@@ -204,15 +204,10 @@ class AssessmentList extends Component {
             //check for id by patient
             //if not patient check by cvsa
             var passback = await requestServer.getPatient(this.state.passed_value)
-            if (passback.data.length !== 0){
+            if (passback.data.length !== 0) {
                 passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
-            }else{
+            } else {
                 passback = await requestServer.getAssessmentsByCVSAId(this.state.passed_value)
-            }
-
-            //if still none, then bad call
-            if (passback.data.length === 0) {
-                alert("No History Found")
             }
             this.populateData(passback.data)
             return

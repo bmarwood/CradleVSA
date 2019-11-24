@@ -37,7 +37,6 @@ class NewAssessment extends React.Component {
             id: '',
             patient_id: '',
             birth_date: '',
-            vht_id: "EMPTY",
             gender: "MALE",
             name: '',
             date: "",
@@ -103,33 +102,9 @@ class NewAssessment extends React.Component {
         //get cvsa_id
         var user = localStorage.getItem("userData")
         var parsedUser = JSON.parse(user)
-        var temp_role_array = Utility.getRoles()
         this.setState({
-            worker_id: parsedUser.id,
-            worker_role: temp_role_array
+            cvsa_id: parsedUser.id
         })
-
-        if (temp_role_array.includes("ADMIN")) {
-            this.getVHTList()
-                .catch(() => {
-                    this.setState({
-                        user_array: []
-                    })
-                })
-        } else if (temp_role_array.includes("COMMUNITY_HEALTH_OFFICER")) {
-            this.getVHTList()
-                .catch(() => {
-                    return true;
-                });
-        } else {//VHT, HW
-            // this.setState({
-            //     user_array: [{
-            //         id: this.state.worker_id,
-            //         name: "Use my ID"
-            //     }]
-            // })
-        }
-
         this.getLocation()
             .catch(() => {
                 this.setState({
@@ -363,7 +338,6 @@ class NewAssessment extends React.Component {
             this.setState({
                 fname: patient_data.name.split(" ")[0],
                 lname: patient_data.name.split(" ")[1],
-                vht_id: patient_data.vht_id,
                 gender: patient_data.gender,
                 create_patient: false
             })
@@ -377,7 +351,6 @@ class NewAssessment extends React.Component {
             this.setState({
                 fname: '',
                 lname: '',
-                vht_id: "EMPTY",
                 gender: "MALE",
                 create_patient: true
             })
@@ -581,19 +554,6 @@ class NewAssessment extends React.Component {
                             />
 
                         </div>
-                        <br/>
-                        <label>CSVA ID: </label>
-                        <br/>
-                        <select
-                            value={this.state.cvsa_id}
-                            onChange={this.handleChange}
-                            name="cvsa_id"
-                        >
-                            <option value="EMPTY"> --SELECT ONE--</option>
-
-                            <option value={this.state.worker_id}> Use my ID</option>
-                            {user_select_option}
-                        </select>
                         <br/>
 
                         <div style={{display: (this.state.create_patient ? 'block' : 'none')}}>
