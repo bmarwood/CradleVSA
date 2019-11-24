@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import MaterialTable from 'material-table';
-import './AssessmentList.css';
 import TrafficIconsCircle from "../Visuals/TrafficIconsCircle";
 import TrafficIconsTriangle from "../Visuals/TrafficIconsTriangle";
 import TrafficIconsOctagon from "../Visuals/TrafficIconsOctagon";
@@ -8,17 +7,16 @@ import ModalPopup from "../../Modals/ModalPopup";
 import requestServer from '../RequestServer';
 
 
-class AssessmentList extends Component {
+class ReferredList extends Component {
 
     constructor(props) {
         super(props);
+        console.log(props.id)
         this.state = {
             columns: [],
             data: [],
             passed_value: props.id
         }
-
-        this.deleteAssessment = this.deleteAssessment.bind(this);
     }
 
     componentDidMount() {
@@ -63,18 +61,6 @@ class AssessmentList extends Component {
                     cellStyle: {textAlign: 'center'}
                 },
                 {
-                    title: 'Follow Up?',
-                    field: 'follow_up',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
-                },
-                {
-                    title: 'Recheck?',
-                    field: 'recheck',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
-                },
-                {
                     title: 'Assessment Information',
                     field: 'info',
                     headerStyle: {textAlign: 'center'},
@@ -89,9 +75,6 @@ class AssessmentList extends Component {
                     cvsa_id: 'LOADING...',
                     gestational_age: 'LOADING...',
                     gestational_unit: 'LOADING...',
-                    referred: 'LOADING...',
-                    follow_up: 'LOADING...',
-                    recheck: 'LOADING...',
                     arrow: 'LOADING...',
                     info: <ModalPopup/>
                 },
@@ -105,18 +88,11 @@ class AssessmentList extends Component {
         this.timer = null;
     }
 
-    async deleteAssessment(assessment) {
-        var response = await requestServer.deleteAssessment(assessment.id)
-        if (response !== null) {
-            return true
-        }
-        return false
-    }
-
 
     populateData(response) {
         var assessmentList = []
         response.forEach(function (assessment) {
+            console.log("assessment: ", assessment)
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
                 cvsa_id={assessment.cvsa_id}
@@ -131,6 +107,8 @@ class AssessmentList extends Component {
                 gestational_unit={assessment.gestational_unit}
                 ews_color={assessment.ews_color}
                 arrow={assessment.arrow}
+                referred={assessment.referred}
+                assessment={assessment}
             />
             var assessment_obj = {
                 id: assessment._id,
@@ -140,8 +118,6 @@ class AssessmentList extends Component {
                 cvsa_id: assessment.cvsa_id,
                 gestational_age: getGestationalAge(assessment),
                 referred: getBoolVisual(assessment.referred),
-                follow_up: getBoolVisual(assessment.follow_up),
-                recheck: getBoolVisual(assessment.recheck),
                 birth_date: assessment.birth_date,
                 heart_rate: assessment.heart_rate,
                 systolic: assessment.systolic,
@@ -157,55 +133,14 @@ class AssessmentList extends Component {
         this.setState({data: assessmentList})
     }
 
-    getRoles(parsedUser) {
-        var roleArray = []
-        if (parsedUser && parsedUser.roles) {
-            parsedUser.roles.forEach(function (role) {
-                roleArray.push(role.role)
-            })
-        }
-
-        return roleArray
-    }
-
-    isAdmin(roles) {
-        if (roles.indexOf("ADMIN") > -1) {
-            return true
-        }
-        return false
-    }
-
     //gets assessments for admin if that role is given, otherwise dynamically populates based on current user
     async getAssessmentList() {
-        if (this.state.passed_value) {
-            //check for id by patient
-            //if not patient check by cvsa
-            var passback = await requestServer.getPatient(this.state.passed_value)
-            if (passback.data.length !== 0){
-                passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
-            }else{
-                passback = await requestServer.getAssessmentsByCVSAId(this.state.passed_value)
-            }
-            
-            //if still none, then bad call
-            if (passback.data.length === 0) {
-                alert("No History Found")
-            }
-            this.populateData(passback.data)
-            return
-        }
-        var userData = JSON.parse(localStorage.getItem("userData"))
-        var roles = this.getRoles(userData)
-        var passback
-        if (this.isAdmin(roles)) {
-            passback = await requestServer.getAssessmentsList()
-        } else {
-            passback = await requestServer.getAssessmentsByUserId(userData.id)
-        }
+        var passback = await requestServer.getReferredAssessments()
         if (passback !== null && passback.data !== "") {
             this.populateData(passback.data)
         }
     }
+
 
     render() {
         return (
@@ -296,4 +231,4 @@ function getGestationalAge(assessment) {
 }
 
 
-export default AssessmentList;
+export default ReferredList;

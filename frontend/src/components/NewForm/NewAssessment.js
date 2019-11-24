@@ -108,7 +108,6 @@ class NewAssessment extends React.Component {
             worker_id: parsedUser.id,
             worker_role: temp_role_array
         })
-        console.log(this.state.worker_role)
 
         if (temp_role_array.includes("ADMIN")) {
             this.getVHTList()
@@ -433,13 +432,9 @@ class NewAssessment extends React.Component {
         let retestAdvice = ReadingRequestAnalysis.computeAdvice(this.state.recheck_history)
         if (retestAdvice !== "RETEST_NOT_RECOMMENDED") {
             this.setState({
-                retestAdvice: retestAdvice,
-                heart_rate: '',
-                systolic: '',
-                diastolic: '',
-                birth_date: ''
+                recheck: true
             })
-            return false;
+            alert(retestAdvice)
         }
 
         //setDate
@@ -454,8 +449,6 @@ class NewAssessment extends React.Component {
 
 
     async addAssessment() {
-        console.log("New Assessment")
-        console.log(this.state)
         var passback = await RequestServer.addAssessment(this.state)
         if (passback !== null) {
             this.props.history.push(
@@ -493,8 +486,6 @@ class NewAssessment extends React.Component {
     render() {
         let symptom = this.state.symptoms_arr.map(item => <ShowSymp key={item.id} item={item}
                                                                     handleChange={this.handleCheckbox}/>)
-        let vht_select_option = this.state.vht_array.map(item => <option key={item.id}
-                                                                         value={item.id}> {item.id} </option>)
         let user_select_option = this.state.user_array.map(user => <option key={user.id}
                                                                            value={user.id}> {user.name} </option>)
         let location_select_option = this.state.location_array.map(location => <option key={location.id}
@@ -569,7 +560,7 @@ class NewAssessment extends React.Component {
                         </RadioGroup>
 
 
-                        <div style={{display: (this.state.dob_type == "age" ? 'block' : 'none')}}>
+                        <div style={{display: (this.state.dob_type === "age" ? 'block' : 'none')}}>
                             <TextValidator
                                 label="Age"
                                 onChange={this.handleChange}
@@ -580,7 +571,7 @@ class NewAssessment extends React.Component {
                             />
                             <br/>
                         </div>
-                        <div style={{display: (this.state.dob_type == "date" ? 'block' : 'none')}}>
+                        <div style={{display: (this.state.dob_type === "date" ? 'block' : 'none')}}>
                             <label>Date of Birth:</label>
                             <br/>
                             <DatePicker

@@ -31,13 +31,13 @@ class ReadingRequestAnalysis {
          *  If 1 reading:
          */
         if (readings.length === 1) {
-            if (countGreen == 1) {
+            if (countGreen === 1) {
                 // done if just one reading, and it's green
                 retestAdvice = RetestWhen.RETEST_NOT_RECOMMENDED;
-            } else if (countYellow == 1) {
+            } else if (countYellow === 1) {
                 // retest in 15m if just one reading, and it's yellow
                 retestAdvice = RetestWhen.RETEST_IN_15_RECOMMENDED;
-            } else if (countRed == 1) {
+            } else if (countRed === 1) {
                 // retest immediately if just one reading, and it's red
                 retestAdvice = RetestWhen.RETEST_RIGHT_NOW_RECOMMENDED;
             }
@@ -47,7 +47,7 @@ class ReadingRequestAnalysis {
          * If 2 readings:
          */
         else if (readings.length === 2) {
-            if (countGreen == 2 || countYellow == 2 || countRed == 2) {
+            if (countGreen === 2 || countYellow === 2 || countRed === 2) {
                 // both readings agree
                 retestAdvice = RetestWhen.RETEST_NOT_RECOMMENDED;
             } else {

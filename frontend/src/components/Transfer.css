@@ -10,7 +10,7 @@
 .landing-formT {
     width: 100%;
     height: 100%;
-    padding-top: 150px;
+    padding-top: 100px;
     flex-wrap: wrap;
     text-align: center;
     align-items: center;
@@ -19,6 +19,19 @@
     min-height: 100%;
     margin: auto;
 }
+.round {
+    border-radius: 15px;
+  }
+
+.bigPad {
+      padding:20px;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+}
+
 
 .select-styleT{
     color:white;
