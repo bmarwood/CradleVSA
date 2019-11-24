@@ -20,6 +20,8 @@ import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
 import IndividualPatient from '../IndividualPatient';
 import IndividualCVSA from '../IndividualCVSA';
+import CommunityReport from "../CommunityComponents/CommunityReport";
+import TransferPatient from '../transferPatient';
 
 const Navigation = () => (
     <Switch>
@@ -34,12 +36,16 @@ const Navigation = () => (
         <Route path="/login" component={Login}/>
         <PrivateRoute path="/logout" component={Logout}/>
         <AdminRoute path="/admin/landing" component={Landing_List}/>
+        <AdminRoute path="/PatientAddMedication" component={PatientAddMedication}/>
+        <AdminRoute path="/PatientNotes" component={PatientNotes}/>
         <WorkerRoute path="/PatientList" component={PatientList}/>
         <WorkerRoute path="/PatientNotes" component={PatientNotes}/>
         <WorkerRoute path="/PatientAddMedication" component={PatientAddMedication}/>
         <WorkerRoute path="/newAssessment" component={NewAssessment}/>
         <WorkerRoute path="/newPatient" component={NewPatient}/>
         <ManagerRoute path="/newWorker" component={NewUser}/>
+        <WorkerRoute path="/CommunityReport" component={CommunityReport}/>
+        <ManagerRoute path="/transfer" component={TransferPatient}/>
         <PrivateRoute path="/profile" component={Profile}/>
         <PrivateRoute path="/changePassword" component={ChangePassword}/>
         <Route path="/resources" component={Resources}/>

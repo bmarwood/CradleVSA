@@ -152,7 +152,6 @@ class NewPatient extends React.Component {
         return false;
     }
 
-
     handleSubmit = async () => {
         console.log(this.state)
         // if (this.state.vht_id === "EMPTY") {
