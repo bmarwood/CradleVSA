@@ -29,8 +29,12 @@ public interface AssessmentsRepository extends MongoRepository<Assessments, Stri
 
     @Query("{date: '?0'}")
     List<Assessments> findByDate(String date);
+
     @Query("{location: '?0'}")
     List<Assessments> findByLocation(String location);
+
+    @Query("{referred: true}")
+    List<Assessments> findByReferred();
 
 
 }

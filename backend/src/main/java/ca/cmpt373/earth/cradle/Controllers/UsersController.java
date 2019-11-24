@@ -83,8 +83,7 @@ public class UsersController {
         Users user = this.usersRepository.findByUsername(username);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        else {
+        } else {
             if (bCrypt.matches(old_password, user.getPassword())) {
                 String hashedPassword = bCrypt.encode(new_password);
                 user.setPassword(hashedPassword);
@@ -95,35 +94,11 @@ public class UsersController {
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
                 }
                 return ResponseEntity.status(200).body(user);
-            }
-            else {
+            } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
         }
     }
-
-//    @PutMapping("/updateProfile")
-//    public ResponseEntity<Users> updateProfile(@RequestBody Users user) {
-//        System.out.println("Retrieving existing users...");
-//        Users foundUser = usersRepository.findUserById(user.getId());
-//        if (user.getId() == foundUser.getId()){
-//            System.out.println("Found a user");
-//            usersRepository.save(user);
-//            return ResponseEntity.status(200).body(user);
-//        }
-//        else {
-//            //Return a not found status
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-//    }
-
-//    SAME AS "/register" - we should use register - it contains password encryption
-//    @PostMapping("/add")
-//    @ResponseStatus(code = HttpStatus.CREATED)
-//    @CrossOrigin(origins = "http://localhost:8040")
-//    public Users add(@RequestBody Users candidate) {
-//        return usersRepository.save(candidate);
-//    }
 
     @PostMapping("/login")
     @ResponseStatus(code = HttpStatus.OK)
