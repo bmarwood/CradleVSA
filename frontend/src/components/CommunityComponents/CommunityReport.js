@@ -104,7 +104,7 @@ class CommunityReport extends React.Component {
 
         return (
             <div>
-                <div className='overview bg round allPad float-button-left'>
+                <div className='selector background round allPad floatLeft'>
                     <ValidatorForm
                         ref="form"
                         onSubmit={this.handleSubmit}
@@ -149,7 +149,7 @@ class CommunityReport extends React.Component {
                             </div>
 
                         </Grid>
-                        <div className='padding-left'>
+                        <div className='pad-left'>
                             < Button type="submit" style={{
                                 backgroundColor: 'blue',
                                 color: 'white'
@@ -160,7 +160,7 @@ class CommunityReport extends React.Component {
                 </div>
 
                 <br />
-                <div className='float-button-right wrapper round-more' style={{ display: (this.state.display ? 'block' : 'none') }}>
+                <div className='floatRight wrapper round-more' style={{ display: (this.state.display ? 'block' : 'none') }}>
                     <MDBContainer>
                         <MDBCard className="card-body"
                             style={{ backgroundColor: " #efeff5\n", width: "auto", marginTop: "auto" }}>

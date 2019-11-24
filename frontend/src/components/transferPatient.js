@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import requestServer from "./RequestServer";
 import MaterialTable from "material-table";
 import './Transfer.css';
@@ -9,7 +9,7 @@ import Utility from "./NewForm/Utility";
 
 class TransferPatient extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             columns: [],
@@ -65,10 +65,10 @@ class TransferPatient extends Component {
         var IdList = []
         response.forEach(patient => {
             var id = patient.id
-            if(patient.vht_id == null){
+            if (patient.vht_id == null) {
                 var vht_id = "EMPTY"
             }
-            else{
+            else {
                 var vht_id = patient.vht_id
             }
             var patient_obj = {
@@ -77,15 +77,15 @@ class TransferPatient extends Component {
             }
             IdList.push(patient_obj)
         });
-        this.setState({data: IdList})
+        this.setState({ data: IdList })
     }
 
 
     async getPatientList() {
         var passback = await requestServer.getPatientVHTList()
         if (passback !== null && passback.data !== "") {
-            this.setState({vht_empty_flag:passback.flag})
-            this.setState({vht_w_assessment:passback.vhtlist})
+            this.setState({ vht_empty_flag: passback.flag })
+            this.setState({ vht_w_assessment: passback.vhtlist })
             this.populateData(passback.data)
         }
     }
@@ -94,15 +94,15 @@ class TransferPatient extends Component {
     async getSinglePatient(ID) {
         var passback = await requestServer.getPatientByID(ID)
         if (passback !== null && passback.data !== "") {
-            return(passback.data)
+            return (passback.data)
         }
     }
 
 
-    async updateSinglePatient(patient){
+    async updateSinglePatient(patient) {
         var passback = await requestServer.updatePatient(patient)
         if (passback !== null && passback.data !== "") {
-            return(passback.data)
+            return (passback.data)
         }
     }
 
@@ -119,55 +119,54 @@ class TransferPatient extends Component {
 
     handleSubmit = async () => {
         //set the patient object to be sent to update
-        for (var itr = 0; itr<this.state.data.length; itr++){
-            if(this.state.data[itr].vht_id === this.state.from_vht){
+        for (var itr = 0; itr < this.state.data.length; itr++) {
+            if (this.state.data[itr].vht_id === this.state.from_vht) {
                 var temp_patient = await this.getSinglePatient(this.state.data[itr].id)
                 temp_patient.vht_id = this.state.to_vht
                 var update_response = await this.updateSinglePatient(temp_patient)
             }
         }
         window.location.reload()
-        alert("All Patients from ID: "+ this.state.from_vht +" have been transferred to ID: "+ this.state.to_vht)
+        alert("All Patients from ID: " + this.state.from_vht + " have been transferred to ID: " + this.state.to_vht)
     }
 
 
-    handleSubmitSingle = async (id,fromList,toList) => {
+    handleSubmitSingle = async (id, fromList, toList) => {
         //set the patient object to be sent to update
-        this.setState({loading: true})
+        this.setState({ loading: true })
         var temp_patient = await this.getSinglePatient(id)
         temp_patient.vht_id = this.state.to_vht
         var update_response = await this.updateSinglePatient(temp_patient)
         this.getPatientList()
-        if(fromList.length === 1 || toList.length === 0){
+        if (fromList.length === 1 || toList.length === 0) {
             window.location.reload()
         }
-        alert("Patient ID: "+ id +" from ID: "+ this.state.from_vht +" has been transferred to ID: "+ this.state.to_vht)
+        alert("Patient ID: " + id + " from ID: " + this.state.from_vht + " has been transferred to ID: " + this.state.to_vht)
     }
 
 
-    handleChange(event){
-        if(event.target.name === "vht_A_id")
-        {
-            if(event.target.value === this.state.to_vht && this.state.to_vht !== "null"){
-                alert("Transfer to same VHT ID: "+ event.target.value + " is not allowed\nPlease try again")
+    handleChange(event) {
+        if (event.target.name === "vht_A_id") {
+            if (event.target.value === this.state.to_vht && this.state.to_vht !== "null") {
+                alert("Transfer to same VHT ID: " + event.target.value + " is not allowed\nPlease try again")
                 event.target.value = null
             }
-            this.setState({from_vht:event.target.value})
+            this.setState({ from_vht: event.target.value })
         }
-        else{
-            if(event.target.value === this.state.from_vht && this.state.from_vht !== "null"){
-                alert("Transfer to same VHT ID: "+ event.target.value + " is not allowed\nPlease try again")
+        else {
+            if (event.target.value === this.state.from_vht && this.state.from_vht !== "null") {
+                alert("Transfer to same VHT ID: " + event.target.value + " is not allowed\nPlease try again")
                 event.target.value = null
             }
-            this.setState({to_vht:event.target.value})
+            this.setState({ to_vht: event.target.value })
         }
     }
 
 
-    populatePatientLists(vht_id){
+    populatePatientLists(vht_id) {
         var tempPatientList = []
-        for (var itr = 0; itr<this.state.data.length; itr++){
-            if(this.state.data[itr].vht_id === vht_id){
+        for (var itr = 0; itr < this.state.data.length; itr++) {
+            if (this.state.data[itr].vht_id === vht_id) {
                 tempPatientList.push(this.state.data[itr])
             }
         }
@@ -175,8 +174,8 @@ class TransferPatient extends Component {
     }
 
 
-    checkEmptyFlag(){
-        if(this.state.vht_empty_flag) {
+    checkEmptyFlag() {
+        if (this.state.vht_empty_flag) {
             if (!this.state.vht_w_assessment.includes("EMPTY")) {
                 this.state.vht_w_assessment.unshift("EMPTY")
             }
@@ -189,55 +188,57 @@ class TransferPatient extends Component {
         let temp_to_vht = this.state.to_vht
         let temp_from_vht = this.state.from_vht
         let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
-                                                                         value={item.id}> {item.id} </option>)
+            value={item.id}> {item.id} </option>)
         let vht_select_option2 = this.state.vht_w_assessment.map(item => <option
-                                                                                 value={item}> {item} </option>)
+            value={item}> {item} </option>)
         let populate_only_selected_from = this.populatePatientLists(temp_from_vht)
         let populate_only_selected_to = this.populatePatientLists(temp_to_vht)
 
         return (
             <div>
-                <div className = "landing-formT">
-                    <h1 style={{color: "white"}}>Transfer Patients</h1>
-                    <label style = {{color:"white"}} >Transfer From: </label>
-                    <select
-                        onChange={this.handleChange}
-                        name="vht_A_id"
-                        value={this.state.vht_id}
-                    >
-                        <option value="null"> --SELECT ONE--</option>
-                        {vht_select_option2}
-                    </select>
-                    <span className = "select-styleT" > >>> </span>
-                    <label className = "select-styleT" >Transfer To: </label>
-                    <select
-                        onChange={this.handleChange}
-                        name="vht_B_id"
-                        value={this.state.vht_id}
-                    >
-                        <option value="null"> --SELECT ONE--</option>
-                        {vht_select_option}
-                    </select>
-                    <Button type="submit" style={{
-                        backgroundColor: 'blue',
-                        color: 'white',
-                        marginLeft:20
-                    }}
-                    onClick={(e) => {if (window.confirm("Are you sure you wish to transfer all patients from ID: "+this.state.from_vht+" to ID: "+this.state.to_vht)) this.handleSubmit()}}>Submit</Button>
+                <div className="landing-formT">
+                    <div className="round bg selector bigPad center">
+                        <h1 style={{ color: "black" }}>Transfer Patients</h1>
+                        <label style={{ color: "black" }} >Transfer From: </label>
+                        <select
+                            onChange={this.handleChange}
+                            name="vht_A_id"
+                            value={this.state.vht_id}
+                        >
+                            <option value="null"> --SELECT ONE--</option>
+                            {vht_select_option2}
+                        </select>
+                        <span className="select-styleT" > >>> </span>
+                        <label className="select-styleT" >Transfer To: </label>
+                        <select
+                            onChange={this.handleChange}
+                            name="vht_B_id"
+                            value={this.state.vht_id}
+                        >
+                            <option value="null"> --SELECT ONE--</option>
+                            {vht_select_option}
+                        </select>
+                        <Button type="submit" style={{
+                            backgroundColor: 'blue',
+                            color: 'white',
+                            marginLeft: 20
+                        }}
+                            onClick={(e) => { if (window.confirm("Are you sure you wish to transfer all patients from ID: " + this.state.from_vht + " to ID: " + this.state.to_vht)) this.handleSubmit() }}>Submit</Button>
+                    </div>
                 </div>
                 <div className="table-positionT">
-                <MaterialTable
-                    title= "Patients assigned to VHT (From)"
-                    columns={this.state.columns}
-                    data={populate_only_selected_from}
-                    actions={[
-                        {
-                            icon: 'compareArrows',
-                            tooltip: 'Transfer Patient',
-                            onClick: (event, rowData) => {if (window.confirm("Are you sure you wish to transfer patient ID: "+rowData.id +" from ID: "+this.state.from_vht+" to ID: "+this.state.to_vht)) this.handleSubmitSingle(rowData.id,populate_only_selected_from,populate_only_selected_to)}
-                        }
-                    ]}
-                />
+                    <MaterialTable
+                        title="Patients assigned to VHT (From)"
+                        columns={this.state.columns}
+                        data={populate_only_selected_from}
+                        actions={[
+                            {
+                                icon: 'compareArrows',
+                                tooltip: 'Transfer Patient',
+                                onClick: (event, rowData) => { if (window.confirm("Are you sure you wish to transfer patient ID: " + rowData.id + " from ID: " + this.state.from_vht + " to ID: " + this.state.to_vht)) this.handleSubmitSingle(rowData.id, populate_only_selected_from, populate_only_selected_to) }
+                            }
+                        ]}
+                    />
                 </div>
                 <div className="table-positionT">
                     <MaterialTable
@@ -247,8 +248,8 @@ class TransferPatient extends Component {
                     />
                 </div>
             </div>
-                );
-        }
+        );
+    }
 }
 
 export default TransferPatient

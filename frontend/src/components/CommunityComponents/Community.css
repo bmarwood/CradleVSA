@@ -1,5 +1,5 @@
 
-.overview {
+.selector {
   margin-top: 20px;
   width: 15%;
   margin-left: 20px;;
@@ -10,7 +10,7 @@
   margin-left: 20px;;
 }
 
-.padding-left {
+.pad-left {
   padding-left: 20px;
 }
 
@@ -19,15 +19,13 @@
   z-index: 1 !important;
 }
 
-.bg {
-  /* padding: 20px; */
+.background {
   background: rgb(255, 255, 255);
 }
 
 #individual .table-position {
   margin: 0 auto !important;
   width: 100%;
-  
 }
 
 .delete {
@@ -93,12 +91,12 @@
   width: 50%;
 }
 
-.float-button-right {
+.floatRight {
   float: right;
   width: 80%;
 }
 
-.float-button-left {
+.floatLeft {
   float: left;
 }
 
