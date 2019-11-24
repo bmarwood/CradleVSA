@@ -6,8 +6,7 @@ import Utility from './Utility';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './newForm.css';
-import {Cell, Radio, RadioGroup} from "react-mdl";
-import ShowSymp from "./SymptomsForm";
+import {Radio, RadioGroup} from "react-mdl";
 import {toast} from "react-toastify";
 
 //form for a new patient
@@ -134,7 +133,6 @@ class NewPatient extends React.Component {
     //get a single patient with matching patient_id
     async getMatchingPatientID(patient_id) {
         var passback = await RequestServer.getPatientByID(patient_id)
-        //console.log(passback)
         if (passback !== null) {
             return passback.data.id
         }
@@ -151,10 +149,6 @@ class NewPatient extends React.Component {
     }
 
     handleSubmit = async () => {
-        // if (this.state.vht_id === "EMPTY") {
-        //     alert("Please select at least one VHT")
-        //     return false;
-        // }
         if (this.state.dob_type === "date") {
             let input_dob = Utility.convertDate(this.state.temp_dob)
             let today = Utility.convertDate(new Date())
@@ -264,7 +258,7 @@ class NewPatient extends React.Component {
                 </RadioGroup>
 
 
-                <div style={{display: (this.state.dob_type == "age" ? 'block' : 'none')}}>
+                <div style={{display: (this.state.dob_type === "age" ? 'block' : 'none')}}>
                     <TextValidator
                         label="Age"
                         onChange={this.handleChange}
@@ -275,7 +269,7 @@ class NewPatient extends React.Component {
                     />
                     <br/>
                 </div>
-                <div style={{display: (this.state.dob_type == "date" ? 'block' : 'none')}}>
+                <div style={{display: (this.state.dob_type === "date" ? 'block' : 'none')}}>
                     <label>Date of Birth:</label>
                     <br/>
                     <DatePicker

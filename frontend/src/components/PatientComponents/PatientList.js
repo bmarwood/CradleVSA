@@ -79,7 +79,6 @@ class PatientList extends Component {
 
 
     populateData(response) {
-        console.log(response)
         var patientList = []
         response.forEach(patient => {
             var name = (patient.name.split(" "))[0]
@@ -139,7 +138,6 @@ class PatientList extends Component {
                                 setTimeout(() => {
                                     resolve();
                                     var didDelete = this.deletePatient(oldData)
-                                    console.log(oldData)
                                     if (didDelete) {
                                         const data = [...this.state.data];
                                         data.splice(data.indexOf(oldData), 1);

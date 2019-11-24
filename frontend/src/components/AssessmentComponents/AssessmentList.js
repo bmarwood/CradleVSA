@@ -12,7 +12,6 @@ class AssessmentList extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props.id)
         this.state = {
             columns: [],
             data: [],
@@ -118,7 +117,6 @@ class AssessmentList extends Component {
     populateData(response) {
         var assessmentList = []
         response.forEach(function (assessment) {
-            console.log("assessment: ", assessment)
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
                 cvsa_id={assessment.cvsa_id}
@@ -163,7 +161,6 @@ class AssessmentList extends Component {
         var roleArray = []
         if (parsedUser && parsedUser.roles) {
             parsedUser.roles.forEach(function (role) {
-                console.log("User data is : " + role.role)
                 roleArray.push(role.role)
             })
         }
@@ -180,14 +177,21 @@ class AssessmentList extends Component {
 
     //gets assessments for admin if that role is given, otherwise dynamically populates based on current user
     async getAssessmentList() {
-        console.log(this.state.passed_value)
         if (this.state.passed_value) {
-            passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
-            this.populateData(passback.data)
+            //check for id by patient
+            //if not patient check by cvsa
+            var passback = await requestServer.getPatient(this.state.passed_value)
+            if (passback.data.length !== 0){
+                passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
+            }else{
+                passback = await requestServer.getAssessmentsByCVSAId(this.state.passed_value)
+            }
+            
+            //if still none, then bad call
             if (passback.data.length === 0) {
                 alert("No History Found")
             }
-            console.log(passback.data)
+            this.populateData(passback.data)
             return
         }
         var userData = JSON.parse(localStorage.getItem("userData"))
@@ -202,7 +206,6 @@ class AssessmentList extends Component {
             this.populateData(passback.data)
         }
     }
-
 
     render() {
         return (

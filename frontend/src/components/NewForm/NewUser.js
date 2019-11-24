@@ -99,7 +99,6 @@ class NewUser extends React.Component {
         var parsedUser = JSON.parse(user)
         if (parsedUser && parsedUser.roles) {
             parsedUser.roles.forEach(function (role) {
-                //console.log("User data is : " + role.role)
                 roleArray.push(role.role)
             })
         }
@@ -238,9 +237,6 @@ class NewUser extends React.Component {
 
         //remove and change the inputs
         this.changeState();
-        //console.log(this.state);
-
-        //  '/users/register/this.state'
         var response = null
         if (this.state.update) {
             response = await RequestServer.updateUser(this.state)

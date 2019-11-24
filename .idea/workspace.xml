@@ -62,7 +62,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.CradleApplication">
+  <component name="RunManager" selected="Application.CradleApplication">
     <configuration name="CradleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ca.cmpt373.earth.cradle.CradleApplication" />
       <module name="cradle" />
@@ -88,7 +88,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.NewAssessment.js" />
         <item itemvalue="Application.CradleApplication" />
         <item itemvalue="Application.CradleApplication" />
       </list>
@@ -123,6 +122,7 @@
       <workItem from="1574107625225" duration="630000" />
       <workItem from="1574150304119" duration="190000" />
       <workItem from="1574215266022" duration="2816000" />
+      <updated>1574524152443</updated>
       <workItem from="1574274494327" duration="178000" />
     </task>
     <servers />

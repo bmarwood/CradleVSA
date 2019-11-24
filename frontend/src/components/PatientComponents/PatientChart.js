@@ -70,10 +70,9 @@ class PatientChart extends React.Component {
     }
 
     populateData(response) {
-        console.log(response)
 
         var dataLineArray = []
-        var labels = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+        var labels = []
 
         var systolicData = []
         var diastolicData = []
@@ -136,7 +135,6 @@ class PatientChart extends React.Component {
     async getMatchingPatientID(patient_id) {
         var passback = await RequestServer.getAssessmentsByPatientId(patient_id)
         if (passback != null) {
-            console.log(passback.data)
             //Converts dates in list_of_assessments to Date format to sort by date
             this.populateData(passback.data.sort(function(a,b){
                 a = Utility.convertStringToDate(a.date);
