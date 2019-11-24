@@ -1,14 +1,15 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import {Grid, Cell} from 'react-mdl';
+import { ValidatorForm } from 'react-material-ui-form-validator';
+import { Grid, Cell } from 'react-mdl';
 import RequestServer from '../RequestServer';
 import DatePicker from "react-datepicker";
 import Utility from "../NewForm/Utility";
 import CommunityGraph from './CommunityGraph';
 import CommunityPieChart from './CommunityPieChart';
 import Alert from "react-bootstrap/Alert";
-import {MDBCard, MDBCardTitle, MDBCardText, MDBContainer} from "mdbreact";
+import { MDBCard, MDBCardTitle, MDBContainer } from "mdbreact";
+import './Community.css';
 
 class CommunityReport extends React.Component {
     constructor(props) {
@@ -98,78 +99,82 @@ class CommunityReport extends React.Component {
     // use variant="outlined" to wrap up the box
     render() {
         let location_select_option = this.state.location_array.map(location => <option key={location.id}
-                                                                                       value={location.id}> {location.name}</option>)
+            value={location.id}> {location.name}</option>)
         const count_assessment = this.state.pie_array.reduce((a, b) => a + b, 0)
 
         return (
-            <div style={{
-                backgroundColor: 'white',
-                margin: 'auto',
-                padding: '50px',
-                textAlign: 'center'
-            }}>
-                <ValidatorForm
-                    ref="form"
-                    onSubmit={this.handleSubmit}
-                    onError={errors => console.log(errors)}
-                >
-                    <Grid>
-                        <Cell col={4}>
-                            <h4> Location </h4>
-                            <select
-                                value={this.state.location}
-                                onChange={this.handleChange}
-                                name="location"
-                            >
-                                <option value="EMPTY"> --SELECT ONE--</option>
-                                {location_select_option}
-                            </select>
-                        </Cell>
-                        <Cell col={4}>
-                            <h4>From:</h4>
-                            <DatePicker
-                                value={this.state.from}
-                                selected={this.state.from}
-                                onChange={date => this.handleDateChange('from', date)}
-                                maxDate={this.state.to}
-                            />
-                        </Cell>
-                        <Cell col={4}>
-                            <h4>To:</h4>
-                            <DatePicker
-                                value={this.state.to}
-                                selected={this.state.to}
-                                onChange={date => this.handleDateChange('to', date)}
-                                minDate={this.state.from}
-                                maxDate={new Date()}
-                            />
-                            <br/>
-                            <br/>
-                        </Cell>
-                    </Grid>
-                    < Button type="submit" style={{
-                        backgroundColor: 'blue',
-                        color: 'white'
-                    }}>Generate
-                    </Button>
-                </ValidatorForm>
+            <div>
+                <div className='overview bg round allPad float-button-left'>
+                    <ValidatorForm
+                        ref="form"
+                        onSubmit={this.handleSubmit}
+                        onError={errors => console.log(errors)}
+                    >
 
-                <br/>
-                <div style={{display: (this.state.display ? 'block' : 'none')}}>
+                        <Grid>
+                            <Cell col={4}>
+                                <h4> Location </h4>
+                                <select
+                                    value={this.state.location}
+                                    onChange={this.handleChange}
+                                    name="location"
+                                >
+                                    <option value="EMPTY"> --SELECT ONE--</option>
+                                    {location_select_option}
+                                </select>
+                            </Cell>
+                            <br />
+                            <div>
+                            <Cell col={5} row={2}>
+                                <h4>From:</h4>
+                                <DatePicker
+                                    value={this.state.from}
+                                    selected={this.state.from}
+                                    onChange={date => this.handleDateChange('from', date)}
+                                    maxDate={this.state.to}
+                                />
+                            </Cell>
+                            <Cell col={7}>
+                                <h4>To:</h4>
+                                <DatePicker
+                                    value={this.state.to}
+                                    selected={this.state.to}
+                                    onChange={date => this.handleDateChange('to', date)}
+                                    minDate={this.state.from}
+                                    maxDate={new Date()}
+                                />
+                                <br />
+                                <br />
+                            </Cell>
+                            </div>
+
+                        </Grid>
+                        <div className='padding-left'>
+                            < Button type="submit" style={{
+                                backgroundColor: 'blue',
+                                color: 'white'
+                            }}>Generate
+                    </Button>
+                        </div>
+                    </ValidatorForm>
+                </div>
+
+                <br />
+                <div className='float-button-right wrapper round-more' style={{ display: (this.state.display ? 'block' : 'none') }}>
                     <MDBContainer>
                         <MDBCard className="card-body"
-                                 style={{backgroundColor: " #efeff5\n", width: "auto", marginTop: "auto"}}>
+                            style={{ backgroundColor: " #efeff5\n", width: "auto", marginTop: "auto" }}>
                             <MDBCardTitle>The average of vital check during the period</MDBCardTitle>
                             <Grid>
                                 <Cell col={4}>
-                                    <br/><br/>
-                                    <Alert key={5} variant={'info'} style={{fontSize: "auto"}}>
+                                    <br /><br />
+                                    <Alert key={5} variant={'info'} style={{ fontSize: "auto" }}>
                                         Total Number of Assessments: {count_assessment}
-                                        <br/>
+                                        <br />
                                         Average Systolic : {this.state.vital_check[0]}
-                                        <br/>
+                                        <br />
                                         Average Diastolic : {this.state.vital_check[1]}
-                                        <br/>
+                                        <br />
                                         Average Heart-rate : {this.state.vital_check[2]}
                                     </Alert>
                                 </Cell>
@@ -181,10 +186,10 @@ class CommunityReport extends React.Component {
                             </Grid>
                         </MDBCard>
 
-                        <br/>
+                        <br />
 
                         <MDBCard className="card-body"
-                                 style={{backgroundColor: " #efeff5\n", width: "auto", marginTop: "auto"}}>
+                            style={{ backgroundColor: " #efeff5\n", width: "auto", marginTop: "auto" }}>
                             <MDBCardTitle>Monthly average vital check Report</MDBCardTitle>
                             <CommunityGraph
                                 array={this.state.graph_array}

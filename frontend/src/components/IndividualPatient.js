@@ -98,14 +98,14 @@ class IndividualPatient extends Component {
                     <div className="one-edge-shadow modal-header ">
                         <h3>Patient Name: {this.state.patient_name}</h3><br />
                         <div className='modal-header-direction'>
-                            <div className='float-left'>
+                            {/* <div className='float-left'> */}
                                 <h5>
                                     Patient ID: {this.state.patient_id}
                                     <br />
                                     Date of Birth: {this.state.patient_dob}
                                 </h5>
 
-                            </div>
+                            {/* </div> */}
                         </div>
                     </div>
                     <h3 className='padding-left'> Last Assessment: {this.state.assessment_id} </h3>
