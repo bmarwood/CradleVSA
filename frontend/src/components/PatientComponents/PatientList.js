@@ -93,7 +93,10 @@ class PatientList extends Component {
                 patient_id={patient.id}
                 patient_name={name + " " + surname}
             />
-            var medications = <MedicationPopup/>
+            var medications = <MedicationPopup
+            patient_id={patient.id}
+            patient_name={name+" "+surname}
+            />
             var update = <UpdatePatientPopup
                 id={patient.id}/>
 
