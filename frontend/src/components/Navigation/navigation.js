@@ -18,6 +18,8 @@ import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
 import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
+import VhtReport from '../AdminComponents/vhtReport';
+import RequestReport from '../AdminComponents/RequestReport';
 import IndividualPatient from '../IndividualPatient';
 import IndividualCVSA from '../IndividualCVSA';
 import CommunityReport from "../CommunityComponents/CommunityReport";
@@ -29,6 +31,8 @@ const Navigation = () => (
         <Route exact path="/" component={LandingPage}/>
         <AdminRoute path="/location" component={Location}/>
         <AdminRoute path="/newlocation" component={NewLocation}/>
+        <ManagerRoute path="/request-VHT-report" component={RequestReport}/>
+        <ManagerRoute path="/vht-report" component={VhtReport}/>
         <PrivateRoute exact path="/user-dashboard" component={PatientList}/>
         <AdminRoute exact path="/admin-dashboard" component={Landing_List}/>
         <Route exact path="/login" component={Login}/>

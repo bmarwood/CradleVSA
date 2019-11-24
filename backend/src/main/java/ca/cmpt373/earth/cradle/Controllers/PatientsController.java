@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -45,6 +46,31 @@ public class PatientsController {
                 eachPatient.setList_of_assessments(assessments);
             }
             return patients;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping("/belongTo{pId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public List<Patients> getBelongTo( @PathVariable String pId) {
+        try {
+            List<Patients> patients = this.patientsRepository.findAll();
+            List<Patients> toReturn = new ArrayList<>();
+            // return patients with updated assessment_list
+            for (Patients eachPatient : patients) {
+                String vhtId = eachPatient.getVht_id();
+                if (vhtId.equals(pId)) {
+                    String id = eachPatient.getId();
+                    List<Assessments> assessments = this.assessmentsController.getAByPatientId(id);
+                    eachPatient.setList_of_assessments(assessments);
+                    toReturn.add(eachPatient);
+                }
+            }
+
+            return toReturn;
         } catch (Throwable e) {
             e.printStackTrace();
             return null;

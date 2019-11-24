@@ -11,6 +11,76 @@ html, body {
 
 }
 
+.card {
+  background: white;
+  height: 80%;
+  width: 200px;
+  -webkit-box-shadow: 0 4px 6px -6px black;
+  -moz-box-shadow: 0 4px 6px -6px black;
+  box-shadow: 0 4px 6px -6px black;
+  margin: 10px;
+  float: left;
+  border-left: rgb(43, 43, 43) 5px Solid;
+  padding-left: 10px;
+}
+
+.cardContainer {
+  margin: 50px auto;
+  width: 90%;
+  height: 500px;
+  display: table;
+}
+
+.float-cards {
+  clear: both;
+}
+
+.left-card {
+  background: white;
+  /* height: 100%; */
+  width: 25%;
+  -webkit-box-shadow: 0 4px 6px -6px black;
+  -moz-box-shadow: 0 4px 6px -6px black;
+  box-shadow: 0 4px 6px -6px black;
+  float: left;
+  border-radius: 5px;
+
+}
+
+.right-card {
+  float: right;
+  background: white;
+  /* height: 100%; */
+  width: 74%;
+  -webkit-box-shadow: 0 4px 6px -6px black;
+  -moz-box-shadow: 0 4px 6px -6px black;
+  box-shadow: 0 4px 6px -6px black;
+  border-radius: 5px;
+  /* overflow: auto; */
+}
+
+
+.right-card {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.right-card::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+.top-card {
+  background: white;
+  height: 150px;
+  width: 100%;
+  -webkit-box-shadow: 0 4px 6px -6px black;
+  -moz-box-shadow: 0 4px 6px -6px black;
+  box-shadow: 0 4px 6px -6px black;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+
+
 .AssessList {
   border: thin solid blue;
   padding: 2rem;
