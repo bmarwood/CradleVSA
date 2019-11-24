@@ -105,7 +105,6 @@ class IndividualCVSA extends Component {
                                     <br />
                                     Date of Birth: {this.state.patient_dob}
                                 </h5>
-
                             </div>
                         </div>
                     </div>
