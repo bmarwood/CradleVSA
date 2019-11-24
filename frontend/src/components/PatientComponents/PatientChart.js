@@ -72,7 +72,7 @@ class PatientChart extends React.Component {
     populateData(response) {
 
         var dataLineArray = []
-        var labels = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+        var labels = []
 
         var systolicData = []
         var diastolicData = []

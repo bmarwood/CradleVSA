@@ -272,11 +272,6 @@ class RequestServer extends Component {
             let patient = await this.getPatientByID(patient_id)
             let new_patient = Utility.populatePatient(patient.data)
             new_patient.list_of_assessments.push(assessment)
-<<<<<<< HEAD
-            // new_patient.list_of_assessments.push([assessment.name, assessment.id])
-
-=======
->>>>>>> 2d9ec2c05b40ba34e4a8646d46f15dd19a42d3e1
             var response = await axios.post(this.getServerLocation() + '/patients/update/' + patient_id, new_patient)
             return response
         } catch (error) {
