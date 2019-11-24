@@ -59,68 +59,9 @@ class VHTChart extends React.Component {
             var month = date.getMonth()
             var index = 0
 
-            switch (month) {
-                case 0:
-                    var index = 0
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-                case 1:
-                    index = 1
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-                case 2:
-                    index = 2
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-                case 3:
-                    index = 3
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-                case 4:
-                    index = 4
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-                case 5:
-                    index = 5
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-                case 6:
-                    index = 6
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-                case 7:
-                    index = 7
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-                case 8:
-                    index = 8
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-                case 9:
-                    index = 9
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-                case 10:
-                    index = 10
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-                case 11:
-                    index = 11
-                    var count = data[index] + 1
-                    data[index] = count
-                    break;
-            }
+
+            var count = data[month]++
+            data[index] = count
 
         })
 
