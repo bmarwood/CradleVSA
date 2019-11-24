@@ -16,10 +16,11 @@ class TransferPatient extends Component {
             data: [],
             vht_array: [],
             vht_empty_flag: false,
-            vht_w_assessment: [],
+            vht_w_patient: [],
             from_vht: '',
             to_vht: '',
-            loading: false
+            loading: false,
+            user_role: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.getVHTList()
@@ -80,11 +81,31 @@ class TransferPatient extends Component {
     }
 
 
+    getRoles() {
+        if(this.state.user_role.length === 0)
+        {
+            var roleArray = []
+            var user = localStorage.getItem("userData")
+            var parsedUser = JSON.parse(user)
+            if (parsedUser && parsedUser.roles) {
+                parsedUser.roles.forEach(function (role) {
+                    roleArray.push(role.role)
+                })
+            }
+            this.setState({user_role:roleArray})
+            return roleArray
+        }
+        else{
+            return this.state.user_role
+        }
+    }
+
+
     async getPatientList() {
         var passback = await requestServer.getPatientVHTList()
         if (passback !== null && passback.data !== "") {
             this.setState({ vht_empty_flag: passback.flag })
-            this.setState({ vht_w_assessment: passback.vhtlist })
+            this.setState({ vht_w_patient: passback.vhtlist })
             this.populateData(passback.data)
         }
     }
@@ -175,21 +196,42 @@ class TransferPatient extends Component {
 
     checkEmptyFlag() {
         if (this.state.vht_empty_flag) {
-            if (!this.state.vht_w_assessment.includes("EMPTY")) {
-                this.state.vht_w_assessment.unshift("EMPTY")
+            if (!this.state.vht_w_patient.includes("EMPTY")) {
+                this.state.vht_w_patient.unshift("EMPTY")
             }
         }
     }
 
+    filter_lists(user_id){
+        console.log("vht_array",this.state.vht_array)
+        console.log("with assessment",this.state.vht_w_patient)
+    }
 
     render() {
         this.checkEmptyFlag()
+        var userRoles = this.getRoles()
+        const Role_Termination_Integer = -1
         let temp_to_vht = this.state.to_vht
         let temp_from_vht = this.state.from_vht
-        let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
-            value={item.id}> {item.id} </option>)
-        let vht_select_option2 = this.state.vht_w_assessment.map(item => <option
-            value={item}> {item} </option>)
+        // let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
+        //     value={item.id}> {item.id} </option>)
+        // let vht_select_option2 = this.state.vht_w_patient.map(item => <option
+        //     value={item}> {item} </option>)
+        let temp_vht_array = this.state.vht_array
+        let temp_vht_w_patient = this.state.vht_w_patient
+        console.log("this is the logged in user role", userRoles)
+        if(userRoles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer){
+            //filter_lists
+            var user = localStorage.getItem("userData")
+            var parsedUser = JSON.parse(user)
+            console.log(parsedUser.id)
+            this.filter_lists(parsedUser.id)
+        }
+
+        let vht_select_option = temp_vht_array.map(item => <option id={item.id}
+                                                                         value={item.id}> {item.id} </option>)
+        let vht_select_option2 = temp_vht_w_patient.map(item => <option
+                                                                                 value={item}> {item} </option>)
         let populate_only_selected_from = this.populatePatientLists(temp_from_vht)
         let populate_only_selected_to = this.populatePatientLists(temp_to_vht)
 
