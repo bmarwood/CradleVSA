@@ -47,7 +47,8 @@ class IndividualPatient extends Component {
                     systolic: response.data.systolic,
                     arrow: response.data.arrow,
                     symptoms: (response.data.symptoms).join(", "),
-                    gestational_unit: response.data.gestational_unit
+                    gestational_unit: response.data.gestational_unit,
+                    assessment_date: response.data.date,
                 })
             }
         }else{

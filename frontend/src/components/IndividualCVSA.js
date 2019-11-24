@@ -38,6 +38,7 @@ class IndividualCVSA extends Component {
             if (response.data === "") {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
             } else {
+                console.log(response)
                 this.setState({
                     assessment_id: response.data._id,
                     ews_color: response.data.ews_color,
@@ -48,7 +49,8 @@ class IndividualCVSA extends Component {
                     systolic: response.data.systolic,
                     arrow: response.data.arrow,
                     symptoms: (response.data.symptoms).join(", "),
-                    gestational_unit: response.data.gestational_unit
+                    gestational_unit: response.data.gestational_unit,
+                    assessment_date: response.data.date,
                 })
             }
         }else{
