@@ -141,7 +141,7 @@ class AssessmentList extends Component {
                 gestational_age: getGestationalAge(assessment),
                 referred: getBoolVisual(assessment.referred),
                 follow_up: getBoolVisual(assessment.follow_up),
-                recheck: getBoolVisual(assessment.recheck),
+                recheck: checkForRecheck(assessment.recheck, assessment.date),
                 birth_date: assessment.birth_date,
                 heart_rate: assessment.heart_rate,
                 systolic: assessment.systolic,
@@ -150,10 +150,10 @@ class AssessmentList extends Component {
                 follow_up_date: assessment.follow_up_date,
                 info: info,
             }
-
+            
             assessmentList.push(assessment_obj)
         });
-
+        
         this.setState({data: assessmentList})
     }
 
@@ -245,6 +245,33 @@ const YellowLight = () => (
         <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"}/>
     </div>
 );
+
+function checkForRecheck(recheck, date){
+    // if date within 20 min display button
+    // if()
+    var dateobj = new Date(date)
+    var datevar= new Date().toString()
+    var datenew = new Date(datevar);
+    console.log("passed in " + date)
+    console.log(datevar)
+    console.log(date)
+    console.log((datevar - date)/1000)
+        // if((datenew - date)/1000) >= 20){
+
+        // }
+// data from database
+// console.log("db: " + data_from_database)
+// console.log("current date: " + date)
+
+// var FIVE_MIN=5*60*1000;
+
+// if((date - new Date(date_from_database)) > FIVE_MIN) {
+//    console.log('Delayed by more than 5 mins');
+// }
+return getBoolVisual(recheck)
+
+// <button className="ui icon button"><i aria-hidden="true" className="info circle icon"></i></button>
+}
 
 
 function getArrowVisual(input) {
