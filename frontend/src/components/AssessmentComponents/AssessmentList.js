@@ -6,6 +6,7 @@ import TrafficIconsTriangle from "../Visuals/TrafficIconsTriangle";
 import TrafficIconsOctagon from "../Visuals/TrafficIconsOctagon";
 import ModalPopup from "../../Modals/ModalPopup";
 import requestServer from '../RequestServer';
+import Utility from '../NewForm/Utility'
 
 
 class AssessmentList extends Component {
@@ -150,10 +151,10 @@ class AssessmentList extends Component {
                 follow_up_date: assessment.follow_up_date,
                 info: info,
             }
-            
+
             assessmentList.push(assessment_obj)
         });
-        
+
         this.setState({data: assessmentList})
     }
 
@@ -181,12 +182,12 @@ class AssessmentList extends Component {
             //check for id by patient
             //if not patient check by cvsa
             var passback = await requestServer.getPatient(this.state.passed_value)
-            if (passback.data.length !== 0){
+            if (passback.data.length !== 0) {
                 passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
-            }else{
+            } else {
                 passback = await requestServer.getAssessmentsByCVSAId(this.state.passed_value)
             }
-            
+
             //if still none, then bad call
             if (passback.data.length === 0) {
                 alert("No History Found")
@@ -246,19 +247,24 @@ const YellowLight = () => (
     </div>
 );
 
-function checkForRecheck(recheck, date){
+function checkForRecheck(recheck, date) {
     // if date within 20 min display button
     // if()
-    var dateobj = new Date(date)
-    var datevar= new Date().toString()
-    var datenew = new Date(datevar);
-    console.log("passed in " + date)
-    console.log(datevar)
-    console.log(date)
-    console.log((datevar - date)/1000)
-        // if((datenew - date)/1000) >= 20){
+    var old_date = new Date(date)
+    var dateobj = old_date.getMinutes()
+    var datenew = new Date()
 
-        // }
+    console.log("\nold date, ", old_date)
+    console.log("\nnew date, ", datenew)
+    
+    let dif = Math.abs((datenew.getTime() - old_date.getTime()) / 1000 / 60)
+    console.log("dif \n", dif)
+
+    if (dif <= 20) {
+        console.log("IT did not pass 20 min ")
+    }
+
+
 // data from database
 // console.log("db: " + data_from_database)
 // console.log("current date: " + date)
@@ -268,7 +274,7 @@ function checkForRecheck(recheck, date){
 // if((date - new Date(date_from_database)) > FIVE_MIN) {
 //    console.log('Delayed by more than 5 mins');
 // }
-return getBoolVisual(recheck)
+    return getBoolVisual(recheck)
 
 // <button className="ui icon button"><i aria-hidden="true" className="info circle icon"></i></button>
 }
