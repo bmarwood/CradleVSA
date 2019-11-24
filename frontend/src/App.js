@@ -58,11 +58,11 @@ class App extends Component {
 
     isAdmin(roles) {
         if (roles.indexOf("ADMIN") > Role_Termination_Integer) {
-            console.log('is Admin')
+            // console.log('is Admin')
             return true
         }
 
-        console.log('is not Admin')
+        // console.log('is not Admin')
         return false 
     }
 

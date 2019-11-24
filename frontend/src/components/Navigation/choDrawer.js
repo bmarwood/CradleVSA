@@ -10,6 +10,7 @@ export default function ChoDrawer() {
             <Link to="/newPatient">New Patient</Link>
             <Link to="/newWorker">New Worker</Link>
             <Link to="/location">View Locations</Link>
+            <Link to="/request-VHT-report">Request VHT Report</Link>
             <Link to="/profile">Profile</Link>
             <Link to="/logout">Logout</Link>
         </Navigation>

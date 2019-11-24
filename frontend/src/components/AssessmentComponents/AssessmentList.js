@@ -200,7 +200,7 @@ class AssessmentList extends Component {
         if (this.isAdmin(roles)) {
             passback = await requestServer.getAssessmentsList()
         } else {
-            passback = await requestServer.getAssessmentsByUserId(userData.id)
+            passback = await requestServer.getAssessmentsByCVSAId(userData.id)
         }
         if (passback !== null && passback.data !== "") {
             this.populateData(passback.data)

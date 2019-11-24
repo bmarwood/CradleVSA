@@ -17,6 +17,7 @@ class PatientChart extends React.Component {
     }
 
     componentDidMount() {
+        console.log("patientId for Chart: ", this.props.patient_id )
         this.getMatchingPatientID(this.props.patient_id)
         this.timer = setInterval(() => this.getMatchingPatientID(this.props.patient_id), 10000);
         this.setState({

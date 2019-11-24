@@ -18,13 +18,13 @@ import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
 import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
+import VhtReport from '../AdminComponents/vhtReport';
+import RequestReport from '../AdminComponents/RequestReport';
 import IndividualPatient from '../IndividualPatient';
 import IndividualCVSA from '../IndividualCVSA';
 import CommunityReport from "../CommunityComponents/CommunityReport";
 import TransferPatient from '../transferPatient';
 import ReferredList from "../Referral/ReferredList";
-//import RequestReport from "../AdminComponents/RequestReport";
-//import VhtReport from "../AdminComponents/vhtReport";
 
 const Navigation = () => (
     <Switch>
@@ -42,6 +42,9 @@ const Navigation = () => (
         {/* Admin Route */}
         <AdminRoute path="/location" component={Location}/>
         <AdminRoute path="/newlocation" component={NewLocation}/>
+        <ManagerRoute path="/request-VHT-report" component={RequestReport}/>
+        <ManagerRoute path="/vht-report" component={VhtReport}/>
+        <PrivateRoute exact path="/user-dashboard" component={PatientList}/>
         <AdminRoute exact path="/admin-dashboard" component={Landing_List}/>
         <AdminRoute exact path="/register" component={Register}/>
         <AdminRoute path="/admin/landing" component={Landing_List}/>
