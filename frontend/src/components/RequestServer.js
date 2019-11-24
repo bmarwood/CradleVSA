@@ -20,7 +20,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/location/all')
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -31,7 +30,6 @@ class RequestServer extends Component {
             var response = await axios.post(this.getServerLocation() + '/location/add', location)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -42,7 +40,6 @@ class RequestServer extends Component {
             var response = await axios.delete(this.getServerLocation() + '/location/delete/' + id)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -53,7 +50,6 @@ class RequestServer extends Component {
             var response = await axios.post(this.getServerLocation() + '/assessments/add', assessment)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -64,7 +60,6 @@ class RequestServer extends Component {
             var response = await axios.post(this.getServerLocation() + '/patients/add', patient)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -73,10 +68,8 @@ class RequestServer extends Component {
     async addUser(user) {
         try {
             var response = await axios.post(this.getServerLocation() + '/users/register', user)
-            console.log("RESPONSE IN ADD USER : ", response)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -87,7 +80,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/patients/get' + id)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -120,7 +112,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/users/get' + id)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -129,6 +120,16 @@ class RequestServer extends Component {
     async getAssessmentsList() {
         try {
             var response = await axios.get(this.getServerLocation() + '/assessments/all')
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
+    async getReferredAssessments() {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/assessments/getReferred')
             return response
         } catch (error) {
             console.log('error block')
@@ -142,7 +143,56 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/patients/all')
             return response
         } catch (error) {
-            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    async getPatientVHTList() {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/patients/all')
+            var userMap = await this.getUserList()
+            var vhtList = []
+            var vhtWithPatients = []
+            //all vhts from userlist
+            for (let x = 0; x < userMap.data.length; x++) {
+                for (let y = 0; y < userMap.data[x].roles.length; y++) {
+                    if (userMap.data[x].roles[y].role == "VHT") {
+                        vhtList.push(userMap.data[x].id)
+                    }
+                }
+            }
+
+            var newResponse = []
+            var flag = false
+            //all patients that have a vht_id or "EMPTY"
+            for (let a = 0; a < response.data.length; a++) {
+                if (response.data[a].vht_id == null || response.data[a].vht_id === "EMPTY") {
+                    newResponse.push(response.data[a])
+                    flag = true
+                }
+                if (vhtList.includes(response.data[a].vht_id)) {
+                    if (!vhtWithPatients.includes(response.data[a].vht_id)) {
+                        vhtWithPatients.push(response.data[a].vht_id)
+                    }
+                    newResponse.push(response.data[a])
+                }
+            }
+            response.flag = flag
+            response.data = newResponse
+            response.vhtlist = vhtWithPatients
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
+    async getVHTList() {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/vhts/all')
+            return response
+        } catch (error) {
             console.log(error)
             return null
         }
@@ -165,7 +215,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/assessments/getByCVSAId' + id)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -189,7 +238,17 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/assessments/getAByPatientId' + patient_id)
             return response
         } catch (error) {
-            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    //get list of assessments based on the patient id
+    async getAssessmentsByLocation(location_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/assessments/getByLocation' + location_id)
+            return response
+        } catch (error) {
             console.log(error)
             return null
         }
@@ -202,7 +261,26 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/patients/get' + patient_id)
             return response
         } catch (error) {
-            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
+    async getLastAssessmentByPatientByID(patient_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/assessments/last/getByPatientId' + patient_id)
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
+    async getLastAssessmentByCVSAByID(CVSA_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/assessments/last/getByCVSAId' + CVSA_id)
+            return response
+        } catch (error) {
             console.log(error)
             return null
         }
@@ -217,7 +295,6 @@ class RequestServer extends Component {
             var response = await axios.post(this.getServerLocation() + '/users/login', userObj)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -229,7 +306,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/users/all')
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -239,18 +315,11 @@ class RequestServer extends Component {
     async updatePatientAssessmentList(patient_id, assessment) {
         try {
             let patient = await this.getPatientByID(patient_id)
-            console.log(patient.data.list_of_assessments)
             let new_patient = Utility.populatePatient(patient.data)
             new_patient.list_of_assessments.push(assessment)
-            // new_patient.list_of_assessments.push([assessment.name, assessment.id])
-            console.log("\n\n patient.data")
-            console.log(new_patient)
-            console.log(new_patient)
-
             var response = await axios.post(this.getServerLocation() + '/patients/update/' + patient_id, new_patient)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -262,7 +331,6 @@ class RequestServer extends Component {
             let response = await axios.post(this.getServerLocation() + '/users/updatePassword/' + user.id + "/" + user.username + "/" + user.old_password + "/" + user.new_password)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -273,7 +341,6 @@ class RequestServer extends Component {
             let response = await axios.post(this.getServerLocation() + '/users/update/' + user.id, user)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -285,7 +352,6 @@ class RequestServer extends Component {
             let response = await axios.post(this.getServerLocation() + '/patients/update/' + patient.id, patient)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -295,12 +361,9 @@ class RequestServer extends Component {
     async deletePatient(patient_id) {
         try {
             let response = await axios.delete(this.getServerLocation() + '/patients/delete/' + patient_id)
-            // delete corresponding assessments
-            // await axios.delete(this.getServerLocation() + '/assessments/deleteByPatientId/' + patient_id)
             return response
 
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -311,7 +374,6 @@ class RequestServer extends Component {
             var response = await axios.delete(this.getServerLocation() + '/users/delete/' + user_id)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -322,12 +384,63 @@ class RequestServer extends Component {
             var response = await axios.delete(this.getServerLocation() + '/assessments/delete/' + assessment_id)
             return response
         } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
+    async updateReferral(assessment) {
+        try {
+            var response = await axios.post(this.getServerLocation() + '/assessments/updateReferral/' + assessment._id, assessment)
+            return response
+        } catch (error) {
             console.log('error block')
             console.log(error)
             return null
         }
     }
 
+    async getMedicationList() {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/medications/all')
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
+    async getMedicationListByID(patient_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/medications/get' + patient_id)
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+    async addMedications(medications) {
+        try {
+            var response = await axios.post(this.getServerLocation() + '/medications/add', medications)
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
+
+    async deleteMedication(id) {
+        try {
+            let response = await axios.delete(this.getServerLocation() + '/medications/delete' + id)
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
 }
+
+
 
 export default new RequestServer();

@@ -1,0 +1,39 @@
+.table-positionT{
+    margin: 0 auto;
+    width: 40%;
+    margin-top: 50px;
+    margin-left: 110px;
+    margin-bottom: 50px;
+    float:left;
+}
+
+.landing-formT {
+    width: 100%;
+    height: 100%;
+    padding-top: 100px;
+    flex-wrap: wrap;
+    text-align: center;
+    align-items: center;
+    height: 100%;
+    width : 100%;
+    min-height: 100%;
+    margin: auto;
+}
+.round {
+    border-radius: 15px;
+  }
+
+.bigPad {
+      padding:20px;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+}
+
+
+.select-styleT{
+    color:white;
+    margin-left: 10px;
+}

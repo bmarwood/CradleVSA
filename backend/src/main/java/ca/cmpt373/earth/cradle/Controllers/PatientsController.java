@@ -132,5 +132,4 @@ public class PatientsController {
         }
         return ResponseEntity.status(200).body(patient);
     }
-
 }

@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-public interface UsersRepository extends MongoRepository<Users, String> {
+public interface UsersRepository extends MongoRepository<Users,String> {
 
     Users findByUsername(String username);
 
@@ -18,7 +18,6 @@ public interface UsersRepository extends MongoRepository<Users, String> {
 
     @Query("{address: {$regex: ?0 } }")
     List<Users> findCustomByRegExAddress(String domain);
-
 
 }
 
