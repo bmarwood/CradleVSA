@@ -260,7 +260,7 @@ async function checkForRecheck(recheck, date, patient_id, id) {
         lastAssessmentIdByPatient = await getLastAssessmentIDByPatient(patient_id);
         //check if last assessment by patient or less then 20 min
         if (dif <= 20 && (id === lastAssessmentIdByPatient)) {
-            return <button className="ui icon button"><Link to={`/newAssessment`}><i aria-hidden="true" className="check icon"></i></Link></button>
+            return <button className="ui icon button"><Link to={`/newAssessment${patient_id}`}><i aria-hidden="true" className="check icon"></i></Link></button>
         } else {
             return getBoolVisual(recheck)
         }
