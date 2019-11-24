@@ -85,7 +85,7 @@ public class Assessments {
         return id;
     }
 
-    public void set_id(String _id) {
+    public void set_id(String id) {
         this.id = id;
     }
 

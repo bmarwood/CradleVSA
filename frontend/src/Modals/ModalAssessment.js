@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Popup from "reactjs-popup";
 import './ModalPopup';
 import './ModalPopup.css';
@@ -8,13 +8,14 @@ import TrafficIconsCircle from '../components/Visuals/TrafficIconsCircle';
 import TrafficIconsTriangle from "../components/Visuals/TrafficIconsTriangle";
 import TrafficIconsOctagon from "../components/Visuals/TrafficIconsOctagon";
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { Link } from 'react-router-dom';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {Link} from 'react-router-dom';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import { Tabs, Tab, Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, IconButton } from 'react-mdl';
+import {Tabs, Tab, Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, IconButton} from 'react-mdl';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 class ModalAssessment extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class ModalAssessment extends Component {
             patient_name: 'LOADING...',
             patient_dob: '',
             CVSA_name: 'LOADING...',
-
+            referred: props.referred
         }
     }
 
@@ -46,7 +47,7 @@ class ModalAssessment extends Component {
         var response = await requestServer.getPatient(this.props.patient_id)
         if (response !== null) {
             if (response.data === "") {
-                this.setState({ patient_name: 'ID doesn\'t match to a patient' })
+                this.setState({patient_name: 'ID doesn\'t match to a patient'})
             } else {
                 // console.log("Patient DATA:", response.data )
                 this.setState({
@@ -62,9 +63,9 @@ class ModalAssessment extends Component {
 
         if (response !== null) {
             if (response.data === "") {
-                this.setState({ CVSA_name: 'ID doesn\'t match to a CVSA' })
+                this.setState({CVSA_name: 'ID doesn\'t match to a CVSA'})
             } else {
-                this.setState({ CVSA_name: response.data.name })
+                this.setState({CVSA_name: response.data.name})
             }
         }
     }
@@ -86,17 +87,24 @@ class ModalAssessment extends Component {
         }
     }
 
+    async closeReferral(id) {
+        var response = await requestServer.updateReferral(id)
+        if (response !== null) {
+            window.location.reload()
+        }
+    }
+
     render() {
         return (
             <div className="modal">
 
                 <div className="one-edge-shadow modal-header p-30">
-                    <h3>Asssessment ID: {this.props.id}</h3><br />
+                    <h3>Asssessment ID: {this.props.id}</h3><br/>
                     <div className='modal-header-direction'>
                         <div className='float-left'>
                             <h5>
                                 Patient ID: {this.props.patient_id}
-                                <br />
+                                <br/>
                                 Patient Name: {this.state.patient_name}
                             </h5>
 
@@ -105,7 +113,7 @@ class ModalAssessment extends Component {
                         <div className='float-right'>
                             <h5>
                                 Cradle Professional ID: {this.props.cvsa_id}
-                                <br />
+                                <br/>
                                 Cradle Professional Name: {this.state.cvsa_name}
                             </h5>
                         </div>
@@ -115,29 +123,30 @@ class ModalAssessment extends Component {
                 <div className="one-edge-shadow modal-body p-30">
                     <div className='float-left'>
                         Early Warning Color: {this.getColorVisual(this.props.ews_color)}
-                        <br />
+                        <br/>
                         Arrow: {this.getArrowVisual(this.props.arrow)}
-                        <br />
+                        <br/>
                         Heart Rate: {this.props.heart_rate}
-                        <br />
+                        <br/>
                         Diastolic: {this.props.diastolic}
-                        <br />
+                        <br/>
                         Systolic: {this.props.systolic}
-                        <br />
-                        Gestational Age: {this.props.gestational_age != 0 ? this.props.gestational_age : <i aria-hidden="true" className="dont icon" />}
-                        <br />
+                        <br/>
+                        Gestational Age: {this.props.gestational_age != 0 ? this.props.gestational_age :
+                        <i aria-hidden="true" className="dont icon"/>}
+                        <br/>
                         Gestational Unit: {this.getGestationalUnit(this.props.gestational_unit)}
-                        <br />
+                        <br/>
                         Current Symptoms: {this.props.symptoms}
                     </div>
 
                     <div className='float-right'>
                         Date of Birth: {this.state.patient_dob}
-                        <br />
+                        <br/>
                         Patient Age: {this.calculateAge() ? this.calculateAge() : 0}
-                        <br />
+                        <br/>
                         Date of Assessment: {this.props.assessment_date}
-                        <br />
+                        <br/>
                         Follow Up Date: {this.props.follow_up_date}
                     </div>
                 </div>
@@ -160,41 +169,59 @@ class ModalAssessment extends Component {
                         </Popup>
                     </div>
                     <div className='pb-30'>
-                        <Button onClick={
-                            () => { if (window.confirm('Are you sure you wish to delete this item?')) this.deleteAssessment(this.props.id) }
-                        } className="ui black basic button float-button-right">
-                            <i className="trash icon" />
-                        </Button>
+                        <div style={{display: (this.state.referred ? 'none' : 'block')}}>
+                            <Button onClick={
+                                () => {
+                                    if (window.confirm('Are you sure you wish to delete this item?')) this.deleteAssessment(this.props.id)
+                                }
+                            } className="ui black basic button float-button-right">
+                                <i className="trash icon"/>
+                            </Button>
+                        </div>
+                        <div style={{display: (this.state.referred ? 'block' : 'none')}}>
+
+                            <Button onClick={
+                                () => {
+                                    if (window.confirm('Are you sure you wish to close the referred loop?')) this.closeReferral(this.props.assessment)
+                                }
+                            } className="ui black basic button float-button-right">
+                                <CheckCircleIcon></CheckCircleIcon>
+                            </Button>
+                        </div>
                     </div>
 
                 </div>
             </div>
-        );
+        )
+            ;
     }
+
     getColorVisual(input) {
         switch (String(input).toUpperCase()) {
             case "GREEN":
-                return <GreenLight />
+                return <GreenLight/>
             case "YELLOW":
-                return <YellowLight />
+                return <YellowLight/>
             case "RED":
-                return <RedLight />
+                return <RedLight/>
             default:
                 return input
         }
     }
+
     getArrowVisual(input) {
         switch (String(input).toUpperCase()) {
             case "UP":
-                return <i className="arrow up icon" />
+                return <i className="arrow up icon"/>
             case "DOWN":
-                return <i className="arrow down icon" />
+                return <i className="arrow down icon"/>
             case "EMPTY":
-                return <i className="window minimize icon" />
+                return <i className="window minimize icon"/>
             default:
                 return input
         }
     }
+
     getGestationalUnit(input) {
         switch (String(input).toUpperCase()) {
             case "WEEK":
@@ -202,7 +229,7 @@ class ModalAssessment extends Component {
             case "MONTH":
                 return ("Month(s)")
             default:
-                return <i aria-hidden="true" className="dont icon" />
+                return <i aria-hidden="true" className="dont icon"/>
         }
     }
 }
@@ -218,17 +245,17 @@ const styles = {
 };
 const GreenLight = () => (
     <div style={styles}>
-        <TrafficIconsCircle name="greencircle" width={50} fill={"#228B22"} />
+        <TrafficIconsCircle name="greencircle" width={50} fill={"#228B22"}/>
     </div>
 );
 const RedLight = () => (
     <div style={styles}>
-        <TrafficIconsOctagon name="redcircle" width={50} fill={"#B22222"} />
+        <TrafficIconsOctagon name="redcircle" width={50} fill={"#B22222"}/>
     </div>
 );
 const YellowLight = () => (
     <div style={styles}>
-        <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"} />
+        <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"}/>
     </div>
 );
-export default ModalAssessment;                    
+export default ModalAssessment;

@@ -47,7 +47,7 @@ class NewAssessment extends React.Component {
             diastolic: "",
             ews_color: null,
             symptoms: [],
-            referred: false,
+            referred: true,
             follow_up: false,
             follow_up_date: null,
             recheck: false,
