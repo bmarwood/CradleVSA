@@ -20,7 +20,6 @@ class Location extends Component {
 
     async componentDidMount() {
         var response = await RequestServer.getLocations()
-        console.log("attempting to get response: ", response.data)
         this.setState({
             columns: [
                 { title: 'id', field: 'id' },

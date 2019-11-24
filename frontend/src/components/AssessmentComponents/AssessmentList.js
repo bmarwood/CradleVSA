@@ -13,7 +13,6 @@ class AssessmentList extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props.id)
         this.state = {
             columns: [],
             data: [],
@@ -190,14 +189,32 @@ class AssessmentList extends Component {
 
     //gets assessments for admin if that role is given, otherwise dynamically populates based on current user
     async getAssessmentList() {
-        console.log(this.state.passed_value)
         if (this.state.passed_value) {
+            /*
+            if (this.state.passed_value) {
             passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
             this.populateData(passback.data)
             if (passback.data.length === 0) {
                 alert("No History Found")
             }
             console.log(passback.data)
+            return
+        }
+             */
+            //check for id by patient
+            //if not patient check by cvsa
+            var passback = await requestServer.getPatient(this.state.passed_value)
+            if (passback.data.length !== 0){
+                passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
+            }else{
+                passback = await requestServer.getAssessmentsByCVSAId(this.state.passed_value)
+            }
+
+            //if still none, then bad call
+            if (passback.data.length === 0) {
+                alert("No History Found")
+            }
+            this.populateData(passback.data)
             return
         }
         var userData = JSON.parse(localStorage.getItem("userData"))
@@ -212,7 +229,6 @@ class AssessmentList extends Component {
             this.populateData(passback.data)
         }
     }
-
 
     render() {
         return (

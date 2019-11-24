@@ -1,0 +1,105 @@
+
+.selector {
+  margin-top: 20px;
+  width: 15%;
+  margin-left: 20px;;
+}
+
+.list {
+  width: 60%;
+  margin-left: 20px;;
+}
+
+.pad-left {
+  padding-left: 20px;
+}
+
+
+.mdl-layout__header {
+  z-index: 1 !important;
+}
+
+.background {
+  background: rgb(255, 255, 255);
+}
+
+#individual .table-position {
+  margin: 0 auto !important;
+  width: 100%;
+}
+
+.delete {
+  padding: 20px;
+}
+
+.allPad {
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.description-body {
+  display: flex;
+  flex-direction:row;
+  padding: 20px;
+}
+
+.round {
+  border-radius: 15px;
+}
+.round-more {
+  border-radius: 25px;
+}
+
+.modal-header {
+  display: block;
+  background: #C06C84;
+  margin: 20px;
+  color: white;
+}
+
+.modal-header-direction {
+  display: flex;
+  flex-direction:row;
+}
+
+.p-30 { 
+  padding: 30px !important;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.pb-30 { 
+  padding-bottom: 30px !important;
+}
+
+
+.one-edge-shadow {
+	-webkit-box-shadow: 0 4px 6px -6px black;
+  -moz-box-shadow: 0 4px 6px -6px black;
+  box-shadow: 0 4px 6px -6px black;
+}
+
+.float-left {
+  text-align: left;
+  width: 50%;
+}
+
+.float-right {
+  text-align: right;
+  width: 50%;
+}
+
+.floatRight {
+  float: right;
+  width: 80%;
+}
+
+.floatLeft {
+  float: left;
+}
+
+.popup-content  {
+  padding: 0 !important;
+}

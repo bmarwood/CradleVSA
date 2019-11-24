@@ -7,9 +7,62 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c5c52e7-f2b7-4154-8017-85c0c31bb73f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/MedicationsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Medications.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/MedicationsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/Modals/MedicationPopup.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/Modals/NewMedicationPopup.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/Modals/NewMedicationPopup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/CommunityComponents/Community.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/CommunityComponents/CommunityGraph.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/CommunityComponents/CommunityPieChart.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/CommunityComponents/CommunityReport.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/IndividualCVSA.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/IndividualCVSA.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/IndividualPatient.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/IndividualPatient.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/NoMatchPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Referral/ReferredList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Transfer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/transferPatient.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/surprised_pikachu.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Models/Assessments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/AssessmentsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/AssessmentsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/LocationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/LocationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/UsersRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/UsersRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Modals/MedicationPopup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Modals/MedicationPopup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Modals/ModalAssessment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Modals/ModalAssessment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Modals/ModalPopup.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Modals/ModalPopup.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AdminComponents/adminNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AdminComponents/adminNav.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navigation/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navigation/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navigation/logout.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navigation/logout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navigation/navigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navigation/navigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navigation/workerNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navigation/workerNav.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/ReadingRetestAnalysis.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/ReadingRetestAnalysis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/Utility.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/Utility.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientAddMedication.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientAddMedication.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientChart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientNotes.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientNotes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/RequestServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/RequestServer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/UserList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/UserList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/UserProfile/ChangePassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/UserProfile/ChangePassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/UserProfile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/UserProfile/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/location.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/location.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/surprised_pikachu.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,7 +113,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.CradleApplication">
+  <component name="RunManager" selected="Application.CradleApplication">
     <configuration name="CradleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ca.cmpt373.earth.cradle.CradleApplication" />
       <module name="cradle" />
@@ -86,7 +139,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.NewAssessment.js" />
         <item itemvalue="Application.CradleApplication" />
         <item itemvalue="Application.CradleApplication" />
       </list>

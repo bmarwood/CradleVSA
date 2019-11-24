@@ -70,7 +70,6 @@ class PatientChart extends React.Component {
     }
 
     populateData(response) {
-        console.log(response)
 
         var dataLineArray = []
         var labels = []
@@ -103,8 +102,14 @@ class PatientChart extends React.Component {
             }
         ]
         response.forEach(list_of_assessments => {
-            //Array of dates
-            labels.push(list_of_assessments.date)
+            //Array of dates\
+            if (list_of_assessments.date.split(" ",4).length > 3) {
+                var tempdate = (list_of_assessments.date.split(" ",4))
+                tempdate.shift()
+                labels.push(tempdate.join(' '))
+              } else {
+                  labels.push(list_of_assessments.date)
+            }
             //3 Arrays for readings
             systolicData.push(list_of_assessments.systolic)
             diastolicData.push(list_of_assessments.diastolic)
@@ -128,16 +133,15 @@ class PatientChart extends React.Component {
     }
 
     async getMatchingPatientID(patient_id) {
-        var passback = await RequestServer.getPatientByID(patient_id)
+        var passback = await RequestServer.getAssessmentsByPatientId(patient_id)
         if (passback != null) {
             //Converts dates in list_of_assessments to Date format to sort by date
-            this.populateData(passback.data.list_of_assessments.sort(function(a,b){
+            this.populateData(passback.data.sort(function(a,b){
                 a = Utility.convertStringToDate(a.date);
                 b = Utility.convertStringToDate(b.date);
                 return a > b ? 1 : a < b ? -1 : 0;
             })
             )
-            console.log(passback.data.list_of_assessments)
         }
     }
 

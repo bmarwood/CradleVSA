@@ -69,11 +69,8 @@ class UserList extends Component {
             user.roles.forEach(role => {
                 roleString = roleString + " " + role.role + ", "
             })
-            console.log('returning roles: ', roleString)
             return roleString
         }
-        console.log('returning empty roles: ')
-
         return roleString
     }
 
@@ -139,7 +136,6 @@ class UserList extends Component {
                                 setTimeout(() => {
                                     resolve();
                                     var didDelete = this.deleteUser(oldData)
-                                    console.log(oldData)
                                     if (didDelete) {
                                         const data = [...this.state.data];
                                         data.splice(data.indexOf(oldData), 1);

@@ -70,7 +70,6 @@ class NewUser extends React.Component {
         if (old_user_data) {
             old_user_data = old_user_data.data
             if (old_user_data !== null) {
-                console.log(old_user_data)
                 this.setState({
                     id: old_user_data.id,
                     gender: old_user_data.gender,
@@ -84,13 +83,10 @@ class NewUser extends React.Component {
                     old_username: old_user_data.username
                 })
                 for (let role of this.state.roles_array) {
-                    console.log(old_user_data.roles)
                     for (let selected_role of old_user_data.roles) {
                         if (selected_role.role.includes(role.name)) {
                             role.checked = true
-                            console.log(role)
                         }
-                        console.log(role)
                     }
                 }
             }
@@ -103,7 +99,6 @@ class NewUser extends React.Component {
         var parsedUser = JSON.parse(user)
         if (parsedUser && parsedUser.roles) {
             parsedUser.roles.forEach(function (role) {
-                //console.log("User data is : " + role.role)
                 roleArray.push(role.role)
             })
         }
@@ -160,7 +155,6 @@ class NewUser extends React.Component {
         this.setState({
             temp_dob: date
         });
-        console.log(this.state.temp_dob.toLocaleString())
     };
 
 
@@ -243,9 +237,6 @@ class NewUser extends React.Component {
 
         //remove and change the inputs
         this.changeState();
-        //console.log(this.state);
-
-        //  '/users/register/this.state'
         var response = null
         if (this.state.update) {
             response = await RequestServer.updateUser(this.state)

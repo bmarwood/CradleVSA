@@ -1,0 +1,92 @@
+
+.overview {
+  width: 40%;
+  margin-left: 20px;;
+}
+
+.list {
+  width: 60%;
+  margin-left: 20px;;
+}
+
+.padding-left {
+  padding-left: 20px;
+}
+
+
+.mdl-layout__header {
+  z-index: 1 !important;
+}
+
+.bg {
+  /* padding: 20px; */
+  background: rgb(255, 255, 255);
+}
+
+#individual .table-position {
+  margin: 0 auto !important;
+  width: 100%;
+  
+}
+
+.delete {
+  padding: 20px;
+}
+
+.description-body {
+  display: flex;
+  flex-direction:row;
+  /* background-color: #355C7D; */
+  /* background: rgb(238, 238, 238); */
+  /* margin: 20px; */
+  padding: 20px;
+}
+
+.modal-header {
+  display: block;
+  background: #C06C84;
+  margin: 20px;
+  color: white;
+}
+
+.modal-header-direction {
+  display: flex;
+  flex-direction:row;
+}
+
+.p-30 { 
+  padding: 30px !important;
+}
+
+.pb-30 { 
+  padding-bottom: 30px !important;
+}
+
+
+.one-edge-shadow {
+	-webkit-box-shadow: 0 4px 6px -6px black;
+  -moz-box-shadow: 0 4px 6px -6px black;
+  box-shadow: 0 4px 6px -6px black;
+}
+
+.float-left {
+  text-align: left;
+  width: 50%;
+}
+
+.float-right {
+  text-align: right;
+  width: 50%;
+}
+
+.float-button-right {
+  float: right;
+}
+
+.float-button-left {
+  float: left;
+}
+
+.popup-content  {
+  padding: 0 !important;
+}
