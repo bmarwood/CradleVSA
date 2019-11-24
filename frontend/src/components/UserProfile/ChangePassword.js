@@ -62,21 +62,16 @@ export default class ChangePassword extends Component {
     //Submit button handler to the back-end
     async handleSubmit(event) {
         event.preventDefault();
-        console.log("Before Submit", this.state);
         if (this.validateNewPassword() === true) {
             try {
-                console.log("hello")
-                console.log("User info", this.state.username);
                 var reset = {
                     username: this.state.username,
                     old_password: this.state.old_password,
                     new_password: this.state.new_password
                 }
                 var response = await RequestServer.updateUserPassword(this.state)
-                console.log(response)
                 if (response !== null) {
                     localStorage.setItem("userData", JSON.stringify(response.data))
-                    console.log(response.data)
                     window.alert("Password change succeed")
                     window.location.reload()
                 } else {
@@ -84,7 +79,6 @@ export default class ChangePassword extends Component {
                 }
             } catch (e) {
                 window.alert("Your current password is wrong")
-                console.log(e)
             }
         } else {
 

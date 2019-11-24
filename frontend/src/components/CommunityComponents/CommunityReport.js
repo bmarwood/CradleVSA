@@ -57,8 +57,6 @@ class CommunityReport extends React.Component {
     //USING ALERT RIGHT NOW, SHOULD DISPLAY INSTEAD
     handleSubmit = async () => {
 
-        console.log(this.state.location)
-        console.log(this.state)
         if (this.state.location === 'EMPTY') {
             alert("Please select location")
             return false
@@ -67,10 +65,8 @@ class CommunityReport extends React.Component {
         let temp_array = []
         if (response !== null) {
             let result = Utility.filterByDate(response.data, this.state.from, this.state.to)
-            console.log(result)
             temp_array.push(result.num_red_up, result.num_red_down, result.num_yellow_down, result.num_yellow_up, result.num_green)
 
-            console.log(temp_array)
             this.setState({
                 pie_array: temp_array,
                 vital_check: result.vital_check,

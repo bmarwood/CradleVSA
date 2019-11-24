@@ -61,7 +61,6 @@ class TransferPatient extends Component {
 
 
     populateData(response) {
-        console.log(response)
         var IdList = []
         response.forEach(patient => {
             var id = patient.id

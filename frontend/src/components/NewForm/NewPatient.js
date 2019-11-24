@@ -14,7 +14,6 @@ class NewPatient extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props.id)
 
         this.state = {
             id: '',
@@ -44,7 +43,6 @@ class NewPatient extends React.Component {
         ValidatorForm.addValidationRule('checkID', (value) => {
             let validID = this.checkID(value)
                 .catch(() => {
-                    console.log("validID", validID)
                     return true;
                 });
             return validID;
@@ -80,7 +78,6 @@ class NewPatient extends React.Component {
         if (old_data) {
             old_data = old_data.data
             if (old_data !== null) {
-                console.log(old_data)
                 this.setState({
                     id: old_data.id,
                     gender: old_data.gender,
@@ -136,7 +133,6 @@ class NewPatient extends React.Component {
     //get a single patient with matching patient_id
     async getMatchingPatientID(patient_id) {
         var passback = await RequestServer.getPatientByID(patient_id)
-        //console.log(passback)
         if (passback !== null) {
             return passback.data.id
         }
@@ -153,11 +149,6 @@ class NewPatient extends React.Component {
     }
 
     handleSubmit = async () => {
-        console.log(this.state)
-        // if (this.state.vht_id === "EMPTY") {
-        //     alert("Please select at least one VHT")
-        //     return false;
-        // }
         if (this.state.dob_type === "date") {
             let input_dob = Utility.convertDate(this.state.temp_dob)
             let today = Utility.convertDate(new Date())
@@ -172,7 +163,6 @@ class NewPatient extends React.Component {
         }
         this.changeState();
         var response = null;
-        console.log(this.state.update)
         if (this.state.update) {
             response = await RequestServer.updatePatient(this.state)
             alert("UPDATED!!")

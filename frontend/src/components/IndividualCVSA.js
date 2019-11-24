@@ -38,7 +38,6 @@ class IndividualCVSA extends Component {
             if (response.data === "") {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
             } else {
-                console.log(response)
                 this.setState({
                     assessment_id: response.data._id,
                     ews_color: response.data.ews_color,
@@ -66,8 +65,6 @@ class IndividualCVSA extends Component {
             if (response.data === "") {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
             } else {
-                console.log("User DATA:", response.data)
-                console.log("got data")
                 var roles = []
                 response.data.roles.forEach(element => {
                     let role = this.capitalizeFirstLetter(element.role.toLowerCase())

@@ -64,8 +64,6 @@ class IndividualPatient extends Component {
             if (response.data === "") {
                 this.setState({ patient_name: 'ID doesn\'t match to a patient' })
             } else {
-                console.log("Patient DATA:", response.data)
-                console.log("got data")
                 this.setState({
                     patient_id: response.data.id,
                     patient_name: response.data.name,

@@ -64,7 +64,6 @@ function getRoles() {
     var parsedUser = JSON.parse(user)
     if (parsedUser && parsedUser.roles) {
         parsedUser.roles.forEach(function (role) {
-            console.log("User data is : " + role.role)
             roleArray.push(role.role)
         })
     }

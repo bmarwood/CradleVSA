@@ -108,7 +108,6 @@ class NewAssessment extends React.Component {
             worker_id: parsedUser.id,
             worker_role: temp_role_array
         })
-        console.log(this.state.worker_role)
 
         if (temp_role_array.includes("ADMIN")) {
             this.getVHTList()
@@ -450,8 +449,6 @@ class NewAssessment extends React.Component {
 
 
     async addAssessment() {
-        console.log("New Assessment")
-        console.log(this.state)
         var passback = await RequestServer.addAssessment(this.state)
         if (passback !== null) {
             this.props.history.push(

@@ -24,7 +24,6 @@ export default class Profile extends Component {
             roles_temp: this.getUserRoles(userData),
             enabled: userData.enabled
         }
-        console.log(this.state)
     }
 
     getUserRoles(user) {
@@ -33,10 +32,8 @@ export default class Profile extends Component {
             user.roles.forEach(role => {
                 roleString = roleString + " " + role.role + ", "
             })
-            console.log('returning roles: ', roleString)
             return roleString
         }
-        console.log('returning empty roles: ')
 
         return roleString
     }
@@ -64,12 +61,10 @@ export default class Profile extends Component {
         event.preventDefault();
         const data = new FormData(event.target);
         delete (this.state.roles_temp);
-        console.log("Before Submit", this.state);
         try {
             var response = await RequestServer.updateUser(this.state)
             if (response != null) {
                 localStorage.setItem("userData", JSON.stringify(response.data))
-                console.log(response.data)
                 window.alert("Profile changed successfully")
                 window.location.reload()
             }

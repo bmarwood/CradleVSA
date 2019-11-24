@@ -28,21 +28,14 @@ class Register extends Component {
 
     checkPasswordMatch() {
         if (this.state.password.trim() === "" || this.state.password !== this.state.passwordRetyped) {
-            console.log('Passwords mismatched')
             this.setState({
                 error: true,
                 errorMsg: "Passwords do not match"
             }, () => {
-                console.log(this.state.password, this.state.passwordRetyped)
             })
             return false;
         }
         return true;
-    }
-
-    testConsoleLog(response) {
-        console.log("response from server: ", response, this.state)
-        console.log("decomposing response: ", response.data.id, " ", response.data.name, response.status)
     }
 
     clearFields() {
@@ -92,8 +85,6 @@ class Register extends Component {
             return;
         }
 
-        console.log("State before calling register function", this.state)
-
         var user = {
             id: this.state.id,
             name: this.state.name,
@@ -123,7 +114,6 @@ class Register extends Component {
     }
 
     radioHandler(e) {
-        console.log(e.target)
         var target = e.target.name
         var value = e.target.value
 

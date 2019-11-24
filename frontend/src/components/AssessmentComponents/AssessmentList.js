@@ -12,7 +12,6 @@ class AssessmentList extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props.id)
         this.state = {
             columns: [],
             data: [],
@@ -184,10 +183,8 @@ class AssessmentList extends Component {
             var passback = await requestServer.getPatient(this.state.passed_value)
             if (passback.data.length !== 0){
                 passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
-                console.log("1 " + passback)
             }else{
                 passback = await requestServer.getAssessmentsByCVSAId(this.state.passed_value)
-                console.log("2" + passback)
             }
             
             //if still none, then bad call
