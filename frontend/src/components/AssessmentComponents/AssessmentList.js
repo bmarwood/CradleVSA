@@ -6,6 +6,7 @@ import TrafficIconsTriangle from "../Visuals/TrafficIconsTriangle";
 import TrafficIconsOctagon from "../Visuals/TrafficIconsOctagon";
 import ModalPopup from "../../Modals/ModalPopup";
 import requestServer from '../RequestServer';
+import ModalRecheck from "../../Modals/ModalRecheck";
 
 
 class AssessmentList extends Component {
@@ -27,6 +28,12 @@ class AssessmentList extends Component {
         this.timer = setInterval(() => this.getAssessmentList(), 10000);
         this.setState({
             columns: [
+                {
+                    title: 'Recheck Button',
+                    field: 'recheck_button',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
                 {
                     title: 'Patient Id',
                     field: 'patient_id',
@@ -94,7 +101,8 @@ class AssessmentList extends Component {
                     follow_up: 'LOADING...',
                     recheck: 'LOADING...',
                     arrow: 'LOADING...',
-                    info: <ModalPopup/>
+                    info: <ModalPopup/>,
+                    recheck_button: <ModalRecheck/>
                 },
             ],
 
@@ -119,6 +127,7 @@ class AssessmentList extends Component {
         var assessmentList = []
         response.forEach(function (assessment) {
             console.log("assessment: ", assessment)
+            var recheck_button = <ModalRecheck data={assessment}/>
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
                 cvsa_id={assessment.cvsa_id}
@@ -151,6 +160,7 @@ class AssessmentList extends Component {
                 symptoms: assessment.symptoms,
                 follow_up_date: assessment.follow_up_date,
                 info: info,
+                recheck_button: recheck_button
             }
 
             assessmentList.push(assessment_obj)

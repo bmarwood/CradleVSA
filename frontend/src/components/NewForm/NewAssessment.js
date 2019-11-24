@@ -584,24 +584,24 @@ class NewAssessment extends React.Component {
                                 onChange={this.changeDOB}
                                 maxDate={new Date()}
                             />
-                            <br/>
+
                         </div>
+                        <br/>
+                        <label>CSVA ID: </label>
+                        <br/>
+                        <select
+                            value={this.state.cvsa_id}
+                            onChange={this.handleChange}
+                            name="cvsa_id"
+                        >
+                            <option value="EMPTY"> --SELECT ONE--</option>
+
+                            <option value={this.state.worker_id}> Use my ID</option>
+                            {user_select_option}
+                        </select>
+                        <br/>
+
                         <div style={{display: (this.state.create_patient ? 'block' : 'none')}}>
-
-                            <label>CSVA ID: </label>
-                            <br/>
-                            <select
-                                value={this.state.cvsa_id}
-                                onChange={this.handleChange}
-                                name="cvsa_id"
-                            >
-                                <option value="EMPTY"> --SELECT ONE--</option>
-
-                                <option value={this.state.worker_id}> Use my ID</option>
-                                {user_select_option}
-                            </select>
-                            <br/>
-
                             <br/>
                             <label>Gender: </label>
                             <select
