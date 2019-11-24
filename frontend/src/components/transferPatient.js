@@ -19,7 +19,8 @@ class TransferPatient extends Component {
             vht_w_assessment: [],
             from_vht: '',
             to_vht: '',
-            loading: false
+            loading: false,
+            user_role: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.getVHTList()
@@ -78,6 +79,26 @@ class TransferPatient extends Component {
             IdList.push(patient_obj)
         });
         this.setState({data: IdList})
+    }
+
+
+    getRoles() {
+        if(this.state.user_role.length === 0)
+        {
+            var roleArray = []
+            var user = localStorage.getItem("userData")
+            var parsedUser = JSON.parse(user)
+            if (parsedUser && parsedUser.roles) {
+                parsedUser.roles.forEach(function (role) {
+                    roleArray.push(role.role)
+                })
+            }
+            this.setState({user_role:roleArray})
+            return roleArray
+        }
+        else{
+            return this.state.user_role
+        }
     }
 
 
@@ -186,6 +207,9 @@ class TransferPatient extends Component {
 
     render() {
         this.checkEmptyFlag()
+        var userRoles = this.getRoles()
+        const Role_Termination_Integer = -1
+        console.log("this is the logged in user role", userRoles)
         let temp_to_vht = this.state.to_vht
         let temp_from_vht = this.state.from_vht
         let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
