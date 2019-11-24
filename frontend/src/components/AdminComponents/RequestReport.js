@@ -1,8 +1,5 @@
 // All the rest of the content of the landing page is coming from 
 import React, {Component} from 'react';
-import {Grid} from 'react-mdl';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import Utility from '../NewForm/Utility';
 import Button from '@material-ui/core/Button';
 import '../../App.css';
@@ -15,6 +12,8 @@ class RequestReport extends Component {
         super(props);
         this.state = {
             vht_list: [],
+            location_list: [],
+            location: '',
             vht_id : '',
             temp_from_date : new Date(),
             temp_to_date: new Date(),
@@ -22,10 +21,12 @@ class RequestReport extends Component {
             to_date: 'date',
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeLocation = this.handleChangeLocation.bind(this);
     }
 
     componentDidMount() {
         this.getVHTsList()
+        this.getAllLocations()
     }
 
 
@@ -51,6 +52,25 @@ class RequestReport extends Component {
 
     }
 
+    populateLocationData(response) {
+        var LocationList = []
+
+        response.forEach(location => {
+            var name = location.name
+            var address = location.address
+            console.log(name)
+            var location_obj = {
+                name: name,
+                address: address
+            }
+            LocationList.push(location_obj)
+        });
+
+        this.setState({location_list: LocationList})
+        console.log("set location data", LocationList)
+
+    }
+
     async getVHTsList() {
         var passback = await requestServer.getAllVHTs()
         if (passback !== null) {
@@ -61,15 +81,29 @@ class RequestReport extends Component {
         }
     }
 
+    async getAllLocations() {
+        var passback = await requestServer.getLocations()
+        if (passback !== null) {
+            this.populateLocationData(passback.data)
+        }
+        else {
+            console.log("Did not receive anything")
+        }
+    }
+
 
     handleChange(event){
-        console.log("EVENT", event.target.name)
-        //event.target.selected = event.target.id
         this.setState({
-            //[event.target.name] : event.target.value,
             vht_id: event.target.value
         })
         console.log("value is", event.target.value)
+    }
+
+    handleChangeLocation(event){
+        this.setState({
+            location: event.target.value
+        })
+        console.log("location is", event.target.value)
     }
 
     handleSubmit = async () => {
@@ -82,11 +116,6 @@ class RequestReport extends Component {
                 let input_date_from = Utility.convertDate(this.state.temp_from_date)
                 let input_date_to = Utility.convertDate(this.state.temp_to_date)
                 let today = Utility.convertDate(new Date())
-
-                // if (today === input_dob) {
-                //     alert("Incorrect date of birth")
-                //     return false;
-                // }
                 this.setState({
                     from_date: input_date_from,
                     to_date: input_date_to
@@ -137,6 +166,11 @@ class RequestReport extends Component {
     render() {
         let vht_select_option = this.state.vht_list.map(item => <option key={item.id}
             value={item.id}> {item.id} </option>)
+
+        let location_select_option = this.state.location_list.map(location => <option key={location.id}
+            value={location.name}> {location.name} </option>)
+
+        console.log("Location Select Option",location_select_option)
         return (
             <div style={{
                 backgroundColor: 'white',
@@ -146,11 +180,22 @@ class RequestReport extends Component {
             }}>
                 <h1 style={{color: "black"}}> VHT Activity Report</h1>
                 {/* <h4 style={{color: "white"}}> Health Facility Location</h4> */}
-                <label style = {{color:"black"}} >Select VHT: </label>
+                <h4 style={{color: "black"}} >Select Health Facility Location </h4>
+                    <select
+                            onChange={this.handleChangeLocation}
+                            value={this.state.location}
+                            name="location_list"
+                    >
+                            <option value="null"> --SELECT ONE--</option>
+                            {location_select_option}
+                    </select>
+                <br/>
+
+                <h4 style={{color: "black"}}>Select VHT: </h4>
                 <form onSubmit={this.handleSubmit}>
                     <select
                             onChange={this.handleChange}
-                            value={this.state.vht_list}
+                            value={this.state.vht_id}
                             name="vht_list"
                     >
                             <option value="null"> --SELECT ONE--</option>
