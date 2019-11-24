@@ -205,6 +205,18 @@ class RequestServer extends Component {
         }
     }
 
+    //get list of assessments based on the patient id
+    async getAssessmentsByLocation(location_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/assessments/getByLocation' + location_id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+
     //TEST : http://localhost:8080/patients/get1
     //get only single patient by the patient id
     async getPatientByID(patient_id) {
@@ -337,6 +349,47 @@ class RequestServer extends Component {
             return null
         }
     }
+    async getMedicationList() {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/medications/all')
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+    async getMedicationListByID(patient_id) {
+        try {
+            var response = await axios.get(this.getServerLocation() + '/medications/get' + patient_id)
+            return response
+        } catch (error) {
+            console.log('error block')
+            console.log(error)
+            return null
+        }
+    }
+        async addMedications(medications) {
+            try {
+                var response = await axios.post(this.getServerLocation() + '/medications/add', medications)
+                return response
+            } catch (error) {
+                console.log('error block')
+                console.log(error)
+                return null
+            }
+        }
+
+        async deleteMedication(id) {
+            try {
+                let response = await axios.delete(this.getServerLocation() + '/medications/delete' + id)
+                return response
+            } catch (error) {
+                console.log('error block')
+                console.log(error)
+                return null
+            }
+        }
 
 }
 
