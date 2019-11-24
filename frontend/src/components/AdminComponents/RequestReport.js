@@ -177,7 +177,8 @@ class RequestReport extends Component {
         return (
             <div style={{
                 backgroundColor: 'white',
-                margin: 'auto',
+                margin: '20px auto',
+                maxWidth: '50%',
                 padding: '50px',
                 textAlign: 'center'
             }}>
