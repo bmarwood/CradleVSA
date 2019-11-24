@@ -35,7 +35,7 @@ class NewAssessment extends React.Component {
         this.state = {
             //use get method to get the assessment id <- should be equal to # of assessments + 1
             id: '',
-            patient_id: '',
+            patient_id: this.props.match.params.id,
             birth_date: '',
             vht_id: "EMPTY",
             gender: "MALE",
@@ -101,6 +101,12 @@ class NewAssessment extends React.Component {
     //componentWillUpdate
     componentDidMount() {
         //get cvsa_id
+        console.log(isNaN(this.state.patient_id))
+        
+        if(!(isNaN(this.state.patient_id))){
+            this.getMatchingPatientData(this.state.patient_id)
+        }
+
         var user = localStorage.getItem("userData")
         var parsedUser = JSON.parse(user)
         var temp_role_array = Utility.getRoles()

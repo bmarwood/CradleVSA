@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './AssessmentList.css';
 import TrafficIconsCircle from "../Visuals/TrafficIconsCircle";
@@ -7,6 +7,8 @@ import TrafficIconsOctagon from "../Visuals/TrafficIconsOctagon";
 import ModalPopup from "../../Modals/ModalPopup";
 import requestServer from '../RequestServer';
 import Utility from '../NewForm/Utility'
+import { Link } from 'react-router-dom';
+
 
 
 class AssessmentList extends Component {
@@ -30,56 +32,56 @@ class AssessmentList extends Component {
                 {
                     title: 'Patient Id',
                     field: 'patient_id',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Cradle Professional Id',
                     field: 'cvsa_id',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Early Warning Color',
                     field: 'ews_color',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Shock Arrow',
                     field: 'arrow',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Gestational Age',
                     field: 'gestational_age',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Referred?',
                     field: 'referred',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Follow Up?',
                     field: 'follow_up',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Recheck?',
                     field: 'recheck',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Assessment Information',
                     field: 'info',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
             ],
             data: [
@@ -94,7 +96,7 @@ class AssessmentList extends Component {
                     follow_up: 'LOADING...',
                     recheck: 'LOADING...',
                     arrow: 'LOADING...',
-                    info: <ModalPopup/>
+                    info: <ModalPopup />
                 },
             ],
 
@@ -115,9 +117,9 @@ class AssessmentList extends Component {
     }
 
 
-    populateData(response) {
+    async populateData(response) {
         var assessmentList = []
-        response.forEach(function (assessment) {
+        for (let assessment of response) {
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
                 cvsa_id={assessment.cvsa_id}
@@ -142,7 +144,7 @@ class AssessmentList extends Component {
                 gestational_age: getGestationalAge(assessment),
                 referred: getBoolVisual(assessment.referred),
                 follow_up: getBoolVisual(assessment.follow_up),
-                recheck: checkForRecheck(assessment.recheck, assessment.date),
+                recheck: await checkForRecheck(assessment.recheck, assessment.date, assessment.patient_id, assessment._id),
                 birth_date: assessment.birth_date,
                 heart_rate: assessment.heart_rate,
                 systolic: assessment.systolic,
@@ -153,9 +155,8 @@ class AssessmentList extends Component {
             }
 
             assessmentList.push(assessment_obj)
-        });
-
-        this.setState({data: assessmentList})
+        }
+        this.setState({ data: assessmentList })
     }
 
     getRoles(parsedUser) {
@@ -233,61 +234,65 @@ const styles = {
 };
 const GreenLight = () => (
     <div style={styles}>
-        <TrafficIconsCircle name="greencircle" width={50} fill={"#228B22"}/>
+        <TrafficIconsCircle name="greencircle" width={50} fill={"#228B22"} />
     </div>
 );
 const RedLight = () => (
     <div style={styles}>
-        <TrafficIconsOctagon name="redcircle" width={50} fill={"#B22222"}/>
+        <TrafficIconsOctagon name="redcircle" width={50} fill={"#B22222"} />
     </div>
 );
 const YellowLight = () => (
     <div style={styles}>
-        <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"}/>
+        <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"} />
     </div>
 );
 
-function checkForRecheck(recheck, date) {
+async function checkForRecheck(recheck, date, patient_id, id) {
     // if date within 20 min display button
-    // if()
-    var old_date = new Date(date)
-    var dateobj = old_date.getMinutes()
-    var datenew = new Date()
+    let recheckVal = String(recheck).toUpperCase();
+    if (recheckVal === "TRUE") {
+        var old_date = new Date(date)
+        var datenew = new Date()
 
-    console.log("\nold date, ", old_date)
-    console.log("\nnew date, ", datenew)
-    
-    let dif = Math.abs((datenew.getTime() - old_date.getTime()) / 1000 / 60)
-    console.log("dif \n", dif)
-
-    if (dif <= 20) {
-        console.log("IT did not pass 20 min ")
+        var dif = Math.abs((datenew.getTime() - old_date.getTime()) / 1000 / 60)
+        var lastAssessmentIdByPatient
+        lastAssessmentIdByPatient = await getLastAssessmentIDByPatient(patient_id);
+        //check if last assessment by patient or less then 20 min
+        if (dif <= 20 && (id === lastAssessmentIdByPatient)) {
+            return <button className="ui icon button"><Link to={`/newAssessment`}><i aria-hidden="true" className="check icon"></i></Link></button>
+        } else {
+            return getBoolVisual(recheck)
+        }
+    } else {
+        return getBoolVisual(recheck)
     }
-
-
-// data from database
-// console.log("db: " + data_from_database)
-// console.log("current date: " + date)
-
-// var FIVE_MIN=5*60*1000;
-
-// if((date - new Date(date_from_database)) > FIVE_MIN) {
-//    console.log('Delayed by more than 5 mins');
-// }
-    return getBoolVisual(recheck)
-
-// <button className="ui icon button"><i aria-hidden="true" className="info circle icon"></i></button>
 }
+
+async function getLastAssessmentIDByPatient(id) {
+    var response = await requestServer.getLastAssessmentByPatientByID(id)
+    if (response !== null) {
+        if (response.data === "") {
+            this.setState({ patient_name: 'ID doesn\'t match to a patient' })
+        } else {
+            return response.data._id
+        }
+    } else {
+        return null;
+    }
+}
+
+
 
 
 function getArrowVisual(input) {
     switch (String(input).toUpperCase()) {
         case "UP":
-            return <i className="arrow up icon"/>
+            return <i className="arrow up icon" />
         case "DOWN":
-            return <i className="arrow down icon"/>
+            return <i className="arrow down icon" />
         case "EMPTY":
-            return <i className="window minimize icon"/>
+            return <i className="window minimize icon" />
         default:
             return input
     }
@@ -296,11 +301,11 @@ function getArrowVisual(input) {
 function getColorVisual(input) {
     switch (String(input).toUpperCase()) {
         case "GREEN":
-            return <GreenLight/>
+            return <GreenLight />
         case "YELLOW":
-            return <YellowLight/>
+            return <YellowLight />
         case "RED":
-            return <RedLight/>
+            return <RedLight />
         default:
             return input
     }
@@ -309,9 +314,9 @@ function getColorVisual(input) {
 function getBoolVisual(input) {
     switch (String(input).toUpperCase()) {
         case "TRUE":
-            return <i aria-hidden="true" className="check icon"/>
+            return <i aria-hidden="true" className="check icon" />
         case "FALSE":
-            return <i aria-hidden="true" className="x icon"/>
+            return <i aria-hidden="true" className="x icon" />
         default:
             return input
     }
@@ -324,7 +329,7 @@ function getGestationalAge(assessment) {
         case "MONTH":
             return (assessment.gestational_age + " Month(s)")
         default:
-            return <i aria-hidden="true" className="dont icon"/>
+            return <i aria-hidden="true" className="dont icon" />
     }
 }
 
