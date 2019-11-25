@@ -193,6 +193,27 @@ class RequestServer extends Component {
         }
     }
 
+
+    async getCHOsListOfVHTs() {
+        try {
+            var choList = []
+            var response = await axios.get(this.getServerLocation() + '/users/all')
+            for (let a = 0; a < response.data.length; a++) {
+                for (let y = 0; y < response.data[a].roles.length; y++) {
+                    if (response.data[a].roles[y].role === "VHT" && response.data[a]) {
+                        choList.push(response.data[a])
+                    }
+                }
+            }
+            response.data = choList
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
+
     async getVHTList() {
         try {
             var response = await axios.get(this.getServerLocation() + '/vhts/all')
@@ -313,6 +334,27 @@ class RequestServer extends Component {
             return null
         }
     }
+
+
+    async getCHOList() {
+        try {
+            var choList = []
+            var response = await axios.get(this.getServerLocation() + '/users/all')
+            for (let a = 0; a < response.data.length; a++) {
+                for (let y = 0; y < response.data[a].roles.length; y++) {
+                    if (response.data[a].roles[y].role === "COMMUNITY_HEALTH_OFFICER") {
+                        choList.push(response.data[a])
+                    }
+                }
+            }
+            response.data = choList
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
 
     async getUserListCHO(user_id) {
         try {

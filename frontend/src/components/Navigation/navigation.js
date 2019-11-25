@@ -24,7 +24,9 @@ import IndividualPatient from '../IndividualPatient';
 import IndividualCVSA from '../IndividualCVSA';
 import CommunityReport from "../CommunityComponents/CommunityReport";
 import TransferPatient from '../transferPatient';
+import TransferVHT from "../transferVHT";
 import ReferredList from "../Referral/ReferredList";
+import HWDashboard from '../HealthWorkerComponents/healthWorkerDashboard';
 
 const Navigation = () => (
     <Switch>
@@ -33,7 +35,7 @@ const Navigation = () => (
         <Route exact path="/login" component={Login}/>
         <Route path="/resources" component={Resources}/>
         {/* Private Route */}
-        <PrivateRoute exact path="/user-dashboard" component={PatientList}/>
+        <PrivateRoute exact path="/user-dashboard" component={HWDashboard}/>
         <PrivateRoute exact path="/AssessmentList" component={AssessmentList}/>
         <PrivateRoute path="/logout" component={Logout}/>
         <PrivateRoute path="/profile" component={Profile}/>
@@ -44,7 +46,7 @@ const Navigation = () => (
         <AdminRoute path="/newlocation" component={NewLocation}/>
         <ManagerRoute path="/request-VHT-report" component={RequestReport}/>
         <ManagerRoute path="/vht-report" component={VhtReport}/>
-        <PrivateRoute exact path="/user-dashboard" component={PatientList}/>
+        <PrivateRoute exact path="/user-dashboard" component={HWDashboard}/>
         <AdminRoute exact path="/admin-dashboard" component={Landing_List}/>
         <AdminRoute exact path="/register" component={Register}/>
         <AdminRoute path="/admin/landing" component={Landing_List}/>
@@ -61,6 +63,7 @@ const Navigation = () => (
         <WorkerRoute path="/CommunityReport" component={CommunityReport}/>
 
         <ManagerRoute path="/transfer" component={TransferPatient}/>
+        <AdminRoute path="/transferVHT" component={TransferVHT}/>
         <PrivateRoute path="/profile" component={Profile}/>
         <PrivateRoute path="/changePassword" component={ChangePassword}/>
         <PrivateRoute path="/patient:id" component={IndividualPatient} />
@@ -145,7 +148,7 @@ function ManagerRoute({component: Component, authed, ...rest}) {
 
     return (
         <Route {...rest} render={(props) => (
-            localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer)
+            localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer || roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer)
                 ? <Component {...props} />
                 : <Redirect to={{
                     pathname: '/',

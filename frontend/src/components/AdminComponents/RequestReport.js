@@ -196,7 +196,8 @@ class RequestReport extends Component {
                 margin: '20px auto',
                 maxWidth: '50%',
                 padding: '50px',
-                textAlign: 'center'
+                textAlign: 'center',
+                borderRadius: '10px'
             }}>
                 <h1 style={{ color: "black" }}> VHT Activity Report</h1>
                 {/* <h4 style={{color: "white"}}> Health Facility Location</h4> */}
