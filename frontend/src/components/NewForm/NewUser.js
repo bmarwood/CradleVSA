@@ -1,10 +1,10 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import ShowRoles from "./SymptomsForm";
-import { Grid, Cell } from 'react-mdl';
+import {Grid, Cell} from 'react-mdl';
 import RequestServer from '../RequestServer'
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-toastify/dist/ReactToastify.css';
@@ -53,6 +53,7 @@ class NewUser extends React.Component {
             user_array: [],
             update: props.id,
             old_username: '',
+            location_array: [],
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
@@ -111,9 +112,17 @@ class NewUser extends React.Component {
                 return true;
             });
 
+        this.getLocation()
+            .catch(() => {
+                this.setState({
+                    location_array: []
+                })
+            })
+
         this.setState({
             roles_array: this.getRoleArray()
         });
+
 
         //check for user id - no duplicate value
         ValidatorForm.addValidationRule('checkID', (value) => {
@@ -140,14 +149,17 @@ class NewUser extends React.Component {
         var roles = this.getRoles()
         if (roles.indexOf("ADMIN") > Role_Termination_Integer) {
             return [//{id: 1, name: Role.USER, checked: true},
-                { id: 2, name: Role.ADMIN, checked: false },
-                { id: 3, name: Role.HEALTH_WORKER, checked: false },
-                { id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false },
-                { id: 5, name: Role.VHT, checked: false }]
+                {id: 2, name: Role.ADMIN, checked: false},
+                {id: 3, name: Role.HEALTH_WORKER, checked: false},
+                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false},
+                {id: 5, name: Role.VHT, checked: false}]
+        } else if (roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer) {
+            return [
+                {id: 5, name: Role.VHT, checked: false},
+                {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false},
+            ]
         } else if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer) {
-            return [//{id: 1, name: Role.USER, checked: true},
-                { id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false },
-                { id: 5, name: Role.VHT, checked: false }]
+            return [{id: 5, name: Role.VHT, checked: false}]
         }
     }
 
@@ -182,11 +194,11 @@ class NewUser extends React.Component {
         const role_array = this.state.roles_array;
         for (let index in role_array) {
             if (role_array[index].checked) {
-                this.state.roles.push({ id: this.state.id, role: role_array[index].name })
+                this.state.roles.push({id: this.state.id, role: role_array[index].name})
             }
         }
         //hard code the user to do not display the user
-        this.state.roles.push({ id: 1, role: Role.USER })
+        this.state.roles.push({id: 1, role: Role.USER})
     }
 
     //format change
@@ -223,6 +235,16 @@ class NewUser extends React.Component {
         }
     }
 
+    async getLocation() {
+        let response = await RequestServer.getLocations()
+        if (response !== null) {
+            this.setState({
+                location_array: response.data
+            })
+        }
+        return [];
+    }
+
 
     handleSubmit = async () => {
         //input validation
@@ -233,6 +255,10 @@ class NewUser extends React.Component {
         if (this.state.error) {
             alert("Must select one role")
             return
+        }
+        if (this.state.location === "EMPTY") {
+            alert(this.state.errorMsg + "\nPlease select one of the location")
+            return;
         }
 
         //remove and change the inputs
@@ -247,7 +273,7 @@ class NewUser extends React.Component {
                 toast("User Added");
                 this.props.history.push(
                     '/',
-                    { detail: response.data }
+                    {detail: response.data}
                 )
             } else {
                 this.setState({
@@ -269,7 +295,10 @@ class NewUser extends React.Component {
 
     render() {
         let roles_map = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
-            handleChange={this.handleCheckbox} />)
+                                                                      handleChange={this.handleCheckbox}/>)
+        let location_select_option = this.state.location_array.map(location => <option key={location.id}
+                                                                                       value={location.id}> {location.name}</option>)
+
         return (
             <div className="newForm">
                 <ValidatorForm
@@ -277,7 +306,7 @@ class NewUser extends React.Component {
                     onSubmit={this.handleSubmit}
                     onError={errors => console.log(errors)}
                 >
-                    <div style={{ display: (this.state.update ? 'none' : 'block') }}>
+                    <div style={{display: (this.state.update ? 'none' : 'block')}}>
                         <h4>New Worker </h4>
                     </div>
 
@@ -292,8 +321,8 @@ class NewUser extends React.Component {
                                 errorMessages={['this field is required', 'Invalid input (only letters)']}
                                 variant="outlined"
                             />
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
                             <TextValidator
                                 label="Last Name"
                                 onChange={this.handleChange}
@@ -303,8 +332,8 @@ class NewUser extends React.Component {
                                 errorMessages={['this field is required', 'Invalid input (only letters)']}
                                 variant="outlined"
                             />
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
                             <TextValidator
                                 label="Address"
                                 onChange={this.handleChange}
@@ -312,8 +341,8 @@ class NewUser extends React.Component {
                                 value={this.state.address}
                                 variant="outlined"
                             />
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
                         </Cell>
 
                         <Cell col={4}>
@@ -326,8 +355,8 @@ class NewUser extends React.Component {
                                 errorMessages={['this field is required', 'Existing ID: Re-enter the ID']}
                                 variant="outlined"
                             />
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
                             <TextValidator
                                 label="Username"
                                 onChange={this.handleChange}
@@ -337,9 +366,9 @@ class NewUser extends React.Component {
                                 errorMessages={['this field is required', 'Existing Username: Re-enter the username']}
                                 variant="outlined"
                             />
-                            <br />
-                            <br />
-                            <div style={{ display: (this.state.update ? 'none' : 'block') }}>
+                            <br/>
+                            <br/>
+                            <div style={{display: (this.state.update ? 'none' : 'block')}}>
                                 <TextValidator
                                     label="Password"
                                     onChange={this.handleChange}
@@ -350,20 +379,20 @@ class NewUser extends React.Component {
                                     errorMessages={['this field is required']}
                                     variant="outlined"
                                 />
-                                <br />
-                                <br />
+                                <br/>
+                                <br/>
                             </div>
-                            <TextValidator
-                                label="Assigned Area"
+                            <label> Location </label>
+                            <select
+                                value={this.state.area}
                                 onChange={this.handleChange}
                                 name="area"
-                                value={this.state.area}
-                                validators={['required']}
-                                errorMessages={['this field is required']}
-                                variant="outlined"
-                            />
-                            <br />
-                            <br />
+                            >
+                                <option value="EMPTY"> --SELECT ONE--</option>
+                                {location_select_option}
+                            </select>
+                            <br/>
+                            <br/>
                         </Cell>
                         <Cell col={4}>
                             <p>Date of Birth:</p>
@@ -372,8 +401,8 @@ class NewUser extends React.Component {
                                 onChange={this.changeDOB}
                                 maxDate={new Date()}
                             />
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
 
                             <label>Gender: </label>
                             <select
@@ -384,19 +413,19 @@ class NewUser extends React.Component {
                                 <option value="MALE"> Male</option>
                                 <option value="FEMALE"> Female</option>
                             </select>
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
                             <p>Select role</p>
                             {roles_map}
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
                         </Cell>
                     </Grid>
                     <Button type="submit" style={{
                         backgroundColor: 'blue',
                         color: 'white'
                     }}>Submit</Button>
-                    <br />
+                    <br/>
                 </ValidatorForm>
             </div>
         );

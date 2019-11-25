@@ -84,8 +84,8 @@ export default class Profile extends Component {
     renderDefaultView = () => {
         //const classes = useStyles();
         return (
-            <div style={{margin: 'auto', textAlign: 'center'}}>
-                <div style={{margin: 'auto', backgroundColor: 'white', textAlign: 'center', width: '100%'}}>
+            <div style={{margin: '50px 100px', textAlign: 'center'}}>
+                <div style={{margin: 'auto',borderRadius: '15px', backgroundColor: 'white', textAlign: 'center', width: '100%'}}>
                     <form className="demo-form" noValidate autoComplete="off" onSubmit={this.handleSubmit.bind(this)}>
                         <Grid className="demo-grid-ruler">
                             <Cell col={12}>

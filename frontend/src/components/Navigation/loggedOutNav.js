@@ -7,8 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function LoggedOutNav() {
     return (
         <Navigation>
-            <Link to ="/">Home</Link>
-            <Link to ="/resources">Resources</Link>
+            
         </Navigation>
     )
 }

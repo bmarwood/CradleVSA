@@ -1,5 +1,10 @@
 .table-position{
     margin: 0 auto;
     width: 80%;
-    margin-top: 80px;
+    margin-top: 40px;
+}
+
+.MuiAppBar-colorPrimary {
+    color: #fff;
+    background-color: #4694ab;
 }

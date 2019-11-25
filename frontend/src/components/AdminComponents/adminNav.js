@@ -7,15 +7,10 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function AdminNav() {
     return (
         <Navigation>
-            <Link to="/">Home</Link>
-            <Link to="/admin/landing">Admin Landing page</Link>
-            <Link to="/PatientList">Patient List</Link>
-            <Link to="/AssessmentList">Assessments List</Link>
-            <Link to="/CommunityReport">Community Report</Link>
-            <Link to="/ReferredList">Referral</Link>
-            <Link to="/Transfer">Transfer Patients</Link>
-            <Link to="/TransferVHT">Transfer VHT</Link>
-            <Link to="/Resources">Resources</Link>
+            <Link to="/admin-dashboard">My Dashboard</Link>
+            <Link to ="/resources">Resources</Link>
+            <Link to="/profile">Profile</Link>
+            <Link to="/logout">Logout</Link>
         </Navigation>
     )
 }
