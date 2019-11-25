@@ -11,6 +11,7 @@ import LoggedOutNav from './components/Navigation/loggedOutNav'
 import HealthWorkerDrawer from './components/Navigation/healthWorkerDrawer'
 import AdminDrawer from './components/AdminComponents/adminDrawer'
 import ChoDrawer from "./components/Navigation/choDrawer";
+import ChoNav from "./components/Navigation/ChoNav";
 
 const Role_Termination_Integer = -1
 
@@ -82,7 +83,7 @@ class App extends Component {
             )
         } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isCHO(roles)) {
             return (
-                <WorkerNav/>
+                <ChoNav/>
             )
         } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isHealthWorker(roles)) {
             return (                  

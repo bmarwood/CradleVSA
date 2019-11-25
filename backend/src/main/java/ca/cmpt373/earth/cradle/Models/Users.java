@@ -24,6 +24,7 @@ public class Users {
     private String gender;
     //    private Gender gender;
     private Set<Role> roles;
+    private String manager_id;
     private boolean enabled;
 
     public Users() {
@@ -34,12 +35,13 @@ public class Users {
         this.dob = "n/a";
         this.address = "n/a";
         this.gender = null;
+        this.manager_id = "n/a";
         this.enabled = false; //enaled or disable the user from log in
     }
 
     public Users(String id, String username, String password,
                  String name, String dob, String address,
-                 String gender, Set<Role> roles) {
+                 String gender, Set<Role> roles, String manager_id) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -49,6 +51,7 @@ public class Users {
         this.gender = gender;
         this.enabled = false;
         this.roles = roles;
+        this.manager_id = manager_id;
     }
 
     public String getId() {
@@ -138,5 +141,10 @@ public class Users {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public void setManager() { this.manager_id = manager_id; }
+
+    public String getManager_id() {return manager_id;}
+
 }
 
