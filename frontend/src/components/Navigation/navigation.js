@@ -47,6 +47,7 @@ const Navigation = () => (
         <WorkerRoute path="/PatientNotes" component={PatientNotes}/>
         <WorkerRoute path="/PatientAddMedication" component={PatientAddMedication}/>
         <WorkerRoute path="/newAssessment" component={NewAssessment}/>
+        <WorkerRoute path="/newAssessment:id" component={NewAssessment} />
         <WorkerRoute path="/newPatient" component={NewPatient}/>
         <WorkerRoute path="/ReferredList" component={ReferredList}/>
         <ManagerRoute path="/newWorker" component={NewUser}/>
@@ -54,9 +55,9 @@ const Navigation = () => (
         <ManagerRoute path="/transfer" component={TransferPatient}/>
         <PrivateRoute path="/profile" component={Profile}/>
         <PrivateRoute path="/changePassword" component={ChangePassword}/>
+        <PrivateRoute path="/patient:id" component={IndividualPatient} />
+        <PrivateRoute path="/cvsa:id" component={IndividualCVSA} />
         <Route path="/resources" component={Resources}/>
-        <Route path="/patient:id" component={IndividualPatient} />
-        <Route path="/cvsa:id" component={IndividualCVSA} />
         <Route component={NoMatchPage} />
     </Switch>
 )
