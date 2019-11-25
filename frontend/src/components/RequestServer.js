@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import {Component} from 'react';
 import axios from 'axios';
 import Utility from './NewForm/Utility'
 import '../App.css';
@@ -156,14 +156,12 @@ class RequestServer extends Component {
             for (let x = 0; x < userMap.data.length; x++) {
                 for (let y = 0; y < userMap.data[x].roles.length; y++) {
                     if (userMap.data[x].roles[y].role === "VHT") {
-                        if(role === "CHO"){
-                            if(userMap.data[x].manager_id ===user_id)
-                            {
+                        if (role === "CHO") {
+                            if (userMap.data[x].manager_id === user_id) {
                                 vhtList.push(userMap.data[x].id)
                             }
 
-                        }
-                        else{
+                        } else {
                             vhtList.push(userMap.data[x].id)
                             //this.getPatientVHTListFilter(user_id, userMap.data[x])
                         }
@@ -316,12 +314,12 @@ class RequestServer extends Component {
         }
     }
 
-    async getUserListCHO(user_id){
+    async getUserListCHO(user_id) {
         try {
             var temp_user_list = []
             var response = await axios.get(this.getServerLocation() + '/users/all')
             for (let a = 0; a < response.data.length; a++) {
-                if(response.data[a].manager_id === user_id){
+                if (response.data[a].manager_id === user_id) {
                     temp_user_list.push(response.data[a])
                 }
             }
@@ -440,6 +438,7 @@ class RequestServer extends Component {
             return null
         }
     }
+
     async addMedications(medications) {
         try {
             var response = await axios.post(this.getServerLocation() + '/medications/add', medications)
@@ -461,7 +460,6 @@ class RequestServer extends Component {
         }
     }
 }
-
 
 
 export default new RequestServer();
