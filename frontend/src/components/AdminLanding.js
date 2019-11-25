@@ -57,9 +57,13 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
-  appbar:{
+  appbar: {
     alignItems: 'center',
-  }
+    backgroundColor: '#436494 !important',
+    borderRadius: '500px',
+    width: '50%',
+    margin: '10px auto',
+}
 }));
 
 function SimpleTabs() {
