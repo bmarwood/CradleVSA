@@ -90,6 +90,10 @@ const useStyles = makeStyles(theme => ({
     },
     appbar: {
         alignItems: 'center',
+        backgroundColor: '#436494 !important',
+        borderRadius: '500px',
+        width: '50%',
+        margin: '10px auto',
     }
 }));
 
