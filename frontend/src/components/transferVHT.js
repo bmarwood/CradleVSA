@@ -84,26 +84,6 @@ class TransferVHT extends Component {
     }
 
 
-    getRoles() {
-        if(this.state.user_role.length === 0)
-        {
-            var roleArray = []
-            var user = localStorage.getItem("userData")
-            var parsedUser = JSON.parse(user)
-            if (parsedUser && parsedUser.roles) {
-                parsedUser.roles.forEach(function (role) {
-                    roleArray.push(role.role)
-                })
-            }
-            var prole = this.checkRoles(roleArray)
-            this.setState({user_role:prole, user_id: parsedUser.id})
-            return prole
-        }
-        else{
-            return this.state.user_role
-        }
-    }
-
     populateVHT(response) {
         var user_array = []
         response.forEach(user => {
@@ -132,7 +112,6 @@ class TransferVHT extends Component {
                 vht_array: this.populateVHT(passback.data)
             })
         }
-        console.log("vht_ARRRRAY",this.state.vht_array)
         this.populateData(this.state.vht_array)
     }
 
@@ -157,14 +136,11 @@ class TransferVHT extends Component {
         var passback = await requestServer.getCHOList()
         var listOfCHOs = []
         if (passback !== null) {
-            //console.log("passss",passback.data)
             for (let a = 0; a < passback.data.length; a++){
-                console.log("passss",passback.data[a])
                 listOfCHOs.push(passback.data[a].id)
             }
             this.setState({cho_array:listOfCHOs})
         }
-        console.log("list",listOfCHOs)
         this.getCHOWithVHT()
     }
 
@@ -172,18 +148,14 @@ class TransferVHT extends Component {
     async getCHOWithVHT(){
         var temp_cho_w_vht = []
         var passback = await this.getVHTList()
-        console.log("vht_array",this.state.vht_array)
         for(var a = 0; a < this.state.vht_array.length; a++){
             var response = await requestServer.getCVSA(this.state.vht_array[a].id)
             if(response.data.manager_id !== 'n/a'){
-                console.log("response",response.data.manager_id)
             }
             var response2 = await requestServer.getCVSA(response.data.manager_id)
             if(response2 != null){
-                console.log("hi",response2.data.roles)
                 for(var x = 0; x < response2.data.roles.length; x++)
                     if(response2.data.roles[x].role === "COMMUNITY_HEALTH_OFFICER"){
-                        console.log("THE MANAGER IS CHO ID", response2.data.id)
                         if(!temp_cho_w_vht.includes(response2.data.id))
                         temp_cho_w_vht.push(response2.data.id)
                     }
@@ -238,7 +210,6 @@ class TransferVHT extends Component {
     }
 
 
-
     checkEmptyFlag() {
         if (this.state.cho_empty_flag) {
             if (!this.state.cho_w_patient.includes("No CHO Assigned")) {
@@ -247,9 +218,8 @@ class TransferVHT extends Component {
         }
     }
 
+
     populateVHTLists(id){
-        console.log("CHOSEN",this.state.from_cho,this.state.to_cho)
-        console.log(this.state.data)
         var tempPatientList = []
         for (var itr = 0; itr < this.state.data.length; itr++) {
             if (this.state.data[itr].manager_id === id) {
@@ -257,8 +227,6 @@ class TransferVHT extends Component {
             }
         }
         return tempPatientList
-
-
     }
 
 
@@ -268,7 +236,6 @@ class TransferVHT extends Component {
         let temp_from_cho = this.state.from_cho
         let temp_cho_array = this.state.cho_array
         let temp_cho_w_vht = this.state.cho_w_vht
-        console.log(temp_cho_array)
 
         let vht_select_option = temp_cho_array.map(item => <option value={item}> {item} </option>)
         let vht_select_option2 = temp_cho_w_vht.map(item => <option value={item}> {item} </option>)
@@ -279,7 +246,7 @@ class TransferVHT extends Component {
             <div>
                 <div className="landing-formT">
                     <div className="round bg selector bigPad center">
-                        <h1 style={{ color: "black" }}>Transfer Patients</h1>
+                        <h1 style={{ color: "black" }}>Transfer VHTs</h1>
                         <label style={{ color: "black" }} >Transfer From: </label>
                         <select
                             onChange={this.handleChange}
@@ -309,7 +276,7 @@ class TransferVHT extends Component {
                 </div>
                 <div className="table-positionT">
                     <MaterialTable
-                        title="Patients assigned to VHT (From)"
+                        title="VHTs assigned to CHO (From)"
                         columns={this.state.columns}
                         data={populate_only_selected_from}
                         actions={[
@@ -323,7 +290,7 @@ class TransferVHT extends Component {
                 </div>
                 <div className="table-positionT">
                     <MaterialTable
-                        title="Patients assigned to VHT (To)"
+                        title="VHTS assigned to CHO (To)"
                         columns={this.state.columns}
                         data={populate_only_selected_to}
                     />
