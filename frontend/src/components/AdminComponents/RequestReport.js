@@ -84,11 +84,14 @@ class RequestReport extends Component {
     }
 
     async getVHTsList() {
-        var passback = await requestServer.getAllVHTs()
+        var passback = await requestServer.getUserList()
         if (passback !== null) {
-            this.populateData(passback.data)
-        }
-        else {
+            this.setState({
+                vht_list: Utility.populateVHT(passback.data)
+            })
+            // this.populateData(passback.data)
+
+        } else {
             console.log("Did not receive anything")
         }
     }
@@ -183,13 +186,12 @@ class RequestReport extends Component {
 
     getLocationOptions() {
         return (this.state.location_list.map(location => {
-            console.log(location._id)
-            console.log(location)
             return <option key={location.id} value={location.id}> {location.name} </option>
         }))
     }
 
     render() {
+
         return (
             <div style={{
                 backgroundColor: 'white',

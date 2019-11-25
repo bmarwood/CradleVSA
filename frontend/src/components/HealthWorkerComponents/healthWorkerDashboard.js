@@ -45,6 +45,7 @@ function SimpleTabs() {
             </TabPanel>
 
             <TabPanel value={value} index={0}>
+                {console.log("id: ", localStorage.getItem('userData').id)}
                 <AssessmentList id={localStorage.getItem('userData').id} />
             </TabPanel>
         </div>
