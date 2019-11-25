@@ -24,6 +24,7 @@ import IndividualPatient from '../IndividualPatient';
 import IndividualCVSA from '../IndividualCVSA';
 import CommunityReport from "../CommunityComponents/CommunityReport";
 import TransferPatient from '../transferPatient';
+import TransferVHT from "../transferVHT";
 import ReferredList from "../Referral/ReferredList";
 
 const Navigation = () => (
@@ -53,6 +54,7 @@ const Navigation = () => (
         <ManagerRoute path="/newWorker" component={NewUser}/>
         <WorkerRoute path="/CommunityReport" component={CommunityReport}/>
         <ManagerRoute path="/transfer" component={TransferPatient}/>
+        <AdminRoute path="/transferVHT" component={TransferVHT}/>
         <PrivateRoute path="/profile" component={Profile}/>
         <PrivateRoute path="/changePassword" component={ChangePassword}/>
         <PrivateRoute path="/patient:id" component={IndividualPatient} />
