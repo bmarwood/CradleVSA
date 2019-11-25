@@ -451,7 +451,9 @@ class NewAssessment extends React.Component {
             this.setState({
                 recheck: true
             })
-            alert(retestAdvice)
+            let message = retestAdvice.replace(/_/g, " ").toLowerCase()
+            alert((message.charAt(0).toUpperCase() + message.slice(1)))
+            console.log(message)
         }
 
         //setDate
