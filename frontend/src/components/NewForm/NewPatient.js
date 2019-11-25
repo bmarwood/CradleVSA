@@ -192,9 +192,11 @@ class NewPatient extends React.Component {
             <ValidatorForm
                 style={{
                     backgroundColor: 'white',
-                    margin: 'auto',
+                    margin: '50px 100px',
                     padding: '50px',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    borderRadius: '10px'
+
                 }}
                 ref="form"
                 onSubmit={this.handleSubmit}
