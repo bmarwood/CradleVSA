@@ -3,6 +3,8 @@ import React from 'react';
 import { Navigation } from 'react-mdl';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 
 export default class HealthWorkerDrawer extends React.Component {
     constructor() {
@@ -49,7 +51,7 @@ export default class HealthWorkerDrawer extends React.Component {
 
         return (
             <Navigation>
-                <h1 className='titleMenu' onClick={() => { this.showPatients() }}>PATIENTS RELATED</h1>
+                <h1 className='titleMenu' onClick={() => { this.showPatients() }}>PATIENTS RELATED <FontAwesomeIcon icon={faCaretDown} /></h1>
 
                 <span className={patientsClass}>
                     <Link className='link-menu' to="/newPatient">New Patient</Link>
@@ -57,12 +59,12 @@ export default class HealthWorkerDrawer extends React.Component {
                     <Link className='link-menu' to="/ReferredList">Referral</Link>
                 </span>
                 <br />
-                <h1 className='titleMenu' onClick={() => { this.showWorkers() }}>WORKERS RELATED</h1>
+                <h1 className='titleMenu' onClick={() => { this.showWorkers() }}>WORKERS RELATED <FontAwesomeIcon icon={faCaretDown} /></h1>
                 <span className={workersClass}>
                     <Link className='link-menu' to="/newWorker">New Worker</Link>
                 </span>
                 <br />
-                <h1 className='titleMenu' onClick={() => { this.showOthers() }}>OTHERS</h1>
+                <h1 className='titleMenu' onClick={() => { this.showOthers() }}>OTHERS <FontAwesomeIcon icon={faCaretDown} /></h1>
                 <span className={othersClass}>
                     <Link className='link-menu' to="/location">View/Add Locations</Link>
                 </span>
