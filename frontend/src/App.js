@@ -43,6 +43,7 @@ class App extends Component {
             return (
                 <Navigation>
                     <Link to ="/login">Login</Link>
+                    <Link to ="/resources">Resources</Link>
                     {this.navBasedOnLogin()}
                 </Navigation>
             )
