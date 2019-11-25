@@ -25,7 +25,6 @@ class TransferPatient extends Component {
             some: ''
         }
         this.handleChange = this.handleChange.bind(this);
-        //this.getRoles()
     }
 
 
@@ -110,12 +109,10 @@ class TransferPatient extends Component {
         if (ifCHO === 'CHO'){
             var passback = await requestServer.getPatientVHTList(this.state.user_id,"CHO")
             this.setState({loading:false})
-            //console.log("should be loaded",this.state.loading)
         }
         else{
             var passback = await requestServer.getPatientVHTList(this.state.user_id, "ADMIN")
             this.setState({loading:false})
-            //console.log("should be loaded",this.state.loading)
         }
         if (passback !== null && passback.data !== "") {
             this.setState({ vht_empty_flag: passback.flag })
@@ -149,7 +146,6 @@ class TransferPatient extends Component {
         else{
             var passback = await requestServer.getUserList()
         }
-        //var passback = await requestServer.getUserList()
         if (passback !== null) {
             this.setState({
                 vht_array: Utility.populateVHT(passback.data),
@@ -174,7 +170,6 @@ class TransferPatient extends Component {
 
     handleSubmitSingle = async (id, fromList, toList) => {
         //set the patient object to be sent to update
-        //this.setState({ loading: true })
         var temp_patient = await this.getSinglePatient(id)
         temp_patient.vht_id = this.state.to_vht
         var update_response = await this.updateSinglePatient(temp_patient)
@@ -231,7 +226,6 @@ class TransferPatient extends Component {
             return "ADMIN"
         }
         else if(roleArray.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer) {
-        //filter_lists
             return "CHO"
         }
         else{
