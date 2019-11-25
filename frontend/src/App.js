@@ -117,8 +117,8 @@ class App extends Component {
         return (
             <div className="demo-big-content">
                 <Layout fixedHeader fixedDrawer>
-                    <Header className = "header-color" title={this.getTitle()} transparent scroll waterfall seamed>
-                    
+                    <Header className = "header-color" title={this.getTitle()} transparent scroll seamed>
+                    {this.navBasedOnLogin()}
                     </Header>
                     <Drawer title="CRADLE">
                             {this.ifLoggedIn()}

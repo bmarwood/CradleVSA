@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import PatientList from '../PatientComponents/PatientList'
 import UserList from  '../UserList';
+import AdminNav from './adminNav';
 
 class Landing_List extends Component {
     render() {
