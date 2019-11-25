@@ -137,6 +137,10 @@ class PatientList extends Component {
                     title="Patients"
                     columns={this.state.columns}
                     data={this.state.data}
+                    options={{
+                        sorting: false,
+                        pageSizeOptions: [5]
+                      }}
                     editable={{
                         onRowDelete: oldData =>
                             new Promise(resolve => {

@@ -216,6 +216,10 @@ class AssessmentList extends Component {
                     title="Assessment List"
                     columns={this.state.columns}
                     data={this.state.data}
+                    options={{
+                        sorting: false,
+                        pageSizeOptions: [5]
+                      }}
                 />
             </div>
 
