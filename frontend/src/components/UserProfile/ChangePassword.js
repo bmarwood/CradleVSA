@@ -3,15 +3,9 @@ import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import RequestServer from '../RequestServer';
 import {Link} from 'react-router-dom';
-import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import {Tabs, Tab, Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, IconButton} from 'react-mdl';
-import PieChart from '../Chart/PieChart';
-import StatIcon from '../../stat-icon.png';
-import UserList from '../UserList';
-import axios from 'axios';
+import {Grid, Cell} from 'react-mdl';
 
 //Profile class which gets user data from localStorage and display accordingly
 export default class ChangePassword extends Component {
@@ -68,21 +62,16 @@ export default class ChangePassword extends Component {
     //Submit button handler to the back-end
     async handleSubmit(event) {
         event.preventDefault();
-        console.log("Before Submit", this.state);
         if (this.validateNewPassword() === true) {
             try {
-                console.log("hello")
-                console.log("User info", this.state.username);
                 var reset = {
                     username: this.state.username,
                     old_password: this.state.old_password,
                     new_password: this.state.new_password
                 }
                 var response = await RequestServer.updateUserPassword(this.state)
-                console.log(response)
                 if (response !== null) {
                     localStorage.setItem("userData", JSON.stringify(response.data))
-                    console.log(response.data)
                     window.alert("Password change succeed")
                     window.location.reload()
                 } else {
@@ -90,7 +79,6 @@ export default class ChangePassword extends Component {
                 }
             } catch (e) {
                 window.alert("Your current password is wrong")
-                console.log(e)
             }
         } else {
 
@@ -173,20 +161,6 @@ export default class ChangePassword extends Component {
     }
 
     render() {
-        // return this.state.isInEditMode ? 
-        // this.renderEditView() : 
-        // this.renderDefaultView()
         return this.renderDefaultView()
-
     }
 }
-
-// <div className="landing-form" style = {{color : "white"}}>
-//     <h1> Your Profile</h1>
-//     <h2 style = {{color : "white"}}>Hello Ms.{this.state.name}</h2>
-//     <p>Username: {this.state.username}</p>
-//     <p>Full Name: {this.state.username}</p>
-//     <p>Date Of Birth: {this.state.dob}</p>
-//     <p>Address: {this.state.address}</p>
-//     <p>Gender: {this.state.gender}</p>
-// </div>

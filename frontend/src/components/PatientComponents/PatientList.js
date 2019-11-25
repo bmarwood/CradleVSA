@@ -4,6 +4,9 @@ import './PatientList.css';
 import GraphPopup from '../../Modals/GraphPopup';
 import MedicationPopup from '../../Modals/MedicationPopup';
 import requestServer from '../RequestServer';
+import UpdatePatientPopup from "../../Modals/UpdatePatientPopup";
+import RecentAssessmentPopup from "../../Modals/RecentAssessmentPopup";
+import { Link } from 'react-router-dom';
 
 class PatientList extends Component {
 
@@ -27,6 +30,12 @@ class PatientList extends Component {
                 {title: 'Birth Date', field: 'birthDate'},
                 {title: 'ID Number', field: 'id'},
                 {
+                    title: 'Patient Page',
+                    field: 'assessment',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
+                {
                     title: 'Patient History',
                     field: 'graph',
                     headerStyle: {textAlign: 'center'},
@@ -38,11 +47,24 @@ class PatientList extends Component {
                     headerStyle: {textAlign: 'center'},
                     cellStyle: {textAlign: 'center'}
                 },
+                {
+                    title: 'Update information',
+                    field: 'update',
+                    headerStyle: {textAlign: 'center'},
+                    cellStyle: {textAlign: 'center'}
+                },
             ],
             data: [
                 {
+                    assessment: <button className="ui icon button"><i className="info icon"/></button>,
+                    name: 'Loading...',
+                    surname: 'Loading...',
+                    sex: 'Loading...',
+                    birthDate: 'Loading...',
+                    id: 'Loading...',
                     graph: <GraphPopup/>,
-                    medications: <MedicationPopup/>
+                    medications: <MedicationPopup/>,
+                    update: <UpdatePatientPopup/>
                 },
             ],
         })
@@ -63,7 +85,6 @@ class PatientList extends Component {
 
 
     populateData(response) {
-        console.log(response)
         var patientList = []
         response.forEach(patient => {
             var name = (patient.name.split(" "))[0]
@@ -71,8 +92,17 @@ class PatientList extends Component {
             var birthDate = patient.birth_date
             var sex = patient.gender[0]
             var id = patient.id
-            var graph = <GraphPopup/>
-            var medications = <MedicationPopup/>
+            var assessment = <button className="ui icon button"> <Link to={`/patient${patient.id}`}><i className="info icon"/></Link></button>
+            var graph = <GraphPopup
+                patient_id={patient.id}
+                patient_name={name + " " + surname}
+            />
+            var medications = <MedicationPopup
+            patient_id={patient.id}
+            patient_name={name+" "+surname}
+            />
+            var update = <UpdatePatientPopup
+                id={patient.id}/>
 
             var patient_obj = {
                 name: name,
@@ -80,8 +110,10 @@ class PatientList extends Component {
                 birthDate: birthDate,
                 sex: sex,
                 id: id,
+                assessment: assessment,
                 graph: graph,
-                medications: medications
+                medications: medications,
+                update: update
             }
 
             patientList.push(patient_obj)
@@ -105,54 +137,24 @@ class PatientList extends Component {
                     title="Patients"
                     columns={this.state.columns}
                     data={this.state.data}
+                    options={{
+                        sorting: false,
+                        pageSizeOptions: [5]
+                      }}
                     editable={{
-                        // onRowUpdate: (newData, oldData) =>
-                        //     new Promise(resolve => {
-                        //         setTimeout(() => {
-                        //             resolve();
-                        //             const data = [...this.state.data];
-                        //             data[data.indexOf(oldData)] = newData;
-                        //             this.setState({ ...this.state, data });
-                        //         }, 600);
-                        //     }),
-                        // onRowDelete: oldData =>
-                        //     new Promise(resolve => {
-                        //         setTimeout(() => {
-                        //             resolve();
-                        //             const data = [...this.state.data];
-                        //             data.splice(data.indexOf(oldData), 1);
-                        //             this.setState({ ...this.state, data });
-                        //         }, 600);
-                        //     }),
-                        // onRowAdd: newData =>
-                        //     new Promise((resolve, reject) => {
-                        //         setTimeout(() => {
-                        //             {
-                        //                 const data = [...this.state.data];
-                        //                 data.push(newData);
-                        //                 this.setState({ ...this.state, data });
-                        //             }
-                        //             resolve();
-                        //         }, 1000);
-                        //     }),
-                        // onRowAdd: newData =>
-                        //     new Promise((resolve) => {
-                        //       console.log("onrowadd", newData)
-                        //     }),
                         onRowDelete: oldData =>
                             new Promise(resolve => {
                                 setTimeout(() => {
                                     resolve();
                                     var didDelete = this.deletePatient(oldData)
-                                    console.log(oldData)
                                     if (didDelete) {
                                         const data = [...this.state.data];
                                         data.splice(data.indexOf(oldData), 1);
                                         this.setState({
-                                            locations: data
+                                            data: data
                                         });
                                     }
-                                }, 600);
+                                }, 1000);
                             }),
 
                     }}

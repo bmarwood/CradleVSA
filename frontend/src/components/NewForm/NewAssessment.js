@@ -2,10 +2,15 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import ShowSymp from "./SymptomsForm";
-import {Grid, Cell} from 'react-mdl';
+import {Grid, Cell, RadioGroup, Radio} from 'react-mdl';
 import RequestServer from '../RequestServer';
 import Utility from './Utility';
 import DatePicker from "react-datepicker";
+import ReadingRequestAnalysis from "./ReadingRetestAnalysis";
+import Alert from "react-bootstrap/Alert";
+import './newForm.css';
+import Switch from "@material-ui/core/Switch";
+
 
 const Color = {
     GREEN: "GREEN",
@@ -33,9 +38,8 @@ class NewAssessment extends React.Component {
         this.state = {
             //use get method to get the assessment id <- should be equal to # of assessments + 1
             id: '',
-            patient_id: '',
+            patient_id: this.props.match.params.id,
             birth_date: '',
-            vht_id: "EMPTY",
             gender: "MALE",
             name: '',
             date: "",
@@ -45,7 +49,7 @@ class NewAssessment extends React.Component {
             diastolic: "",
             ews_color: null,
             symptoms: [],
-            referred: false,
+            referred: true,
             follow_up: false,
             follow_up_date: null,
             recheck: false,
@@ -63,10 +67,14 @@ class NewAssessment extends React.Component {
             msg: '',        //for the componenetDidMount error message
             vht_array: [],
             create_patient: false,
-            submit: false,
             user_array: [],
             worker_id: '',
+            worker_role: [],
             location_array: [],
+            dob_type: 'date',
+            temp_dob: new Date(),
+            recheck_history: [],
+            retestAdvice: "RETEST_NOT_RECOMMENDED",
 
             //Symptoms
             symptoms_arr: [
@@ -82,25 +90,56 @@ class NewAssessment extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleCheckbox = this.handleCheckbox.bind(this)
+        this.handleSwitch = this.handleSwitch.bind(this)
         this.setGestational_age = this.setGestational_age.bind(this)
-        this.setSubmit = this.setState.bind(this)
     }
 
-//componentWillUpdate
+    //handle date change
+    changeDOB = date => {
+        this.setState({
+            temp_dob: date
+        });
+    };
+
+    async getAssessmentByPatientId(id) {
+        var passback = await RequestServer.getAssessmentsByPatientId(id)
+        var result
+        if (passback.data === null) {
+            return
+        }
+        var data = passback.data
+        var data_size = data.length
+
+        if (data_size >= 2) {
+            //last
+            if (data[data_size - 1].recheck === false) {
+                return
+            } else if (data[data_size - 2].recheck === false) {
+                this.state.recheck_history.push(data[data_size - 1].ews_color)
+            } else {
+                this.state.recheck_history.push(data[data_size - 2].ews_color)
+                this.state.recheck_history.push(data[data_size - 1].ews_color)
+            }
+        } else if (data_size === 1) {
+            if (data[data_size - 1].recheck === true) {
+                this.state.recheck_history.push(data[data_size - 1].ews_color)
+            }
+        }
+        return
+    }
+
+
+    //componentWillUpdate
     componentDidMount() {
-        //get id of user
-        this.getVHTList()
-            .catch(() => {
-                return true;
-            });
-
-        this.getUserList()
-            .catch(() => {
-                this.setState({
-                    user_array: []
-                })
-            })
-
+        //get cvsa_id
+        if (!(isNaN(this.state.patient_id))) {
+            this.getMatchingPatientData(this.state.patient_id)
+        }
+        var user = localStorage.getItem("userData")
+        var parsedUser = JSON.parse(user)
+        this.setState({
+            cvsa_id: parsedUser.id
+        })
         this.getLocation()
             .catch(() => {
                 this.setState({
@@ -108,20 +147,20 @@ class NewAssessment extends React.Component {
                 })
             })
 
-
-        //get cvsa_id
-        var user = localStorage.getItem("userData")
-        var parsedUser = JSON.parse(user)
-        this.setState({
-            worker_id: parsedUser.id
-        })
-
         //check if systolic > diastolic
         ValidatorForm.addValidationRule('isGreater', (value) => {
             if (parseInt(value) <= parseInt(this.state.systolic)) {
                 return true;
             }
             return false;
+        });
+
+        //check if age is filled
+        ValidatorForm.addValidationRule('check_dob_type', (value) => {
+            if (this.state.dob_type === 'age' && this.state.birth_date === '') {
+                return false;
+            }
+            return true;
         });
 
 
@@ -175,12 +214,20 @@ class NewAssessment extends React.Component {
         })
     }
 
+    handleSwitch() {
+        this.setState(prevState => {
+            this.setState({
+                referred: !this.state.referred
+            })
+        })
+    }
+
     // give user possible vht id
     async getVHTList() {
         var passback = await RequestServer.getUserList()
         if (passback !== null) {
             this.setState({
-                vht_array: Utility.populateVHT(passback.data)
+                user_array: Utility.populateVHT(passback.data)
             })
         }
     }
@@ -267,6 +314,7 @@ class NewAssessment extends React.Component {
                 arrow: Arrow.EMPTY
             })
         }
+        this.state.recheck_history.push(this.state.ews_color)
     }
 
     // Check if one of the checkbox is selected or the selected checkboxes are valid
@@ -321,36 +369,31 @@ class NewAssessment extends React.Component {
         }
         //add the checked symptoms
         this.addSymptoms();
-
-        ///ERRP *************
-        if (!this.state.vht_array.includes(this.state.cvsa_id)) {
-            this.setState({
-                vht_id: "EMPTY"
-            })
-        }
     }
 
 
     //get a single patient with matching patient_id
     async getMatchingPatientData(patient_id) {
         let passback = await RequestServer.getPatientByID(patient_id)
-        if (!this.state.submit && passback !== null && passback.data !== '') {
+        if (passback !== null && passback.data !== '') {
             let patient_data = passback.data
 
             this.setState({
                 fname: patient_data.name.split(" ")[0],
                 lname: patient_data.name.split(" ")[1],
-                birth_date: patient_data.birth_date,
-                vht_id: patient_data.vht_id,
                 gender: patient_data.gender,
                 create_patient: false
             })
-        } else if (!this.state.submit) {
+            if (patient_data.birth_date.includes(", ")) {
+                this.setState({
+                    temp_dob: new Date(patient_data.birth_date)
+                })
+
+            }
+        } else {
             this.setState({
                 fname: '',
                 lname: '',
-                birth_date: '',
-                vht_id: "EMPTY",
                 gender: "MALE",
                 create_patient: true
             })
@@ -370,8 +413,7 @@ class NewAssessment extends React.Component {
     handleSubmit = async () => {
         this.setState({
             error: false,
-            errorMessage: '',
-            submit: true
+            errorMessage: ''
         })
         this.checkSymptoms();
         this.checkGestAge();
@@ -383,44 +425,66 @@ class NewAssessment extends React.Component {
 
         //the error controller
         if (this.state.error) {
-            this.setState({
-                submit: false
-            })
+
             alert(this.state.errorMsg)
             return;
         }
 
+        if (this.state.dob_type === "date") {
+            let input_dob = Utility.convertDate(this.state.temp_dob)
+            let today = Utility.convertDate(new Date())
+
+            if (today === input_dob) {
+                alert("Incorrect date of birth")
+                return false;
+            }
+            this.setState({
+                birth_date: input_dob
+            })
+        }
+        this.setColor();
+
+        //check if we need to recheck the reading
+        await this.getAssessmentByPatientId(this.state.patient_id)
+        var retestAdvice = ReadingRequestAnalysis.computeAdvice(this.state.recheck_history)
+        if (retestAdvice !== "RETEST_NOT_RECOMMENDED") {
+            this.setState({
+                recheck: true
+            })
+            let message = retestAdvice.replace(/_/g, " ").toLowerCase()
+            alert((message.charAt(0).toUpperCase() + message.slice(1)))
+            console.log(message)
+        }
+
         //setDate
         let today = new Date();
-        this.setState({date: Utility.convertDate(today)})
-        this.setColor();
+        this.setState({date: today.toString()})
         this.changeType();
         this.changeState();
-        //console.log(this.state)
 
         //assessment
-        this.addAssessment();
+        this.addAssessment(retestAdvice);
     }
 
 
-    async addAssessment() {
-        console.log("New Assessment")
-        console.log(this.state)
+    async addAssessment(advice) {
         var passback = await RequestServer.addAssessment(this.state)
         if (passback !== null) {
-            this.props.history.push(
-                '/',
-                {detail: passback.data}
-            )
+            if (advice === "RETEST_RIGHT_NOW_RECOMMENDED") {
+                this.props.history.push(
+                    '/newAssessment' + this.state.patient_id,
+                    {detail: passback.data}
+                )
+                window.location.reload();
+            } else {
+                this.props.history.push(
+                    '/',
+                    {detail: passback.data}
+                )
+            }
         }
     }
 
-
-    setSubmit() {
-        this.setState({
-            submit: true
-        })
-    }
 
     async getLocation() {
         let response = await RequestServer.getLocations()
@@ -449,196 +513,205 @@ class NewAssessment extends React.Component {
     render() {
         let symptom = this.state.symptoms_arr.map(item => <ShowSymp key={item.id} item={item}
                                                                     handleChange={this.handleCheckbox}/>)
-        let vht_select_option = this.state.vht_array.map(item => <option key={item.id}
-                                                                         value={item.id}> {item.id} </option>)
         let user_select_option = this.state.user_array.map(user => <option key={user.id}
-                                                                           value={user.id}> {user.id} </option>)
-
-
+                                                                           value={user.id}> {user.name} </option>)
         let location_select_option = this.state.location_array.map(location => <option key={location.id}
                                                                                        value={location.id}> {location.name}</option>)
 
         return (
-            <ValidatorForm
-                style={{
-                    backgroundColor: 'white',
-                    margin: 'auto',
-                    padding: '50px',
-                    textAlign: 'center'
-                }}
-                ref="form"
-                onSubmit={this.handleSubmit}
-                onError={errors => console.log(errors)}
-            >
-                <Grid>
-                    <Cell col={4}>
+            <div className="newForm">
+                <ValidatorForm
+                    ref="form"
+                    onSubmit={this.handleSubmit}
+                    onError={errors => console.log(errors)}
+                >
+                    <Grid>
+                        <Cell col={4}>
 
-                        {/*<label>Location: </label>*/}
-                        <h4> Location </h4>
-                        <br/>
-                        <select
-                            value={this.state.location}
-                            onChange={this.handleChange}
-                            name="location"
-                        >
-                            <option value="EMPTY"> --SELECT ONE--</option>
-                            {location_select_option}
-                        </select>
-                        <h4> Patient Form </h4>
-
-                        <TextValidator
-                            label="Attestation ID"
-                            onChange={this.handleChange}
-                            name="patient_id"
-                            value={this.state.patient_id}
-                            validators={['required', 'matchRegexp:^[0-9]{11}$']}
-                            errorMessages={['this field is required', 'Must be 11 digits']}
-                        />
-                        <br/>
-                        <div style={{display: (this.state.create_patient ? 'block' : 'none')}}>
-                            <TextValidator
-                                label="First Name"
-                                onChange={this.handleChange}
-                                name="fname"
-                                value={this.state.fname}
-                                validators={['required', 'matchRegexp:^[A-Za-z]+$']}
-                                errorMessages={['this field is required', 'Invalid input (only letters)']}
-                            />
-                            <br/>
-
-                            <TextValidator
-                                label="Last Name"
-                                onChange={this.handleChange}
-                                name="lname"
-                                value={this.state.lname}
-                                validators={['required', 'matchRegexp:^[A-Za-z]+$']}
-                                errorMessages={['this field is required', 'Invalid input (only letters)']}
-                            />
-                            <br/>
-
-                            <TextValidator
-                                label="Date of birth"
-                                onChange={this.handleChange}
-                                name="birth_date"
-                                value={this.state.birth_date}
-                                validators={['required']}
-                                errorMessages={['this field is required']}
-                            />
-                            <br/>
-                            <br/>
-
-                            <label>CSVA ID: </label>
-                            <br/>
+                            {/*<label>Location: </label>*/}
+                            <h4> Location </h4>
                             <select
-                                value={this.state.cvsa_id}
+                                value={this.state.location}
                                 onChange={this.handleChange}
-                                name="cvsa_id"
+                                name="location"
                             >
                                 <option value="EMPTY"> --SELECT ONE--</option>
-                                <option value={this.state.worker_id}> Use my ID</option>
-                                {user_select_option}
+                                {location_select_option}
                             </select>
-                            <br/>
+                            <h4> Patient Form </h4>
 
-                            <br/>
-                            <label>Gender: </label>
-                            <select
-                                value={this.state.gender}
+                            <TextValidator
+                                label="Attestation ID"
                                 onChange={this.handleChange}
-                                name="gender"
-                            >
-                                <option value="MALE"> Male</option>
-                                <option value="FEMALE"> Female</option>
-                            </select>
+                                name="patient_id"
+                                value={this.state.patient_id}
+                                validators={['required', 'matchRegexp:^[0-9]{11}$']}
+                                errorMessages={['this field is required', 'Must be 11 digits']}
+                            />
                             <br/>
-                        </div>
-                        <br/>
-
-                        <div style={{display: (this.state.gender === "FEMALE" ? 'block' : 'none')}}>
-                            <label>Gestational Age:</label>
-                            <br/>
-                            <select
-                                value={this.state.gestational_unit}
-                                onChange={this.handleChange}
-                                name="gestational_unit"
-                                onClick={this.setGestational_age}
-                            >
-                                <option value="EMPTY"> --SELECT ONE--</option>
-                                <option value="WEEK"> Week(s)</option>
-                                <option value="MONTH"> Month(s)</option>
-                                <option value="NOT_PREGNANT"> Not Pregnant</option>
-                            </select>
-                            <br/>
-
-                            <div
-                                style={{display: (this.state.gestational_unit !== Gestational_unit.NOT_PREGNANT && this.state.gestational_unit !== Gestational_unit.EMPTY ? 'block' : 'none')}}>
+                            <div style={{display: (this.state.create_patient ? 'block' : 'none')}}>
+                                <TextValidator
+                                    label="First Name"
+                                    onChange={this.handleChange}
+                                    name="fname"
+                                    value={this.state.fname}
+                                    validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                                    errorMessages={['this field is required', 'Invalid input (only letters)']}
+                                />
+                                <br/>
 
                                 <TextValidator
-                                    label="Gestational Age"
+                                    label="Last Name"
                                     onChange={this.handleChange}
-                                    name="gestational_age"
-                                    value={this.state.gestational_age}
-                                    validators={['required', 'checkPregnancy', 'minNumber:0', 'maxNumber:60', 'matchRegexp:^[0-9]*$']}
-                                    errorMessages={['this field is required', this.state.msg, 'MUST BE BETWEEN 0-60']}
+                                    name="lname"
+                                    value={this.state.lname}
+                                    validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                                    errorMessages={['this field is required', 'Invalid input (only letters)']}
                                 />
+                                <br/>
                             </div>
-                        </div>
-                    </Cell>
-                    <Cell col={4}>
-                        <h4> Symptoms </h4>
+                            <br/>
 
-                        {symptom}
+                            <RadioGroup name="dob_type"
+                                        onChange={this.handleChange}
+                                        value={this.state.dob_type}>
+                                <Radio value="date" ripple>
+                                    <span className="mdl-radio__label">Date of Birth</span>
+                                </Radio>
+                                <Radio value="age">Age</Radio>
+                            </RadioGroup>
 
-                        <TextValidator
-                            label="Other Symptoms"
-                            onChange={this.handleChange}
-                            name="temp_symptoms"
-                            value={this.state.temp_symptoms}
-                        />
 
-                        <br/>
-                    </Cell>
-                    <Cell col={4}>
+                            <div style={{display: (this.state.dob_type === "age" ? 'block' : 'none')}}>
+                                <TextValidator
+                                    label="Age"
+                                    onChange={this.handleChange}
+                                    name="birth_date"
+                                    value={this.state.birth_date}
+                                    validators={['check_dob_type', 'minNumber:0', 'maxNumber:150', 'matchRegexp:^[0-9]*$']}
+                                    errorMessages={['this field is required', 'between 0 - 150', 'between 0 - 150', "Number only"]}
+                                />
+                                <br/>
+                            </div>
+                            <div style={{display: (this.state.dob_type === "date" ? 'block' : 'none')}}>
+                                <label>Date of Birth:</label>
+                                <br/>
+                                <DatePicker
+                                    selected={this.state.temp_dob}
+                                    onChange={this.changeDOB}
+                                    maxDate={new Date()}
+                                />
 
-                        <h4>Vitals</h4>
-                        <TextValidator
-                            label="Systolic"
-                            onChange={this.handleChange}
-                            name="systolic"
-                            value={this.state.systolic}
-                            validators={['required', 'minNumber:10', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required', 'MUST BE BETWEEN 10-300', 'MUST BE BETWEEN 10-300', 'MUST BE BETWEEN 10-300']}
-                        />
-                        <br/>
-                        <TextValidator
-                            label="Diastolic"
-                            onChange={this.handleChange}
-                            name="diastolic"
-                            value={this.state.diastolic}
-                            validators={['required', 'isGreater', 'minNumber:10', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required', 'Diastolic should be <= to Systolic', 'MUST BE BETWEEN 10-300', 'MUST BE BETWEEN 10-300', 'MUST BE BETWEEN 10-300']}
-                        />
-                        <br/>
-                        <TextValidator
-                            label="Heart Rate"
-                            onChange={this.handleChange}
-                            name="heart_rate"
-                            value={this.state.heart_rate}
-                            validators={['required', 'minNumber:40', 'maxNumber:200', 'matchRegexp:^[0-9]*$']}
-                            errorMessages={['this field is required', 'MUST BE BETWEEN 40-200', 'MUST BE BETWEEN 40-200', 'MUST BE BETWEEN 40-200']}
-                        />
-                    </Cell>
-                </Grid>
-                <br/>
-                <br/>
-                <Button type="submit" style={{
-                    backgroundColor: 'blue',
-                    color: 'white'
-                }}>Submit</Button>
-                <br/>
-                <br/>
+                            </div>
+                            <br/>
 
-            </ValidatorForm>
+                            <div style={{display: (this.state.create_patient ? 'block' : 'none')}}>
+                                <br/>
+                                <label>Gender: </label>
+                                <select
+                                    value={this.state.gender}
+                                    onChange={this.handleChange}
+                                    name="gender"
+                                >
+                                    <option value="MALE"> Male</option>
+                                    <option value="FEMALE"> Female</option>
+                                </select>
+                                <br/>
+                            </div>
+                            <br/>
+
+                            <div style={{display: (this.state.gender === "FEMALE" ? 'block' : 'none')}}>
+                                <label>Gestational Age:</label>
+                                <br/>
+                                <select
+                                    value={this.state.gestational_unit}
+                                    onChange={this.handleChange}
+                                    name="gestational_unit"
+                                    onClick={this.setGestational_age}
+                                >
+                                    <option value="EMPTY"> --SELECT ONE--</option>
+                                    <option value="WEEK"> Week(s)</option>
+                                    <option value="MONTH"> Month(s)</option>
+                                    <option value="NOT_PREGNANT"> Not Pregnant</option>
+                                </select>
+                                <br/>
+
+                                <div
+                                    style={{display: (this.state.gestational_unit !== Gestational_unit.NOT_PREGNANT && this.state.gestational_unit !== Gestational_unit.EMPTY ? 'block' : 'none')}}>
+
+                                    <TextValidator
+                                        label="Gestational Age"
+                                        onChange={this.handleChange}
+                                        name="gestational_age"
+                                        value={this.state.gestational_age}
+                                        validators={['required', 'checkPregnancy', 'minNumber:0', 'maxNumber:60', 'matchRegexp:^[0-9]*$']}
+                                        errorMessages={['this field is required', this.state.msg, 'MUST BE BETWEEN 0-60']}
+                                    />
+                                </div>
+                            </div>
+                        </Cell>
+                        <Cell col={4}>
+                            <h4> Symptoms </h4>
+
+                            {symptom}
+
+                            <TextValidator
+                                label="Other Symptoms"
+                                onChange={this.handleChange}
+                                name="temp_symptoms"
+                                value={this.state.temp_symptoms}
+                            />
+
+                            <br/>
+                        </Cell>
+                        <Cell col={4}>
+                            <h4>Vitals</h4>
+
+                            <TextValidator
+                                label="Systolic"
+                                onChange={this.handleChange}
+                                name="systolic"
+                                value={this.state.systolic}
+                                validators={['required', 'minNumber:10', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
+                                errorMessages={['this field is required', 'MUST BE BETWEEN 10-300', 'MUST BE BETWEEN 10-300', 'MUST BE BETWEEN 10-300']}
+                            />
+                            <br/>
+                            <TextValidator
+                                label="Diastolic"
+                                onChange={this.handleChange}
+                                name="diastolic"
+                                value={this.state.diastolic}
+                                validators={['required', 'isGreater', 'minNumber:10', 'maxNumber:300', 'matchRegexp:^[0-9]*$']}
+                                errorMessages={['this field is required', 'Diastolic should be <= to Systolic', 'MUST BE BETWEEN 10-300', 'MUST BE BETWEEN 10-300', 'MUST BE BETWEEN 10-300']}
+                            />
+                            <br/>
+                            <TextValidator
+                                label="Heart Rate"
+                                onChange={this.handleChange}
+                                name="heart_rate"
+                                value={this.state.heart_rate}
+                                validators={['required', 'minNumber:40', 'maxNumber:200', 'matchRegexp:^[0-9]*$']}
+                                errorMessages={['this field is required', 'MUST BE BETWEEN 40-200', 'MUST BE BETWEEN 40-200', 'MUST BE BETWEEN 40-200']}
+                            />
+                            <br/>
+                            <br/>
+                            <label>Send Referral: </label>
+                            <Switch ripple id="switch1" onChange={this.handleSwitch}
+                                    name="referred"
+                                    value={this.state.referred} defaultChecked>Send Referral</Switch>
+                        </Cell>
+                    </Grid>
+                    <br/>
+                    <br/>
+                    <Button type="submit" style={{
+                        backgroundColor: 'blue',
+                        color: 'white'
+                    }}>Submit</Button>
+                    <br/>
+                    <br/>
+
+                </ValidatorForm>
+            </div>
         );
     }
 }

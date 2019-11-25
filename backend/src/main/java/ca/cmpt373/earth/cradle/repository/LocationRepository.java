@@ -3,6 +3,7 @@ package ca.cmpt373.earth.cradle.repository;
 import ca.cmpt373.earth.cradle.Models.Location;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+
 import java.util.List;
 
 public interface LocationRepository extends MongoRepository<Location, String> {

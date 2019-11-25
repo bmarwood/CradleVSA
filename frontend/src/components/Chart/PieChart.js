@@ -3,12 +3,13 @@ import { Pie } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";
 
 class ChartsPage extends React.Component {
+
   state = {
     dataPie: {
-      labels: ["Red", "Green", "Yellow", "Grey", "Dark Grey"],
+      labels: ["Red", "Green", "Yellow"],
       datasets: [
         {
-          data: [300, 50, 100, 40, 120],
+          data: [this.props.red, this.props.green, this.props.yellow],
           backgroundColor: [
             "#F7464A",
             "#46BFBD",

@@ -11,6 +11,7 @@ import LoggedOutNav from './components/Navigation/loggedOutNav'
 import HealthWorkerDrawer from './components/Navigation/healthWorkerDrawer'
 import AdminDrawer from './components/AdminComponents/adminDrawer'
 import ChoDrawer from "./components/Navigation/choDrawer";
+import ChoNav from "./components/Navigation/ChoNav";
 
 const Role_Termination_Integer = -1
 
@@ -22,7 +23,6 @@ class App extends Component {
         var parsedUser = JSON.parse(user)
         if (parsedUser && parsedUser.roles) {
             parsedUser.roles.forEach( function(role) {
-                console.log("User data is : " + role.role)
                 roleArray.push(role.role)
             })
         }
@@ -58,11 +58,11 @@ class App extends Component {
 
     isAdmin(roles) {
         if (roles.indexOf("ADMIN") > Role_Termination_Integer) {
-            console.log('is Admin')
+            // console.log('is Admin')
             return true
         }
 
-        console.log('is not Admin')
+        // console.log('is not Admin')
         return false 
     }
 
@@ -83,7 +83,7 @@ class App extends Component {
             )
         } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isCHO(roles)) {
             return (
-                <WorkerNav/>
+                <ChoNav/>
             )
         } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isHealthWorker(roles)) {
             return (                  

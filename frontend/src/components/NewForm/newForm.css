@@ -1,3 +1,18 @@
 label {
     padding-right: 10px;
 }
+
+.mdl-radio__label {
+    font-size: 12px;
+}
+
+.newForm {
+    background-color: white;
+    margin: auto;
+    padding: 50px;
+    text-align: center;
+    border-radius: 15px;
+    margin-left: 100px;;
+    margin-right: 100px;;
+
+}

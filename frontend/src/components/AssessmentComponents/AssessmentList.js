@@ -6,6 +6,8 @@ import TrafficIconsTriangle from "../Visuals/TrafficIconsTriangle";
 import TrafficIconsOctagon from "../Visuals/TrafficIconsOctagon";
 import ModalPopup from "../../Modals/ModalPopup";
 import requestServer from '../RequestServer';
+import { Link } from 'react-router-dom';
+
 
 
 class AssessmentList extends Component {
@@ -15,8 +17,10 @@ class AssessmentList extends Component {
         this.state = {
             columns: [],
             data: [],
+            passed_value: props.id
         }
-        this.deleteAssessment = this.deleteAssessment.bind(this)
+
+        this.deleteAssessment = this.deleteAssessment.bind(this);
     }
 
     componentDidMount() {
@@ -112,10 +116,9 @@ class AssessmentList extends Component {
     }
 
 
-    populateData(response) {
-
+    async populateData(response) {
         var assessmentList = []
-        response.forEach(function (assessment) {
+        for (let assessment of response) {
             var info = <ModalPopup
                 patient_id={assessment.patient_id}
                 cvsa_id={assessment.cvsa_id}
@@ -123,8 +126,16 @@ class AssessmentList extends Component {
                 systolic={assessment.systolic}
                 diastolic={assessment.diastolic}
                 heart_rate={assessment.heart_rate}
+                id={assessment._id}
+                assessment_date={assessment.date}
+                follow_up_date={assessment.follow_up_date}
+                gestational_age={assessment.gestational_age}
+                gestational_unit={assessment.gestational_unit}
+                ews_color={assessment.ews_color}
+                arrow={assessment.arrow}
             />
             var assessment_obj = {
+                assessment_date: assessment.date,
                 id: assessment._id,
                 ews_color: getColorVisual(assessment.ews_color),
                 arrow: getArrowVisual(assessment.arrow),
@@ -133,7 +144,7 @@ class AssessmentList extends Component {
                 gestational_age: getGestationalAge(assessment),
                 referred: getBoolVisual(assessment.referred),
                 follow_up: getBoolVisual(assessment.follow_up),
-                recheck: getBoolVisual(assessment.recheck),
+                recheck: await checkForRecheck(assessment.recheck, assessment.date, assessment.patient_id, assessment._id),
                 birth_date: assessment.birth_date,
                 heart_rate: assessment.heart_rate,
                 systolic: assessment.systolic,
@@ -142,10 +153,10 @@ class AssessmentList extends Component {
                 follow_up_date: assessment.follow_up_date,
                 info: info,
             }
-
             assessmentList.push(assessment_obj)
-        });
-
+        }
+        //sort the new assessment array by assessment_date 
+        assessmentList.sort((a, b) => ((convertToDate(a.assessment_date) > convertToDate(b.assessment_date)) ? 1 : ((convertToDate(b.assessment_date)) > convertToDate(a.assessment_date))) ? -1 : 0)
         this.setState({ data: assessmentList })
     }
 
@@ -153,7 +164,6 @@ class AssessmentList extends Component {
         var roleArray = []
         if (parsedUser && parsedUser.roles) {
             parsedUser.roles.forEach(function (role) {
-                console.log("User data is : " + role.role)
                 roleArray.push(role.role)
             })
         }
@@ -170,25 +180,35 @@ class AssessmentList extends Component {
 
     //gets assessments for admin if that role is given, otherwise dynamically populates based on current user
     async getAssessmentList() {
+        if (this.state.passed_value) {
+            //check for id by patient
+            //if not patient check by cvsa
+            var passback = await requestServer.getPatient(this.state.passed_value)
+            if (passback.data.length !== 0) {
+                passback = await requestServer.getAssessmentsByPatientId(this.state.passed_value)
+            } else {
+                passback = await requestServer.getAssessmentsByCVSAId(this.state.passed_value)
+            }
+
+            //if still none, then bad call
+            if (passback.data.length === 0) {
+                alert("No History Found")
+            }
+            this.populateData(passback.data)
+            return
+        }
         var userData = JSON.parse(localStorage.getItem("userData"))
         var roles = this.getRoles(userData)
         var passback
         if (this.isAdmin(roles)) {
             passback = await requestServer.getAssessmentsList()
-
-            if (passback !== null && passback.data !== "") {
-                this.populateData(passback.data)
-            }
-
         } else {
-            passback = await requestServer.getAssessmentsByUserId(userData.id)
-
-            if (passback !== null && passback.data !== "") {
-                this.populateData(passback.data)
-            }
+            passback = await requestServer.getAssessmentsByCVSAId(userData.id)
+        }
+        if (passback !== null && passback.data !== "") {
+            this.populateData(passback.data)
         }
     }
-
 
     render() {
         return (
@@ -197,25 +217,10 @@ class AssessmentList extends Component {
                     title="Assessment List"
                     columns={this.state.columns}
                     data={this.state.data}
-                    // editable={{
-                    //     onRowDelete: oldData =>
-                    //         new Promise(resolve => {
-                    //             setTimeout(() => {
-                    //                 resolve();
-                    //                 var didDelete = this.deleteAssessment(oldData)
-                    //                 console.log(oldData)
-                    //                 if (didDelete) {
-                    //                     const data = [...this.state.data];
-                    //                     data.splice(data.indexOf(oldData), 1);
-                    //                     this.setState({
-                    //                         locations: data
-                    //                     });
-                    //                 }
-                    //             }, 600);
-                    //         }),
-
-
-                    // }}
+                    options={{
+                        sorting: false,
+                        pageSizeOptions: [5]
+                      }}
                 />
             </div>
 
@@ -247,6 +252,46 @@ const YellowLight = () => (
         <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"} />
     </div>
 );
+
+function convertToDate(date) {
+    return new Date(date)
+}
+
+async function checkForRecheck(recheck, date, patient_id, id) {
+    // if date within 20 min display button
+    let recheckVal = String(recheck).toUpperCase();
+    if (recheckVal === "TRUE") {
+        var old_date = new Date(date)
+        var datenew = new Date()
+
+        var dif = Math.abs((datenew.getTime() - old_date.getTime()) / 1000 / 60)
+        var lastAssessmentIdByPatient
+        lastAssessmentIdByPatient = await getLastAssessmentIDByPatient(patient_id);
+        //check if last assessment by patient or less then 20 min
+        if (dif <= 20 && (id === lastAssessmentIdByPatient)) {
+            return <button className="ui icon button"><Link to={`/newAssessment${patient_id}`}><i aria-hidden="true" className="check icon"></i></Link></button>
+        } else {
+            return getBoolVisual(recheck)
+        }
+    } else {
+        return getBoolVisual(recheck)
+    }
+}
+
+async function getLastAssessmentIDByPatient(id) {
+    var response = await requestServer.getLastAssessmentByPatientByID(id)
+    if (response !== null) {
+        if (response.data === "") {
+            this.setState({ patient_name: 'ID doesn\'t match to a patient' })
+        } else {
+            return response.data._id
+        }
+    } else {
+        return null;
+    }
+}
+
+
 
 
 function getArrowVisual(input) {

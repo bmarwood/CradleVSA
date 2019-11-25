@@ -63,21 +63,8 @@ public class UsersController {
     @ResponseStatus(code = HttpStatus.OK)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<Users> updateUser(@RequestBody Users user) {
-        //Update user's information
-
-        String workerId = user.getId();
-        String name = user.getName();
-        String username = user.getUsername();
-        String password = user.getPassword();
-        String dob = user.getDob();
-        String address = user.getAddress();
-//        Users.Gender gender = user.getGender();
-        String gender = user.getGender();
-        Set<Role> roles = user.getRoles();
-
         try {
-            this.usersRepository.save(new Users(workerId, username, password, name, dob,
-                    address, gender, roles));
+            this.usersRepository.save(user);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -112,22 +99,6 @@ public class UsersController {
             }
         }
     }
-
-//    @PutMapping("/updateProfile")
-//    public ResponseEntity<Users> updateProfile(@RequestBody Users user) {
-//        System.out.println("Retrieving existing users...");
-//        Users foundUser = usersRepository.findUserById(user.getId());
-//        if (user.getId() == foundUser.getId()){
-//            System.out.println("Found a user");
-//            usersRepository.save(user);
-//            return ResponseEntity.status(200).body(user);
-//        }
-//        else {
-//            //Return a not found status
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-//    }
-
 
     @PostMapping("/login")
     @ResponseStatus(code = HttpStatus.OK)
@@ -168,12 +139,13 @@ public class UsersController {
 //        Users.Gender gender = user.getGender();
         String gender = user.getGender();
         Set<Role> roles = user.getRoles();
+        String manager_id = user.getManager_id();
 
         String hashedPassword = bCrypt.encode(password);
 
         try {
             this.usersRepository.save(new Users(workerId, username, hashedPassword, name, dob,
-                    address, gender, roles));
+                    address, gender, roles,manager_id));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -184,7 +156,7 @@ public class UsersController {
 
     }
 
-    @DeleteMapping("/delete/{userID}")
+    @DeleteMapping("/delete/{userId}")
     public String deleteById(@PathVariable String userId) {
         usersRepository.deleteById(userId);
         return userId;

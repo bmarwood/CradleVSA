@@ -1,17 +1,10 @@
-import React, {Component, PostForm} from 'react';
+import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
-import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import RequestServer from '../RequestServer';
 import {Link} from 'react-router-dom';
-import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import {Tabs, Tab, Grid, Cell, Card, CardTitle, CardText, CardActions, CardMenu, IconButton} from 'react-mdl';
-import PieChart from '../Chart/PieChart';
-import StatIcon from '../../stat-icon.png';
-import UserList from '../UserList';
-import axios from 'axios';
 
 //Profile class which gets user data from localStorage and display accordingly
 export default class Profile extends Component {
@@ -31,7 +24,6 @@ export default class Profile extends Component {
             roles_temp: this.getUserRoles(userData),
             enabled: userData.enabled
         }
-        console.log(this.state)
     }
 
     getUserRoles(user) {
@@ -40,10 +32,8 @@ export default class Profile extends Component {
             user.roles.forEach(role => {
                 roleString = roleString + " " + role.role + ", "
             })
-            console.log('returning roles: ', roleString)
             return roleString
         }
-        console.log('returning empty roles: ')
 
         return roleString
     }
@@ -71,24 +61,10 @@ export default class Profile extends Component {
         event.preventDefault();
         const data = new FormData(event.target);
         delete (this.state.roles_temp);
-        console.log("Before Submit", this.state);
         try {
-            // var user = {
-            //     id: this.state.id,
-            //     username: this.state.username,
-            //     password: this.state.password,
-            //     name: this.state.name,
-            //     dob: this.state.dob,
-            //     address: this.state.address,
-            //     gender: this.state.gender,
-            //     roles: this.state.roles,
-            //     enabled: this.state.enabled
-            // }
-
             var response = await RequestServer.updateUser(this.state)
             if (response != null) {
                 localStorage.setItem("userData", JSON.stringify(response.data))
-                console.log(response.data)
                 window.alert("Profile changed successfully")
                 window.location.reload()
             }
@@ -215,21 +191,6 @@ export default class Profile extends Component {
                                 />
                             </Cell>
 
-                            {/* <Cell col = {4}>
-                        <TextField
-                            id="outlined-status"
-                            label="Status"
-                            className={classes.textField}
-                            value={values.status}
-                            onChange={handleChange('status')}
-                            margin="normal"
-                            InputProps={{
-                                readOnly: true,
-                                }}
-                            variant="outlined"
-                        />
-                    </Cell> */}
-
                         </Grid>
                         <Button style={{padding: '10px'}} variant="outlined" color="secondary" className="demo-button"
                                 type="submit">
@@ -248,20 +209,7 @@ export default class Profile extends Component {
     }
 
     render() {
-        // return this.state.isInEditMode ? 
-        // this.renderEditView() : 
-        // this.renderDefaultView()
         return this.renderDefaultView()
 
     }
 }
-
-// <div className="landing-form" style = {{color : "white"}}>
-//     <h1> Your Profile</h1>
-//     <h2 style = {{color : "white"}}>Hello Ms.{this.state.name}</h2>
-//     <p>Username: {this.state.username}</p>
-//     <p>Full Name: {this.state.username}</p>
-//     <p>Date Of Birth: {this.state.dob}</p>
-//     <p>Address: {this.state.address}</p>
-//     <p>Gender: {this.state.gender}</p>
-// </div>
