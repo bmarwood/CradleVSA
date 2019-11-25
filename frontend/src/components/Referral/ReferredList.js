@@ -146,7 +146,7 @@ class ReferredList extends Component {
         return (
             <div className="table-position">
                 <MaterialTable
-                    title="Assessment List"
+                    title="Referred List"
                     columns={this.state.columns}
                     data={this.state.data}
                 />

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import './PatientComponents/PatientList.css';
 import requestServer from './RequestServer';
@@ -20,18 +20,18 @@ class UserList extends Component {
         this.timer = setInterval(() => this.getUserList(), 10000);
         this.setState({
             columns: [
-                {title: 'Username', field: 'username'},
-                {title: 'Role', field: 'role', type: 'array'},
-                {title: 'Name', field: 'name'},
-                {title: 'Surname', field: 'surname'},
-                {title: 'Sex', field: 'sex'},
-                {title: 'Birth Year', field: 'birthYear', type: 'numeric'},
-                {title: 'ID Number', field: 'id', type: 'numberic'},
+                { title: 'Username', field: 'username' },
+                { title: 'Role', field: 'role', type: 'array' },
+                { title: 'Name', field: 'name' },
+                { title: 'Surname', field: 'surname' },
+                { title: 'Sex', field: 'sex' },
+                { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+                { title: 'ID Number', field: 'id', type: 'numberic' },
                 {
                     title: 'Update information',
                     field: 'update',
-                    headerStyle: {textAlign: 'center'},
-                    cellStyle: {textAlign: 'center'}
+                    headerStyle: { textAlign: 'center' },
+                    cellStyle: { textAlign: 'center' }
                 },
             ],
             Data: [
@@ -43,7 +43,7 @@ class UserList extends Component {
                     sex: 'Loading',
                     birthYear: 'Loading',
                     id: 'Loading',
-                    update: <UpdateUserPopup/>
+                    update: <UpdateUserPopup />
                 }
             ]
 
@@ -63,13 +63,22 @@ class UserList extends Component {
         return false
     }
 
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     getUserRoles(user) {
         var roleString = ''
         if (user && user.roles) {
-            user.roles.forEach(role => {
-                roleString = roleString + " " + role.role + ", "
-            })
-            return roleString
+
+            var roles = []
+            user.roles.forEach(element => {
+                let role = this.capitalizeFirstLetter(element.role.toLowerCase()).replace(/_/g, " ")
+                roles.push(role)
+            });
+
+            roles = roles.join(", ")
+            return roles
         }
         return roleString
     }
@@ -104,7 +113,7 @@ class UserList extends Component {
             UserList.push(user_obj)
         });
 
-        this.setState({data: UserList})
+        this.setState({ data: UserList })
 
     }
 
