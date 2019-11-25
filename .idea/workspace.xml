@@ -8,7 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6c5c52e7-f2b7-4154-8017-85c0c31bb73f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,19 +32,21 @@
     </option>
   </component>
   <component name="ProjectId" id="1RqNVEVk5Zpo0xb9wJrwUl4DIcF" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570348118439" />
-    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JAVA" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last.edited.regexp" value="Sample Text" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Desktop/HOMEWORK/CMPT373/Dictionary.java" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -59,7 +60,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.CradleApplication">
+  <component name="RunManager" selected="Spring Boot.CradleApplication">
     <configuration name="CradleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ca.cmpt373.earth.cradle.CradleApplication" />
       <module name="cradle" />
@@ -73,9 +74,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NewAssessment.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" working-dir="$PROJECT_DIR$/frontend/src/components/NewForm">
-      <method v="2" />
-    </configuration>
     <configuration name="CradleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="cradle" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="ca.cmpt373.earth.cradle.CradleApplication" />
@@ -86,12 +84,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.CradleApplication" />
-        <item itemvalue="Application.CradleApplication" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="showServicesTree" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -102,24 +96,14 @@
       <created>1570347832870</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1574524152443</updated>
+      <updated>1570347832870</updated>
       <workItem from="1570390690418" duration="2679000" />
       <workItem from="1570509159428" duration="438000" />
       <workItem from="1570509748392" duration="856000" />
-      <workItem from="1572497843434" duration="37498000" />
-      <workItem from="1572762994428" duration="169000" />
-      <workItem from="1572826490737" duration="918000" />
-      <workItem from="1572890842138" duration="5653000" />
-      <workItem from="1573070919935" duration="1980000" />
-      <workItem from="1573529843920" duration="4443000" />
-      <workItem from="1573786734659" duration="7640000" />
-      <workItem from="1573841798570" duration="5265000" />
-      <workItem from="1574023672279" duration="720000" />
-      <workItem from="1574095603816" duration="2692000" />
-      <workItem from="1574107625225" duration="630000" />
-      <workItem from="1574150304119" duration="190000" />
-      <workItem from="1574215266022" duration="2816000" />
-      <workItem from="1574274494327" duration="178000" />
+      <workItem from="1572153264401" duration="3447000" />
+      <workItem from="1572234664750" duration="2279000" />
+      <workItem from="1572989185663" duration="590000" />
+      <workItem from="1573509973152" duration="118000" />
     </task>
     <servers />
   </component>
@@ -152,22 +136,6 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java</url>
-          <line>58</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>
