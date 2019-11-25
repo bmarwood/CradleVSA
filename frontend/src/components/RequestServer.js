@@ -145,9 +145,6 @@ class RequestServer extends Component {
         }
     }
 
-    getPatientVHTListFilter(){
-
-    }
 
     async getPatientVHTList(user_id, role) {
         try {

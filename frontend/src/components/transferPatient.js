@@ -68,7 +68,7 @@ class TransferPatient extends Component {
         response.forEach(patient => {
             var id = patient.id
             if (patient.vht_id == null || patient.vht_id == "EMPTY") {
-                var vht_id = "no vht"
+                var vht_id = "No VHT Assigned"
             }
             else {
                 var vht_id = patient.vht_id
@@ -212,8 +212,8 @@ class TransferPatient extends Component {
 
     checkEmptyFlag() {
         if (this.state.vht_empty_flag) {
-            if (!this.state.vht_w_patient.includes("no vht")) {
-                this.state.vht_w_patient.unshift("no vht")
+            if (!this.state.vht_w_patient.includes("No VHT Assigned")) {
+                this.state.vht_w_patient.unshift("No VHT Assigned")
             }
         }
     }
