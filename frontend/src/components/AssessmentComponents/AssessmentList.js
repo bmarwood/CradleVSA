@@ -6,7 +6,6 @@ import TrafficIconsTriangle from "../Visuals/TrafficIconsTriangle";
 import TrafficIconsOctagon from "../Visuals/TrafficIconsOctagon";
 import ModalPopup from "../../Modals/ModalPopup";
 import requestServer from '../RequestServer';
-import Utility from '../NewForm/Utility'
 import { Link } from 'react-router-dom';
 
 
@@ -136,6 +135,7 @@ class AssessmentList extends Component {
                 arrow={assessment.arrow}
             />
             var assessment_obj = {
+                assessment_date: assessment.date,
                 id: assessment._id,
                 ews_color: getColorVisual(assessment.ews_color),
                 arrow: getArrowVisual(assessment.arrow),
@@ -153,9 +153,9 @@ class AssessmentList extends Component {
                 follow_up_date: assessment.follow_up_date,
                 info: info,
             }
-
             assessmentList.push(assessment_obj)
         }
+        assessmentList.sort((a, b) => ((convertToDate(a.assessment_date) > convertToDate(b.assessment_date)) ? 1 : ((convertToDate(b.assessment_date)) > convertToDate(a.assessment_date))) ? -1 : 0)
         this.setState({ data: assessmentList })
     }
 
@@ -247,6 +247,10 @@ const YellowLight = () => (
         <TrafficIconsTriangle name="triangle-container" width={50} fill={"#CCCC00"} />
     </div>
 );
+
+function convertToDate(date) {
+    return new Date(date)
+}
 
 async function checkForRecheck(recheck, date, patient_id, id) {
     // if date within 20 min display button
