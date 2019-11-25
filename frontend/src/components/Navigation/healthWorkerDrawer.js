@@ -10,13 +10,10 @@ export default function HealthWorkerDrawer() {
             <h1 style = {{color: "blue"}}>PATIENTS RELATED</h1>
             <Link to="/newPatient">New Patient</Link>
             <Link to="/newAssessment">New Assessment</Link>
-            <Link to="/Transfer">Transfer Patients</Link>
             <Link to="/ReferredList">Referral</Link>
-            <Link to="/CommunityReport">Community Report</Link>
             <br/>
             <h1 style = {{color: "blue"}}>WORKERS RELATED</h1>
             <Link to="/newWorker">New Worker</Link>
-            <Link to="/request-VHT-report">Request VHT Report</Link>
             <br/>
             <h1 style = {{color: "blue"}}>OTHERS</h1>
             <Link to="/location">View/Add Locations</Link>
