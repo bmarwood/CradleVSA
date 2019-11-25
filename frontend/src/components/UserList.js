@@ -3,6 +3,8 @@ import MaterialTable from 'material-table';
 import './PatientComponents/PatientList.css';
 import requestServer from './RequestServer';
 import UpdateUserPopup from "../Modals/UpdateUserPopup";
+import { Link } from 'react-router-dom';
+
 
 class UserList extends Component {
 
@@ -20,13 +22,13 @@ class UserList extends Component {
         this.timer = setInterval(() => this.getUserList(), 10000);
         this.setState({
             columns: [
+                { title: 'User Info', field: 'id', type: 'numberic' },
                 { title: 'Username', field: 'username' },
-                { title: 'Role', field: 'role', type: 'array' },
                 { title: 'Name', field: 'name' },
                 { title: 'Surname', field: 'surname' },
+                { title: 'Role', field: 'role', type: 'array' },
                 { title: 'Sex', field: 'sex' },
                 { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-                { title: 'ID Number', field: 'id', type: 'numberic' },
                 {
                     title: 'Update information',
                     field: 'update',
@@ -42,7 +44,7 @@ class UserList extends Component {
                     surname: 'Loading',
                     sex: 'Loading',
                     birthYear: 'Loading',
-                    id: 'Loading',
+                    id: <button className="ui icon button"> <i className="info icon"/></button>,
                     update: <UpdateUserPopup />
                 }
             ]
@@ -106,7 +108,7 @@ class UserList extends Component {
                 surname: surname,
                 sex: sex,
                 birthYear: birthYear,
-                id: id,
+                id: <button className="ui icon button"> <Link to={`/cvsa${id}`}><i className="info icon"/></Link></button>,
                 update: update
             }
 
