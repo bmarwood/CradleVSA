@@ -51,7 +51,6 @@ const Navigation = () => (
         <AdminRoute path="/PatientAddMedication" component={PatientAddMedication}/>
         <AdminRoute path="/PatientNotes" component={PatientNotes}/>
 
-
         <WorkerRoute path="/PatientList" component={PatientList}/>
         <WorkerRoute path="/PatientNotes" component={PatientNotes}/>
         <WorkerRoute path="/newAssessment" component={NewAssessment}/>

@@ -7,13 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function WorkerNav() {
     return (
         <Navigation>
-            <Link to ="/">Home</Link>
-            <Link to ="/PatientList">Patient List</Link>
-            <Link to ="/AssessmentList">Assessments List</Link>
-            <Link to="/CommunityReport">Community Report</Link>
-            <Link to="/ReferredList">Referred List</Link>
-            <Link to ="/Resources">Resources</Link>
+            <Link to="/user-dashboard">My Dashboard</Link>
             <Link to="/profile">Profile</Link>
+            <Link to ="/resources">Resources</Link>
             <Link to="/logout">Logout</Link>
         </Navigation>
     )
