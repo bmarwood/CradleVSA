@@ -163,7 +163,7 @@ class PatientChart extends React.Component {
                         No history found
                     </Alert>
                 </div>
-                <MDBContainer style={{backgroundColor: 'white'}}>
+                <MDBContainer style={{backgroundColor: 'white' , textAlign: 'center'}}>
                     <h3 className="mt-5">{this.props.patient_name}</h3>
                     <Line data={this.state.dataLine} options={{responsive: true}}/>
                 </MDBContainer>
