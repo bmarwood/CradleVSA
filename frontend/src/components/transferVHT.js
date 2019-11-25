@@ -36,14 +36,14 @@ class TransferVHT extends Component {
         this.setState({
             columns: [
                 {
-                    title: 'Patient Id',
+                    title: 'VHT Id',
                     field: 'id',
                     headerStyle: { textAlign: 'center' },
                     cellStyle: { textAlign: 'center' }
                 },
                 {
                     title: 'Cradle Professional Id',
-                    field: 'vht_id',
+                    field: 'manager_id',
                     headerStyle: { textAlign: 'center' },
                     cellStyle: { textAlign: 'center' }
                 },
@@ -66,19 +66,19 @@ class TransferVHT extends Component {
 
     populateData(response) {
         var IdList = []
-        response.forEach(patient => {
-            var id = patient.id
-            if (patient.vht_id == null || patient.vht_id == "EMPTY") {
-                var vht_id = "No VHT Assigned"
+        response.forEach(vht => {
+            var id = vht.id
+            if (vht.manager_id == null || vht.manager_id == "EMPTY") {
+                var manager_id = "No CHO Assigned"
             }
             else {
-                var vht_id = patient.vht_id
+                var manager_id = vht.manager_id
             }
-            var patient_obj = {
+            var vht_obj = {
                 id: id,
-                vht_id: vht_id,
+                manager_id: manager_id,
             }
-            IdList.push(patient_obj)
+            IdList.push(vht_obj)
         });
         this.setState({ data: IdList })
     }
@@ -121,6 +121,7 @@ class TransferVHT extends Component {
                 }
             });
         });
+        this.setState({data: user_array})
         return user_array;
     }
 
@@ -131,29 +132,21 @@ class TransferVHT extends Component {
                 vht_array: this.populateVHT(passback.data)
             })
         }
-        //console.log("vht_array",this.state.vht_array)
+        console.log("vht_ARRRRAY",this.state.vht_array)
+        this.populateData(this.state.vht_array)
     }
 
-    // async getVHTList() {
-    //     var passback = await requestServer.getVHTListForCHO()
-    //     if (passback !== null && passback.data !== "") {
-    //         this.setState({ vht_empty_flag: passback.flag })
-    //         this.setState({ vht_w_patient: passback.vhtlist })
-    //         this.populateData(passback.data)
-    //     }
-    // }
 
-
-    async getSinglePatient(ID) {
-        var passback = await requestServer.getPatientByID(ID)
+    async getSingleUser(ID) {
+        var passback = await requestServer.getCVSA(ID)
         if (passback !== null && passback.data !== "") {
             return (passback.data)
         }
     }
 
 
-    async updateSinglePatient(patient) {
-        var passback = await requestServer.updatePatient(patient)
+    async updateSingleUser(patient) {
+        var passback = await requestServer.updateUser(patient)
         if (passback !== null && passback.data !== "") {
             return (passback.data)
         }
@@ -195,88 +188,82 @@ class TransferVHT extends Component {
                         temp_cho_w_vht.push(response2.data.id)
                     }
             }
-            // for(var x = 0; response2.data.roles.length; x++)
-            //     if(response2.data.roles === "CHO"){
-            //         console.log("THE MANAGER IS CHO ID", response2.data.id)
-            //     }
         }
         this.setState({cho_w_vht:temp_cho_w_vht})
-        //var response = await requestServer.getCVSA(id)
-        //this.state.cho_w_vht
     }
 
 
     handleSubmit = async () => {
         //set the patient object to be sent to update
         for (var itr = 0; itr < this.state.data.length; itr++) {
-            if (this.state.data[itr].vht_id === this.state.from_vht) {
-                var temp_patient = await this.getSinglePatient(this.state.data[itr].id)
-                temp_patient.vht_id = this.state.to_vht
-                var update_response = await this.updateSinglePatient(temp_patient)
+            if (this.state.data[itr].manager_id === this.state.from_cho) {
+                var temp_patient = await this.getSingleUser(this.state.data[itr].id)
+                temp_patient.manager_id = this.state.to_cho
+                var update_response = await this.updateSingleUser(temp_patient)
             }
         }
         window.location.reload()
-        alert("All Patients from ID: " + this.state.from_vht + " have been transferred to ID: " + this.state.to_vht)
+        alert("All Patients from ID: " + this.state.from_cho + " have been transferred to ID: " + this.state.to_cho)
     }
 
 
     handleSubmitSingle = async (id, fromList, toList) => {
         //set the patient object to be sent to update
-        var temp_patient = await this.getSinglePatient(id)
-        temp_patient.vht_id = this.state.to_vht
-        var update_response = await this.updateSinglePatient(temp_patient)
-        this.getPatientList()
+        var temp_patient = await this.getSingleUser(id)
+        temp_patient.manager_id = this.state.to_cho
+        var update_response = await this.updateSingleUser(temp_patient)
+        this.getVHTList()
         if (fromList.length === 1 || toList.length === 0) {
             window.location.reload()
         }
-        alert("Patient ID: " + id + " from ID: " + this.state.from_vht + " has been transferred to ID: " + this.state.to_vht)
+        alert("Patient ID: " + id + " from ID: " + this.state.from_cho + " has been transferred to ID: " + this.state.to_cho)
     }
 
 
     handleChange(event) {
         if (event.target.name === "vht_A_id") {
-            if (event.target.value === this.state.to_vht && this.state.to_vht !== "null") {
-                alert("Transfer to same VHT ID: " + event.target.value + " is not allowed\nPlease try again")
+            if (event.target.value === this.state.to_cho && this.state.to_cho !== "null") {
+                alert("Transfer to same CHO ID: " + event.target.value + " is not allowed\nPlease try again")
                 event.target.value = null
             }
-            this.setState({ from_vht: event.target.value })
+            this.setState({ from_cho: event.target.value })
         }
         else {
-            if (event.target.value === this.state.from_vht && this.state.from_vht !== "null") {
-                alert("Transfer to same VHT ID: " + event.target.value + " is not allowed\nPlease try again")
+            if (event.target.value === this.state.from_cho && this.state.from_cho !== "null") {
+                alert("Transfer to same CHO ID: " + event.target.value + " is not allowed\nPlease try again")
                 event.target.value = null
             }
-            this.setState({ to_vht: event.target.value })
+            this.setState({ to_cho: event.target.value })
         }
     }
 
-
-    populatePatientLists(vht_id) {
-        var tempPatientList = []
-        for (var itr = 0; itr < this.state.data.length; itr++) {
-            if (this.state.data[itr].vht_id === vht_id) {
-                tempPatientList.push(this.state.data[itr])
-            }
-        }
-        return tempPatientList
-    }
 
 
     checkEmptyFlag() {
-        if (this.state.vht_empty_flag) {
-            if (!this.state.vht_w_patient.includes("No VHT Assigned")) {
-                this.state.vht_w_patient.unshift("No VHT Assigned")
+        if (this.state.cho_empty_flag) {
+            if (!this.state.cho_w_patient.includes("No CHO Assigned")) {
+                this.state.cho_w_patient.unshift("No CHO Assigned")
             }
         }
     }
 
     populateVHTLists(id){
-        return;
+        console.log("CHOSEN",this.state.from_cho,this.state.to_cho)
+        console.log(this.state.data)
+        var tempPatientList = []
+        for (var itr = 0; itr < this.state.data.length; itr++) {
+            if (this.state.data[itr].manager_id === id) {
+                tempPatientList.push(this.state.data[itr])
+            }
+        }
+        return tempPatientList
+
+
     }
 
 
     render() {
-        //this.checkEmptyFlag()
+        this.checkEmptyFlag()
         let temp_to_cho = this.state.to_cho
         let temp_from_cho = this.state.from_cho
         let temp_cho_array = this.state.cho_array
@@ -317,7 +304,7 @@ class TransferVHT extends Component {
                             color: 'white',
                             marginLeft: 20
                         }}
-                                onClick={(e) => { if (window.confirm("Are you sure you wish to transfer all patients from ID: " + this.state.from_vht + " to ID: " + this.state.to_vht)) this.handleSubmit() }}>Submit</Button>
+                                onClick={(e) => { if (window.confirm("Are you sure you wish to transfer all patients from ID: " + this.state.from_cho + " to ID: " + this.state.to_cho)) this.handleSubmit() }}>Submit</Button>
                     </div>
                 </div>
                 <div className="table-positionT">
@@ -329,7 +316,7 @@ class TransferVHT extends Component {
                             {
                                 icon: 'compareArrows',
                                 tooltip: 'Transfer Patient',
-                                onClick: (event, rowData) => { if (window.confirm("Are you sure you wish to transfer patient ID: " + rowData.id + " from ID: " + this.state.from_vht + " to ID: " + this.state.to_vht)) this.handleSubmitSingle(rowData.id, populate_only_selected_from, populate_only_selected_to) }
+                                onClick: (event, rowData) => { if (window.confirm("Are you sure you wish to transfer patient ID: " + rowData.id + " from ID: " + this.state.from_cho + " to ID: " + this.state.to_cho)) this.handleSubmitSingle(rowData.id, populate_only_selected_from, populate_only_selected_to) }
                             }
                         ]}
                     />
