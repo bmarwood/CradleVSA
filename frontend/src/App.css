@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+
 }
 
 .button-location {
@@ -15,6 +16,10 @@
   color: white;
 }
 
+.scroll {
+  scrollbar-width: thin;
+}
+
 .MuiAppBar-colorPrimary {
   color: #fff;
   background-color: #4a7582 !important;
@@ -22,6 +27,11 @@
 
 .mdl-layout__drawer {
   color: rgb(136, 188, 203) !important;
+  scrollbar-width: thin;
+}
+
+.mdl-layout__content {
+  scrollbar-width: thin;
 }
 
 .mdl-layout__drawer > .mdl-layout__title, .mdl-layout__drawer > .mdl-layout-title {
@@ -110,7 +120,6 @@
 .App-link {
   color: #61dafb;
 }
-
 
 /* width */
 ::-webkit-scrollbar {
