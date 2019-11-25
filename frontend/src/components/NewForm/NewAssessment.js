@@ -527,8 +527,6 @@ class NewAssessment extends React.Component {
                 >
                     <Grid>
                         <Cell col={4}>
-
-                            {/*<label>Location: </label>*/}
                             <h4> Location </h4>
                             <select
                                 value={this.state.location}
