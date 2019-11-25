@@ -54,18 +54,18 @@ const Navigation = () => (
         <WorkerRoute path="/PatientList" component={PatientList}/>
         <WorkerRoute path="/PatientNotes" component={PatientNotes}/>
         <WorkerRoute path="/newAssessment" component={NewAssessment}/>
+        <WorkerRoute path="/newAssessment:id" component={NewAssessment} />
         <WorkerRoute path="/newPatient" component={NewPatient}/>
         <WorkerRoute path="/ReferredList" component={ReferredList}/>
         <ManagerRoute path="/newWorker" component={NewUser}/>
         <WorkerRoute path="/CommunityReport" component={CommunityReport}/>
 
         <ManagerRoute path="/transfer" component={TransferPatient}/>
-        {/* <ManagerRoute path = "/request-VHT-report" component = {RequestReport}/>
-        <ManagerRoute path = "/vht-report" component = {VhtReport}/> */}
-
-
-        <Route path="/patient:id" component={IndividualPatient} />
-        <Route path="/cvsa:id" component={IndividualCVSA} />
+        <PrivateRoute path="/profile" component={Profile}/>
+        <PrivateRoute path="/changePassword" component={ChangePassword}/>
+        <PrivateRoute path="/patient:id" component={IndividualPatient} />
+        <PrivateRoute path="/cvsa:id" component={IndividualCVSA} />
+        <Route path="/resources" component={Resources}/>
         <Route component={NoMatchPage} />
 
     </Switch>

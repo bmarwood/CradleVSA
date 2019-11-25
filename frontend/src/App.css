@@ -3,6 +3,47 @@
 
 }
 
+.showMenu {
+  display: block;
+}
+
+.hideMenu {
+  display: none !important;
+}
+
+.titleMenu {
+  color: #2e5ad1  !important;
+}
+
+.titleMenu:hover {
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgb(230, 167, 167) !important;
+}
+
+.link-menu {
+  display: block;
+  flex-shrink: 0;
+  padding: 16px 10px;
+  margin: 0;
+  color: #757575;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+  opacity: 0.87;  
+}
+
+.link-menu:hover {
+  display: block;
+  margin: 0;
+  background-color: rgb(224,224,224) !important;
+}
+
+.mdl-layout__drawer .mdl-navigation .mdl-navigation__link:hover {
+  background-color: rgb(224,224,224, 0) !important;
+}
+
 .button-location {
   background-color: white !important;
 }

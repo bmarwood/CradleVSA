@@ -7,6 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c5c52e7-f2b7-4154-8017-85c0c31bb73f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Navigation/ChoNav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/AssessmentsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/Controllers/PatientsController.java" afterDir="false" />
@@ -20,7 +23,28 @@
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/PatientsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/ca/cmpt373/earth/cradle/repository/PatientsRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/test/java/ca/cmpt373/earth/cradle/CradleApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Modals/ModalAssessment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Modals/ModalAssessment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AdminComponents/RequestReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AdminComponents/RequestReport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AdminComponents/adminDrawer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AdminComponents/adminDrawer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AdminComponents/vhtReport.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AdminComponents/vhtReport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AssessmentComponents/AssessmentList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/IndividualPatient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/IndividualPatient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navigation/healthWorkerDrawer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navigation/healthWorkerDrawer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navigation/navigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navigation/navigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewAssessment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewLocation.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewLocation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewPatient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/NewUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/NewUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/NewForm/newForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/NewForm/newForm.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientChart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PatientComponents/PatientList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/RequestServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/RequestServer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Transfer.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Transfer.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/transferPatient.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/transferPatient.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/backend/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

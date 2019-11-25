@@ -90,7 +90,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/vhts/all')
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -101,7 +100,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/vhts/get' + id)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -132,7 +130,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/assessments/getReferred')
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -148,7 +145,8 @@ class RequestServer extends Component {
         }
     }
 
-    async getPatientVHTList() {
+
+    async getPatientVHTList(user_id, role) {
         try {
             var response = await axios.get(this.getServerLocation() + '/patients/all')
             var userMap = await this.getUserList()
@@ -157,12 +155,21 @@ class RequestServer extends Component {
             //all vhts from userlist
             for (let x = 0; x < userMap.data.length; x++) {
                 for (let y = 0; y < userMap.data[x].roles.length; y++) {
-                    if (userMap.data[x].roles[y].role == "VHT") {
-                        vhtList.push(userMap.data[x].id)
+                    if (userMap.data[x].roles[y].role === "VHT") {
+                        if(role === "CHO"){
+                            if(userMap.data[x].manager_id ===user_id)
+                            {
+                                vhtList.push(userMap.data[x].id)
+                            }
+
+                        }
+                        else{
+                            vhtList.push(userMap.data[x].id)
+                            //this.getPatientVHTListFilter(user_id, userMap.data[x])
+                        }
                     }
                 }
             }
-
             var newResponse = []
             var flag = false
             //all patients that have a vht_id or "EMPTY"
@@ -203,7 +210,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/patients/belongTo' + id)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -226,7 +232,6 @@ class RequestServer extends Component {
             var response = await axios.get(this.getServerLocation() + '/assessments/filter/getByCVSAId' + id + "/" + from + "/" + to)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }
@@ -304,6 +309,23 @@ class RequestServer extends Component {
     async getUserList() {
         try {
             var response = await axios.get(this.getServerLocation() + '/users/all')
+            return response
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
+    async getUserListCHO(user_id){
+        try {
+            var temp_user_list = []
+            var response = await axios.get(this.getServerLocation() + '/users/all')
+            for (let a = 0; a < response.data.length; a++) {
+                if(response.data[a].manager_id === user_id){
+                    temp_user_list.push(response.data[a])
+                }
+            }
+            response.data = temp_user_list
             return response
         } catch (error) {
             console.log(error)
@@ -394,7 +416,6 @@ class RequestServer extends Component {
             var response = await axios.post(this.getServerLocation() + '/assessments/updateReferral/' + assessment._id, assessment)
             return response
         } catch (error) {
-            console.log('error block')
             console.log(error)
             return null
         }

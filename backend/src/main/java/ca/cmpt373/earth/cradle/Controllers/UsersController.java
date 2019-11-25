@@ -139,12 +139,13 @@ public class UsersController {
 //        Users.Gender gender = user.getGender();
         String gender = user.getGender();
         Set<Role> roles = user.getRoles();
+        String manager_id = user.getManager_id();
 
         String hashedPassword = bCrypt.encode(password);
 
         try {
             this.usersRepository.save(new Users(workerId, username, hashedPassword, name, dob,
-                    address, gender, roles));
+                    address, gender, roles,manager_id));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
