@@ -21,15 +21,16 @@ class TransferPatient extends Component {
             to_vht: '',
             loading: true,
             user_role: [],
-            user_id: ''
+            user_id: '',
+            some: ''
         }
         this.handleChange = this.handleChange.bind(this);
         //this.getRoles()
-        this.getVHTList()
     }
 
 
     componentDidMount() {
+        this.getVHTList()
         this.getPatientList()
         this.timer = setInterval(() => this.getPatientList(), 10000);
         this.setState({
