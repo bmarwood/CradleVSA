@@ -5,6 +5,7 @@ import TrafficIconsTriangle from "./Visuals/TrafficIconsTriangle";
 import TrafficIconsOctagon from "./Visuals/TrafficIconsOctagon";
 import './IndividualPatient.css';
 import AssessmentList from "./AssessmentComponents/AssessmentList";
+import GraphPopup from '../Modals/GraphPopup';
 
 
 class IndividualPatient extends Component {
@@ -51,7 +52,7 @@ class IndividualPatient extends Component {
                     assessment_date: response.data.date,
                 })
             }
-        }else{
+        } else {
             this.setState({
                 assessment_id: 'No Assessments',
             })
@@ -97,46 +98,49 @@ class IndividualPatient extends Component {
                     <div className="one-edge-shadow modal-header ">
                         <h3>Patient Name: {this.state.patient_name}</h3><br />
                         <div className='modal-header-direction'>
-                            {/* <div className='float-left'> */}
-                                <h5>
-                                    Patient ID: {this.state.patient_id}
-                                    <br />
-                                    Date of Birth: {this.state.patient_dob}
-                                </h5>
+                            <h5>
+                                Patient ID: {this.state.patient_id}
+                                <br />
+                                Date of Birth: {this.state.patient_dob}
+                            </h5>
 
-                            {/* </div> */}
                         </div>
                     </div>
                     <h3 className='padding-left'> Last Assessment: {this.state.assessment_id} </h3>
-                        <div className="one-edge-shadow modal-body p-30">
-                            <div className='float-left'>
-                                Early Warning Color: {this.getColorVisual(this.state.ews_color)}
-                                <br />
-                                Arrow: {this.getArrowVisual(this.state.arrow)}
-                                <br />
-                                Heart Rate: {this.state.heart_rate}
-                                <br />
-                                Diastolic: {this.state.diastolic}
-                                <br />
-                                Systolic: {this.state.systolic}
-                                <br />
-                                Gestational Age: {this.state.gestational_age != 0 ? this.props.gestational_age : <i aria-hidden="true" className="dont icon" />}
-                                <br />
-                                Gestational Unit: {this.getGestationalUnit(this.state.gestational_unit)}
-                                <br />
-                                Current Symptoms: {this.state.symptoms}
-                            </div>
-
-                            <div className='float-right'>
-                                Date of Birth: {this.state.patient_dob}
-                                <br />
-                                Patient Age: {this.calculateAge() ? this.calculateAge() : 0}
-                                <br />
-                                Date of Assessment: {this.state.assessment_date}
-                                <br />
-                                Follow Up Date: {this.state.follow_up_date != null ? this.state.follow_up_date : <i aria-hidden="true" className="dont icon" />}
-                            </div>
+                    <div className="one-edge-shadow modal-body p-30">
+                        <div className='float-left'>
+                            Early Warning Color: {this.getColorVisual(this.state.ews_color)}
+                            <br />
+                            Arrow: {this.getArrowVisual(this.state.arrow)}
+                            <br />
+                            Heart Rate: {this.state.heart_rate}
+                            <br />
+                            Diastolic: {this.state.diastolic}
+                            <br />
+                            Systolic: {this.state.systolic}
+                            <br />
+                            Gestational Age: {this.state.gestational_age != 0 ? this.props.gestational_age : <i aria-hidden="true" className="dont icon" />}
+                            <br />
+                            Gestational Unit: {this.getGestationalUnit(this.state.gestational_unit)}
+                            <br />
+                            Current Symptoms: {this.state.symptoms}
                         </div>
+
+                        <div className='float-right'>
+                            Date of Birth: {this.state.patient_dob}
+                            <br />
+                            Patient Age: {this.calculateAge() ? this.calculateAge() : 0}
+                            <br />
+                            Date of Assessment: {this.state.assessment_date}
+                            <br />
+                            Follow Up Date: {this.state.follow_up_date != null ? this.state.follow_up_date : <i aria-hidden="true" className="dont icon" />}
+                            <br />
+                            History Graph: <GraphPopup
+                                patient_id={this.state.patient_id}
+                                patient_name={this.state.patient_name}
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 <div className='list'>
