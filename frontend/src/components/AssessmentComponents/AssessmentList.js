@@ -155,6 +155,7 @@ class AssessmentList extends Component {
             }
             assessmentList.push(assessment_obj)
         }
+        //sort the new assessment array by assessment_date 
         assessmentList.sort((a, b) => ((convertToDate(a.assessment_date) > convertToDate(b.assessment_date)) ? 1 : ((convertToDate(b.assessment_date)) > convertToDate(a.assessment_date))) ? -1 : 0)
         this.setState({ data: assessmentList })
     }
