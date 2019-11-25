@@ -79,7 +79,8 @@ export default class AdminDrawer extends React.Component {
                     <Link className='link-menu' to="/newPatient">New Patient</Link>
                     <Link className='link-menu' to="/newAssessment">New Assessment</Link>
                     <Link className='link-menu' to="/newWorker">New Worker</Link>
-                    <Link className='link-menu' to="/Transfer">Transfer Patients</Link>
+                    <Link className='link-menu' to="/transfer">Transfer Patients</Link>
+                    <Link className='link-menu' to="/transferVHT">Transfer VHT</Link>
                 </span>
 
                 <br />
