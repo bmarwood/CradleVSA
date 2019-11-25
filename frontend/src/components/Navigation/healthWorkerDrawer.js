@@ -4,7 +4,7 @@ import { Navigation } from 'react-mdl';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 
 export default class HealthWorkerDrawer extends React.Component {
     constructor() {
@@ -49,9 +49,13 @@ export default class HealthWorkerDrawer extends React.Component {
         var workersClass = this.state.showWorkers ? 'showMenu' : "hideMenu"
         var othersClass = this.state.showOthers ? 'showMenu' : "hideMenu"
 
+        var patientIcon = this.state.showPatients ?  faCaretUp : faCaretDown
+        var workerIcon = this.state.showWorkers ?  faCaretUp : faCaretDown
+        var otherIcon = this.state.showOthers ?  faCaretUp : faCaretDown
+
         return (
             <Navigation>
-                <h1 className='titleMenu' onClick={() => { this.showPatients() }}>PATIENTS RELATED <FontAwesomeIcon icon={faCaretDown} /></h1>
+                <h1 className='titleMenu' onClick={() => { this.showPatients() }}>PATIENTS RELATED <FontAwesomeIcon icon={patientIcon} /></h1>
 
                 <span className={patientsClass}>
                     <Link className='link-menu' to="/newPatient">New Patient</Link>
@@ -59,12 +63,12 @@ export default class HealthWorkerDrawer extends React.Component {
                     <Link className='link-menu' to="/ReferredList">Referral</Link>
                 </span>
                 <br />
-                <h1 className='titleMenu' onClick={() => { this.showWorkers() }}>WORKERS RELATED <FontAwesomeIcon icon={faCaretDown} /></h1>
+                <h1 className='titleMenu' onClick={() => { this.showWorkers() }}>WORKERS RELATED <FontAwesomeIcon icon={workerIcon} /></h1>
                 <span className={workersClass}>
                     <Link className='link-menu' to="/newWorker">New Worker</Link>
                 </span>
                 <br />
-                <h1 className='titleMenu' onClick={() => { this.showOthers() }}>OTHERS <FontAwesomeIcon icon={faCaretDown} /></h1>
+                <h1 className='titleMenu' onClick={() => { this.showOthers() }}>OTHERS <FontAwesomeIcon icon={otherIcon} /></h1>
                 <span className={othersClass}>
                     <Link className='link-menu' to="/location">View/Add Locations</Link>
                 </span>
