@@ -14,6 +14,7 @@ export default function AdminNav() {
             <Link to="/CommunityReport">Community Report</Link>
             <Link to="/ReferredList">Referral</Link>
             <Link to="/Transfer">Transfer Patients</Link>
+            <Link to="/TransferVHT">Transfer VHT</Link>
             <Link to="/Resources">Resources</Link>
         </Navigation>
     )
