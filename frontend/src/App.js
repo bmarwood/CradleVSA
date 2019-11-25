@@ -12,6 +12,7 @@ import HealthWorkerDrawer from './components/Navigation/healthWorkerDrawer'
 import AdminDrawer from './components/AdminComponents/adminDrawer'
 import ChoDrawer from "./components/Navigation/choDrawer";
 import ChoNav from "./components/Navigation/ChoNav";
+import VhtDrawer from './components/Navigation/vhtDrawer';
 
 const Role_Termination_Integer = -1
 
@@ -39,6 +40,8 @@ class App extends Component {
             return (<ChoDrawer/>)
         } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isHealthWorker(roles)) {
             return (<HealthWorkerDrawer/>)
+        }  else if (localStorage.getItem('isLoggedIn') === 'true' && this.isVHT(roles)) {
+            return (<VhtDrawer/>)
         } else {
             return (
                 <Navigation>
@@ -52,6 +55,14 @@ class App extends Component {
 
     isHealthWorker(roles) {
         if (roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer) {
+            return true
+        }
+
+        return false 
+    }
+
+    isVHT(roles) {
+        if (roles.indexOf("VHT") > Role_Termination_Integer) {
             return true
         }
 
@@ -91,8 +102,11 @@ class App extends Component {
             return (                  
                 <WorkerNav/>
             )
-        }
-        else {
+        } else if (localStorage.getItem('isLoggedIn') === 'true' && this.isVHT(roles)) {
+            return (                  
+                <WorkerNav/>
+            )
+        } else {
             return (                        
                 <LoggedOutNav/>
             )

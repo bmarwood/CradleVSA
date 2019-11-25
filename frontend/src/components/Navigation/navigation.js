@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import LandingPage from '../landingpage';
 import NewAssessment from '../NewForm/NewAssessment';
 import NewPatient from '../NewForm/NewPatient';
@@ -31,44 +31,44 @@ import HWDashboard from '../HealthWorkerComponents/healthWorkerDashboard';
 const Navigation = () => (
     <Switch>
         {/* General Route */}
-        <Route exact path="/" component={LandingPage}/>
-        <Route exact path="/login" component={Login}/>
-        <Route path="/resources" component={Resources}/>
+        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/login" component={Login} />
+        <Route path="/resources" component={Resources} />
         {/* Private Route */}
-        <PrivateRoute exact path="/user-dashboard" component={HWDashboard}/>
-        <PrivateRoute exact path="/AssessmentList" component={AssessmentList}/>
-        <PrivateRoute path="/logout" component={Logout}/>
-        <PrivateRoute path="/profile" component={Profile}/>
-        <PrivateRoute path="/changePassword" component={ChangePassword}/>
+        <PrivateRoute exact path="/user-dashboard" component={HWDashboard} />
+        <PrivateRoute exact path="/AssessmentList" component={AssessmentList} />
+        <PrivateRoute path="/logout" component={Logout} />
+        <PrivateRoute path="/profile" component={Profile} />
+        <PrivateRoute path="/changePassword" component={ChangePassword} />
 
         {/* Admin Route */}
-        <AdminRoute path="/location" component={Location}/>
-        <AdminRoute path="/newlocation" component={NewLocation}/>
-        <ManagerRoute path="/request-VHT-report" component={RequestReport}/>
-        <ManagerRoute path="/vht-report" component={VhtReport}/>
-        <PrivateRoute exact path="/user-dashboard" component={HWDashboard}/>
-        <AdminRoute exact path="/admin-dashboard" component={Landing_List}/>
-        <AdminRoute exact path="/register" component={Register}/>
-        <AdminRoute path="/admin/landing" component={Landing_List}/>
-        <AdminRoute path="/PatientAddMedication" component={PatientAddMedication}/>
-        <AdminRoute path="/PatientNotes" component={PatientNotes}/>
+        <AdminRoute path="/location" component={Location} />
+        <AdminRoute path="/newlocation" component={NewLocation} />
+        <ManagerRoute path="/request-VHT-report" component={RequestReport} />
+        <ManagerRoute path="/vht-report" component={VhtReport} />
+        <PrivateRoute exact path="/user-dashboard" component={HWDashboard} />
+        <AdminRoute exact path="/admin-dashboard" component={Landing_List} />
+        <AdminRoute exact path="/register" component={Register} />
+        <AdminRoute path="/admin/landing" component={Landing_List} />
+        <AdminRoute path="/PatientAddMedication" component={PatientAddMedication} />
+        <AdminRoute path="/PatientNotes" component={PatientNotes} />
 
-        <WorkerRoute path="/PatientList" component={PatientList}/>
-        <WorkerRoute path="/PatientNotes" component={PatientNotes}/>
-        <WorkerRoute path="/newAssessment" component={NewAssessment}/>
+        <WorkerRoute path="/PatientList" component={PatientList} />
+        <WorkerRoute path="/PatientNotes" component={PatientNotes} />
+        <WorkerRoute path="/newAssessment" component={NewAssessment} />
         <WorkerRoute path="/newAssessment:id" component={NewAssessment} />
-        <WorkerRoute path="/newPatient" component={NewPatient}/>
-        <WorkerRoute path="/ReferredList" component={ReferredList}/>
-        <ManagerRoute path="/newWorker" component={NewUser}/>
-        <WorkerRoute path="/CommunityReport" component={CommunityReport}/>
+        <WorkerRoute path="/newPatient" component={NewPatient} />
+        <WorkerRoute path="/ReferredList" component={ReferredList} />
+        <ManagerRoute path="/newWorker" component={NewUser} />
+        <WorkerRoute path="/CommunityReport" component={CommunityReport} />
 
-        <ManagerRoute path="/transfer" component={TransferPatient}/>
-        <AdminRoute path="/transferVHT" component={TransferVHT}/>
-        <PrivateRoute path="/profile" component={Profile}/>
-        <PrivateRoute path="/changePassword" component={ChangePassword}/>
+        <ManagerRoute path="/transfer" component={TransferPatient} />
+        <AdminRoute path="/transferVHT" component={TransferVHT} />
+        <PrivateRoute path="/profile" component={Profile} />
+        <PrivateRoute path="/changePassword" component={ChangePassword} />
         <PrivateRoute path="/patient:id" component={IndividualPatient} />
         <PrivateRoute path="/cvsa:id" component={IndividualCVSA} />
-        <Route path="/resources" component={Resources}/>
+        <Route path="/resources" component={Resources} />
         <Route component={NoMatchPage} />
 
     </Switch>
@@ -91,7 +91,7 @@ function getRoles() {
     return roleArray
 }
 
-function PrivateRoute({component: Component, authed, ...rest}) {
+function PrivateRoute({ component: Component, authed, ...rest }) {
 
     return (
         <Route {...rest} render={(props) => (
@@ -99,33 +99,33 @@ function PrivateRoute({component: Component, authed, ...rest}) {
                 ? <Component {...props} />
                 : <Redirect to={{
                     pathname: '/login',
-                    state: {from: props.location}
-                }}/>
-        )}/>
+                    state: { from: props.location }
+                }} />
+        )} />
 
     )
 }
 
 //TODO: Need to create a page for unauth access.
-function WorkerRoute({component: Component, authed, ...rest}) {
+function WorkerRoute({ component: Component, authed, ...rest }) {
 
     var roles = getRoles()
 
     return (
         <Route {...rest} render={(props) => (
-            localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer || roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer)
+            localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer || roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer || roles.indexOf("VHT") > Role_Termination_Integer )
                 ? <Component {...props} />
                 : <Redirect to={{
                     pathname: '/',
-                    state: {from: props.location}
-                }}/>
-        )}/>
+                    state: { from: props.location }
+                }} />
+        )} />
 
     )
 }
 
 //TODO: Need to create a redirect page for unauth access.
-function AdminRoute({component: Component, authed, ...rest}) {
+function AdminRoute({ component: Component, authed, ...rest }) {
 
     var roles = getRoles()
 
@@ -135,27 +135,26 @@ function AdminRoute({component: Component, authed, ...rest}) {
                 ? <Component {...props} />
                 : <Redirect to={{
                     pathname: '/',
-                    state: {from: props.location}
-                }}/>
-        )}/>
+                    state: { from: props.location }
+                }} />
+        )} />
 
     )
 }
 
-function ManagerRoute({component: Component, authed, ...rest}) {
+function ManagerRoute({ component: Component, authed, ...rest }) {
 
     var roles = getRoles()
 
     return (
         <Route {...rest} render={(props) => (
-            localStorage.getItem('isLoggedIn') === 'true' && (roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer || roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer)
+            localStorage.getItem('isLoggedIn') === 'true' && ( roles.indexOf("ADMIN") > Role_Termination_Integer || roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer || roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer)
                 ? <Component {...props} />
                 : <Redirect to={{
                     pathname: '/',
-                    state: {from: props.location}
-                }}/>
-        )}/>
-
+                    state: { from: props.location }
+                }} />
+            )} />
     )
 }
 
