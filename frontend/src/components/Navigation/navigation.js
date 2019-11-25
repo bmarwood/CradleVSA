@@ -18,6 +18,8 @@ import ChangePassword from '../UserProfile/ChangePassword'
 import Profile from '../UserProfile/Profile';
 import Location from '../location';
 import NewLocation from '../NewForm/NewLocation';
+import VhtReport from '../AdminComponents/vhtReport';
+import RequestReport from '../AdminComponents/RequestReport';
 import IndividualPatient from '../IndividualPatient';
 import IndividualCVSA from '../IndividualCVSA';
 import CommunityReport from "../CommunityComponents/CommunityReport";
@@ -29,6 +31,8 @@ const Navigation = () => (
         <Route exact path="/" component={LandingPage}/>
         <AdminRoute path="/location" component={Location}/>
         <AdminRoute path="/newlocation" component={NewLocation}/>
+        <ManagerRoute path="/request-VHT-report" component={RequestReport}/>
+        <ManagerRoute path="/vht-report" component={VhtReport}/>
         <PrivateRoute exact path="/user-dashboard" component={PatientList}/>
         <AdminRoute exact path="/admin-dashboard" component={Landing_List}/>
         <Route exact path="/login" component={Login}/>
@@ -43,6 +47,7 @@ const Navigation = () => (
         <WorkerRoute path="/PatientNotes" component={PatientNotes}/>
         <WorkerRoute path="/PatientAddMedication" component={PatientAddMedication}/>
         <WorkerRoute path="/newAssessment" component={NewAssessment}/>
+        <WorkerRoute path="/newAssessment:id" component={NewAssessment} />
         <WorkerRoute path="/newPatient" component={NewPatient}/>
         <WorkerRoute path="/ReferredList" component={ReferredList}/>
         <ManagerRoute path="/newWorker" component={NewUser}/>
@@ -50,9 +55,9 @@ const Navigation = () => (
         <ManagerRoute path="/transfer" component={TransferPatient}/>
         <PrivateRoute path="/profile" component={Profile}/>
         <PrivateRoute path="/changePassword" component={ChangePassword}/>
+        <PrivateRoute path="/patient:id" component={IndividualPatient} />
+        <PrivateRoute path="/cvsa:id" component={IndividualCVSA} />
         <Route path="/resources" component={Resources}/>
-        <Route path="/patient:id" component={IndividualPatient} />
-        <Route path="/cvsa:id" component={IndividualCVSA} />
         <Route component={NoMatchPage} />
     </Switch>
 )

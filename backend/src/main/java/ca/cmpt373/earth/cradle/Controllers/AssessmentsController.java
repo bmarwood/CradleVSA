@@ -86,6 +86,15 @@ public class AssessmentsController {
         return assessmentsRepository.findByCVSAId(CVSA_id);
     }
 
+    //vht_id
+    @GetMapping("/filter/getByCVSAId{CVSA_id}/{from}/{to}")
+    @ResponseStatus(code = HttpStatus.OK)
+    @CrossOrigin(origins = "http://localhost:8040")
+    public List<Assessments> getByCVSAIdByDate(@PathVariable String CVSA_id, @PathVariable String from, @PathVariable String to) {
+
+        return assessmentsRepository.findByCVSAId(CVSA_id);
+    }
+
     //patient_id
     @GetMapping("/getAByPatientId{patient_id}")
     @ResponseStatus(code = HttpStatus.OK)
