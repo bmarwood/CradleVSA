@@ -107,7 +107,7 @@ class ModalAssessment extends Component {
                             <h5>
                                 Cradle Professional ID: {this.props.cvsa_id}
                                 <br/>
-                                Cradle Professional Name: {this.state.cvsa_name}
+                                Cradle Professional Name: {this.state.CVSA_name}
                             </h5>
                         </div>
                     </div>

@@ -53,6 +53,7 @@ class NewUser extends React.Component {
             user_array: [],
             update: props.id,
             old_username: '',
+            location_array: [],
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
@@ -111,9 +112,17 @@ class NewUser extends React.Component {
                 return true;
             });
 
+        this.getLocation()
+            .catch(() => {
+                this.setState({
+                    location_array: []
+                })
+            })
+
         this.setState({
             roles_array: this.getRoleArray()
         });
+
 
         //check for user id - no duplicate value
         ValidatorForm.addValidationRule('checkID', (value) => {
@@ -223,6 +232,16 @@ class NewUser extends React.Component {
         }
     }
 
+    async getLocation() {
+        let response = await RequestServer.getLocations()
+        if (response !== null) {
+            this.setState({
+                location_array: response.data
+            })
+        }
+        return [];
+    }
+
 
     handleSubmit = async () => {
         //input validation
@@ -233,6 +252,10 @@ class NewUser extends React.Component {
         if (this.state.error) {
             alert("Must select one role")
             return
+        }
+        if (this.state.location === "EMPTY") {
+            alert(this.state.errorMsg + "\nPlease select one of the location")
+            return;
         }
 
         //remove and change the inputs
@@ -270,140 +293,138 @@ class NewUser extends React.Component {
     render() {
         let roles_map = this.state.roles_array.map(item => <ShowRoles key={item.id} item={item}
                                                                       handleChange={this.handleCheckbox}/>)
+        let location_select_option = this.state.location_array.map(location => <option key={location.id}
+                                                                                       value={location.id}> {location.name}</option>)
+
         return (
-            <ValidatorForm
-                style={{
-                    backgroundColor: 'white',
-                    margin: '50px 100px',
-                    padding: '50px',
-                    textAlign: 'center',
-                    borderRadius: '10px'
-                }}
-                ref="form"
-                onSubmit={this.handleSubmit}
-                onError={errors => console.log(errors)}
-            >
-                <div style={{display: (this.state.update ? 'none' : 'block')}}>
-                    <h4>New Worker </h4>
-                </div>
+            <div className="newForm">
+                <ValidatorForm
+                    ref="form"
+                    onSubmit={this.handleSubmit}
+                    onError={errors => console.log(errors)}
+                >
+                    <div style={{display: (this.state.update ? 'none' : 'block')}}>
+                        <h4>New Worker </h4>
+                    </div>
 
-                <Grid>
-                    <Cell col={4}>
-                        <TextValidator
-                            label="First Name"
-                            onChange={this.handleChange}
-                            name="fname"
-                            value={this.state.fname}
-                            validators={['required', 'matchRegexp:^[A-Za-z]+$']}
-                            errorMessages={['this field is required', 'Invalid input (only letters)']}
-                            variant="outlined"
-                        />
-                        <br/>
-                        <br/>
-                        <TextValidator
-                            label="Last Name"
-                            onChange={this.handleChange}
-                            name="lname"
-                            value={this.state.lname}
-                            validators={['required', 'matchRegexp:^[A-Za-z]+$']}
-                            errorMessages={['this field is required', 'Invalid input (only letters)']}
-                            variant="outlined"
-                        />
-                        <br/>
-                        <br/>
-                        <TextValidator
-                            label="Address"
-                            onChange={this.handleChange}
-                            name="address"
-                            value={this.state.address}
-                            variant="outlined"
-                        />
-                        <br/>
-                        <br/>
-                    </Cell>
-
-                    <Cell col={4}>
-                        <TextValidator
-                            label="ID"
-                            onChange={this.handleChange}
-                            name="id"
-                            value={this.state.id}
-                            validators={['required', 'checkID']}
-                            errorMessages={['this field is required', 'Existing ID: Re-enter the ID']}
-                            variant="outlined"
-                        />
-                        <br/>
-                        <br/>
-                        <TextValidator
-                            label="Username"
-                            onChange={this.handleChange}
-                            name="username"
-                            value={this.state.username}
-                            validators={['required', 'checkUsername']}
-                            errorMessages={['this field is required', 'Existing Username: Re-enter the username']}
-                            variant="outlined"
-                        />
-                        <br/>
-                        <br/>
-                        <div style={{display: (this.state.update ? 'none' : 'block')}}>
+                    <Grid>
+                        <Cell col={4}>
                             <TextValidator
-                                label="Password"
+                                label="First Name"
                                 onChange={this.handleChange}
-                                name="password"
-                                value={this.state.password}
-                                type="password"
-                                validators={['required']}
-                                errorMessages={['this field is required']}
+                                name="fname"
+                                value={this.state.fname}
+                                validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                                errorMessages={['this field is required', 'Invalid input (only letters)']}
                                 variant="outlined"
                             />
                             <br/>
                             <br/>
-                        </div>
-                        <TextValidator
-                            label="Assigned Area"
-                            onChange={this.handleChange}
-                            name="area"
-                            value={this.state.area}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
-                            variant="outlined"
-                        />
-                        <br/>
-                        <br/>
-                    </Cell>
-                    <Cell col={4}>
-                        <p>Date of Birth:</p>
-                        <DatePicker
-                            selected={this.state.temp_dob}
-                            onChange={this.changeDOB}
-                            maxDate={new Date()}
-                        />
-                        <br/>
-                        <br/>
+                            <TextValidator
+                                label="Last Name"
+                                onChange={this.handleChange}
+                                name="lname"
+                                value={this.state.lname}
+                                validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                                errorMessages={['this field is required', 'Invalid input (only letters)']}
+                                variant="outlined"
+                            />
+                            <br/>
+                            <br/>
+                            <TextValidator
+                                label="Address"
+                                onChange={this.handleChange}
+                                name="address"
+                                value={this.state.address}
+                                variant="outlined"
+                            />
+                            <br/>
+                            <br/>
+                        </Cell>
 
-                        <label>Gender: </label>
-                        <select
-                            value={this.state.gender}
-                            onChange={this.handleChange}
-                            name="gender"
-                        >
-                            <option value="MALE"> Male</option>
-                            <option value="FEMALE"> Female</option>
-                        </select>
-                        <br/>
-                        <br/>
-                        <p>Select role</p>
-                        {roles_map}
-                        <br/>
-                        <br/>
-                    </Cell>
-                </Grid>
-                <Button type="submit" style={{
-                    backgroundColor: 'blue',
-                    color: 'white'
-                }}>Submit</Button>
-                <br/>
-            </ValidatorForm>
+                        <Cell col={4}>
+                            <TextValidator
+                                label="ID"
+                                onChange={this.handleChange}
+                                name="id"
+                                value={this.state.id}
+                                validators={['required', 'checkID']}
+                                errorMessages={['this field is required', 'Existing ID: Re-enter the ID']}
+                                variant="outlined"
+                            />
+                            <br/>
+                            <br/>
+                            <TextValidator
+                                label="Username"
+                                onChange={this.handleChange}
+                                name="username"
+                                value={this.state.username}
+                                validators={['required', 'checkUsername']}
+                                errorMessages={['this field is required', 'Existing Username: Re-enter the username']}
+                                variant="outlined"
+                            />
+                            <br/>
+                            <br/>
+                            <div style={{display: (this.state.update ? 'none' : 'block')}}>
+                                <TextValidator
+                                    label="Password"
+                                    onChange={this.handleChange}
+                                    name="password"
+                                    value={this.state.password}
+                                    type="password"
+                                    validators={['required']}
+                                    errorMessages={['this field is required']}
+                                    variant="outlined"
+                                />
+                                <br/>
+                                <br/>
+                            </div>
+                            <label> Location </label>
+                            <select
+                                value={this.state.area}
+                                onChange={this.handleChange}
+                                name="area"
+                            >
+                                <option value="EMPTY"> --SELECT ONE--</option>
+                                {location_select_option}
+                            </select>
+                            <br/>
+                            <br/>
+                        </Cell>
+                        <Cell col={4}>
+                            <p>Date of Birth:</p>
+                            <DatePicker
+                                selected={this.state.temp_dob}
+                                onChange={this.changeDOB}
+                                maxDate={new Date()}
+                            />
+                            <br/>
+                            <br/>
+
+                            <label>Gender: </label>
+                            <select
+                                value={this.state.gender}
+                                onChange={this.handleChange}
+                                name="gender"
+                            >
+                                <option value="MALE"> Male</option>
+                                <option value="FEMALE"> Female</option>
+                            </select>
+                            <br/>
+                            <br/>
+                            <p>Select role</p>
+                            {roles_map}
+                            <br/>
+                            <br/>
+                        </Cell>
+                    </Grid>
+                    <Button type="submit" style={{
+                        backgroundColor: 'blue',
+                        color: 'white'
+                    }}>Submit</Button>
+                    <br/>
+                </ValidatorForm>
+            </div>
         );
     }
 }

@@ -57,11 +57,21 @@ class RequestReport extends Component {
     populateLocationData(response) {
         var LocationList = []
 
+        var initObj = {
+            id: 'all',
+            name: "All",
+            Address: "All"
+        }
+        
+        LocationList.push(initObj)
+
         response.forEach(location => {
+            var id = location.id
             var name = location.name
             var address = location.address
             console.log(name)
             var location_obj = {
+                id: id,
                 name: name,
                 address: address
             }
@@ -117,15 +127,18 @@ class RequestReport extends Component {
             var vht_id = this.state.vht_id
             var from = this.state.from_date
             var to = this.state.to_date
+            var location = this.state.location
+
             // this.requestReport(vht_id, from, to)
-            if (this.state.from_date === "date" && this.state.to_date === "date") {
+            if (from === "date" && to === "date") {
                 let input_date_from = Utility.convertDate(this.state.temp_from_date)
                 let input_date_to = Utility.convertDate(this.state.temp_to_date)
                 let today = Utility.convertDate(new Date())
 
                 this.setState({
                     from_date: input_date_from,
-                    to_date: input_date_to
+                    to_date: input_date_to,
+                    location: location
                 }, () => { this.requestReport(vht_id) })
             }
 
@@ -139,7 +152,8 @@ class RequestReport extends Component {
             state: {
                 vht_id: vht_id,
                 from: this.state.from_date,
-                to: this.state.to_date
+                to: this.state.to_date,
+                location: this.state.location
             }
         })
     }
@@ -169,7 +183,9 @@ class RequestReport extends Component {
 
     getLocationOptions() {
         return (this.state.location_list.map(location => {
-            return <option key={location.id} value={location.name}> {location.name} </option>
+            console.log(location._id)
+            console.log(location)
+            return <option key={location.id} value={location.id}> {location.name} </option>
         }))
     }
 

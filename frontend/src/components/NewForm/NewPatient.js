@@ -1,13 +1,13 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import RequestServer from '../RequestServer';
 import Utility from './Utility';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './newForm.css';
-import {Radio, RadioGroup} from "react-mdl";
-import {toast} from "react-toastify";
+import { Radio, RadioGroup } from "react-mdl";
+import { toast } from "react-toastify";
 
 //form for a new patient
 class NewPatient extends React.Component {
@@ -172,7 +172,7 @@ class NewPatient extends React.Component {
                 toast("Patient Added");
                 this.props.history.push(
                     '/',
-                    {detail: response.data}
+                    { detail: response.data }
                 )
             } else {
                 this.setState({
@@ -186,121 +186,116 @@ class NewPatient extends React.Component {
 
     render() {
         let vht_select_option = this.state.vht_array.map(item => <option key={item.id}
-                                                                         value={item.id}> {item.id} </option>)
+            value={item.id}> {item.id} </option>)
 
         return (
-            <ValidatorForm
-                style={{
-                    backgroundColor: 'white',
-                    margin: '50px 100px',
-                    padding: '50px',
-                    textAlign: 'center',
-                    borderRadius: '10px'
+            <div className="newForm">
 
-                }}
-                ref="form"
-                onSubmit={this.handleSubmit}
-                onError={errors => console.log(errors)}
-            >
-                <div style={{display: (this.state.update ? 'none' : 'block')}}>
-                    <h4>New Patient </h4>
-                </div>
-                <TextValidator
-                    label="First Name"
-                    onChange={this.handleChange}
-                    name="fname"
-                    value={this.state.fname}
-                    validators={['required', 'matchRegexp:^[A-Za-z]+$']}
-                    errorMessages={['this field is required', 'Invalid input (only letters)']}
-                    variant="outlined"
-                />
-                <br/>
-                <br/>
-                <TextValidator
-                    label="Last Name"
-                    onChange={this.handleChange}
-                    name="lname"
-                    value={this.state.lname}
-                    validators={['required', 'matchRegexp:^[A-Za-z]+$']}
-                    errorMessages={['this field is required', 'Invalid input (only letters)']}
-                    variant="outlined"
-                />
-                <br/>
-                <br/>
-                <TextValidator
-                    label="Attestation ID"
-                    onChange={this.handleChange}
-                    name="id"
-                    value={this.state.id}
-                    validators={['required', 'check_format', 'checkID']}
-                    errorMessages={['this field is required', 'Must be 11 digits', 'Existing ID: Re-enter the ID']}
-                    variant="outlined"
-                />
-                <br/>
-                <br/>
-                <label>VHT: </label>
-                <select
-                    value={this.state.vht_id}
-                    onChange={this.handleChange}
-                    name="vht_id"
+                <ValidatorForm
+                    ref="form"
+                    onSubmit={this.handleSubmit}
+                    onError={errors => console.log(errors)}
                 >
-                    <option value="EMPTY"> --SELECT ONE--</option>
-                    {vht_select_option}
-                </select>
-                <br/>
-                <br/>
-
-                <RadioGroup name="dob_type"
-                            onChange={this.handleChange}
-                            value={this.state.dob_type}>
-                    <Radio value="date" ripple>
-                        <span className="mdl-radio__label">Date of Birth</span>
-                    </Radio>
-                    <Radio value="age">Age</Radio>
-                </RadioGroup>
-
-
-                <div style={{display: (this.state.dob_type === "age" ? 'block' : 'none')}}>
+                    <div style={{ display: (this.state.update ? 'none' : 'block') }}>
+                        <h4>New Patient </h4>
+                    </div>
                     <TextValidator
-                        label="Age"
+                        label="First Name"
                         onChange={this.handleChange}
-                        name="birth_date"
-                        value={this.state.birth_date}
-                        validators={['check_dob_type', 'minNumber:0', 'maxNumber:150', 'matchRegexp:^[0-9]*$']}
-                        errorMessages={['this field is required', 'between 0 - 150', 'between 0 - 150', "Number only"]}
+                        name="fname"
+                        value={this.state.fname}
+                        validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                        errorMessages={['this field is required', 'Invalid input (only letters)']}
+                        variant="outlined"
                     />
-                    <br/>
-                </div>
-                <div style={{display: (this.state.dob_type === "date" ? 'block' : 'none')}}>
-                    <label>Date of Birth:</label>
-                    <br/>
-                    <DatePicker
-                        selected={this.state.temp_dob}
-                        onChange={this.changeDOB}
-                        maxDate={new Date()}
+                    <br />
+                    <br />
+                    <TextValidator
+                        label="Last Name"
+                        onChange={this.handleChange}
+                        name="lname"
+                        value={this.state.lname}
+                        validators={['required', 'matchRegexp:^[A-Za-z]+$']}
+                        errorMessages={['this field is required', 'Invalid input (only letters)']}
+                        variant="outlined"
                     />
-                    <br/>
-                </div>
-                <br/>
+                    <br />
+                    <br />
+                    <TextValidator
+                        label="Attestation ID"
+                        onChange={this.handleChange}
+                        name="id"
+                        value={this.state.id}
+                        validators={['required', 'check_format', 'checkID']}
+                        errorMessages={['this field is required', 'Must be 11 digits', 'Existing ID: Re-enter the ID']}
+                        variant="outlined"
+                    />
+                    <br />
+                    <br />
+                    <label>VHT: </label>
+                    <select
+                        value={this.state.vht_id}
+                        onChange={this.handleChange}
+                        name="vht_id"
+                    >
+                        <option value="EMPTY"> --SELECT ONE--</option>
+                        {vht_select_option}
+                    </select>
+                    <br />
+                    <br />
 
-                <label>Gender: </label>
-                <select
-                    value={this.state.gender}
-                    onChange={this.handleChange}
-                    name="gender"
-                >
-                    <option value="MALE"> Male</option>
-                    <option value="FEMALE"> Female</option>
-                </select>
-                <br/>
-                <br/>
-                <br/>
-                <Button type="submit" style={{
-                    backgroundColor: 'blue',
-                    color: 'white'
-                }}>Submit</Button>
-                <br/>
-            </ValidatorForm>
+                    <RadioGroup name="dob_type"
+                        onChange={this.handleChange}
+                        value={this.state.dob_type}>
+                        <Radio value="date" ripple>
+                            <span className="mdl-radio__label">Date of Birth</span>
+                        </Radio>
+                        <Radio value="age">Age</Radio>
+                    </RadioGroup>
+
+
+                    <div style={{ display: (this.state.dob_type === "age" ? 'block' : 'none') }}>
+                        <TextValidator
+                            label="Age"
+                            onChange={this.handleChange}
+                            name="birth_date"
+                            value={this.state.birth_date}
+                            validators={['check_dob_type', 'minNumber:0', 'maxNumber:150', 'matchRegexp:^[0-9]*$']}
+                            errorMessages={['this field is required', 'between 0 - 150', 'between 0 - 150', "Number only"]}
+                        />
+                        <br />
+                    </div>
+                    <div style={{ display: (this.state.dob_type === "date" ? 'block' : 'none') }}>
+                        <label>Date of Birth:</label>
+                        <br />
+                        <DatePicker
+                            selected={this.state.temp_dob}
+                            onChange={this.changeDOB}
+                            maxDate={new Date()}
+                        />
+                        <br />
+                    </div>
+                    <br />
+
+                    <label>Gender: </label>
+                    <select
+                        value={this.state.gender}
+                        onChange={this.handleChange}
+                        name="gender"
+                    >
+                        <option value="MALE"> Male</option>
+                        <option value="FEMALE"> Female</option>
+                    </select>
+                    <br />
+                    <br />
+                    <br />
+                    <Button type="submit" style={{
+                        backgroundColor: 'blue',
+                        color: 'white'
+                    }}>Submit</Button>
+                    <br />
+                </ValidatorForm>
+            </div>
         );
     }
 }

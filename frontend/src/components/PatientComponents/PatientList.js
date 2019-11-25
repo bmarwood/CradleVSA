@@ -6,6 +6,7 @@ import MedicationPopup from '../../Modals/MedicationPopup';
 import requestServer from '../RequestServer';
 import UpdatePatientPopup from "../../Modals/UpdatePatientPopup";
 import RecentAssessmentPopup from "../../Modals/RecentAssessmentPopup";
+import { Link } from 'react-router-dom';
 
 class PatientList extends Component {
 
@@ -29,7 +30,7 @@ class PatientList extends Component {
                 {title: 'Birth Date', field: 'birthDate'},
                 {title: 'ID Number', field: 'id'},
                 {
-                    title: 'Assessment',
+                    title: 'Patient Page',
                     field: 'assessment',
                     headerStyle: {textAlign: 'center'},
                     cellStyle: {textAlign: 'center'}
@@ -55,7 +56,12 @@ class PatientList extends Component {
             ],
             data: [
                 {
-                    assessment: <RecentAssessmentPopup/>,
+                    assessment: <button className="ui icon button"><i className="info icon"/></button>,
+                    name: 'Loading...',
+                    surname: 'Loading...',
+                    sex: 'Loading...',
+                    birthDate: 'Loading...',
+                    id: 'Loading...',
                     graph: <GraphPopup/>,
                     medications: <MedicationPopup/>,
                     update: <UpdatePatientPopup/>
@@ -86,8 +92,7 @@ class PatientList extends Component {
             var birthDate = patient.birth_date
             var sex = patient.gender[0]
             var id = patient.id
-            var assessment = <RecentAssessmentPopup
-                id={patient.id}/>
+            var assessment = <button className="ui icon button"> <Link to={`/patient${patient.id}`}><i className="info icon"/></Link></button>
             var graph = <GraphPopup
                 patient_id={patient.id}
                 patient_name={name + " " + surname}
@@ -132,6 +137,10 @@ class PatientList extends Component {
                     title="Patients"
                     columns={this.state.columns}
                     data={this.state.data}
+                    options={{
+                        sorting: false,
+                        pageSizeOptions: [5]
+                      }}
                     editable={{
                         onRowDelete: oldData =>
                             new Promise(resolve => {
