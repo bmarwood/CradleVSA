@@ -43,7 +43,7 @@
     "write-json-file": "^4.2.0"
   },
   "scripts": {
-    "start": "HTTPS=true cross-env PORT=3000 react-scripts start"
+    "start": "HTTPS=true cross-env PORT=8040 react-scripts start"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -60,7 +60,6 @@
       "last 1 safari version"
     ]
   },
-  
   "devDependencies": {
     "@material-ui/core": "^4.4.3",
     "css-loader": "^3.2.0",
