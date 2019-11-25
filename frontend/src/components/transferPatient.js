@@ -19,10 +19,12 @@ class TransferPatient extends Component {
             vht_w_patient: [],
             from_vht: '',
             to_vht: '',
-            loading: false,
-            user_role: []
+            loading: true,
+            user_role: [],
+            user_id: ''
         }
         this.handleChange = this.handleChange.bind(this);
+        //this.getRoles()
         this.getVHTList()
     }
 
@@ -92,8 +94,9 @@ class TransferPatient extends Component {
                     roleArray.push(role.role)
                 })
             }
-            this.setState({user_role:roleArray})
-            return roleArray
+            var prole = this.checkRoles(roleArray)
+            this.setState({user_role:prole, user_id: parsedUser.id})
+            return prole
         }
         else{
             return this.state.user_role
@@ -102,7 +105,17 @@ class TransferPatient extends Component {
 
 
     async getPatientList() {
-        var passback = await requestServer.getPatientVHTList()
+        var ifCHO = await this.getRoles()
+        if (ifCHO === 'CHO'){
+            var passback = await requestServer.getPatientVHTList(this.state.user_id,"CHO")
+            this.setState({loading:false})
+            //console.log("should be loaded",this.state.loading)
+        }
+        else{
+            var passback = await requestServer.getPatientVHTList(this.state.user_id, "ADMIN")
+            this.setState({loading:false})
+            //console.log("should be loaded",this.state.loading)
+        }
         if (passback !== null && passback.data !== "") {
             this.setState({ vht_empty_flag: passback.flag })
             this.setState({ vht_w_patient: passback.vhtlist })
@@ -128,7 +141,14 @@ class TransferPatient extends Component {
 
 
     async getVHTList() {
-        var passback = await requestServer.getUserList()
+        var ifCHO = await this.getRoles()
+        if(ifCHO === "CHO"){
+            var passback = await requestServer.getUserListCHO(this.state.user_id)
+        }
+        else{
+            var passback = await requestServer.getUserList()
+        }
+        //var passback = await requestServer.getUserList()
         if (passback !== null) {
             this.setState({
                 vht_array: Utility.populateVHT(passback.data),
@@ -153,7 +173,7 @@ class TransferPatient extends Component {
 
     handleSubmitSingle = async (id, fromList, toList) => {
         //set the patient object to be sent to update
-        this.setState({ loading: true })
+        //this.setState({ loading: true })
         var temp_patient = await this.getSinglePatient(id)
         temp_patient.vht_id = this.state.to_vht
         var update_response = await this.updateSinglePatient(temp_patient)
@@ -202,31 +222,30 @@ class TransferPatient extends Component {
         }
     }
 
-    filter_lists(user_id){
-        console.log("vht_array",this.state.vht_array)
-        console.log("with assessment",this.state.vht_w_patient)
+
+    checkRoles(roleArray)
+    {
+        const Role_Termination_Integer = -1
+        if(roleArray.indexOf("ADMIN") > Role_Termination_Integer){
+            return "ADMIN"
+        }
+        else if(roleArray.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer) {
+        //filter_lists
+            return "CHO"
+        }
+        else{
+            return "NO ROLE"
+        }
     }
+
 
     render() {
         this.checkEmptyFlag()
-        var userRoles = this.getRoles()
-        const Role_Termination_Integer = -1
         let temp_to_vht = this.state.to_vht
         let temp_from_vht = this.state.from_vht
-        // let vht_select_option = this.state.vht_array.map(item => <option id={item.id}
-        //     value={item.id}> {item.id} </option>)
-        // let vht_select_option2 = this.state.vht_w_patient.map(item => <option
-        //     value={item}> {item} </option>)
         let temp_vht_array = this.state.vht_array
         let temp_vht_w_patient = this.state.vht_w_patient
-        console.log("this is the logged in user role", userRoles)
-        if(userRoles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer){
-            //filter_lists
-            var user = localStorage.getItem("userData")
-            var parsedUser = JSON.parse(user)
-            console.log(parsedUser.id)
-            this.filter_lists(parsedUser.id)
-        }
+
 
         let vht_select_option = temp_vht_array.map(item => <option id={item.id}
                                                                          value={item.id}> {item.id} </option>)
