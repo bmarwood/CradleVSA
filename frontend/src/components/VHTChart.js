@@ -17,8 +17,8 @@ class VHTChart extends React.Component {
                     {
                         label: "Assessments Per Month",
                         fill: true,
-                        backgroundColor: "rgba(255, 157, 148, .3)",
-                        borderColor: "red",
+                        backgroundColor: "rgba(137, 187, 203, 1)",
+                        borderColor: "grey",
                         data: [
                             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                         ]

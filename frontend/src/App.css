@@ -1,5 +1,47 @@
 .App {
   text-align: center;
+
+}
+
+.showMenu {
+  display: block;
+}
+
+.hideMenu {
+  display: none !important;
+}
+
+.titleMenu {
+  color: #2e5ad1  !important;
+}
+
+.titleMenu:hover {
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgb(230, 167, 167) !important;
+}
+
+.link-menu {
+  display: block;
+  flex-shrink: 0;
+  padding: 16px 10px;
+  margin: 0;
+  color: #757575;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+  opacity: 0.87;  
+}
+
+.link-menu:hover {
+  display: block;
+  margin: 0;
+  background-color: rgb(224,224,224) !important;
+}
+
+.mdl-layout__drawer .mdl-navigation .mdl-navigation__link:hover {
+  background-color: rgb(224,224,224, 0) !important;
 }
 
 .button-location {
@@ -14,10 +56,31 @@
 .input-txt {
   color: white;
 }
+
+.scroll {
+  scrollbar-width: thin;
+}
+
+.MuiAppBar-colorPrimary {
+  color: #fff;
+  background-color: #4a7582 !important;
+}
+
+.mdl-layout__drawer {
+  color: rgb(136, 188, 203) !important;
+  scrollbar-width: thin;
+}
+
+.mdl-layout__content {
+  scrollbar-width: thin;
+}
+
+.mdl-layout__drawer > .mdl-layout__title, .mdl-layout__drawer > .mdl-layout-title {
+  line-height: 75px;
+}
+
 .header-color {
-  background: #355C7D;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #C06C84, #6C5B7B, #355C7D);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #C06C84, #6C5B7B, #355C7D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #C06C84;  /* fallback for old browsers */
   background-repeat: repeat;
   text-decoration-color: blue;
 }
@@ -97,6 +160,26 @@
 
 .App-link {
   color: #61dafb;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 @keyframes App-logo-spin {

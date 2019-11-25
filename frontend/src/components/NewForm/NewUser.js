@@ -153,10 +153,13 @@ class NewUser extends React.Component {
                 {id: 3, name: Role.HEALTH_WORKER, checked: false},
                 {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false},
                 {id: 5, name: Role.VHT, checked: false}]
-        } else if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer) {
-            return [//{id: 1, name: Role.USER, checked: true},
+        } else if (roles.indexOf("HEALTH_WORKER") > Role_Termination_Integer) {
+            return [
+                {id: 5, name: Role.VHT, checked: false},
                 {id: 4, name: Role.COMMUNITY_HEALTH_OFFICER, checked: false},
-                {id: 5, name: Role.VHT, checked: false}]
+            ]
+        } else if (roles.indexOf("COMMUNITY_HEALTH_OFFICER") > Role_Termination_Integer) {
+            return [{id: 5, name: Role.VHT, checked: false}]
         }
     }
 

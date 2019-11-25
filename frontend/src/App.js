@@ -43,6 +43,7 @@ class App extends Component {
             return (
                 <Navigation>
                     <Link to ="/login">Login</Link>
+                    {this.navBasedOnLogin()}
                 </Navigation>
             )
         }
@@ -97,14 +98,28 @@ class App extends Component {
         }
     }
 
+    getTitle() {
+        var roles = this.getRoles()
+        if (this.isAdmin(roles)){
+            return "Admin Dashboard"
+        }
+        else if (this.isCHO(roles)){
+            return "CHO Dashboard"
+        }
+        else if (this.isHealthWorker(roles)){
+            return "Health Worker Dashboard"
+        }
+        else {
+            return "Dashboard"
+        }
+    }
+
     render() {
         return (
             <div className="demo-big-content">
-                <Layout fixedHeader>
-                    <Header className = "header-color" title="CRADLE" transparent scroll waterfall seamed>
-                        {this.navBasedOnLogin()}
-
-
+                <Layout fixedHeader fixedDrawer>
+                    <Header className = "header-color" title={this.getTitle()} transparent scroll seamed>
+                    {this.navBasedOnLogin()}
                     </Header>
                     <Drawer title="CRADLE">
                             {this.ifLoggedIn()}

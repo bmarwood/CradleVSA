@@ -8,7 +8,9 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import PatientList from '../PatientComponents/PatientList'
-import UserList from  '../UserList'
+import UserList from  '../UserList';
+import AdminNav from './adminNav';
+import AssessmentList from '../AssessmentComponents/AssessmentList';
 
 class Landing_List extends Component {
     render() {
@@ -34,15 +36,19 @@ function SimpleTabs() {
       <div className={classes.root}>
         <AppBar className={classes.appbar} position="static">
           <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+          <Tab label="Assessments" {...a11yProps(2)}/>
             <Tab label="Patients" {...a11yProps(0)} />
-            <Tab label="Users" {...a11yProps(1)} />
+            <Tab label="Workers" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
-        <TabPanel value={value} index={0}>
+        <TabPanel value={value} index={1}>
           <PatientList/>
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={2}>
           <UserList/>
+        </TabPanel>
+        <TabPanel value={value} index={0}>
+          <AssessmentList/>
         </TabPanel>
       </div>
   );

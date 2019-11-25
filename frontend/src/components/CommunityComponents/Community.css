@@ -1,8 +1,40 @@
 
 .selector {
   margin-top: 20px;
-  width: 15%;
-  margin-left: 20px;;
+  height: 15%;
+  margin-left: 20px;
+  margin: 20px auto;
+}
+
+#community .mdl-grid {
+  display: block !important;
+  flex-flow: row wrap;
+  margin: 0 auto 0 auto;
+  align-items: stretch;
+}
+
+.margin-10 {
+  margin-top: 20px;
+}
+
+.card-body-report {
+  background:white;
+  background-color: white;
+  height: 80%;
+  width: 200px;
+  box-shadow: 0 4px 6px -6px
+black;
+  margin: 10px;
+  float: left;
+  border-left:
+rgb(121, 198, 250) 5px Solid !important;
+  padding-left: 10px;
+  width: 95% !important;
+}
+
+.container-com {
+  display: flex;
+
 }
 
 .list {
@@ -93,7 +125,7 @@
 
 .floatRight {
   float: right;
-  width: 80%;
+  /* width: 80%; */
 }
 
 .floatLeft {
